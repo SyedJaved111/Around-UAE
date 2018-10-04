@@ -147,3 +147,21 @@ enum StoreReviewKey:String{
     case COMMENT = "comment"
 }
 
+enum AddToCartKey:String{
+    case product = "product"
+    case quantity = "quantity"
+    case featureszero = "features[0]"
+    case characteristicsone = "characteristics[0]"
+}
+
+enum DeleteProductCartKey:String{
+    case product = "product"
+    case combination = "combination"
+}
+
+enum CartQuantityUpdateKey:String{
+    case quantity = "quantity"
+    case product = "product"
+    case combination = "combination"
+}
+

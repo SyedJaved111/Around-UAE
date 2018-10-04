@@ -40,6 +40,7 @@
 		187BBA8521626BF40070D155 /* VCDesertSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BBA8421626BF40070D155 /* VCDesertSafari.swift */; };
 		188191B42164F65300FEA31D /* VCProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188191B22164F65200FEA31D /* VCProductDetail.swift */; };
 		188191B52164F65300FEA31D /* GMSteper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188191B32164F65300FEA31D /* GMSteper.swift */; };
+		18973E1E216603C100E314F4 /* CharacteristicsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18973E1D216603C100E314F4 /* CharacteristicsCell.swift */; };
 		18B150332164D02600FF87A4 /* GMSteperCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B150312164D02500FF87A4 /* GMSteperCart.swift */; };
 		18B150342164D02600FF87A4 /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B150322164D02500FF87A4 /* CartCell.swift */; };
 		18B150362164E4B800FF87A4 /* DefaultAlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B150352164E4B800FF87A4 /* DefaultAlamofireManager.swift */; };
@@ -57,7 +58,6 @@
 		18BA9672216353FE0009AE52 /* VCSubDivisions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BA9671216353FE0009AE52 /* VCSubDivisions.swift */; };
 		18BA9674216399A90009AE52 /* VCEditGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BA9673216399A90009AE52 /* VCEditGender.swift */; };
 		18BA967A2163AF100009AE52 /* VCCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BA96772163AF100009AE52 /* VCCart.swift */; };
-		18BB210D21650E8E005727F2 /* CellC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BB210821650E8D005727F2 /* CellC.swift */; };
 		18BB210E21650E8E005727F2 /* VCTopratedProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BB210921650E8D005727F2 /* VCTopratedProductList.swift */; };
 		18BB210F21650E8E005727F2 /* CellNearBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BB210A21650E8E005727F2 /* CellNearBy.swift */; };
 		18BB211021650E8E005727F2 /* VCNearByProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BB210B21650E8E005727F2 /* VCNearByProductList.swift */; };
@@ -192,6 +192,7 @@
 		187BBA8421626BF40070D155 /* VCDesertSafari.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCDesertSafari.swift; sourceTree = "<group>"; };
 		188191B22164F65200FEA31D /* VCProductDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCProductDetail.swift; sourceTree = "<group>"; };
 		188191B32164F65300FEA31D /* GMSteper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSteper.swift; sourceTree = "<group>"; };
+		18973E1D216603C100E314F4 /* CharacteristicsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicsCell.swift; sourceTree = "<group>"; };
 		18B150312164D02500FF87A4 /* GMSteperCart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSteperCart.swift; sourceTree = "<group>"; };
 		18B150322164D02500FF87A4 /* CartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
 		18B150352164E4B800FF87A4 /* DefaultAlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlamofireManager.swift; sourceTree = "<group>"; };
@@ -209,7 +210,6 @@
 		18BA9671216353FE0009AE52 /* VCSubDivisions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCSubDivisions.swift; sourceTree = "<group>"; };
 		18BA9673216399A90009AE52 /* VCEditGender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCEditGender.swift; sourceTree = "<group>"; };
 		18BA96772163AF100009AE52 /* VCCart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCCart.swift; sourceTree = "<group>"; };
-		18BB210821650E8D005727F2 /* CellC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CellC.swift; path = ../../../../../Downloads/CellC.swift; sourceTree = "<group>"; };
 		18BB210921650E8D005727F2 /* VCTopratedProductList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCTopratedProductList.swift; sourceTree = "<group>"; };
 		18BB210A21650E8E005727F2 /* CellNearBy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNearBy.swift; sourceTree = "<group>"; };
 		18BB210B21650E8E005727F2 /* VCNearByProductList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCNearByProductList.swift; sourceTree = "<group>"; };
@@ -581,7 +581,6 @@
 				1F5A3F6A215F8AA800B0CBC6 /* VCDivisions.swift */,
 				1F5A3F6B215F8AA800B0CBC6 /* VCtest.swift */,
 				188191B32164F65300FEA31D /* GMSteper.swift */,
-				18BB210821650E8D005727F2 /* CellC.swift */,
 			);
 			path = ProductList;
 			sourceTree = "<group>";
@@ -630,6 +629,7 @@
 				1F5A3F7C215F8AA800B0CBC6 /* VCStores.swift */,
 				1F5A3F7D215F8AA800B0CBC6 /* VCStoreTab.swift */,
 				188191B22164F65200FEA31D /* VCProductDetail.swift */,
+				18973E1D216603C100E314F4 /* CharacteristicsCell.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -1025,6 +1025,7 @@
 				1F5A4015215F8AA900B0CBC6 /* UIButtonMain.swift in Sources */,
 				1F5A3FCA215F8AA900B0CBC6 /* AppDelegate.swift in Sources */,
 				188191B42164F65300FEA31D /* VCProductDetail.swift in Sources */,
+				18973E1E216603C100E314F4 /* CharacteristicsCell.swift in Sources */,
 				1F5A3FE0215F8AA900B0CBC6 /* VCCategories.swift in Sources */,
 				1F5A3FE5215F8AA900B0CBC6 /* VCNearBy.swift in Sources */,
 				1F5A3FF9215F8AA900B0CBC6 /* CellMenu.swift in Sources */,
@@ -1051,7 +1052,6 @@
 				18BA96672163483F0009AE52 /* DilverdTablCell.swift in Sources */,
 				1F5A403C215F8AA900B0CBC6 /* UIScrollView+Extensions.swift in Sources */,
 				187BBA612161F8030070D155 /* ButtonExtension.swift in Sources */,
-				18BB210D21650E8E005727F2 /* CellC.swift in Sources */,
 				18BA966D2163483F0009AE52 /* VCCancelledProducts.swift in Sources */,
 				1F5A3FFD215F8AA900B0CBC6 /* VCSelectLanguage.swift in Sources */,
 				18BA9672216353FE0009AE52 /* VCSubDivisions.swift in Sources */,

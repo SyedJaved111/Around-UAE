@@ -36,15 +36,9 @@ enum APIURL: String{
 
     case productDetailURL          = "product/detail"
     case storeProductsURL          = "auth/products"
-    
-    //skipping right now
-    //case addProductURL             = "auth/products/store"
-    
+ 
     case editProductURL            = "auth/products/edit"
-    
-    //skipping right now
-    //case updateProductURL          = "auth/products/update"
-    
+
     case deleteProductURL          = "auth/products/delete"
     case deleteProductImageURL     = "auth/products/delete/image"
     case setDefaultProductImageURL = "auth/products/default/image"
@@ -55,8 +49,9 @@ enum APIURL: String{
     case getSlidersURL             = "sliders"
     case contactUsURL              = "contact-us"
     
-    //skipping right now
-    //case addToCartURL            = "auth/cart/add-product"
+    case addToCartURL              = "auth/cart/add-product"
+    case deleteCarProductURL       = "auth/cart/product/remove"
+    case cartQuantityUpdateURL     = "auth/cart/update"
     case getCartProductsURL        = "auth/cart"
     case getCitiesURL              = "cities"
     case citiesPlacesURL           = "city/places"

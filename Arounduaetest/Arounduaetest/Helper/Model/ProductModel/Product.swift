@@ -21,6 +21,7 @@ struct About : Decodable {
 struct Characteristics : Decodable {
     let _id : String?
     let title : Title?
+    let image: String?
 }
 
 struct Combinations : Decodable {
@@ -53,8 +54,8 @@ struct Price : Decodable {
 
 struct Priceables : Decodable {
     let characteristics : [Characteristics]?
-    let _id : String?
     let feature : Feature?
+    let _id : String?
 }
 
 struct ProductName : Decodable {

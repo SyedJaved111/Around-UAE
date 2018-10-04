@@ -28,5 +28,6 @@ target 'Arounduaetest' do
   pod 'CountryPickerSwift'
   pod 'FlagKit'
   pod 'DZNEmptyDataSet'
+  pod 'PayPal-iOS-SDK'
 
 end

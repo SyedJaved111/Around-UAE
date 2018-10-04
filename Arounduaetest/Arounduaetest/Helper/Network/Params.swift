@@ -104,4 +104,21 @@ typealias StoreReviewParams = (
     comment:String
 )
 
+typealias AddCartproductsParams = (
+    productid:String,
+    quantity:String,
+    features:[String],
+    characteristics:[String]
+)
+
+typealias DeleteProductCartParams = (
+    product:String,
+    combination:String
+)
+
+typealias CartQuantityUpdateParams = (
+    quantity:String,
+    product:String,
+    combination:String
+)
 

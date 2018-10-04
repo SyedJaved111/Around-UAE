@@ -73,6 +73,7 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                     self?.finishLoading()
                     if let productResponse = response{
                         if productResponse.success!{
+                            
                             let vcStoreInfo = self?.child_1 as! VCStoreInfo
                             vcStoreInfo.storeid = productResponse.data?._id ?? ""
                             vcStoreInfo.lblInstinct.text = productResponse.data?.storeName?.en ?? ""

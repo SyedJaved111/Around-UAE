@@ -18,7 +18,22 @@ class VCProductDetail: UIViewController {
     @IBOutlet weak var Productcounter: GMStepper!
     @IBOutlet weak var productDescription: UILabel!
     
+    @IBOutlet weak var colorCollectionView: UICollectionView!{
+        didSet{
+            colorCollectionView.delegate = self
+            colorCollectionView.dataSource = self
+        }
+    }
+    
+    @IBOutlet weak var sizeCollectionView: UICollectionView!{
+        didSet{
+            sizeCollectionView.delegate = self
+            sizeCollectionView.dataSource = self
+        }
+    }
+    
     var product:Products!
+    var productDetail:Product?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +49,33 @@ class VCProductDetail: UIViewController {
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
+                        self?.productDetail = storeResponse.data!
                         self?.setupProductDetsil(storeResponse.data!)
+                        self?.colorCollectionView.reloadData()
+                        self?.sizeCollectionView.reloadData()
+                    }
+                }else{
+                    self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
+    }
+    
+    private func addToCart(){
+        CartManager().addCartProducts((product._id!,"\(Productcounter.value)",["5b8f6d105fae83149c238946"],["5b8f6d695fae83149c238949"]),
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let storeResponse = response{
+                    if storeResponse.success!{
+                       
                     }
                 }else{
                     self?.alertMessage(message: "Error".localized, completionHandler: nil)
@@ -59,20 +100,50 @@ class VCProductDetail: UIViewController {
         productDescription.text = productdetail.description?.en ?? ""
     }
     
-    @IBAction func productLike(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func addToCart(_ sender: UIButton){
-        
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Product Detail"
         self.addBackButton()
     }
     
     @IBAction func addtocartclick(_ sender: Any) {
-       
+       addToCart()
     }
+}
+
+extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView{
+            case colorCollectionView:
+                return productDetail?.priceables?[0].characteristics?.count ?? 0
+            case sizeCollectionView:
+                return productDetail?.priceables?[1].characteristics?.count ?? 0
+            default:
+                return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CharacteristicsCell", for: indexPath) as! CharacteristicsCell
+        switch collectionView{
+            case colorCollectionView:
+                cell.setupCell(productDetail?.priceables?[0].characteristics?[indexPath.row].image ?? "")
+            case sizeCollectionView:
+                cell.setupCell(productDetail?.priceables?[1].characteristics?[indexPath.row].image ?? "")
+            default:
+                return cell
+            }
+        return cell
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+//        switch collectionView{
+//            case colorCollectionView:
+//            
+//            case sizeCollectionView:
+//            
+//            default:
+//                break
+//        }
+//    }
 }

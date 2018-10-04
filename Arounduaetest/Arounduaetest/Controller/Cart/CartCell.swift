@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol Cartprotocol{
+    func tapOnDeleteProduct(cell:CartCell)
+}
+
 class CartCell: UITableViewCell {
 
     @IBOutlet weak var imgProduct: UIImageView!
@@ -15,17 +19,9 @@ class CartCell: UITableViewCell {
     @IBOutlet weak var lblProductPrice: UILabel!
     @IBOutlet weak var lblusername: UILabel!
     @IBOutlet weak var lblProductname: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    var delegate:Cartprotocol?
+    
+    @IBAction func btnCancelClick(_ sender: Any){
+        self.delegate?.tapOnDeleteProduct(cell: self)
     }
-
-    @IBAction func btnCancelClick(_ sender: Any) {
-    }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

@@ -57,6 +57,9 @@ enum ServerAPI {
     
     //Cart API's
     case GetCartProducts
+    case AddProdcutsCart(AddCartproductsParams)
+    case DeleteProductCart(DeleteProductCartParams)
+    case CartQuantityUpdate(CartQuantityUpdateParams)
     
     //Cities & Places
     case GetCities(pageNo:String)
@@ -196,6 +199,12 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return APIURL.productReviewURL.rawValue
             case .StoreReview:
                 return APIURL.storeReviewURL.rawValue
+            case .AddProdcutsCart:
+                return APIURL.addToCartURL.rawValue
+            case .DeleteProductCart:
+                return APIURL.deleteCarProductURL.rawValue
+            case .CartQuantityUpdate:
+                return APIURL.cartQuantityUpdateURL.rawValue
         }
     }
 
@@ -210,7 +219,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .SetDefaultProductImage,.GetCities,.CitiesPlaces,.PlaceDetail,
                .SubmitPlaceReview,.PlaceReviewsListing,.MakePlaceFavourite,
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
-               .GetFavouriteProducts,.ProductReview,.StoreReview:
+               .GetFavouriteProducts,.ProductReview,.StoreReview,
+               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate:
                 return .post
           case .checkIsSocialLogin,.GetUserProfile,.RemoveImage,
                .GetStoreSGDS,.GetFeaturesCharacters,.GetSiteSettings,
@@ -328,6 +338,13 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 parameters[StoreReviewKey.COMMENT.rawValue] = params.comment
                 return parameters
             
+            case .AddProdcutsCart(let params):
+                parameters[AddToCartKey.product.rawValue] = params.productid
+                parameters[AddToCartKey.quantity.rawValue] = params.quantity
+                parameters[AddToCartKey.featureszero.rawValue] = params.features
+                parameters[AddToCartKey.characteristicsone.rawValue] = params.characteristics
+                return parameters
+            
             default:
                 return nil
           }
@@ -351,7 +368,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .ContactUs,.GetCities,.CitiesPlaces,.PlaceDetail,.SubmitPlaceReview,
                .PlaceReviewsListing,.MakePlaceFavourite,
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
-               .GetFavouriteProducts,.ProductReview,.StoreReview:
+               .GetFavouriteProducts,.ProductReview,.StoreReview,
+               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
           case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:
