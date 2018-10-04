@@ -19,6 +19,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     @IBOutlet var lblWords: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
     @IBOutlet weak var storeImage: UIImageView!
+    var storeid = ""
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo.init(title: "Store Info".localized)
@@ -26,5 +27,16 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
 
     override func viewDidLoad(){
         super.viewDidLoad()
+    }
+    
+    @IBAction func review(_ sender: Any){
+        self.performSegue(withIdentifier: "movetopopfromstores", sender: storeid)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "movetopopfromstores"{
+            let dvc = segue.destination as! VCPopUp
+            dvc.storeid = sender as! String
+        }
     }
 }

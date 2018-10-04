@@ -38,8 +38,7 @@ class VCSelectLanguage: UIViewController {
     }
     
     @IBAction func btnArabicClick(_ sender: Any){
-        UserDefaults.standard.set("ar", forKey: "i18n_language")
-        goToLogin()
+        
     }
     
     private func goToLogin(){

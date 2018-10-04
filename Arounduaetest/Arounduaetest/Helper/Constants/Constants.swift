@@ -56,9 +56,4 @@ enum Storyboards{
     static var Home = "Home"
 }
 
-extension NSObject {
-    class var identifier: String {
-        return String(describing: self)
-    }
-}
 

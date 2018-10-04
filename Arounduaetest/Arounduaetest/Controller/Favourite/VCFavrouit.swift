@@ -8,53 +8,98 @@
 
 import UIKit
 import Cosmos
+import XLPagerTabStrip
 
-class VCFavrouit: UIViewController{
+class VCFavrouit: UIViewController,IndicatorInfoProvider{
     
     @IBOutlet weak var viewEmptyList: UIView!
     @IBOutlet weak var lblEmpty: UILabel!
     @IBOutlet weak var lblMessage: UILabel!
     
-    @IBOutlet var tableViewProducts: UITableView!{
+    @IBOutlet var favouriteProductTableView: UITableView!{
         didSet{
-            //self.collectionViewProducts.delegate = self
-            //self.collectionViewProducts.dataSource = self
+            self.favouriteProductTableView.delegate = self
+            self.favouriteProductTableView.dataSource = self
         }
     }
     
-    var favouriteProductsArray = [Products]()
+    var favouriteProductList = [Products]()
     var totalPages = 0
     var currentPage = 0
     
-    override func viewDidLoad(){
+    override func viewDidLoad() {
         super.viewDidLoad()
         initialUI()
-        //fetchProductsData()
+        getFavouriteProducts()
     }
-
-    override func viewWillAppear(_ animated: Bool){
+    
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.title = "Products"
+        lblEmpty.text = "Empty List".localized
+        lblMessage.text = "Sorry there no data available".localized
+    }
+    
+    private func getFavouriteProducts(){
+        startLoading("")
+        ProductManager().getFavouriteProducts("\(currentPage + 1)",
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let FavouriteProductData = response{
+                    if(FavouriteProductData.data?.products ?? []).count == 0{
+                        self?.viewEmptyList.isHidden = false
+                    }else{
+                        self?.favouriteProductList = FavouriteProductData.data?.products ?? []
+                        self?.currentPage = FavouriteProductData.data?.pagination?.page ?? 1
+                        self?.totalPages = FavouriteProductData.data?.pagination?.pages ?? 0
+                        self?.favouriteProductTableView.reloadData()
+                    }
+                }else{
+                    self?.viewEmptyList.isHidden = false
+                    self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.viewEmptyList.isHidden = false
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
+    }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo.init(title: "Products")
+    }
+    
+    @IBAction func tryAgain(_ sender: UIButton) {
+        self.viewEmptyList.isHidden = true
+        getFavouriteProducts()
     }
 }
 
 extension VCFavrouit{
+    
     func initialUI(){
         
-        tableViewProducts.spr_setTextHeader { [weak self] in
+        favouriteProductTableView.spr_setTextHeader { [weak self] in
             self?.viewEmptyList.isHidden = true
             self?.currentPage = 0
-            StoreManager().getStores("\((self?.currentPage ?? 0) + 1)",successCallback:
+             ProductManager().getFavouriteProducts("\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
-                        self?.tableViewProducts.spr_endRefreshing()
-                        if let productResponse = response{
-                            if(productResponse.data?.stores ?? []).count == 0{
+                        self?.favouriteProductTableView.spr_endRefreshing()
+                        if let favouriteResponse = response{
+                            if(favouriteResponse.data?.products ?? []).count == 0{
                                 self?.viewEmptyList.isHidden = false
                             }else{
-                                //self?.favouriteProductsArray = productResponse.data?. ?? []
-//                                self?.currentPage = storeResponse.data?.pagination?.page ?? 1
-//                                self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
-//                                self?.collectionViewProducts.reloadData()
+                                self?.favouriteProductList = favouriteResponse.data?.products ?? []
+                                self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
+                                self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
+                                self?.favouriteProductTableView.reloadData()
                             }
                         }else{
                             self?.viewEmptyList.isHidden = false
@@ -64,29 +109,29 @@ extension VCFavrouit{
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
-                    self?.tableViewProducts.spr_endRefreshing()
+                    self?.favouriteProductTableView.spr_endRefreshing()
                     self?.viewEmptyList.isHidden = false
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
         }
         
-          tableViewProducts.spr_setIndicatorFooter {[weak self] in
+        favouriteProductTableView.spr_setIndicatorFooter {[weak self] in
             if((self?.currentPage)! >= (self?.totalPages)!){
-                self?.tableViewProducts.spr_endRefreshing()
+                self?.favouriteProductTableView.spr_endRefreshing()
                 return}
             
-            StoreManager().getStores("\((self?.currentPage ?? 0) + 1)",successCallback:
+             ProductManager().getFavouriteProducts("\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
-                        self?.tableViewProducts.spr_endRefreshing()
-                        if let storeResponse = response{
-                            for store in storeResponse.data?.stores ?? []{
-                                //self?.storelist.append(store)
+                        self?.favouriteProductTableView.spr_endRefreshing()
+                        if let favouriteResponse = response{
+                            for product in favouriteResponse.data?.products ?? []{
+                                self?.favouriteProductList.append(product)
                             }
-                            self?.currentPage = storeResponse.data?.pagination?.page ?? 1
-                            self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
-                            self?.tableViewProducts.reloadData()
+                            self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
+                            self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
+                            self?.favouriteProductTableView.reloadData()
                         }else{
                             self?.alertMessage(message: "Error".localized, completionHandler: nil)
                         }
@@ -94,7 +139,7 @@ extension VCFavrouit{
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
-                    self?.tableViewProducts.spr_endRefreshing()
+                    self?.favouriteProductTableView.spr_endRefreshing()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -105,17 +150,17 @@ extension VCFavrouit{
 extension VCFavrouit: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return 133
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return favouriteProductList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = tableView.dequeueReusableCell(withIdentifier: "CellFavourit") as! CellFavourit
-        //data.imgFavourit.image = Favroutarr[indexPath.row]
-        data.selectionStyle = .none
-        return data
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellFavourit") as! CellFavourit
+        cell.setupCellData(favouriteProductList[indexPath.row])
+        cell.selectionStyle = .none
+        return cell
     }
 }

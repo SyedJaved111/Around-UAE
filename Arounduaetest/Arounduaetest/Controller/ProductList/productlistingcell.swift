@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CellC: UICollectionViewCell {
+class productlistingcell: UICollectionViewCell {
     
     @IBOutlet var UIButtonFavourite: UIButton!
     @IBOutlet var lblProductName: UILabel!

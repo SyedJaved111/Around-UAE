@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cosmos
 
 class VCPopUp: UIViewController {
 
@@ -15,43 +16,142 @@ class VCPopUp: UIViewController {
     @IBOutlet var textViewWriteComments: UICustomTextView!
     @IBOutlet var btnCancel: UIButtonMain!
     @IBOutlet var btnSubmit: UIButtonMain!
-    @IBAction func btnAction(_ sender: Any) {
-    dismiss(animated: true, completion: nil)
-    }
+    @IBOutlet weak var ratingView: CosmosView!
+    var placeid = ""
+    var storeid = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        textViewWriteComments.delegate = self
+        textViewWriteComments.text = "Commint..."
+        textViewWriteComments.textColor = UIColor.lightGray
     }
-
     
-    override func viewWillAppear(_ animated: Bool) {
+    @IBAction func btnAction(_ sender: Any){
+        dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         lblSubmitFeedBack.text = "Submit Feedback".localized
-      lblSubmitFeedBack.text = "Hows was your experience with instinct Store?".localized
-        
-        textViewWriteComments.text = "Write Comments...".localized
-        
+        //lblSubmitFeedBack.text = "Hows was your experience with instinct Store?".localized
+        //textViewWriteComments.text = "Write Comments...".localized
         btnSubmit.setTitle("Submit".localized, for: .normal)
         btnCancel.setTitle("Cancel".localized, for: .normal)
-        
-        
-        
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func isCheckReview()->Bool{
+        guard let comment = textViewWriteComments.text, comment != "Commint..." else{
+            self.alertMessage(message: "Please Enter Your Comment!", completionHandler: nil)
+            return false
+        }
+        return true
     }
-    */
+    
+    @IBAction func submit(_ sender: Any){
+        if !isCheckReview(){
+            return
+        }
+        if placeid != ""{
+           placeReview()
+        }else{
+           storeReview()
+        }
+    }
+    
+    private func storeReview(){
+        startLoading("")
+        StoreManager().storeReview((storeid,"\(ratingView.rating)",textViewWriteComments.text!),
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async{
+                self?.finishLoading()
+                if let reviewResponse = response{
+                    if reviewResponse.success!{
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                    }else{
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
+    }
+    
+    private func placeReview(){
+        startLoading("")
+        CitiesPlacesManager().submitPlaceReview((placeid,"\(ratingView.rating)",textViewWriteComments.text!),
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async{
+                self?.finishLoading()
+                if let reviewResponse = response{
+                    if reviewResponse.success!{
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                    }else{
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
+    }
+    
+    @IBAction func cancel(_ sender: Any){
+        dismiss(animated: true, completion: nil)
+    }
+    
+//    ProductManager().submitProductReview((productid,"\(ratingView.rating)",textViewWriteComments.text!),
+//    successCallback:
+//    {[weak self](response) in
+//    DispatchQueue.main.async{
+//    self?.finishLoading()
+//    if let reviewResponse = response{
+//    if reviewResponse.success!{
+//    self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+//    }else{
+//    self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+//    }
+//    }else{
+//    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+//    }
+//    }
+//    })
+//    {[weak self](error) in
+//    DispatchQueue.main.async {
+//    self?.finishLoading()
+//    self?.alertMessage(message: error.message, completionHandler: nil)
+//    }
+//    }
+}
 
+extension VCPopUp: UITextViewDelegate{
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textViewWriteComments.textColor == UIColor.lightGray {
+            textViewWriteComments.text = nil
+            textViewWriteComments.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textViewWriteComments.text.isEmpty {
+            textViewWriteComments.text = "Commint..."
+            textViewWriteComments.textColor = UIColor.lightGray
+        }
+    }
 }

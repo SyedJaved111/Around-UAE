@@ -8,6 +8,7 @@
 
 import UIKit
 import XLPagerTabStrip
+import SDWebImage
 
 class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
    
@@ -66,5 +67,12 @@ extension VCStoreProducts: UICollectionViewDelegate,UICollectionViewDataSource {
         let product = productsArray[indexPath.row]
         cell.setupProductCell(product: product)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCProductDetail") as! VCProductDetail
+        vc.product = productsArray[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -28,6 +28,12 @@ class NearByCell: UICollectionViewCell {
         self.btnFavourit.layer.borderColor = UIColor.lightGray.cgColor
     }
     
+    override func awakeFromNib() {
+        cosmosView.rating = 0.0
+        title.text = nil
+        placeTitle.image = nil
+    }
+    
     func setupPlaceCell(_ places:Places){
         cosmosView.rating = Double(places.averageRating!)
         title.text = places.title?.en ?? ""

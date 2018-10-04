@@ -11,8 +11,7 @@ import XLPagerTabStrip
 
 class VCPlaces: ButtonBarPagerTabStripViewController {
 
-     @IBOutlet var collectionViewPager: ButtonBarView!
-    var placesArray = [Places]()
+    @IBOutlet var collectionViewPager: ButtonBarView!
     var cityId = ""
     let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCNearBy")
     let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCTopRated")
@@ -42,7 +41,6 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
         super.viewDidLoad()
         super.viewDidLoad()
-        self.fetchCitiesPlacesData()
     }
   
     override func viewWillAppear(_ animated: Bool) {
@@ -52,30 +50,8 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController]{
+        (child_1 as! VCNearBy).cityid = cityId
+        (child_2 as! VCTopRated).cityid = cityId
         return [child_1,child_2]
-    }
-    
-    private func fetchCitiesPlacesData(){
-    
-        startLoading("")
-        CitiesPlacesManager().getCitiesPlaces((cityId,"1","",""),successCallback:
-            {[weak self](response) in
-                DispatchQueue.main.async {
-                    self?.finishLoading()
-                    if let citiesPlacesResponse = response{
-                        if(citiesPlacesResponse.data?.places ?? []).count != 0{
-                            SharedData.sharedUserInfo.placesDataObj = citiesPlacesResponse.data!
-                        }
-                    }else{
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
-                    }
-                }
-            })
-        {[weak self](error) in
-            DispatchQueue.main.async{
-                self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
-            }
-        }
     }
 }

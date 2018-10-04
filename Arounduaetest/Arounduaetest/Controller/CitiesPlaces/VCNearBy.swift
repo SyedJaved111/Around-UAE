@@ -9,49 +9,103 @@
 import UIKit
 import XLPagerTabStrip
 import Cosmos
+import CoreLocation
 
-class VCNearBy: UIViewController,IndicatorInfoProvider {
+class VCNearBy: UIViewController,IndicatorInfoProvider,CLLocationManagerDelegate {
    
     @IBOutlet weak var viewEmptyList: UIView!
     @IBOutlet weak var lblEmpty: UILabel!
     @IBOutlet weak var lblMessage: UILabel!
-    
+    var locationManager:CLLocationManager!
+
     @IBOutlet weak var NearbyCollectionview: UICollectionView!{
         didSet{
             self.NearbyCollectionview.delegate = self
             self.NearbyCollectionview.dataSource = self
         }
     }
-    
 
     var placeArray = [Places]()
     var totalPages = 0
     var currentPage = 0
     var cityid = ""
+    private var long:Double?
+    private var lat:Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NearbyCollectionview.adjustDesign(width: ((view.frame.size.width+20)/2.4))
         initialUI()
-        setupData()
+        fetchCitiesPlacesData()
     }
     
-    private func setupData(){
-        placeArray = SharedData.sharedUserInfo.placesDataObj?.places ?? []
-        totalPages = SharedData.sharedUserInfo.placesDataObj?.pagination?.pages ?? 0
-        currentPage = SharedData.sharedUserInfo.placesDataObj?.pagination?.page ?? 0
-        NearbyCollectionview.reloadData()
+    private func fetchCitiesPlacesData(){
+
+//        guard let latitude = lat, let longitude = long else{
+//
+//        }
+
+        startLoading("")
+        CitiesPlacesManager().getCitiesPlaces((cityid,"\(currentPage + 1)","\(72.2327)","\(52.8765)"),successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let citiesPlacesResponse = response{
+                        if(citiesPlacesResponse.data?.places ?? []).count == 0{
+                           self?.viewEmptyList.isHidden = false
+                        }else{
+                            self?.placeArray = citiesPlacesResponse.data?.places ?? []
+                            self?.currentPage = citiesPlacesResponse.data?.pagination?.page ?? 1
+                            self?.totalPages = citiesPlacesResponse.data?.pagination?.pages ?? 0
+                            self?.NearbyCollectionview.reloadData()
+                        }
+                    }else{
+                        self?.viewEmptyList.isHidden = false
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                }
+            })
+        {[weak self](error) in
+            DispatchQueue.main.async{
+                self?.finishLoading()
+                self?.viewEmptyList.isHidden = false
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Stores"
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data available".localized
+        determineMyCurrentLocation()
+
     }
 
     @IBAction func tryAgain(_ sender: UIButton) {
         self.viewEmptyList.isHidden = true
-        //fetchStoresData()
+        fetchCitiesPlacesData()
+    }
+    
+    func determineMyCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        long = userLocation.coordinate.longitude
+        lat = userLocation.coordinate.latitude
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
+        print("Error \(error)")
     }
 }
 
@@ -120,7 +174,6 @@ extension VCNearBy{
     }
 }
 
-
 extension VCNearBy: UICollectionViewDataSource,UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -135,10 +188,19 @@ extension VCNearBy: UICollectionViewDataSource,UICollectionViewDelegate{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        if let id = placeArray[indexPath.row]._id{
+            moveToPlaceDetail(id)
+        }
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "NearBy")
+    }
+    
+    private func moveToPlaceDetail(_ placeid:String){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCDesertSafari") as! VCDesertSafari
+        vc.placeid = placeid
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

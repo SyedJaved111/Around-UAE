@@ -26,12 +26,11 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
        "My Orders".localized,
        "Change Settings".localized,
        "Contact Us".localized,
-       "About Us".localized,]
+       "About Us".localized]
     
     let defaults = UserDefaults.standard
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let shareduserinfo = SharedData.sharedUserInfo
-    let user = AppSettings.sharedSettings.user
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -50,11 +49,11 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     }
     
     func setupUserData(){
-        lblUserProfileMail.text = user.email!
-        lblUserProfilename.text = user.fullName!
+        lblUserProfileMail.text = AppSettings.sharedSettings.user.email!
+        lblUserProfilename.text = AppSettings.sharedSettings.user.fullName!
         imgUserProfile.setShowActivityIndicator(true)
         imgUserProfile.setIndicatorStyle(.gray)
-        imgUserProfile.sd_setImage(with: URL(string: user.image ?? ""))
+        imgUserProfile.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.image ?? ""))
     }
     
     func ImgDesign(){
@@ -80,9 +79,9 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
         let index = indexPath.row
         switch index {
             case 0:
-            break
+             moveToOrderVC()
             case 1:
-             moveToChangeSettings()
+             break
             case 2:
              moveToContactUs()
             case 3:
@@ -125,9 +124,9 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func moveToChangeSettings(){
+    func moveToOrderVC(){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCProfile") as! VCProfile
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCMyOrders") as! VCMyOrders
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

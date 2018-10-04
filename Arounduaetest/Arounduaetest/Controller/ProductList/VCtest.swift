@@ -37,7 +37,7 @@ collectionViewProduct.adjustDesign(width: (view.frame.size.width+24)/2.3)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellC", for: indexPath) as! CellC
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "productlistingcell", for: indexPath) as! productlistingcell
         cell.imgProduct.image = imgFaces[indexPath.row]
         cell.lblProductName.text = lblName[indexPath.row]
         return cell

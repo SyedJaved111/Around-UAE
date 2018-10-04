@@ -72,18 +72,21 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let productResponse = response{
-
-                          let vcStoreInfo = self?.child_1 as! VCStoreInfo
-                          vcStoreInfo.lblInstinct.text = productResponse.data?.storeName?.en ?? ""
-                          vcStoreInfo.lblAdress.text = productResponse.data?.location ?? ""
-                          vcStoreInfo.lblWords.text = productResponse.data?.description?.en ?? ""
-                          vcStoreInfo.storeImage.setShowActivityIndicator(true)
-                          vcStoreInfo.storeImage.setIndicatorStyle(.gray)
-                          vcStoreInfo.storeImage.sd_setImage(with: URL(string: productResponse.data?.image ?? ""))
-                        
-                          let vcStoreProducts = self?.child_2 as! VCStoreProducts
-                          vcStoreProducts.productsArray = productResponse.data?.products ?? []
-                
+                        if productResponse.success!{
+                            let vcStoreInfo = self?.child_1 as! VCStoreInfo
+                            vcStoreInfo.storeid = productResponse.data?._id ?? ""
+                            vcStoreInfo.lblInstinct.text = productResponse.data?.storeName?.en ?? ""
+                            vcStoreInfo.lblAdress.text = productResponse.data?.location ?? ""
+                            vcStoreInfo.lblWords.text = productResponse.data?.description?.en ?? ""
+                            vcStoreInfo.storeImage.setShowActivityIndicator(true)
+                            vcStoreInfo.storeImage.setIndicatorStyle(.gray)
+                            vcStoreInfo.storeImage.sd_setImage(with: URL(string: productResponse.data?.image ?? ""))
+                            
+                            let vcStoreProducts = self?.child_2 as! VCStoreProducts
+                            vcStoreProducts.productsArray = productResponse.data?.products ?? []
+                        }else{
+                            self?.alertMessage(message: (productResponse.message?.en ?? "").localized, completionHandler: nil)
+                        }
                     }else{
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)
                     }

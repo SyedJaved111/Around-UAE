@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DropDown
 
 class VCContactUs: UIViewController{
     
@@ -19,9 +20,19 @@ class VCContactUs: UIViewController{
     @IBOutlet weak var lblYourComment: UILabel!
     @IBOutlet weak var txtComment: UITextView!
     @IBOutlet weak var btnSubmit: UIButtonMain!
+    @IBOutlet weak var dropdown: UIButton!
+    let menudropDown = DropDown()
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
+        menudropDown.anchorView = dropdown
+        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.dataSource = ["App Feedback".localized,"Complaint".localized]
+        menudropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            self.appFeedBack.text = item
+        }
     }
 
     override func viewWillAppear(_ animated: Bool){
@@ -65,6 +76,10 @@ class VCContactUs: UIViewController{
         return true
     }
     
+    @IBAction func dropDown(_ sender: Any){
+       menudropDown.show()
+    }
+    
     @IBAction func btnSubmitClick(_ sender: Any){
         if isCheck(){
             contactUs(name: txtName.text!, email: txtEmail.text!, comment: txtComment.text!)
@@ -73,7 +88,7 @@ class VCContactUs: UIViewController{
     
     private func contactUs(name:String,email:String,comment:String){
         startLoading("")
-        IndexManager().contactUs((name,email,"AppFeedBack",comment),
+        IndexManager().contactUs((name,email,self.appFeedBack.text!,comment),
         successCallback:
         {[weak self](response) in
             self?.finishLoading()

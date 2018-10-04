@@ -14,8 +14,8 @@ class VCHome: BaseController{
     @IBOutlet weak var btnViewMore: UIButton!
     @IBOutlet weak var lblGenralServices: UILabel!
     @IBOutlet weak var lblKnow: UILabel!
-    
     @IBOutlet weak var bannerView: UIView!
+    
     @IBOutlet weak var tablView: UITableView!{
         didSet{
             self.tablView.delegate = self
@@ -49,7 +49,7 @@ class VCHome: BaseController{
         lblKnow.text = "know more detals about various shope, location & tourist spots around UAE ".localized
         lblGenralServices.text = "GENRAL SERVICES".localized
     }
-  
+    
     @objc func refreshTableView() {
         fetchGroupsWithDivisons(isRefresh: true)
     }
@@ -150,7 +150,10 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -158,7 +161,6 @@ extension VCHome : DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No Data Is Avaliable!"
         let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
-        self.tablView.backgroundColor =  #colorLiteral(red: 0.1960784314, green: 0.03529411765, blue: 0.03137254902, alpha: 1)
         return NSAttributedString(string: str, attributes: attrs)
     }
 }

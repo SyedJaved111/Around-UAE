@@ -151,7 +151,7 @@ class VCSplash: BaseController {
                 if(socialResponse.success!){
                     self?.userProfileData(check : check, successResponse : socialResponse)
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                    self?.alertMessage(message: socialResponse.message?.en ?? "", completionHandler: {
                         self?.checkIsSocialLogin(check: check, email : email)
                     })
                 }
@@ -172,7 +172,7 @@ class VCSplash: BaseController {
         
         AppSettings.sharedSettings.user = successResponse.data!
         let accountType = successResponse.data?.accountType!
-        let authToken  = successResponse.data?.authorization!
+        let authToken = successResponse.data?.authorization!
         AppSettings.sharedSettings.authToken = authToken
         AppSettings.sharedSettings.accountType = accountType
         AppSettings.sharedSettings.loginMethod = (check == 0) ? "local0" : "local1"

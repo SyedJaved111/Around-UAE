@@ -109,9 +109,7 @@ class VCChangePassword: BaseController {
                 self?.finishLoading()
                 if let Response = response{
                     if(Response.success ?? false == true){
-                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: {
-                         self?.appDelegate.moveToLogin()
-                        })
+                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: nil)
                     }else{
                         self?.alertMessage(message: Response.message?.en ?? "", completionHandler: nil)
                     }

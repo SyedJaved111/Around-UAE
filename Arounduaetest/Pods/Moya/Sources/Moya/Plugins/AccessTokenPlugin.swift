@@ -62,7 +62,7 @@ public struct AccessTokenPlugin: PluginType {
 
         switch authorizationType {
         case .basic, .bearer:
-            let authValue = authorizationType.rawValue + " " + tokenClosure()
+            let authValue = tokenClosure()
             request.addValue(authValue, forHTTPHeaderField: "Authorization")
         case .none:
             break

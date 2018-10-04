@@ -48,7 +48,7 @@ class VCCities: BaseController{
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let citiesResponse = response{
-                        if(citiesResponse.data?.cities ?? []).count != 0{
+                        if(citiesResponse.data?.cities ?? []).count == 0{
                             self?.viewEmptyList.isHidden = false
                         }else{
                             self?.CitiesArray = citiesResponse.data?.cities ?? []

@@ -9,7 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 
-class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDelegate {
+class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDelegate{
     
     @IBOutlet weak var viewEmptyList: UIView!
     @IBOutlet weak var lblEmpty: UILabel!
@@ -135,14 +135,14 @@ extension VCCategories{
         }else if indexPath.row == 1{
             self.moveToResturants()
         }else{
-            self.moveToProducts(grouplist[indexPath.row]._id ?? "")
+            self.moveToSubDivisons(grouplist[indexPath.row]._id ?? "")
         }
     }
     
-    private func moveToProducts(_ groupId:String){
+    private func moveToSubDivisons(_ groupId:String){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCDivisions") as! VCDivisions
-        vc.groupid = groupId
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCSubDivisions") as! VCSubDivisions
+        vc.groupId = groupId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

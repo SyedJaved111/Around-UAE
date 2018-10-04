@@ -118,40 +118,40 @@ class VCLogin: BaseController {
     }
     
     @IBAction func btnForgetPasswordClick(_ sender: Any){
-        guard let vcForgotpassword = self.getControllerRef(controller: VCForgotPassword.identifier,
-        storyboard: Storyboards.Main) as? VCForgotPassword else {return}
-        self.navigationController?.pushViewController(vcForgotpassword, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCForgotPassword") as! VCForgotPassword
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnFacebookClick(_ sender: Any){
-        let loginManager = FBSDKLoginManager()
-        loginManager.logIn(withReadPermissions: ["email", "public_profile"], from: self)
-        {[weak self](result, error) in
-            if error != nil{
-                print(error?.localizedDescription ?? "Nothing")
-            }else if (result?.isCancelled)!{
-                print("Cancel")
-            }
-            else{
-                if(result?.grantedPermissions.contains("email"))!{
-                     self?.logInFromFacebook()
-                }
-            }
-        }
+//        let loginManager = FBSDKLoginManager()
+//        loginManager.logIn(withReadPermissions: ["email", "public_profile"], from: self)
+//        {[weak self](result, error) in
+//            if error != nil{
+//                print(error?.localizedDescription ?? "Nothing")
+//            }else if (result?.isCancelled)!{
+//                print("Cancel")
+//            }
+//            else{
+//                if(result?.grantedPermissions.contains("email"))!{
+//                     self?.logInFromFacebook()
+//                }
+//            }
+//        }
     }
     
     @IBAction func btnGoogleClick(_ sender: Any){
-        let googleSignIn = GIDSignIn.sharedInstance()
-        googleSignIn?.shouldFetchBasicProfile = true
-        googleSignIn?.scopes = ["profile", "email"]
-        googleSignIn?.delegate = self
-        googleSignIn?.signIn()
+//        let googleSignIn = GIDSignIn.sharedInstance()
+//        googleSignIn?.shouldFetchBasicProfile = true
+//        googleSignIn?.scopes = ["profile", "email"]
+//        googleSignIn?.delegate = self
+//        googleSignIn?.signIn()
     }
     
     @IBAction func btnRegisterNowClick(_ sender: Any){
-        guard let vcRegister = self.getControllerRef(controller: VCRegister.identifier,
-                                                     storyboard: Storyboards.Main) as? VCRegister else {return}
-        self.navigationController?.pushViewController(vcRegister, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCRegister") as! VCRegister
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func loginUser(useremail:String,userpassword:String){
@@ -238,7 +238,7 @@ extension VCLogin: GIDSignInUIDelegate, GIDSignInDelegate{
                             self?.appDelegate.moveToLogin()
                         }
                     }else{
-                       self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
                     }
                 }
         }){[weak self](error) in

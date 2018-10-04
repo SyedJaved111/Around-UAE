@@ -7,23 +7,39 @@
 //
 
 import UIKit
+import Cosmos
+import SDWebImage
 
 class TopratedCell: UICollectionViewCell {
     
     @IBOutlet weak var btnToprated: UIButton!
-    
+    @IBOutlet weak var cosmosView: CosmosView!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var placeTitle: UIImageView!
     
     override func layoutSubviews() {
         super.layoutSubviews()
         self.setsubViewDesign()
-        
-        
     }
     
-    func setsubViewDesign()
-    {
+    func setsubViewDesign(){
         self.btnToprated.layer.cornerRadius = 20
         self.btnToprated.layer.borderWidth = 0.5
         self.btnToprated.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
+    override func awakeFromNib() {
+        cosmosView.rating = 0.0
+        title.text = nil
+        placeTitle.image = nil
+    }
+    
+    func setupPlaceCell(_ places:Places){
+        cosmosView.rating = Double(places.averageRating!)
+        title.text = places.title?.en ?? ""
+        
+        placeTitle.setShowActivityIndicator(true)
+        placeTitle.setIndicatorStyle(.gray)
+        placeTitle.sd_setImage(with: URL(string: places.images?.first?.path ?? ""))
     }
 }
