@@ -57,9 +57,10 @@ enum ServerAPI {
     
     //Cart API's
     case GetCartProducts
-    case AddProdcutsCart(AddCartproductsParams)
+    case AddProdcutsCart([String:Any])
     case DeleteProductCart(DeleteProductCartParams)
     case CartQuantityUpdate(CartQuantityUpdateParams)
+    case Payment(PaymentParams)
     
     //Cities & Places
     case GetCities(pageNo:String)
@@ -205,6 +206,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return APIURL.deleteCarProductURL.rawValue
             case .CartQuantityUpdate:
                 return APIURL.cartQuantityUpdateURL.rawValue
+            case .Payment:
+                return APIURL.paymentURL.rawValue
         }
     }
 
@@ -220,7 +223,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .SubmitPlaceReview,.PlaceReviewsListing,.MakePlaceFavourite,
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
-               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate:
+               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,.Payment:
                 return .post
           case .checkIsSocialLogin,.GetUserProfile,.RemoveImage,
                .GetStoreSGDS,.GetFeaturesCharacters,.GetSiteSettings,
@@ -339,10 +342,11 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return parameters
             
             case .AddProdcutsCart(let params):
-                parameters[AddToCartKey.product.rawValue] = params.productid
-                parameters[AddToCartKey.quantity.rawValue] = params.quantity
-                parameters[AddToCartKey.featureszero.rawValue] = params.features
-                parameters[AddToCartKey.characteristicsone.rawValue] = params.characteristics
+                return params
+            
+            case .Payment(let params):
+                parameters[PaymentKey.payerId.rawValue] = params.payerId
+                parameters[PaymentKey.token.rawValue] = params.token
                 return parameters
             
             default:
@@ -369,7 +373,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .PlaceReviewsListing,.MakePlaceFavourite,
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
-               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate:
+               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,.Payment:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
           case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:

@@ -122,3 +122,8 @@ typealias CartQuantityUpdateParams = (
     combination:String
 )
 
+typealias PaymentParams = (
+    payerId:String,
+    token:String
+)
+

@@ -68,7 +68,45 @@ class VCProductDetail: UIViewController {
     }
     
     private func addToCart(){
-        CartManager().addCartProducts((product._id!,"\(Productcounter.value)",["5b8f6d105fae83149c238946"],["5b8f6d695fae83149c238949"]),
+        
+        var dic = [String:Any]()
+        var features = [String]()
+        var characteristics = [String]()
+        
+        if let sizeindxpaths = sizeCollectionView.indexPathsForSelectedItems{
+            for indxpath in sizeindxpaths{
+                print(indxpath.row)
+                dic["characteristics[\(indxpath.row)]"] = productDetail?.priceables?[0].characteristics?[indxpath.row]._id ?? ""
+                characteristics.append(productDetail?.priceables?[0].characteristics?[indxpath.row]._id ?? "")
+            }
+            dic["features[\(0)]"] = productDetail?.priceables?[0].feature?._id ?? ""
+            features.append(productDetail?.priceables?[0].feature?._id ?? "")
+        }
+        
+        if let colorindxpaths = colorCollectionView.indexPathsForSelectedItems{
+            for indxpath in colorindxpaths{
+                print(indxpath.row)
+                dic["characteristics[\(indxpath.row)]"] = productDetail?.priceables?[1].characteristics?[indxpath.row]._id ?? ""
+                characteristics.append(productDetail?.priceables?[1].characteristics?[indxpath.row]._id ?? "")
+            }
+            dic["features[\(1)]"] = productDetail?.priceables?[1].feature?._id ?? ""
+            features.append(productDetail?.priceables?[1].feature?._id ?? "")
+        }
+       
+        dic["product"] = product._id!
+        dic["quantity"] = "\(Int(Productcounter.value))"
+       
+        if let combinations = productDetail?.combinations{
+            for obj in combinations{
+                if obj.characteristics != characteristics && obj.features != features {
+                    self.alertMessage(message: "Could not find cobination!!!!", completionHandler: nil)
+                    return
+                }
+            }
+        }
+        
+        startLoading("")
+        CartManager().addCartProducts(dic,
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
@@ -76,9 +114,11 @@ class VCProductDetail: UIViewController {
                 if let storeResponse = response{
                     if storeResponse.success!{
                        
+                    }else{
+                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
                 }
             }
         })
@@ -88,6 +128,10 @@ class VCProductDetail: UIViewController {
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
+    }
+    
+    private func checkCombinations(){
+        
     }
     
     private func setupProductDetsil(_ productdetail:Product){
@@ -115,9 +159,9 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView{
             case colorCollectionView:
-                return productDetail?.priceables?[0].characteristics?.count ?? 0
-            case sizeCollectionView:
                 return productDetail?.priceables?[1].characteristics?.count ?? 0
+            case sizeCollectionView:
+                return productDetail?.priceables?[0].characteristics?.count ?? 0
             default:
                 return 0
         }
@@ -127,23 +171,12 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CharacteristicsCell", for: indexPath) as! CharacteristicsCell
         switch collectionView{
             case colorCollectionView:
-                cell.setupCell(productDetail?.priceables?[0].characteristics?[indexPath.row].image ?? "")
-            case sizeCollectionView:
                 cell.setupCell(productDetail?.priceables?[1].characteristics?[indexPath.row].image ?? "")
+            case sizeCollectionView:
+                cell.setupCell(productDetail?.priceables?[0].characteristics?[indexPath.row].image ?? "")
             default:
                 return cell
             }
         return cell
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-//        switch collectionView{
-//            case colorCollectionView:
-//            
-//            case sizeCollectionView:
-//            
-//            default:
-//                break
-//        }
-//    }
 }

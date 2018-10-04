@@ -207,4 +207,19 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
     func payPalProfileSharingViewController(_ profileSharingViewController: PayPalProfileSharingViewController, userDidLogInWithAuthorization profileSharingAuthorization: [AnyHashable : Any]){
         print("PayPal Profile Sharing Authorization Canceled")
     }
+    
+    private func sendPyamentToServer(_ paymentId:String, token:String){
+        startLoading("")
+        CartManager().Payment((paymentId,token),
+        successCallback:
+        {[weak self](response) in
+            
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
+    }
 }

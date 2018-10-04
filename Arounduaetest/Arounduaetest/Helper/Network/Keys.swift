@@ -165,3 +165,8 @@ enum CartQuantityUpdateKey:String{
     case combination = "combination"
 }
 
+enum PaymentKey:String{
+    case payerId = "payerId"
+    case token = "token"
+}
+

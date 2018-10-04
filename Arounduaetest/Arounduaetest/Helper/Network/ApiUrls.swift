@@ -52,6 +52,7 @@ enum APIURL: String{
     case addToCartURL              = "auth/cart/add-product"
     case deleteCarProductURL       = "auth/cart/product/remove"
     case cartQuantityUpdateURL     = "auth/cart/update"
+    case paymentURL                = "auth/payment"
     case getCartProductsURL        = "auth/cart"
     case getCitiesURL              = "cities"
     case citiesPlacesURL           = "city/places"
