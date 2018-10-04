@@ -1,10 +1,10 @@
-/* 
-  Localizable.strings
-  AroundUAE
-
-  Created by Apple on 13/09/2018.
-  Copyright © 2018 Apple. All rights reserved.
-*/
+/*
+ Localizable.strings
+ AroundUAE
+ 
+ Created by Apple on 13/09/2018.
+ Copyright © 2018 Apple. All rights reserved.
+ */
 
 "Around UAE" = "Around UAE";
 //splash
@@ -19,20 +19,24 @@
 
 //login screen
 "Login" = "Login";
-"Email" = "Email";
+"Username" = "Username";
 "Password" = "Password";
 "Forgot your password?" = "Forgot your password?";
 "OR" = "OR";
-"Continue with Facebook" = "Continue with Facebook";
-"Continue with Gmail" = "Continue with Gmail";
+"Login with facebook" = "Login with facebook";
+"Login with gmail" = "Login with gmail";
 "Don't have an account?" = "Don't have an account?";
 "Register now" = "Register now";
-
+"Alert" = "Alert";
+"Please Enter Email!" = "Please Enter Email!";
+"Please Enter Valid Email!" = "Please Enter Valid Email!";
+"Please Enter Password" = "Please Enter Password";
 //"Forgot Password"
 "Forgot Password" = "Forgot Password";
 "Forgot your password? Enter your email below " = "Forgot your password? Enter your email below ";
-"Enter Email" = "Enter Email";
+"Enter Code" = "Enter Code";
 "Submit" = "Submit";
+"Resend" = "Resend";
 
 //"Change Password"
 "Change Password" = "Change Password";
@@ -42,6 +46,10 @@
 "Confirm Password" = "Confirm Password";
 "Cancel" = "Cancel";
 "Update" = "Update";
+
+"Please Enter Old Password" = "Please Enter Old Password";
+"Please Enter New Password" = "Please Enter New Password";
+"Please Enter Confirm Password" = "Please Enter Confirm Password" ;
 
 
 //Register
@@ -55,14 +63,26 @@
 "Male" = "Male";
 "Female" = "Female";
 "Already have an account?" = "Already have an account?";
+"Confirm Password" = "Confirm Password";
+"Password" = "Password";
+"Email" = "Email";
+"Login now" = "Login now" ;
 
+"Please Enter FirstName" = "Please Enter FirstName";
+"Please Enter LastName" = "Please Enter LastName";
+"Please Enter Phone Number" =  "Please Enter Phone Number";
+"Please Enter Password" = "Please Enter Password";
+"Please Enter Confirm Password" = "Please Enter Confirm Password";
+"Please Enter Address" = "Please Enter Address";
+"Please Select Nic Image" = "Please Select Nic Image" ;
 //"Email Verfication"
 "Email Verfication" = "Email Verfication";
 "A verfication code is send to your email, please check your email and enter the verfication code below" = "A verfication code is send to your email, please check your email and enter the verfication code below";
 "Enter Code" = "Enter Code";
 "Resend" = "Resend";
-
+"Please Enter Code" = "Please Enter Code";
 //"Contact Us"
+
 "Contact Us" = "Contact Us";
 "What can we Help you with?" = "What can we Help you with?";
 "App Feedback" = "App Feedback";
@@ -71,7 +91,19 @@
 "Comment" = "Comment";
 
 
+//"TabHomes"
+"Around UAE" = "Around UAE";
+"View More" = "View More";
+"know more detals about various shope, location & tourist spots around UAE " = "know more detals about various shope, location & tourist spots around UAE";
+"GENRAL SERVICES" = "GENRAL SERVICES";
+"Empty List" = "Empty List";
 
+"Sorry there no data is available refresh it or try it later " = "Sorry there no data is available refresh it or try it later ";
+//"VCMENU"
 
-
-
+"My Orders"  = "My Orders";
+"Change Settings" =  "Change Settings" ;
+"About Us" = "About Us";
+"Terms & Conditions" =   "Terms & Conditions";
+"Privacy Policy" = "Privacy Policy";
+"Logout" =   "Logout" ;

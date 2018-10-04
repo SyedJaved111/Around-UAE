@@ -9,34 +9,67 @@
 import UIKit
 
 class VCForgotPassword: BaseController{
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     @IBOutlet weak var lblForgotPassword: UILabel!
     @IBOutlet weak var txtEnterEmail: UITextField!
     @IBOutlet weak var btnSubmit: UIButtonMain!
     
+    @IBOutlet weak var btnResend: UIButtonMain!
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
-        self.addBackButton()
+        //self.addBackButton()
+        self.Forgotlocalaiz()
         self.title = "Forgot Password".localized
-        self.lblForgotPassword.text = "Forgot your password? Enter your email below ".localized
-        self.txtEnterEmail.placeholder = "Enter Email".localized
-        self.btnSubmit.setTitle("Submit".localized, for: .normal)
+        
+//        self.lblForgotPassword.text = "Forgot your password? Enter your email below ".localized
+//        self.txtEnterEmail.placeholder = "Enter Email".localized
+//        self.btnSubmit.setTitle("Submit".localized, for: .normal)
     }
+    
+    
+    func Forgotlocalaiz()
+    {
+        
+        self.lblForgotPassword.text = "Forgot your password? Enter your email below ".localized
+        
+        self.txtEnterEmail.setPadding(left: 10, right: 0)
+        self.txtEnterEmail.placeholder  = "Enter Code".localized
+        self.btnSubmit.setTitle("Submit".localized, for: .normal)
+        self.btnResend.setTitle("Resend".localized, for: .normal)
+        if(lang == "ar")
+        {
+            self.showArabicBackButton()
+            self.txtEnterEmail.textAlignment = .right
+            
+            
+        }else if(lang == "en")
+        {
+            self.addBackButton()
+            
+            self.txtEnterEmail.textAlignment = .left
+        }
+        
+        
+        
+    }
+    
     
     private func isCheck()->Bool{
         guard let email = txtEnterEmail.text, email.count > 0 else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter email", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter email".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if !email.isValidEmail{
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Valid Email", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid Email".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false

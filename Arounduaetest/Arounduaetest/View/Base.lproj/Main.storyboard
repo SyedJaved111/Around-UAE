@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nGP-0Y-R9y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nGP-0Y-R9y">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
         <!--Splash-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="VCSplash" id="BYZ-38-t0r" customClass="VCSplash" customModule="Arounduaetest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VCSplash" id="BYZ-38-t0r" customClass="VCSplash" customModule="Around_UAE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -93,7 +93,7 @@
         <!--Select Language-->
         <scene sceneID="84a-hj-C7J">
             <objects>
-                <viewController storyboardIdentifier="VCSelectLanguage" id="IIi-Cz-FnK" customClass="VCSelectLanguage" customModule="Arounduaetest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VCSelectLanguage" id="IIi-Cz-FnK" customClass="VCSelectLanguage" customModule="Around_UAE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nU5-CN-vH8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -109,7 +109,7 @@
                                 <rect key="frame" x="0.0" y="146" width="375" height="375"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="hdG-Y9-e3g">
-                                        <rect key="frame" x="97" y="0.0" width="180" height="170"/>
+                                        <rect key="frame" x="97.5" y="0.0" width="180" height="170"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="180" id="aY6-ae-Jc7"/>
                                             <constraint firstAttribute="height" constant="170" id="d93-7n-D4N"/>
@@ -135,7 +135,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QKc-Gw-ptK">
                                         <rect key="frame" x="40" y="283" width="295" height="90"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vA2-Qg-IDm" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vA2-Qg-IDm" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="295" height="40"/>
                                                 <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -159,7 +159,7 @@
                                                     <action selector="btnEnglishClick:" destination="IIi-Cz-FnK" eventType="touchUpInside" id="6J2-h7-xDL"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSF-ei-W5Y" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSF-ei-W5Y" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="50" width="295" height="40"/>
                                                 <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Arabic">
@@ -223,7 +223,7 @@
         <!--Login-->
         <scene sceneID="qL7-0N-Y3f">
             <objects>
-                <viewController storyboardIdentifier="VCLogin" id="oYE-Ko-ZDZ" customClass="VCLogin" customModule="Arounduaetest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VCLogin" id="oYE-Ko-ZDZ" customClass="VCLogin" customModule="Around_UAE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i4o-il-GRe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -242,7 +242,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="zZX-VA-lQR">
-                                                <rect key="frame" x="107" y="20" width="160" height="150"/>
+                                                <rect key="frame" x="107.5" y="20" width="160" height="150"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="Fgh-FT-EXS"/>
                                                     <constraint firstAttribute="width" constant="160" id="KbP-wG-Wzz"/>
@@ -251,7 +251,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JSs-F1-Mrd">
                                                 <rect key="frame" x="40" y="190" width="295" height="155"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2h2-oH-xsq" customClass="UITextFieldCustom" customModule="Arounduaetest" customModuleProvider="target">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2h2-oH-xsq" customClass="UITextFieldCustom" customModule="Around_UAE" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="295" height="45"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="45" id="9QU-GE-W42"/>
@@ -269,7 +269,7 @@
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ym7-iv-faj" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ym7-iv-faj" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="110" width="295" height="45"/>
                                                         <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -305,7 +305,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V58-31-Zbr">
-                                                <rect key="frame" x="103" y="355" width="168" height="31"/>
+                                                <rect key="frame" x="103.5" y="355" width="168" height="31"/>
                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="16"/>
                                                 <state key="normal" title="Forgot your password?">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -315,20 +315,20 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCF-a3-cYd">
-                                                <rect key="frame" x="176" y="396" width="22.5" height="19"/>
+                                                <rect key="frame" x="176.5" y="396" width="22.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="16"/>
                                                 <color key="textColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9SN-q6-0nH" userLabel="line1">
-                                                <rect key="frame" x="0.0" y="405.5" width="171" height="1"/>
+                                                <rect key="frame" x="0.0" y="405" width="171.5" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="r3S-op-LEe"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BCf-1v-pZJ" userLabel="line 2">
-                                                <rect key="frame" x="203.5" y="405.5" width="171.5" height="1"/>
+                                                <rect key="frame" x="204" y="405" width="171" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="qJC-eJ-Xvq"/>
@@ -337,18 +337,18 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="49o-4e-g4R">
                                                 <rect key="frame" x="40" y="435" width="295" height="100"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9Y-Hd-miT" customClass="UIViewCustom" customModule="Arounduaetest" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9Y-Hd-miT" customClass="UIViewCustom" customModule="Around_UAE" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="295" height="45"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Facebook" translatesAutoresizingMaskIntoConstraints="NO" id="KJn-qK-jaQ">
-                                                                <rect key="frame" x="20" y="10.5" width="25" height="25"/>
+                                                                <rect key="frame" x="20" y="10" width="25" height="25"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="25" id="9Qs-oj-0v7"/>
                                                                     <constraint firstAttribute="height" constant="25" id="mnT-tS-VNf"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mO-BW-wVS">
-                                                                <rect key="frame" x="55" y="14" width="140.5" height="18"/>
+                                                                <rect key="frame" x="55" y="13.5" width="140.5" height="18"/>
                                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -384,18 +384,18 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f8N-Es-iQY" customClass="UIViewCustom" customModule="Arounduaetest" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f8N-Es-iQY" customClass="UIViewCustom" customModule="Around_UAE" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="55" width="295" height="45"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Google" translatesAutoresizingMaskIntoConstraints="NO" id="y9k-bt-3Wh">
-                                                                <rect key="frame" x="20" y="10.5" width="25" height="25"/>
+                                                                <rect key="frame" x="20" y="10" width="25" height="25"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="25" id="7yd-Bh-Z43"/>
                                                                     <constraint firstAttribute="height" constant="25" id="fyX-4V-nFB"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with gmail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9RL-Do-mwq">
-                                                                <rect key="frame" x="55" y="14" width="114" height="18"/>
+                                                                <rect key="frame" x="55" y="13.5" width="114" height="18"/>
                                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -437,7 +437,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cNf-XB-Yfw">
-                                                <rect key="frame" x="59.5" y="570" width="257.5" height="30"/>
+                                                <rect key="frame" x="59" y="570" width="257.5" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kuy-h3-mVQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="161.5" height="30"/>
@@ -524,7 +524,7 @@
         <!--Forgot Password-->
         <scene sceneID="yNi-Gb-gdU">
             <objects>
-                <viewController storyboardIdentifier="VCForgotPassword" id="lFP-kt-vub" customClass="VCForgotPassword" customModule="Arounduaetest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VCForgotPassword" id="lFP-kt-vub" customClass="VCForgotPassword" customModule="Around_UAE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LJI-VC-uW7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -543,7 +543,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CUj-r8-ViR">
-                                <rect key="frame" x="25" y="73" width="325" height="40"/>
+                                <rect key="frame" x="25" y="73.5" width="325" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="v4Y-VB-Z1Q"/>
                                 </constraints>
@@ -552,9 +552,9 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="exf-lA-UIN">
-                                <rect key="frame" x="25" y="128" width="325" height="40"/>
+                                <rect key="frame" x="25" y="128.5" width="325" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EhE-L1-JDh" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EhE-L1-JDh" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="157.5" height="40"/>
                                         <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -579,7 +579,7 @@
                                             <action selector="btnResendClick:" destination="p31-J0-gEN" eventType="touchUpInside" id="CYX-jd-ym8"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-Un-fV3" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-Un-fV3" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="167.5" y="0.0" width="157.5" height="40"/>
                                         <color key="backgroundColor" red="0.1529411765" green="0.15686274510000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="17"/>
@@ -623,6 +623,7 @@
                         <viewLayoutGuide key="safeArea" id="Xne-ni-z9h"/>
                     </view>
                     <connections>
+                        <outlet property="btnResend" destination="EhE-L1-JDh" id="oxC-Q5-Y2p"/>
                         <outlet property="btnSubmit" destination="oYg-Un-fV3" id="Qqf-3Z-UbE"/>
                         <outlet property="lblForgotPassword" destination="PG7-yP-noo" id="buK-mF-EEz"/>
                         <outlet property="txtEnterEmail" destination="CUj-r8-ViR" id="Eo9-0J-eMo"/>
@@ -635,7 +636,7 @@
         <!--Email Verfication-->
         <scene sceneID="96Z-pQ-NTH">
             <objects>
-                <viewController storyboardIdentifier="VCEmailVerfication" id="p31-J0-gEN" customClass="VCEmailVerfication" customModule="Arounduaetest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VCEmailVerfication" id="p31-J0-gEN" customClass="VCEmailVerfication" customModule="Around_UAE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gnc-nQ-v7y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -665,7 +666,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vW0-tg-vMB">
                                 <rect key="frame" x="35" y="154" width="305" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etN-GF-zkP" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etN-GF-zkP" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="147.5" height="40"/>
                                         <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -690,7 +691,7 @@
                                             <action selector="btnResendClick:" destination="p31-J0-gEN" eventType="touchUpInside" id="a0A-IS-bv8"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="506-Fo-Pjt" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="506-Fo-Pjt" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="157.5" y="0.0" width="147.5" height="40"/>
                                         <color key="backgroundColor" red="0.1529411765" green="0.15686274510000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="17"/>
@@ -749,7 +750,7 @@
         <!--Change Password-->
         <scene sceneID="wJx-Co-M9n">
             <objects>
-                <viewController storyboardIdentifier="VCChangePassword" id="Hwp-HG-Klz" customClass="VCChangePassword" customModule="Arounduaetest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VCChangePassword" id="Hwp-HG-Klz" customClass="VCChangePassword" customModule="Around_UAE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PXv-Cg-rhq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -796,7 +797,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uVt-eX-Kek">
                                 <rect key="frame" x="40" y="254" width="295" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnD-DU-QK0" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnD-DU-QK0" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="142.5" height="40"/>
                                         <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -821,7 +822,7 @@
                                             <action selector="btnCancelClick:" destination="Hwp-HG-Klz" eventType="touchUpInside" id="Ydr-Pf-lSY"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKK-Ow-t9e" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKK-Ow-t9e" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="152.5" y="0.0" width="142.5" height="40"/>
                                         <color key="backgroundColor" red="0.1529411765" green="0.15686274510000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="17"/>
@@ -879,7 +880,7 @@
         <!--Register-->
         <scene sceneID="A5a-gi-0Jr">
             <objects>
-                <viewController storyboardIdentifier="VCRegister" id="kju-Kl-LIR" customClass="VCRegister" customModule="Arounduaetest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VCRegister" id="kju-Kl-LIR" customClass="VCRegister" customModule="Around_UAE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3vH-ph-lgA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -955,7 +956,7 @@
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uu-2T-zof" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uu-2T-zof" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="350" width="295" height="40"/>
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="141" maxY="0.0"/>
@@ -980,7 +981,7 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slJ-vT-xmH">
-                                                <rect key="frame" x="40" y="441.5" width="60" height="20"/>
+                                                <rect key="frame" x="40" y="441" width="60" height="20"/>
                                                 <fontDescription key="fontDescription" name="Raleway-SemiBold" family="Raleway" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1038,7 +1039,7 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgM-xY-3hp" customClass="UIButtonMain" customModule="Arounduaetest" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgM-xY-3hp" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                                 <rect key="frame" x="40" y="482" width="295" height="45"/>
                                                 <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -1151,7 +1152,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2T-B1-WkC" customClass="CountryPicker" customModule="CountryPicker">
-                            <rect key="frame" x="37" y="183" width="300" height="300"/>
+                            <rect key="frame" x="37.5" y="183.5" width="300" height="300"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="aRB-UA-VVU"/>

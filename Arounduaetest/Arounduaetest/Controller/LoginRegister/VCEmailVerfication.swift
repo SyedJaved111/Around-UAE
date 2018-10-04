@@ -9,13 +9,14 @@
 import UIKit
 
 class VCEmailVerfication: BaseController {
-
+let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     @IBOutlet weak var lblVerficationCodeText: UILabel!
     @IBOutlet weak var txtEnterCode: UITextField!
     @IBOutlet weak var btnResend: UIButtonMain!
     @IBOutlet weak var btnSubmit: UIButtonMain!
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     let email = AppSettings.sharedSettings.user.email ?? ""
     
     override func viewDidLoad() {
@@ -24,7 +25,7 @@ class VCEmailVerfication: BaseController {
     
     override func viewWillAppear(_ animated: Bool){
         self.setNavigationBar()
-        self.addBackButton()
+        //self.addBackButton()
         self.setupLocalization()
     }
     
@@ -34,11 +35,24 @@ class VCEmailVerfication: BaseController {
         self.txtEnterCode.placeholder = "Enter Code".localized
         self.btnResend.setTitle("Resend".localized, for: .normal)
         self.btnSubmit.setTitle("Submit".localized, for: .normal)
+        
+        if(lang == "ar")
+        {
+            self.showArabicBackButton()
+            self.txtEnterCode.textAlignment = .right
+            
+        }else if(lang == "en")
+        {
+            self.addBackButton()
+            self.txtEnterCode.textAlignment = .left
+            
+        }
     }
+
 
     @IBAction func btnSubmitClick(_ sender: Any){
         guard let code = txtEnterCode.text, code.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Verfication Code", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Verfication Code".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return

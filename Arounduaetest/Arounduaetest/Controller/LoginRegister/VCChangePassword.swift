@@ -9,7 +9,8 @@
 import UIKit
 
 class VCChangePassword: BaseController {
-
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     @IBOutlet weak var lblEnterNewPassword: UILabel!
     @IBOutlet weak var txtOldPassword: UITextField!
     @IBOutlet weak var txtNewPassword: UITextField!
@@ -18,7 +19,7 @@ class VCChangePassword: BaseController {
     @IBOutlet weak var btnUpdate: UIButtonMain!
     var email: String!
     var code: String!
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         code = "8008"
@@ -26,7 +27,7 @@ class VCChangePassword: BaseController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
-        self.addBackButton()
+        //self.addBackButton()
         self.setupLocalization()
     }
     
@@ -38,7 +39,24 @@ class VCChangePassword: BaseController {
         self.txtConfirmPassword.placeholder = "Confirm Password".localized
         self.btnCancel.setTitle("Cancel".localized, for: .normal)
         self.btnUpdate.setTitle("Update".localized, for: .normal)
+        
+        if (lang == "ar")
+        {
+            self.showArabicBackButton()
+            self.txtNewPassword.textAlignment = .right
+            self.txtOldPassword.textAlignment = .right
+            self.txtConfirmPassword.textAlignment = .right
+            
+        }else if(lang == "en")
+        {
+            self.addBackButton()
+            self.txtNewPassword.textAlignment = .left
+            self.txtOldPassword.textAlignment = .left
+            self.txtConfirmPassword.textAlignment = .left
+        }
+        
     }
+    
     
     private func isCheck()->Bool{
         

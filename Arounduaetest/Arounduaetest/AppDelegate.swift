@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     static let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+     let storyBoard = UIStoryboard.mainStoryboard
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // status bar set
@@ -73,14 +73,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
     }
     
-    func moveToLogin(){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
-        vc.ishownBackBtn = false
-        let nvc: UINavigationController = UINavigationController(rootViewController: vc)
-        self.window?.rootViewController = nvc
-        self.window?.makeKeyAndVisible()
-    }
+//    func moveToLogin(){
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
+//        vc.ishownBackBtn = false
+//        let nvc: UINavigationController = UINavigationController(rootViewController: vc)
+//        self.window?.rootViewController = nvc
+//        self.window?.makeKeyAndVisible()
+//    }
     
     func moveToSplash(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -97,5 +97,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = nvc
         self.window?.makeKeyAndVisible()
     }
+    func moveToLogin()
+    {
+        // let mainController = storyBoard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
+        let lang = UserDefaults.standard.string(forKey: "i18n_language")
+        
+        if lang == "ar"
+        {
+            let rightViewController = storyBoard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
+            let nvc: UINavigationController = UINavigationController(rootViewController: rightViewController)
+            UIView.appearance().semanticContentAttribute = .forceRightToLeft
+            self.window?.rootViewController = nvc
+            self.window?.makeKeyAndVisible()
+        }
+        else
+        {
+            let leftViewController = storyBoard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
+            let nvc: UINavigationController = UINavigationController(rootViewController: leftViewController)
+            UIView.appearance().semanticContentAttribute = .forceLeftToRight
+            self.window?.rootViewController = nvc
+            self.window?.makeKeyAndVisible()
+        }
+        self.window?.makeKeyAndVisible()
+    }
+    
+    
 }
 
+
+
+extension UIStoryboard {
+    
+    public static var mainStoryboard: UIStoryboard {
+        let bundle = Bundle.main
+        guard let name = bundle.object(forInfoDictionaryKey: "UIMainStoryboardFile") as? String else {
+            return UIStoryboard()
+        }
+        return UIStoryboard(name: name, bundle: bundle)
+    }
+}

@@ -10,7 +10,7 @@ import UIKit
 import DZNEmptyDataSet
 
 class VCHome: BaseController{
-    
+    let lang  = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var btnViewMore: UIButton!
     @IBOutlet weak var lblGenralServices: UILabel!
     @IBOutlet weak var lblKnow: UILabel!
@@ -33,7 +33,7 @@ class VCHome: BaseController{
     }()
     
     var groupWithDivisionList = [GroupDivisonData]()
-    let lang  = UserDefaults.standard.string(forKey: "i18n_language")
+    
     
     override func viewDidLoad(){
         super.viewDidLoad()

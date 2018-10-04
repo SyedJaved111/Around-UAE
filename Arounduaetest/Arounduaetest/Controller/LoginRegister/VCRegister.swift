@@ -14,7 +14,8 @@ import GooglePlaces
 import FlagKit
 
 class VCRegister: BaseController{
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
@@ -48,6 +49,14 @@ class VCRegister: BaseController{
         super.viewDidLoad()
         radioMale.isSelected = true
         self.txtAttachNIC.titleLabel?.text = "Attach NIC Copy"
+        
+        if(lang == "en"){
+            self.txtAttachNIC.titleLabel?.textAlignment = .left
+        } else if(lang == "ar")
+        {
+            self.txtAttachNIC.titleLabel?.textAlignment = .right
+        }
+        
         setupTxtPhone()
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         self.countryPickerMainView.addGestureRecognizer(tap)
@@ -56,10 +65,18 @@ class VCRegister: BaseController{
 
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(true)
+        
+        
+        
         self.setNavigationBar()
-        self.addBackButton()
+       // self.addBackButton()
         self.setupLocalization()
+        
+        
     }
+    
+    
+    
     
     private func setupTxtPhone(){
         self.txtPhoneNumber.delegate = self
@@ -74,12 +91,22 @@ class VCRegister: BaseController{
     }
     
     fileprivate func addButton(){
+        if(lang == "en"){
         let button = UIButton()
         button.setImage(image, for: .normal)
         button.frame = CGRect(x: 15, y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         button.addTarget(self, action: #selector(self.addBtn), for: .touchUpInside)
         txtPhoneNumber.leftView = button
         txtPhoneNumber.leftViewMode = .always
+    }else if(lang == "ar")
+        {
+            let button = UIButton()
+            button.setImage(image, for: .normal)
+            button.frame = CGRect(x: CGFloat(5), y:15 , width: CGFloat(25), height: CGFloat(25))
+            button.addTarget(self, action: #selector(self.addBtn), for: .touchUpInside)
+            txtPhoneNumber.rightView = button
+            txtPhoneNumber.rightViewMode = .always
+        }
     }
     
     @objc func addBtn(_ sender: Any) {
@@ -93,23 +120,77 @@ class VCRegister: BaseController{
         self.subScrollView.isHidden = false
     }
     
+    
     private func setupLocalization(){
         self.title = "Register".localized
-        self.txtFirstName.placeholder = "First Name".localized
-        self.txtLastName.placeholder = "Last Name".localized
-        self.txtEmail.placeholder = "Email".localized
-        self.txtPhoneNumber.placeholder = "Phone no".localized
-        self.txtPasspord.placeholder = "Password".localized
-        self.txtConfirmPassword.placeholder = "Confrim Password".localized
-        self.txtAddress.placeholder = "Address".localized
+        
+        self.txtFirstName.setPadding(left: 10, right: 0)
+        
+        
+        self.txtLastName.setPadding(left: 10, right: 0)
+        
+        
+        self.txtEmail.setPadding(left: 10, right: 0)
+        
+        
+        self.txtPhoneNumber.setPadding(left: 10, right: 0)
+        
+        
+        self.txtPasspord.setPadding(left: 10, right: 0)
+        
+        
+        self.txtConfirmPassword.setPadding(left: 10, right: 0)
+        
+        
+        self.txtAddress.setPadding(left: 10, right: 0)
+        
         
         self.lblGenderText.text = "Gender".localized
         self.radioMale.setTitle("Male".localized, for: .normal)
         self.radioFemale.setTitle("Female".localized, for: .normal)
         self.btnRegister.setTitle("Register".localized, for: .normal)
         self.lblAlreadyHaveAnAccount.text = "Already have an account?".localized
-        self.btnLoginNow.setTitle("Login now", for: .normal)
+        self.btnLoginNow.setTitle("Login now".localized, for: .normal)
+        
+        
+        self.txtAddress.placeholder = "Address".localized
+        self.txtLastName.placeholder = "Last Name".localized
+        self.txtPhoneNumber.placeholder = "Phone no".localized
+        self.txtFirstName.placeholder = "First Name".localized
+        self.txtAttachNIC.setTitle("Attach NIC Copy".localized, for: .normal)
+        self.txtConfirmPassword.placeholder = "Confirm Password".localized
+        self.txtPasspord.placeholder = "Password".localized
+        self.txtEmail.placeholder = "Email".localized
+        
+        
+        if(lang == "ar")
+        {
+            self.showArabicBackButton()
+            self.txtAddress.textAlignment = .right
+            self.txtLastName.textAlignment = .right
+            self.txtPhoneNumber.textAlignment = .right
+            self.txtFirstName.textAlignment = .right
+            
+            self.txtConfirmPassword.textAlignment = .right
+            self.txtPasspord.textAlignment = .right
+            self.txtEmail.textAlignment = .right
+            
+        }else if(lang == "en")
+        {
+            self.addBackButton()
+            self.txtAddress.textAlignment = .left
+            self.txtLastName.textAlignment = .left
+            self.txtPhoneNumber.textAlignment = .left
+            self.txtFirstName.textAlignment = .left
+            
+            self.txtConfirmPassword.textAlignment = .left
+            self.txtPasspord.textAlignment = .left
+            self.txtEmail.textAlignment = .left
+            
+        }
     }
+    
+    
     
     @IBAction func attachNic(_ sender: UIButton) {
         picNicImage()
@@ -164,49 +245,49 @@ class VCRegister: BaseController{
     private func isCheck()->Bool{
         
         guard let firstName = txtFirstName.text, firstName.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter FirstName", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter FirstName".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let lastName = txtLastName.text, lastName.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter LastName", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter LastName".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let email = txtEmail.text, email.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Email", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Email".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if !email.isValidEmail{
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Valid Email", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid Email".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let phoneNumber = txtPhoneNumber.text, phoneNumber.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter PhoneNumber", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter PhoneNumber".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if !phoneNumber.isPhoneNumber{
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Valid PhoneNumber", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid PhoneNumber".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let password = txtPasspord.text, password.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Password", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Password".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
@@ -220,7 +301,7 @@ class VCRegister: BaseController{
         }
         
         guard let confirmpassword = txtConfirmPassword.text, confirmpassword.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Confirm Password", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Confirm Password".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
@@ -234,14 +315,14 @@ class VCRegister: BaseController{
         }
         
         guard let address = txtAddress.text, address.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Address", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Address".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let _ = imgNic else{
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Select Nic Image", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Select Nic Image".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false

@@ -34,43 +34,51 @@ class VCLogin: BaseController {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
+        self.TxtFfieldLocalaiz()
     }
     
     override func viewWillAppear(_ animated: Bool){
         self.setNavigationBar()
-        if ishownBackBtn{
-            if lang == "ar"{
-                self.showArabicBackButton()
-            }else if lang == "en"{
-                addBackButton()
-            }
-        }
+//        if ishownBackBtn{
+//            if lang == "ar"{
+//                self.showArabicBackButton()
+//            }else if lang == "en"{
+//                addBackButton()
+//            }
+//        }
         self.setupLocalization()
-        self.TxtFfieldLocalaiz()
-        if let myImage = UIImage(named: "Username"){
-            txtEmail.withImage(direction: .Left, image: myImage, colorSeparator: UIColor.black, colorBorder: UIColor.lightGray)
-        }
         
-        if let myImage1 = UIImage(named: "Password"){
-            txtPassword.withImage(direction: .Left, image: myImage1, colorSeparator: UIColor.black, colorBorder: UIColor.lightGray)
-        }
+//        if let myImage = UIImage(named: "Username"){
+//            txtEmail.withImage(direction: .Left, image: myImage, colorSeparator: UIColor.black, colorBorder: UIColor.lightGray)
+//        }
+//
+//        if let myImage1 = UIImage(named: "Password"){
+//            txtPassword.withImage(direction: .Left, image: myImage1, colorSeparator: UIColor.black, colorBorder: UIColor.lightGray)
+//        }
     }
     
-    func TxtFfieldLocalaiz(){
-        let passwordimg = UIImage(named: "Password")
-        let userimg = UIImage(named: "Username")
+    func TxtFfieldLocalaiz()
+    {
+        var  passwordimg = UIImage(named: "Password")
+        var  userimg = UIImage(named: "Username")
         
         if (lang == "ar"){
+            
             txtEmail.setPadding(left: 0, right: 15)
             txtPassword.setPadding(left: 0, right: 15)
+            
             self.txtPassword.withImage(direction: .Right, image: passwordimg!, colorSeparator: bgColor, colorBorder: bgColor)
             self.txtEmail.withImage(direction: .Right, image: userimg!, colorSeparator: bgColor, colorBorder: bgColor)
-        } else if(lang == "en"){
+        } else if(lang == "en")
+        {
+            
             txtEmail.setPadding(left: 0, right: 0)
             txtPassword.setPadding(left: 0, right: 0)
             self.txtEmail.withImage(direction: .Left, image: userimg!, colorSeparator: bgColor, colorBorder: bgColor)
             self.txtPassword.withImage(direction: .Left, image: passwordimg!, colorSeparator: bgColor, colorBorder: bgColor)
+            
         }
+        
     }
     
     private func setupLocalization(){
@@ -78,31 +86,48 @@ class VCLogin: BaseController {
         self.txtEmail.placeholder = "Username".localized
         self.txtPassword.placeholder = "Password".localized
         self.btnLogin.setTitle("Login".localized, for: .normal)
+        self.btnRegisterNow.setTitle("Register now".localized, for: .normal)
         self.btnForgetYourPassword.setTitle("Forgot your password?".localized, for: .normal)
         self.lblOR.text = "OR".localized
         self.lblContinueWithFaceBook.text = "Login with facebook".localized
         self.lblContinueWithGmail.text = "Login with gmail".localized
         self.lblDontHaveAnAccount.text = "Don't have an account?".localized
+        
+        if (lang == "ar")
+        {
+            self.showArabicBackButton()
+            self.txtPassword.textAlignment = .right
+            self.txtEmail.textAlignment = .right
+            
+        }
+        else if(lang == "en")
+        {
+            self.addBackButton()
+            self.txtPassword.textAlignment = .left
+            self.txtEmail.textAlignment = .left
+        }
+        
     }
+    
     
     private func isCheck()->Bool{
         
         guard let email = txtEmail.text, email.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Email!", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Email!".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if !email.isValidEmail{
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Valid Email!", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid Email!".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let password = txtPassword.text, password.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Password", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Password".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false

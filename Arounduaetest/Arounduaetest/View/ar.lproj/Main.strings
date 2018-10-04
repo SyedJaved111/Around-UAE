@@ -2,122 +2,125 @@
 /* Class = "UILabel"; text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"; ObjectID = "0pP-r6-sb2"; */
 "0pP-r6-sb2.text" = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's";
 
-/* Class = "UILabel"; text = "Select Language"; ObjectID = "3MB-8E-xGk"; */
-"3MB-8E-xGk.text" = "Select Language";
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "2h2-oH-xsq"; */
+"2h2-oH-xsq.placeholder" = "Username";
 
-/* Class = "UITextField"; placeholder = "Last Name"; ObjectID = "3zc-Ww-YZy"; */
-"3zc-Ww-YZy.placeholder" = "Last Name";
+/* Class = "UITextField"; placeholder = "Confirm Password"; ObjectID = "2jK-PY-O1D"; */
+"2jK-PY-O1D.placeholder" = "Confirm Password";
 
-/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "7HG-jQ-bI1"; */
-"7HG-jQ-bI1.normalTitle" = "Register";
+/* Class = "UILabel"; text = "A verfication code is send to your email, please check your email and enter the verfication code below"; ObjectID = "3Rt-05-Rn7"; */
+"3Rt-05-Rn7.text" = "A verfication code is send to your email, please check your email and enter the verfication code below";
 
-/* Class = "UIButton"; normalTitle = "English"; ObjectID = "9Jl-3d-5j5"; */
-"9Jl-3d-5j5.normalTitle" = "English";
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "506-Fo-Pjt"; */
+"506-Fo-Pjt.normalTitle" = "Submit";
 
-/* Class = "UITextField"; placeholder = "Address"; ObjectID = "9T3-HR-nZL"; */
-"9T3-HR-nZL.placeholder" = "Address";
+/* Class = "UILabel"; text = "Select Language"; ObjectID = "52C-O6-x6o"; */
+"52C-O6-x6o.text" = "Select Language";
 
-/* Class = "UITextField"; placeholder = "First Name"; ObjectID = "F5u-Cv-dgb"; */
-"F5u-Cv-dgb.placeholder" = "First Name";
+/* Class = "UIButton"; normalTitle = "Male"; ObjectID = "6Vn-Bj-aO6"; */
+"6Vn-Bj-aO6.normalTitle" = "Male";
 
-/* Class = "UILabel"; text = "Don't have an account?"; ObjectID = "FBG-XV-c6X"; */
-"FBG-XV-c6X.text" = "Don't have an account?";
+/* Class = "UIButton"; normalTitle = "Attach NIC Copy"; ObjectID = "6uu-2T-zof"; */
+"6uu-2T-zof.normalTitle" = "Attach NIC Copy";
 
-/* Class = "UIButton"; normalTitle = "Login now"; ObjectID = "Ifi-gI-GjD"; */
-"Ifi-gI-GjD.normalTitle" = "Login now";
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "73R-aN-fjb"; */
+"73R-aN-fjb.placeholder" = "Password";
 
-/* Class = "UIButton"; normalTitle = "Register now"; ObjectID = "KmQ-p5-qOh"; */
-"KmQ-p5-qOh.normalTitle" = "Register now";
+/* Class = "UILabel"; text = "Login with gmail"; ObjectID = "9RL-Do-mwq"; */
+"9RL-Do-mwq.text" = "Login with gmail";
 
-/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "LKd-U1-5Lt"; */
-"LKd-U1-5Lt.normalTitle" = "Submit";
+/* Class = "UILabel"; text = "Login with facebook"; ObjectID = "9mO-BW-wVS"; */
+"9mO-BW-wVS.text" = "Login with facebook";
 
-/* Class = "UITextField"; placeholder = "Email"; ObjectID = "LNz-wk-dLV"; */
-"LNz-wk-dLV.placeholder" = "Email";
+/* Class = "UILabel"; text = "OR"; ObjectID = "BCF-a3-cYd"; */
+"BCF-a3-cYd.text" = "OR";
 
-/* Class = "UIButton"; normalTitle = "Resend"; ObjectID = "LrO-se-Hi9"; */
-"LrO-se-Hi9.normalTitle" = "Resend";
+/* Class = "UITextField"; placeholder = "Enter Code"; ObjectID = "CUj-r8-ViR"; */
+"CUj-r8-ViR.placeholder" = "Enter Code";
 
-/* Class = "UITextField"; placeholder = "Confrim Password"; ObjectID = "NsM-uV-8Qz"; */
-"NsM-uV-8Qz.placeholder" = "Confrim Password";
+/* Class = "UIButton"; normalTitle = "Resend"; ObjectID = "EhE-L1-JDh"; */
+"EhE-L1-JDh.normalTitle" = "Resend";
 
-/* Class = "UITextField"; placeholder = "Old Password"; ObjectID = "Pzj-Ev-4ts"; */
-"Pzj-Ev-4ts.placeholder" = "Old Password";
+/* Class = "UILabel"; text = "Select language to continue with"; ObjectID = "Kb0-Rt-y20"; */
+"Kb0-Rt-y20.text" = "Select language to continue with";
 
-/* Class = "UILabel"; text = "Continue with Facebook"; ObjectID = "QHx-Xe-PZS"; */
-"QHx-Xe-PZS.text" = "Continue with Facebook";
+/* Class = "UILabel"; text = "Don't have an account?"; ObjectID = "Kuy-h3-mVQ"; */
+"Kuy-h3-mVQ.text" = "Don't have an account?";
 
-/* Class = "UITextField"; placeholder = "Confirm Password"; ObjectID = "S2g-pJ-ID5"; */
-"S2g-pJ-ID5.placeholder" = "Confirm Password";
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "LgM-xY-3hp"; */
+"LgM-xY-3hp.normalTitle" = "Register";
 
-/* Class = "UILabel"; text = "Continue with Gmail"; ObjectID = "TgQ-cq-SZi"; */
-"TgQ-cq-SZi.text" = "Continue with Gmail";
+/* Class = "UITextField"; placeholder = "New Password"; ObjectID = "Nmf-TB-5dO"; */
+"Nmf-TB-5dO.placeholder" = "New Password";
 
-/* Class = "UITextField"; placeholder = "New Password"; ObjectID = "WIa-wf-UJR"; */
-"WIa-wf-UJR.placeholder" = "New Password";
+/* Class = "UILabel"; text = "Forgot your password? Enter your email below "; ObjectID = "PG7-yP-noo"; */
+"PG7-yP-noo.text" = "Forgot your password? Enter your email below ";
 
-/* Class = "UITextField"; placeholder = "Email"; ObjectID = "Wm3-S6-wQs"; */
-"Wm3-S6-wQs.placeholder" = "Email";
+/* Class = "UITextField"; placeholder = "Phone no"; ObjectID = "QoV-hV-bJ1"; */
+"QoV-hV-bJ1.placeholder" = "Phone no";
 
-/* Class = "UILabel"; text = "Forgot your password? Enter your email below "; ObjectID = "Yoo-nz-ANm"; */
-"Yoo-nz-ANm.text" = "Forgot your password? Enter your email below ";
+/* Class = "UILabel"; text = "Already have an account?"; ObjectID = "SSl-UG-FBV"; */
+"SSl-UG-FBV.text" = "Already have an account?";
 
-/* Class = "UILabel"; text = "OR"; ObjectID = "ZYR-x9-e2r"; */
-"ZYR-x9-e2r.text" = "OR";
+/* Class = "UIButton"; normalTitle = "Forgot your password?"; ObjectID = "V58-31-Zbr"; */
+"V58-31-Zbr.normalTitle" = "Forgot your password?";
 
-/* Class = "UIButton"; normalTitle = "Male"; ObjectID = "aNv-Nh-7VD"; */
-"aNv-Nh-7VD.normalTitle" = "Male";
+/* Class = "UIButton"; normalTitle = "Update"; ObjectID = "ZKK-Ow-t9e"; */
+"ZKK-Ow-t9e.normalTitle" = "Update";
 
-/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "amy-oF-7y9"; */
-"amy-oF-7y9.normalTitle" = "Cancel";
+/* Class = "UIButton"; normalTitle = "Arabic"; ObjectID = "bSF-ei-W5Y"; */
+"bSF-ei-W5Y.normalTitle" = "Arabic";
 
-/* Class = "UILabel"; text = "Gender"; ObjectID = "bvM-SJ-Vfp"; */
-"bvM-SJ-Vfp.text" = "Gender";
+/* Class = "UIButton"; normalTitle = "Register now"; ObjectID = "brg-Z1-b68"; */
+"brg-Z1-b68.normalTitle" = "Register now";
 
-/* Class = "UIButton"; normalTitle = "Arabic"; ObjectID = "cQk-J1-GvC"; */
-"cQk-J1-GvC.normalTitle" = "Arabic";
+/* Class = "UILabel"; text = "Enter your new password and then confirm it to change your account password"; ObjectID = "cIr-tC-AG1"; */
+"cIr-tC-AG1.text" = "Enter your new password and then confirm it to change your account password";
 
-/* Class = "UITextField"; placeholder = "Attach NIC Copy"; ObjectID = "cj1-oO-i6s"; */
-"cj1-oO-i6s.placeholder" = "Attach NIC Copy";
+/* Class = "UITextField"; placeholder = "Address"; ObjectID = "cMe-dm-TvH"; */
+"cMe-dm-TvH.placeholder" = "Address";
 
-/* Class = "UITextField"; placeholder = "Enter Code"; ObjectID = "eU1-QV-fdH"; */
-"eU1-QV-fdH.placeholder" = "Enter Code";
+/* Class = "UIButton"; normalTitle = "Resend"; ObjectID = "etN-GF-zkP"; */
+"etN-GF-zkP.normalTitle" = "Resend";
 
-/* Class = "UITextField"; placeholder = "Password"; ObjectID = "fMt-Bs-twr"; */
-"fMt-Bs-twr.placeholder" = "Password";
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "fbX-WR-Aj5"; */
+"fbX-WR-Aj5.placeholder" = "Email";
 
-/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "fQk-HJ-ru9"; */
-"fQk-HJ-ru9.normalTitle" = "Submit";
+/* Class = "UITextField"; placeholder = "Old Password"; ObjectID = "kTv-yc-jCP"; */
+"kTv-yc-jCP.placeholder" = "Old Password";
 
-/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "fSn-0h-5Xq"; */
-"fSn-0h-5Xq.normalTitle" = "Login";
+/* Class = "UITextField"; placeholder = "First Name"; ObjectID = "n0G-Fl-07G"; */
+"n0G-Fl-07G.placeholder" = "First Name";
 
-/* Class = "UITextField"; placeholder = "Enter Email"; ObjectID = "fg6-Ps-TkL"; */
-"fg6-Ps-TkL.placeholder" = "Enter Email";
+/* Class = "UIButton"; normalTitle = "Login now"; ObjectID = "nBE-Eg-imS"; */
+"nBE-Eg-imS.normalTitle" = "Login now";
 
-/* Class = "UILabel"; text = "Already have an account?"; ObjectID = "jKR-dN-QCz"; */
-"jKR-dN-QCz.text" = "Already have an account?";
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "nKG-RR-9ea"; */
+"nKG-RR-9ea.placeholder" = "Password";
 
-/* Class = "UILabel"; text = "A verfication code is send to your email, please check your email and enter the verfication code below"; ObjectID = "kXa-hM-b7d"; */
-"kXa-hM-b7d.text" = "A verfication code is send to your email, please check your email and enter the verfication code below";
+/* Class = "UIButton"; normalTitle = "Female"; ObjectID = "nab-w6-JjA"; */
+"nab-w6-JjA.normalTitle" = "Female";
 
-/* Class = "UIButton"; normalTitle = "Female"; ObjectID = "lHk-a1-NvW"; */
-"lHk-a1-NvW.normalTitle" = "Female";
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "nnD-DU-QK0"; */
+"nnD-DU-QK0.normalTitle" = "Cancel";
 
-/* Class = "UIButton"; normalTitle = "Update"; ObjectID = "m3T-dW-LF1"; */
-"m3T-dW-LF1.normalTitle" = "Update";
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "oYg-Un-fV3"; */
+"oYg-Un-fV3.normalTitle" = "Submit";
 
-/* Class = "UITextField"; placeholder = "Phone no"; ObjectID = "p0w-Tn-TIo"; */
-"p0w-Tn-TIo.placeholder" = "Phone no";
+/* Class = "UITextField"; placeholder = "Confrim Password"; ObjectID = "p1S-bz-vqh"; */
+"p1S-bz-vqh.placeholder" = "Confrim Password";
 
-/* Class = "UILabel"; text = "Enter your new password and then confirm it to change your account password"; ObjectID = "u6e-YD-Tic"; */
-"u6e-YD-Tic.text" = "Enter your new password and then confirm it to change your account password";
+/* Class = "UILabel"; text = "Gender"; ObjectID = "slJ-vT-xmH"; */
+"slJ-vT-xmH.text" = "Gender";
 
-/* Class = "UITextField"; placeholder = "Password"; ObjectID = "wS3-VK-VNT"; */
-"wS3-VK-VNT.placeholder" = "Password";
+/* Class = "UITextField"; placeholder = "Last Name"; ObjectID = "tu4-ns-gi4"; */
+"tu4-ns-gi4.placeholder" = "Last Name";
 
-/* Class = "UIButton"; normalTitle = "Forgot your password?"; ObjectID = "xIf-Go-KpH"; */
-"xIf-Go-KpH.normalTitle" = "Forgot your password?";
+/* Class = "UIButton"; normalTitle = "English"; ObjectID = "vA2-Qg-IDm"; */
+"vA2-Qg-IDm.normalTitle" = "English";
 
-/* Class = "UILabel"; text = "Select language to continue with"; ObjectID = "z5d-9g-jiV"; */
-"z5d-9g-jiV.text" = "Select language to continue with";
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "ym7-iv-faj"; */
+"ym7-iv-faj.normalTitle" = "Login";
+
+/* Class = "UITextField"; placeholder = "Enter Code"; ObjectID = "zj9-ia-lND"; */
+"zj9-ia-lND.placeholder" = "Enter Code";
