@@ -19,6 +19,7 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
         super.viewDidLoad()
         collectionViewManageProducts.adjustDesign(width: ((view.frame.size.width+25)/2.3))
         collectionViewManageProducts.reloadData()
+        
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
@@ -63,16 +64,20 @@ extension VCStoreProducts: UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"CellStore", for: indexPath) as! CellStore
-        cell.delegate = self
+        if AppSettings.sharedSettings.accountType != "seller"{
+           cell.delegate = self
+        }
         let product = productsArray[indexPath.row]
         cell.setupProductCell(product: product)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCProductDetail") as! VCProductDetail
-        vc.product = productsArray[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
+        if AppSettings.sharedSettings.accountType != "seller"{
+            let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "VCProductDetail") as! VCProductDetail
+            vc.product = productsArray[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

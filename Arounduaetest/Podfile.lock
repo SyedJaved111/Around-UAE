@@ -49,6 +49,8 @@ PODS:
   - IQKeyboardManagerSwift (5.0.6)
   - KMPlaceholderTextView (1.3.0)
   - MBProgressHUD (1.0.0)
+  - MIBadgeButton (0.0.7)
+  - MIBadgeButton-Swift (0.5)
   - Moya (10.0.0):
     - Moya/Core (= 10.0.0)
   - Moya/Core (10.0.0):
@@ -57,6 +59,7 @@ PODS:
   - NVActivityIndicatorView (4.0.0):
     - NVActivityIndicatorView/Presenter (= 4.0.0)
   - NVActivityIndicatorView/Presenter (4.0.0)
+  - ObjectMapper (3.1.0)
   - PayPal-iOS-SDK (2.18.1):
     - PayPal-iOS-SDK/CardIO (= 2.18.1)
     - PayPal-iOS-SDK/Core (= 2.18.1)
@@ -68,6 +71,10 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
+  - Socket.IO-Client-Swift (13.2.0):
+    - Starscream (~> 3.0.2)
+  - Starscream (3.0.5)
+  - SwiftRangeSlider (2.0.0)
   - SwiftyJSON (4.0.0)
   - Toast-Swift (2.0.0)
   - XLPagerTabStrip (8.0.0)
@@ -88,11 +95,16 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - KMPlaceholderTextView
   - MBProgressHUD
+  - MIBadgeButton
+  - MIBadgeButton-Swift (from `https://github.com/mustafaibrahim989/MIBadgeButton-Swift.git`, branch `master`)
   - Moya
   - NVActivityIndicatorView
+  - ObjectMapper
   - PayPal-iOS-SDK
   - RangeSeekSlider
   - SDWebImage
+  - Socket.IO-Client-Swift
+  - SwiftRangeSlider
   - SwiftyJSON
   - Toast-Swift
   - XLPagerTabStrip
@@ -120,15 +132,30 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - KMPlaceholderTextView
     - MBProgressHUD
+    - MIBadgeButton
     - Moya
     - NVActivityIndicatorView
+    - ObjectMapper
     - PayPal-iOS-SDK
     - RangeSeekSlider
     - Result
     - SDWebImage
+    - Socket.IO-Client-Swift
+    - Starscream
+    - SwiftRangeSlider
     - SwiftyJSON
     - Toast-Swift
     - XLPagerTabStrip
+
+EXTERNAL SOURCES:
+  MIBadgeButton-Swift:
+    :branch: master
+    :git: https://github.com/mustafaibrahim989/MIBadgeButton-Swift.git
+
+CHECKOUT OPTIONS:
+  MIBadgeButton-Swift:
+    :commit: 3c2638d2e6e46ec2e6dd978d8ada8863df3df5e6
+    :git: https://github.com/mustafaibrahim989/MIBadgeButton-Swift.git
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
@@ -152,16 +179,22 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 02bfbb0dff71c66d0ab77d80d25dfce0c3717735
   KMPlaceholderTextView: 2bbcd19a273648a80a61e1e48f9743a24d8930e3
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MIBadgeButton: 7c34f180a194d152bb3817c05443eab3a01433cd
+  MIBadgeButton-Swift: 9e57309b00b168d75ca8fecb45bc75124a8ffddf
   Moya: adb58b0f4e58430db43cc6e2f6ebab1836501186
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
+  ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   PayPal-iOS-SDK: 10654cd111e911a9807bddb96fae81aacb8e9915
   RangeSeekSlider: 0386c5a9aa5ebcb2fa5238e8a627280cf46c7c0a
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  Socket.IO-Client-Swift: 4698ea9eb2955eecf7fdf06c487ff1597e4cd779
+  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
+  SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   Toast-Swift: 5b2f8f720f7e78e48511f693df1f9c9a6e38a25a
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
 
-PODFILE CHECKSUM: ebe582d5fc04f36616da1309f5c2069978f4b113
+PODFILE CHECKSUM: f07a7db19d1f81d81180d110fb20cd3612d274bb
 
 COCOAPODS: 1.5.3

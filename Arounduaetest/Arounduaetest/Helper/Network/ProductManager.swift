@@ -205,4 +205,21 @@ class ProductManager{
             failureCallback(error)
         })
     }
+    
+    //MARK: - SearchProduct
+    func SearchProduct(_ search:String,successCallback : @escaping(Response<SearchProductData>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .SearchProduct(searchtxt: search),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<SearchProductData>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
 }

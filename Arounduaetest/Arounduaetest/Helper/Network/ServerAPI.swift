@@ -49,6 +49,7 @@ enum ServerAPI {
     case MakeProductFavourite(productId:String)
     case GetFavouriteProducts(pageNo:String)
     case ProductReview(ProductReviewParams)
+    case SearchProduct(searchtxt:String)
     
     //Index API's
     case GetSiteSettings
@@ -100,7 +101,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         switch self {
           case .UserLogin,.ForgotPassword,.RegisterUser,
              .EmailVerification,.ResendVerification,
-             .ResetPassword,.CitiesPlaces:
+             .ResetPassword,.CitiesPlaces,.SearchProduct:
             return .none
           default:
             return .basic
@@ -208,6 +209,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return APIURL.cartQuantityUpdateURL.rawValue
             case .Payment:
                 return APIURL.paymentURL.rawValue
+            case .SearchProduct:
+                return APIURL.searchProductURL.rawValue
         }
     }
 
@@ -223,7 +226,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .SubmitPlaceReview,.PlaceReviewsListing,.MakePlaceFavourite,
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
-               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,.Payment:
+               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
+               .Payment,.SearchProduct:
                 return .post
           case .checkIsSocialLogin,.GetUserProfile,.RemoveImage,
                .GetStoreSGDS,.GetFeaturesCharacters,.GetSiteSettings,
@@ -349,6 +353,10 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 parameters[PaymentKey.token.rawValue] = params.token
                 return parameters
             
+            case .SearchProduct(let searchTxt):
+                parameters["locale"] = searchTxt
+                return parameters
+            
             default:
                 return nil
           }
@@ -373,7 +381,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .PlaceReviewsListing,.MakePlaceFavourite,
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
-               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,.Payment:
+               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
+               .Payment,.SearchProduct:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
           case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:

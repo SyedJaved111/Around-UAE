@@ -81,3 +81,6 @@ struct Products: Decodable {
     let price : Price?
 }
 
+struct SearchProductData : Decodable {
+    let products : [Products]?
+}

@@ -130,4 +130,5 @@ class ProfileManager{
             failureCallback(error)
         })
     }
+
 }

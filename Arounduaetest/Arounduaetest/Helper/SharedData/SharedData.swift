@@ -14,9 +14,18 @@ class SharedData{
     var setting = Settings.getDefaultObject()
     var pages = [Pages]()
     var sliders = [Sliders]()
+    //var userData =  [UserData]()
     var placesDataObj:PlacesData!
     var isSocialLogin : Int!
     var socialId : String!
     var socialName : String!
     var socialEmail : String!
+    var userID = ""
+    var conversationuserID = ""
+    
+    var conversationID = ""
+    var personID = ""
+    var conversationArray = [Conversations]()
+    var conversationTableId : Int = 0
+    var chatTitle = ""
 }

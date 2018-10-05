@@ -8,6 +8,9 @@
 
 import UIKit
 import XLPagerTabStrip
+import SocketIO
+import SwiftyJSON
+import MIBadgeButton_Swift
 
 class VCStoreTab: ButtonBarPagerTabStripViewController {
 
@@ -19,7 +22,6 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     var storeid = ""
     let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreInfo")
     let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreProducts")
-    
 
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo.init(title: "Store Info".localized)
@@ -54,12 +56,16 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+       
         self.setNavigationBar()
+        //self.addNotificationButton()
         self.addBackButton()
         self.title = "Stores"
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
     }
+    
+
     
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
         

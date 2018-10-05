@@ -9,6 +9,7 @@
 import UIKit
 import DZNEmptyDataSet
 
+
 class VCHome: BaseController{
     
     @IBOutlet weak var btnViewMore: UIButton!
@@ -34,6 +35,7 @@ class VCHome: BaseController{
     
     var groupWithDivisionList = [GroupDivisonData]()
     let lang  = UserDefaults.standard.string(forKey: "i18n_language")
+   
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -44,6 +46,7 @@ class VCHome: BaseController{
         setupLocalization()
     }
     
+    
     private func setupLocalization(){
         btnViewMore.setTitle("View More".localized, for: .normal)
         lblKnow.text = "know more detals about various shope, location & tourist spots around UAE ".localized
@@ -53,6 +56,7 @@ class VCHome: BaseController{
     @objc func refreshTableView() {
         fetchGroupsWithDivisons(isRefresh: true)
     }
+    
     
     private func fetchGroupsWithDivisons(isRefresh: Bool){
         

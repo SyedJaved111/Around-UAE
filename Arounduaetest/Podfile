@@ -29,5 +29,11 @@ target 'Arounduaetest' do
   pod 'FlagKit'
   pod 'DZNEmptyDataSet'
   pod 'PayPal-iOS-SDK'
+   pod 'ObjectMapper'
+   pod 'RangeSeekSlider'
+   pod 'SwiftRangeSlider'
+   pod 'Socket.IO-Client-Swift'
+   pod "MIBadgeButton-Swift", :git => 'https://github.com/mustafaibrahim989/MIBadgeButton-Swift.git', :branch => 'master'
+   pod "MIBadgeButton"
 
 end

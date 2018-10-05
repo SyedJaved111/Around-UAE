@@ -18,6 +18,7 @@ protocol storeCellDelegate{
 class CellStore: UICollectionViewCell {
     
     @IBOutlet var UIButtonFavourite: UIButton!
+    @IBOutlet var addtocartBtn: UIButton!
     @IBOutlet var imgProducts: UIImageView!
     @IBOutlet var lblProductName: UILabel!
     @IBOutlet weak var productPrice: UILabel!
@@ -41,6 +42,10 @@ class CellStore: UICollectionViewCell {
         imgProducts.setIndicatorStyle(.gray)
         productPrice.text = "$\(product.price?.usd ?? 0)"
         imgProducts.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
+        if AppSettings.sharedSettings.accountType == "seller"{
+           UIButtonFavourite.isHidden = true
+           addtocartBtn.isHidden = true
+        }
     }
     
     @IBAction func addToCart(_ sender: UIButton){

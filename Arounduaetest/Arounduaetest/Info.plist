@@ -25,7 +25,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Allow to access camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>&quot;Allow to use location&quot;</string>
+	<string>"Allow to use location"</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow to access photos</string>
 	<key>UIAppFonts</key>

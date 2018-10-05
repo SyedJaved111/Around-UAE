@@ -93,8 +93,7 @@ extension VCSubDivisions: UICollectionViewDataSource,UICollectionViewDelegate{
     
     private func moveToStoreDetail(_ storeid:String){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCStoreProducts") as! VCStoreProducts
-        //vc.storeid = storeid
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -27,6 +27,9 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
 
     override func viewDidLoad(){
         super.viewDidLoad()
+        if AppSettings.sharedSettings.accountType == "seller"{
+            btnSubmitFeedBack.isHidden = true
+        }
     }
     
     @IBAction func review(_ sender: Any){

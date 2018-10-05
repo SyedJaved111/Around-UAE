@@ -16,7 +16,8 @@ class VCProductDetail: UIViewController {
     @IBOutlet weak var productname: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
     @IBOutlet weak var Productcounter: GMStepper!
-    @IBOutlet weak var productDescription: UILabel!
+    @IBOutlet weak var productDescription: UITextView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var colorCollectionView: UICollectionView!{
         didSet{
@@ -99,21 +100,26 @@ class VCProductDetail: UIViewController {
         if let combinations = productDetail?.combinations{
             for obj in combinations{
                 if obj.characteristics != characteristics && obj.features != features {
-                    self.alertMessage(message: "Could not find cobination!!!!", completionHandler: nil)
+                    self.alertMessage(message: "Could not find combination!!", completionHandler: nil)
                     return
+                }else if obj.characteristics == characteristics && obj.features == features{
+                    addToCartProduct(dic)
+                    break
                 }
             }
         }
-        
+    }
+    
+    private func addToCartProduct(_ dict:[String:Any]){
         startLoading("")
-        CartManager().addCartProducts(dic,
+        CartManager().addCartProducts(dict,
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
-                       
+                        
                     }else{
                         self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
                     }
@@ -128,10 +134,6 @@ class VCProductDetail: UIViewController {
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
-    }
-    
-    private func checkCombinations(){
-        
     }
     
     private func setupProductDetsil(_ productdetail:Product){
