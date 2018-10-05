@@ -23,7 +23,7 @@
 "Forgot your password?" = "نسيت رقمك السري؟";
 "OR" = "أو";
 "Login with facebook" = "تسجيل الدخول باستخدام الفيسبوك";
-"Login with gmail" = "تسجيل الدخول باستخدام gmail";
+"Login with gmail" = "تسجيل الدخول باستخدام جوجل";
 "Don't have an account?" = "ليس لديك حساب؟";
 "Register now" = "سجل الان";
 "Alert" = "محزر";
@@ -36,6 +36,7 @@
 "Enter Code" = "ادخل الرمز";
 "Submit" = "خضع";
 "Resend" = "إعادة إرسال";
+"Please Enter email" = "يرجى إدخال البريد الإلكتروني";
 
 //"Change Password"
 "Change Password" = "تغيير كلمة السر";
