@@ -1712,7 +1712,7 @@
                                                                         <real key="value" value="14"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="view:V2D-gr-bCP:value"/>
-                                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="A24FA57C-DA15-4E40-B4F9-3AC80A81AB92"/>
+                                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="A27F564B-2B20-4F12-BB9F-FBEE63125F4A"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cUs-nQ-xwR">
@@ -2043,7 +2043,7 @@
                                                                     <real key="value" value="0.0"/>
                                                                 </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="view:V2D-gr-bCP:value"/>
-                                                                <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="A24FA57C-DA15-4E40-B4F9-3AC80A81AB92"/>
+                                                                <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="A27F564B-2B20-4F12-BB9F-FBEE63125F4A"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                     </subviews>
@@ -6122,20 +6122,20 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TqM-sF-5fc">
-                                                <rect key="frame" x="15" y="677" width="345" height="1"/>
+                                                <rect key="frame" x="15" y="678" width="345" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="ErM-I8-q64"/>
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Quantity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxY-N7-yf9">
-                                                <rect key="frame" x="15" y="686" width="345" height="17.5"/>
+                                                <rect key="frame" x="15" y="687" width="345" height="18"/>
                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CKj-z0-NLd">
-                                                <rect key="frame" x="15" y="711.5" width="345" height="40"/>
+                                                <rect key="frame" x="15" y="713" width="345" height="40"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LqH-hz-AMW" customClass="GMStepper" customModule="Around_UAE" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="167.5" height="40"/>
@@ -6263,7 +6263,7 @@
                                                 </cells>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ueH-v1-4kx">
-                                                <rect key="frame" x="8" y="546" width="359" height="122.5"/>
+                                                <rect key="frame" x="8" y="546" width="359" height="123.5"/>
                                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniaLorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia</string>
                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                 <nil key="textColor"/>
@@ -6813,7 +6813,7 @@
     </scenes>
     <resources>
         <image name="3" width="300" height="300"/>
-        <image name="A24FA57C-DA15-4E40-B4F9-3AC80A81AB92" width="200" height="200">
+        <image name="A27F564B-2B20-4F12-BB9F-FBEE63125F4A" width="200" height="200">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
 ExQZHh8jJCsuMTtDR0tPUlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdz
