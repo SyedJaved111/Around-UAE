@@ -31,7 +31,7 @@ class VCHomeTabs: TTabBarViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.rightBarButton()
-        setsocketIOS()
+        //setsocketIOS()
     }
 
     @objc func btnCardClick (_ sender: Any){

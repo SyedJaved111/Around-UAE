@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
   FBSDKLoginManagerLogger *_logger;
   FBSDKLoginManagerState _state;
   FBSDKKeychainStore *_keychainStore;
+  BOOL _usedSFAuthSession;
 }
 
 + (void)initialize
@@ -63,6 +64,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
 {
   self = [super init];
   if (self) {
+    self.authType = @"rerequest";
     NSString *keyChainServiceIdentifier = [NSString stringWithFormat:@"com.facebook.sdk.loginmanager.%@", [[NSBundle mainBundle] bundleIdentifier]];
     _keychainStore = [[FBSDKKeychainStore alloc] initWithService:keyChainServiceIdentifier accessGroup:nil];
   }
@@ -159,6 +161,14 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
 {
   switch (_state) {
     case FBSDKLoginManagerStateStart: {
+      if (self->_usedSFAuthSession) {
+        // Using SFAuthenticationSession makes an interestitial dialog that blocks the app, but in certain situations such as
+        // screen lock it can be dismissed and have the control returned to the app without invoking the completionHandler.
+        // In this case, the viewcontroller has the control back and tried to reinvoke the login. This is acceptable behavior
+        // and we should pop up the dialog again
+        return YES;
+      }
+
       NSString *errorStr = @"** WARNING: You are trying to start a login while a previous login has not finished yet."
       "This is unsupported behavior. You should wait until the previous login handler gets called to start a new login.";
       [FBSDKLogger singleShotLogEntry:FBSDKLoggingBehaviorDeveloperErrors
@@ -198,6 +208,8 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
 
 - (void)completeAuthentication:(FBSDKLoginCompletionParameters *)parameters expectChallenge:(BOOL)expectChallenge
 {
+  NSSet *recentlyGrantedPermissions = nil;
+  NSSet *recentlyDeclinedPermissions = nil;
   FBSDKLoginManagerLoginResult *result = nil;
   NSError *error = parameters.error;
 
@@ -226,9 +238,6 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
       NSSet *grantedPermissions = parameters.permissions;
       NSSet *declinedPermissions = parameters.declinedPermissions;
 
-      NSSet *recentlyGrantedPermissions = nil;
-      NSSet *recentlyDeclinedPermissions = nil;
-
       [self determineRecentlyGrantedPermissions:&recentlyGrantedPermissions
                     recentlyDeclinedPermissions:&recentlyDeclinedPermissions
                            forGrantedPermission:grantedPermissions
@@ -241,7 +250,8 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
                                                                           appID:parameters.appID
                                                                          userID:parameters.userID
                                                                  expirationDate:parameters.expirationDate
-                                                                    refreshDate:[NSDate date]];
+                                                                    refreshDate:[NSDate date]
+                                                                    dataAccessExpirationDate:parameters.dataAccessExpirationDate];
         result = [[FBSDKLoginManagerLoginResult alloc] initWithToken:token
                                                          isCancelled:NO
                                                   grantedPermissions:recentlyGrantedPermissions
@@ -252,24 +262,27 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
           // in a reauth, short circuit and let the login handler be called when the validation finishes.
           return;
         }
-      } else {
-        cancelled = YES;
       }
     }
 
-    if (cancelled) {
+    if (cancelled || recentlyGrantedPermissions.count == 0) {
       NSSet *declinedPermissions = nil;
-
-      // If a System Account reauthorization was cancelled by the user tapping Don't Allow
-      // then add the declined permissions to the login result. The Accounts framework
-      // doesn't register the decline with Facebook, which is why we don't update the
-      // access token.
-      if ([FBSDKAccessToken currentAccessToken] != nil && parameters.isSystemAccount) {
-        declinedPermissions = parameters.declinedPermissions;
+      if ([FBSDKAccessToken currentAccessToken] != nil) {
+        if (parameters.isSystemAccount) {
+          // If a System Account reauthorization was cancelled by the user tapping Don't Allow
+          // then add the declined permissions to the login result. The Accounts framework
+          // doesn't register the decline with Facebook, which is why we don't update the
+          // access token.
+          declinedPermissions = parameters.declinedPermissions;
+        } else {
+          // Always include the list of declined permissions from this login request
+          // if an access token is already cached by the SDK
+          declinedPermissions = recentlyDeclinedPermissions;
+        }
       }
 
       result = [[FBSDKLoginManagerLoginResult alloc] initWithToken:nil
-                                                       isCancelled:YES
+                                                       isCancelled:cancelled
                                                 grantedPermissions:nil
                                                declinedPermissions:declinedPermissions];
     }
@@ -349,7 +362,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
   loginParams[@"return_scopes"] = @"true";
   loginParams[@"sdk_version"] = FBSDK_VERSION_STRING;
   loginParams[@"fbapp_pres"] = @([FBSDKInternalUtility isFacebookAppInstalled]);
-  loginParams[@"auth_type"] = @"rerequest";
+  loginParams[@"auth_type"] = self.authType;
   loginParams[@"logging_token"] = serverConfiguration.loggingToken;
 
   [FBSDKInternalUtility dictionary:loginParams setObject:[FBSDKSettings appURLSchemeSuffix] forKey:@"local_client_id"];
@@ -382,11 +395,12 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
 {
   FBSDKServerConfiguration *serverConfiguration = [FBSDKServerConfigurationManager cachedServerConfiguration];
   NSDictionary *loginParams = [self logInParametersWithPermissions:_requestedPermissions serverConfiguration:serverConfiguration];
+  self->_usedSFAuthSession = NO;
 
   void(^completion)(BOOL, NSString *, NSError *) = ^void(BOOL didPerformLogIn, NSString *authMethod, NSError *error) {
     if (didPerformLogIn) {
-      [_logger startAuthMethod:authMethod];
-      _state = FBSDKLoginManagerStatePerformingLogin;
+      [self->_logger startAuthMethod:authMethod];
+      self->_state = FBSDKLoginManagerStatePerformingLogin;
     } else if (error && [error.domain isEqualToString:SFVCCanceledLogin]) {
       [self handleImplicitCancelOfLogIn];
     } else {
@@ -418,7 +432,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
         }
         break;
       }
-      // intentional fall through.
+      // Intentional fall through. Switching to browser login instead.
     }
     case FBSDKLoginBehaviorBrowser: {
       [self performBrowserLogInWithParameters:loginParams handler:^(BOOL openedURL,
@@ -510,7 +524,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
 
   NSDate *start = [NSDate date];
   [[FBSDKApplicationDelegate sharedInstance] openURL:authURL sender:self handler:^(BOOL openedURL, NSError *anError) {
-    [_logger logNativeAppDialogResult:openedURL dialogDuration:-[start timeIntervalSinceNow]];
+    [self->_logger logNativeAppDialogResult:openedURL dialogDuration:-[start timeIntervalSinceNow]];
     if (handler) {
       handler(openedURL, anError);
     }
@@ -548,8 +562,10 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
         handler(didOpen, authMethod, anError);
       }
     };
+
     if (useSafariViewController) {
-        // Note based on above, authURL must be a http scheme. If that changes, add a guard, otherwise SFVC can throw
+      // Note based on above, authURL must be a http scheme. If that changes, add a guard, otherwise SFVC can throw
+      self->_usedSFAuthSession = YES;
       [[FBSDKApplicationDelegate sharedInstance] openURLWithSafariViewController:authURL
                                                                           sender:self
                                                               fromViewController:self.fromViewController
@@ -687,7 +703,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
       audience = nil;
   }
 
-  unsigned long timePriorToSystemAuthUI = [FBSDKInternalUtility currentTimeInMilliseconds];
+  uint64_t timePriorToSystemAuthUI = [FBSDKInternalUtility currentTimeInMilliseconds];
 
   // the FBSDKSystemAccountStoreAdapter completion handler maintains the strong reference during the the asynchronous operation
   [[FBSDKSystemAccountStoreAdapter sharedInstance]
@@ -705,7 +721,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
      // false positives.
      BOOL didShowDialog = [FBSDKInternalUtility currentTimeInMilliseconds] - timePriorToSystemAuthUI > 350;
      BOOL isUnTOSedDevice = !oauthToken && accountStoreError.code == ACErrorAccountNotFound;
-     [_logger systemAuthDidShowDialog:didShowDialog isUnTOSedDevice:isUnTOSedDevice];
+     [self->_logger systemAuthDidShowDialog:didShowDialog isUnTOSedDevice:isUnTOSedDevice];
 
      if (accountStoreError && [FBSDKSystemAccountStoreAdapter sharedInstance].forceBlockingRenew) {
        accountStoreError = [FBSDKLoginError errorForSystemPasswordChange:accountStoreError];

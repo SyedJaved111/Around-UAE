@@ -7,23 +7,22 @@
 //
 
 import UIKit
+import DZNEmptyDataSet
 
 class VCStores: BaseController{
-    
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
     
     @IBOutlet var collectionViewStores: UICollectionView!{
         didSet{
             self.collectionViewStores.delegate = self
             self.collectionViewStores.dataSource = self
+            self.collectionViewStores.alwaysBounceVertical = true
         }
     }
     
     var storelist = [Stores]()
     var totalPages = 0
     var currentPage = 0
+    var isEmptyViewShown = false
  
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +33,14 @@ class VCStores: BaseController{
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Stores"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
         self.setNavigationBar()
         self.addBackButton()
+    }
+    
+    fileprivate func setupDelegates(){
+        self.collectionViewStores.emptyDataSetSource = self
+        self.collectionViewStores.emptyDataSetDelegate = self
+        self.collectionViewStores.reloadData()
     }
     
     private func fetchStoresData(){
@@ -48,32 +51,26 @@ class VCStores: BaseController{
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let storeResponse = response{
-                        if(storeResponse.data?.stores ?? []).count == 0{
-                            self?.viewEmptyList.isHidden = false
-                        }else{
+                        if storeResponse.success!{
                             self?.storelist = storeResponse.data?.stores ?? []
                             self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                             self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
-                            self?.collectionViewStores.reloadData()
+                        }else{
+                            self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
                         }
                     }else{
-                        self?.viewEmptyList.isHidden = false
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.viewEmptyList.isHidden = false
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
-    }
-    
-    @IBAction func tryAgain(_ sender: UIButton) {
-         self.viewEmptyList.isHidden = true
-         fetchStoresData()
     }
 }
 
@@ -82,31 +79,29 @@ extension VCStores{
     func initialUI(){
     
         collectionViewStores.spr_setTextHeader { [weak self] in
-            self?.viewEmptyList.isHidden = true
             self?.currentPage = 0
             StoreManager().getStores("\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         self?.collectionViewStores.spr_endRefreshing()
                         if let storeResponse = response{
-                            if(storeResponse.data?.stores ?? []).count == 0{
-                                self?.viewEmptyList.isHidden = false
-                            }else{
+                            if storeResponse.success!{
                                 self?.storelist = storeResponse.data?.stores ?? []
                                 self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
-                                self?.collectionViewStores.reloadData()
+                            }else{
+                                self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
                         }else{
-                            self?.viewEmptyList.isHidden = false
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.collectionViewStores.spr_endRefreshing()
-                    self?.viewEmptyList.isHidden = false
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                     }
                 }
@@ -122,20 +117,25 @@ extension VCStores{
                     DispatchQueue.main.async {
                         self?.collectionViewStores.spr_endRefreshing()
                         if let storeResponse = response{
-                            for store in storeResponse.data?.stores ?? []{
-                                self?.storelist.append(store)
+                            if storeResponse.success!{
+                                for store in storeResponse.data?.stores ?? []{
+                                    self?.storelist.append(store)
+                                }
+                                self?.currentPage = storeResponse.data?.pagination?.page ?? 1
+                                self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
+                            }else{
+                                self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
-                            self?.currentPage = storeResponse.data?.pagination?.page ?? 1
-                            self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
-                            self?.collectionViewStores.reloadData()
                         }else{
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.collectionViewStores.spr_endRefreshing()
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -168,4 +168,9 @@ extension VCStores: UICollectionViewDataSource,UICollectionViewDelegate{
         vc.storeid = storeid
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchStoresData()
+    }
 }
+

@@ -9,16 +9,13 @@
 import UIKit
 import XLPagerTabStrip
 
-class VCTopRated: UIViewController,IndicatorInfoProvider {
-    
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
+class VCTopRated: BaseController,IndicatorInfoProvider {
     
     @IBOutlet weak var TopratedCollectionView: UICollectionView!{
         didSet{
             self.TopratedCollectionView.delegate = self
             self.TopratedCollectionView.dataSource = self
+            self.TopratedCollectionView.alwaysBounceVertical = true
         }
     }
     
@@ -34,31 +31,36 @@ class VCTopRated: UIViewController,IndicatorInfoProvider {
         fetchCitiesPlacesData()
     }
     
+    fileprivate func setupDelegates(){
+        self.TopratedCollectionView.emptyDataSetSource = self
+        self.TopratedCollectionView.emptyDataSetDelegate = self
+        self.TopratedCollectionView.reloadData()
+    }
+    
     private func fetchCitiesPlacesData(){
         startLoading("")
         CitiesPlacesManager().getCitiesPlaces((cityid,"\(currentPage + 1)","",""),successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
-                    if let citiesPlacesResponse = response{
-                        if(citiesPlacesResponse.data?.places ?? []).count == 0{
-                            self?.viewEmptyList.isHidden = false
+                    if let placeResponse = response{
+                        if placeResponse.success!{
+                            self?.placeArray = placeResponse.data?.places ?? []
+                            self?.currentPage = placeResponse.data?.pagination?.page ?? 1
+                            self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                         }else{
-                            self?.placeArray = citiesPlacesResponse.data?.places ?? []
-                            self?.currentPage = citiesPlacesResponse.data?.pagination?.page ?? 1
-                            self?.totalPages = citiesPlacesResponse.data?.pagination?.pages ?? 0
-                            self?.TopratedCollectionView.reloadData()
+                            self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
                         }
                     }else{
-                        self?.viewEmptyList.isHidden = false
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async{
                 self?.finishLoading()
-                self?.viewEmptyList.isHidden = false
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -66,13 +68,6 @@ class VCTopRated: UIViewController,IndicatorInfoProvider {
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Stores"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
-    }
-    
-    @IBAction func tryAgain(_ sender: UIButton) {
-        self.viewEmptyList.isHidden = true
-        fetchCitiesPlacesData()
     }
 }
 
@@ -81,31 +76,29 @@ extension VCTopRated{
     func initialUI(){
         
         TopratedCollectionView.spr_setTextHeader { [weak self] in
-            self?.viewEmptyList.isHidden = true
             self?.currentPage = 0
             CitiesPlacesManager().getCitiesPlaces((self?.cityid ?? "0","\(self?.currentPage ?? 0)","",""),successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         self?.TopratedCollectionView.spr_endRefreshing()
                         if let placeResponse = response{
-                            if(placeResponse.data?.places ?? []).count == 0{
-                                self?.viewEmptyList.isHidden = false
-                            }else{
+                            if placeResponse.success!{
                                 self?.placeArray = placeResponse.data?.places ?? []
                                 self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
-                                self?.TopratedCollectionView.reloadData()
+                            }else{
+                                self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
                         }else{
-                            self?.viewEmptyList.isHidden = false
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.TopratedCollectionView.spr_endRefreshing()
-                    self?.viewEmptyList.isHidden = false
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -120,20 +113,26 @@ extension VCTopRated{
                     DispatchQueue.main.async {
                         self?.TopratedCollectionView.spr_endRefreshing()
                         if let placeResponse = response{
-                            for cityplaces in placeResponse.data?.places ?? []{
-                                self?.placeArray.append(cityplaces)
+                            
+                            if placeResponse.success!{
+                                for cityplaces in placeResponse.data?.places ?? []{
+                                    self?.placeArray.append(cityplaces)
+                                }
+                                self?.currentPage = placeResponse.data?.pagination?.page ?? 1
+                                self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
+                            }else{
+                                self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
-                            self?.currentPage = placeResponse.data?.pagination?.page ?? 1
-                            self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
-                            self?.TopratedCollectionView.reloadData()
                         }else{
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.TopratedCollectionView.spr_endRefreshing()
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -168,6 +167,10 @@ extension VCTopRated: UICollectionViewDataSource,UICollectionViewDelegate{
         let vc = storyboard.instantiateViewController(withIdentifier: "VCDesertSafari") as! VCDesertSafari
         vc.placeid = placeid
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchCitiesPlacesData()
     }
 }
 

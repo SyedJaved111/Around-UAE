@@ -17,17 +17,7 @@ class CharacteristicsCell: UICollectionViewCell {
         characterImage.makeRound()
         characterImage.setShowActivityIndicator(true)
         characterImage.setIndicatorStyle(.gray)
+        characterImage.makeRound()
         //characterImage.sd_setImage(with: URL(string: image ))
-    }
-    
-    override var isSelected: Bool{
-        didSet{
-            if self.isSelected{
-                
-            }
-            else{
-                
-            }
-        }
     }
 }

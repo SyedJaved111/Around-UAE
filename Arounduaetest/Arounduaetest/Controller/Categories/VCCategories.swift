@@ -8,17 +8,15 @@
 
 import UIKit
 import XLPagerTabStrip
+import DZNEmptyDataSet
 
 class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDelegate{
-    
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
     
     @IBOutlet var groupCollectionView: UICollectionView!{
         didSet{
             self.groupCollectionView.delegate = self
             self.groupCollectionView.dataSource = self
+            self.groupCollectionView.alwaysBounceVertical = true
             self.groupCollectionView.addSubview(refreshControl)
         }
     }
@@ -41,17 +39,19 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
         groupCollectionView.adjustDesign(width: ((view.frame.size.width+20)/2.3))
         setupDefaultGroups()
         fetchGroupsData(isRefresh: false)
-        self.viewEmptyList.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
+    }
+    
+    fileprivate func setupDelegates(){
+        self.groupCollectionView.emptyDataSetSource = self
+        self.groupCollectionView.emptyDataSetDelegate = self
+        self.groupCollectionView.reloadData()
     }
     
     @objc func refreshTableView() {
-        self.viewEmptyList.isHidden = true
         fetchGroupsData(isRefresh: true)
     }
     
@@ -69,7 +69,6 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
         GDSManager().getGroups(successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
-                
                 if isRefresh == false {
                     self?.finishLoading()
                 }else {
@@ -77,19 +76,17 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
                 }
     
                 if let groupResponse = response{
-                    
-                    if(groupResponse.data?.groups ?? []).count == 0{
-                        self?.viewEmptyList.isHidden = false
-                    }else{
+                    if groupResponse.success!{
                         self?.grouplist = groupResponse.data?.groups ?? []
                         self?.grouplist.insert((self?.storeGroup)!, at: 0)
                         self?.grouplist.insert((self?.resturantGroup)!, at:1)
-                        self?.groupCollectionView.reloadData()
+                    }else{
+                        self?.alertMessage(message:(groupResponse.message?.en ?? "").localized, completionHandler: nil)
                     }
                 }else{
-                    
-                   self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                 }
+                self?.setupDelegates()
             }
         })
         {[weak self](error) in
@@ -99,14 +96,10 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
                 }else {
                     self?.refreshControl.endRefreshing()
                 }
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
-    }
-    
-    @IBAction func tryAgain(_ sender: UIButton){
-        self.viewEmptyList.isHidden = true
-        fetchGroupsData(isRefresh: false)
     }
 }
 
@@ -156,6 +149,10 @@ extension VCCategories{
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCResturants") as! VCResturants
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchGroupsData(isRefresh: false)
     }
 }
 

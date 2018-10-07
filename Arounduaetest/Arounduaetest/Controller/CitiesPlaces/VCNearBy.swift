@@ -10,18 +10,17 @@ import UIKit
 import XLPagerTabStrip
 import Cosmos
 import CoreLocation
+import DZNEmptyDataSet
 
-class VCNearBy: UIViewController,IndicatorInfoProvider,CLLocationManagerDelegate {
+class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
    
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
     var locationManager:CLLocationManager!
 
     @IBOutlet weak var NearbyCollectionview: UICollectionView!{
         didSet{
             self.NearbyCollectionview.delegate = self
             self.NearbyCollectionview.dataSource = self
+            self.NearbyCollectionview.alwaysBounceVertical = true
         }
     }
 
@@ -39,6 +38,13 @@ class VCNearBy: UIViewController,IndicatorInfoProvider,CLLocationManagerDelegate
         fetchCitiesPlacesData()
     }
     
+    fileprivate func setupDelegates(){
+        self.NearbyCollectionview.emptyDataSetSource = self
+        self.NearbyCollectionview.emptyDataSetDelegate = self
+        self.NearbyCollectionview.reloadData()
+    }
+    
+    
     private func fetchCitiesPlacesData(){
 
 //        guard let latitude = lat, let longitude = long else{
@@ -51,24 +57,23 @@ class VCNearBy: UIViewController,IndicatorInfoProvider,CLLocationManagerDelegate
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let citiesPlacesResponse = response{
-                        if(citiesPlacesResponse.data?.places ?? []).count == 0{
-                           self?.viewEmptyList.isHidden = false
-                        }else{
+                        if citiesPlacesResponse.success!{
                             self?.placeArray = citiesPlacesResponse.data?.places ?? []
                             self?.currentPage = citiesPlacesResponse.data?.pagination?.page ?? 1
                             self?.totalPages = citiesPlacesResponse.data?.pagination?.pages ?? 0
-                            self?.NearbyCollectionview.reloadData()
+                        }else{
+                            self?.alertMessage(message:(citiesPlacesResponse.message?.en ?? "").localized, completionHandler: nil)
                         }
                     }else{
-                        self?.viewEmptyList.isHidden = false
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async{
                 self?.finishLoading()
-                self?.viewEmptyList.isHidden = false
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -76,17 +81,9 @@ class VCNearBy: UIViewController,IndicatorInfoProvider,CLLocationManagerDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Stores"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
         determineMyCurrentLocation()
-
     }
 
-    @IBAction func tryAgain(_ sender: UIButton) {
-        self.viewEmptyList.isHidden = true
-        fetchCitiesPlacesData()
-    }
-    
     func determineMyCurrentLocation() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -114,31 +111,29 @@ extension VCNearBy{
     func initialUI(){
         
         NearbyCollectionview.spr_setTextHeader { [weak self] in
-            self?.viewEmptyList.isHidden = true
             self?.currentPage = 0
             CitiesPlacesManager().getCitiesPlaces((self?.cityid ?? "0","\(self?.currentPage ?? 0)","",""),successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         self?.NearbyCollectionview.spr_endRefreshing()
-                        if let storeResponse = response{
-                            if(storeResponse.data?.places ?? []).count == 0{
-                                self?.viewEmptyList.isHidden = false
+                        if let citiesPlacesResponse = response{
+                            if citiesPlacesResponse.success!{
+                                self?.placeArray = citiesPlacesResponse.data?.places ?? []
+                                self?.currentPage = citiesPlacesResponse.data?.pagination?.page ?? 1
+                                self?.totalPages = citiesPlacesResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.placeArray = storeResponse.data?.places ?? []
-                                self?.currentPage = storeResponse.data?.pagination?.page ?? 1
-                                self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
-                                self?.NearbyCollectionview.reloadData()
+                                self?.alertMessage(message:(citiesPlacesResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
                         }else{
-                            self?.viewEmptyList.isHidden = false
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.NearbyCollectionview.spr_endRefreshing()
-                    self?.viewEmptyList.isHidden = false
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                     }
                 }
@@ -153,20 +148,25 @@ extension VCNearBy{
                     DispatchQueue.main.async {
                         self?.NearbyCollectionview.spr_endRefreshing()
                         if let cityplacesResponse = response{
-                            for cityplaces in cityplacesResponse.data?.places ?? []{
-                                self?.placeArray.append(cityplaces)
+                            if cityplacesResponse.success!{
+                                for cityplaces in cityplacesResponse.data?.places ?? []{
+                                    self?.placeArray.append(cityplaces)
+                                }
+                                self?.currentPage = cityplacesResponse.data?.pagination?.page ?? 1
+                                self?.totalPages = cityplacesResponse.data?.pagination?.pages ?? 0
+                            }else{
+                                self?.alertMessage(message:(cityplacesResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
-                            self?.currentPage = cityplacesResponse.data?.pagination?.page ?? 1
-                            self?.totalPages = cityplacesResponse.data?.pagination?.pages ?? 0
-                            self?.NearbyCollectionview.reloadData()
                         }else{
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.NearbyCollectionview.spr_endRefreshing()
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -202,5 +202,9 @@ extension VCNearBy: UICollectionViewDataSource,UICollectionViewDelegate{
         let vc = storyboard.instantiateViewController(withIdentifier: "VCDesertSafari") as! VCDesertSafari
         vc.placeid = placeid
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchCitiesPlacesData()
     }
 }

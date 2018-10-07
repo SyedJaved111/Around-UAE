@@ -8,64 +8,82 @@
 
 import UIKit
 
-class VCSubDivisions: UIViewController {
+class VCSubDivisions: BaseController {
 
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
-    
     @IBOutlet var collectionViewSubDivison: UICollectionView!{
         didSet{
             self.collectionViewSubDivison.delegate = self
             self.collectionViewSubDivison.dataSource = self
+            self.collectionViewSubDivison.alwaysBounceVertical = true
+            self.collectionViewSubDivison.addSubview(refreshControl)
         }
     }
     
     var subDivisonlist = [GroupDivisonData]()
     var groupId = ""
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(refreshTableView),for: UIControlEvents.valueChanged)
+        refreshControl.tintColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionViewSubDivison.adjustDesign(width: ((view.frame.size.width+20)/2.3))
-        fetchSubDivisonsData()
+        fetchSubDivisonsData(isRefresh: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "SubCategories"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
         self.setNavigationBar()
         self.addBackButton()
     }
     
-    @IBAction func tryAgain(_ sender: UIButton) {
-        self.viewEmptyList.isHidden = true
-        fetchSubDivisonsData()
+    fileprivate func setupDelegates(){
+        self.collectionViewSubDivison.emptyDataSetSource = self
+        self.collectionViewSubDivison.emptyDataSetDelegate = self
+        self.collectionViewSubDivison.reloadData()
     }
     
-    private func fetchSubDivisonsData(){
-        startLoading("")
+    @objc func refreshTableView() {
+        fetchSubDivisonsData(isRefresh: true)
+    }
+    
+    private func fetchSubDivisonsData(isRefresh: Bool){
+        if isRefresh == false{
+            startLoading("")
+        }
         GDSManager().gethDivisonsOfGoup(groupId,successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async{
-                    self?.finishLoading()
-                    if let subDivisonResponse = response{
-                        if(subDivisonResponse.data ?? []).count == 0{
-                            self?.viewEmptyList.isHidden = false
-                        }else{
-                            self?.subDivisonlist = subDivisonResponse.data ?? []
-                            self?.collectionViewSubDivison.reloadData()
-                        }
-                    }else{
-                        self?.viewEmptyList.isHidden = false
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    if isRefresh == false {
+                        self?.finishLoading()
+                    }else {
+                        self?.refreshControl.endRefreshing()
                     }
+                    if let subDivisonResponse = response{
+                        if subDivisonResponse.success!{
+                            self?.subDivisonlist = subDivisonResponse.data ?? []
+                        }else{
+                            self?.alertMessage(message:(subDivisonResponse.message?.en ?? "").localized, completionHandler: nil)
+                       }
+                    }else{
+                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                    }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async {
-                self?.finishLoading()
-                self?.viewEmptyList.isHidden = false
+                if isRefresh == false {
+                    self?.finishLoading()
+                }else {
+                    self?.refreshControl.endRefreshing()
+                }
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -95,6 +113,10 @@ extension VCSubDivisions: UICollectionViewDataSource,UICollectionViewDelegate{
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchSubDivisonsData(isRefresh: false)
     }
 }
 

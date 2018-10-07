@@ -15,27 +15,27 @@ class VCProductDetail: UIViewController {
     @IBOutlet weak var prodcutPrice: UILabel!
     @IBOutlet weak var productname: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
-    @IBOutlet weak var Productcounter: GMStepper!
+    @IBOutlet weak var favouriteBtn: UIButton!
+    @IBOutlet weak var Productcounter: GMStepperCart!
     @IBOutlet weak var productDescription: UITextView!
-    @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var colorCollectionView: UICollectionView!{
+    @IBOutlet weak var CollectionView: UICollectionView!{
         didSet{
-            colorCollectionView.delegate = self
-            colorCollectionView.dataSource = self
-        }
-    }
-    
-    @IBOutlet weak var sizeCollectionView: UICollectionView!{
-        didSet{
-            sizeCollectionView.delegate = self
-            sizeCollectionView.dataSource = self
+            CollectionView.delegate = self
+            CollectionView.dataSource = self
+            CollectionView.allowsSelection = true
+            CollectionView.allowsMultipleSelection = true
         }
     }
     
     var product:Products!
     var productDetail:Product?
-
+    var selectedCell = [IndexPath]()
+    var dic = [String:Any]()
+    var features = [String]()
+    var characteristics = [String]()
+    var combination:Combinations?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getProductDetail()
@@ -52,11 +52,12 @@ class VCProductDetail: UIViewController {
                     if storeResponse.success!{
                         self?.productDetail = storeResponse.data!
                         self?.setupProductDetsil(storeResponse.data!)
-                        self?.colorCollectionView.reloadData()
-                        self?.sizeCollectionView.reloadData()
+                        self?.CollectionView.reloadData()
+                    }else{
+                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                 }
             }
         })
@@ -68,42 +69,18 @@ class VCProductDetail: UIViewController {
         }
     }
     
-    private func addToCart(){
-        
-        var dic = [String:Any]()
-        var features = [String]()
-        var characteristics = [String]()
-        
-        if let sizeindxpaths = sizeCollectionView.indexPathsForSelectedItems{
-            for indxpath in sizeindxpaths{
-                print(indxpath.row)
-                dic["characteristics[\(indxpath.row)]"] = productDetail?.priceables?[0].characteristics?[indxpath.row]._id ?? ""
-                characteristics.append(productDetail?.priceables?[0].characteristics?[indxpath.row]._id ?? "")
-            }
-            dic["features[\(0)]"] = productDetail?.priceables?[0].feature?._id ?? ""
-            features.append(productDetail?.priceables?[0].feature?._id ?? "")
-        }
-        
-        if let colorindxpaths = colorCollectionView.indexPathsForSelectedItems{
-            for indxpath in colorindxpaths{
-                print(indxpath.row)
-                dic["characteristics[\(indxpath.row)]"] = productDetail?.priceables?[1].characteristics?[indxpath.row]._id ?? ""
-                characteristics.append(productDetail?.priceables?[1].characteristics?[indxpath.row]._id ?? "")
-            }
-            dic["features[\(1)]"] = productDetail?.priceables?[1].feature?._id ?? ""
-            features.append(productDetail?.priceables?[1].feature?._id ?? "")
-        }
-       
+    private func checKCombination(){
         dic["product"] = product._id!
         dic["quantity"] = "\(Int(Productcounter.value))"
-       
+        
         if let combinations = productDetail?.combinations{
             for obj in combinations{
-                if obj.characteristics != characteristics && obj.features != features {
+                if obj.features! != features && obj.characteristics! != characteristics {
                     self.alertMessage(message: "Could not find combination!!", completionHandler: nil)
                     return
-                }else if obj.characteristics == characteristics && obj.features == features{
-                    addToCartProduct(dic)
+                }else if obj.features! == features && obj.characteristics! == characteristics{
+                    prodcutPrice.text = "$\(obj.price?.usd ?? 0)"
+                    combination = obj
                     break
                 }
             }
@@ -119,7 +96,7 @@ class VCProductDetail: UIViewController {
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
-                        
+                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
                     }else{
                         self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
                     }
@@ -151,34 +128,106 @@ class VCProductDetail: UIViewController {
         self.addBackButton()
     }
     
-    @IBAction func addtocartclick(_ sender: Any) {
-       addToCart()
+    @IBAction func addtocartclick(_ sender: Any){
+        guard let comb = combination,
+           let avaliablecount = comb.avalaible,avaliablecount > Int(Productcounter.value) else{
+            self.alertMessage(message: "Product is not avaliable in your desired quantity", completionHandler: nil)
+            return
+        }
+       addToCartProduct(dic)
+    }
+    
+    @IBAction func makeProductFavourite(_ sender: Any){
+        startLoading("")
+        ProductManager().makeProductFavourite(product._id!,
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let favouriteResponse = response{
+                    if favouriteResponse.success!{
+                        if(favouriteResponse.message?.en ?? "") == "Product disliked Successfully."{
+                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+                        }else{
+                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+                        }
+                    }else{
+                        self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
 }
 
 extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch collectionView{
-            case colorCollectionView:
-                return productDetail?.priceables?[1].characteristics?.count ?? 0
-            case sizeCollectionView:
-                return productDetail?.priceables?[0].characteristics?.count ?? 0
-            default:
-                return 0
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        var resuable :UICollectionReusableView? = nil
+        if kind == UICollectionElementKindSectionHeader{
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "ProductDetailView", for: indexPath) as! ProductDetailView
+            view.lblHeader.text = productDetail?.priceables?[indexPath.section].feature?.title?.en
+            resuable = view
+            return resuable!
         }
+        return resuable!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return productDetail?.priceables?[section].characteristics?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CharacteristicsCell", for: indexPath) as! CharacteristicsCell
-        switch collectionView{
-            case colorCollectionView:
-                cell.setupCell(productDetail?.priceables?[1].characteristics?[indexPath.row].image ?? "")
-            case sizeCollectionView:
-                cell.setupCell(productDetail?.priceables?[0].characteristics?[indexPath.row].image ?? "")
-            default:
-                return cell
-            }
+        cell.setupCell(productDetail?.priceables?[indexPath.row].characteristics?[indexPath.row].image ?? "")
+        if selectedCell.contains(indexPath){
+            cell.characterImage.layer.borderWidth = 2.0
+            cell.characterImage.layer.borderColor = UIColor.red.cgColor
+        }
+        else{
+            cell.characterImage.layer.borderWidth = 2.0
+            cell.characterImage.layer.borderColor = UIColor.clear.cgColor
+        }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
+        selectedCell.append(indexPath)
+        cell.characterImage.layer.borderWidth = 2.0
+        cell.characterImage.layer.borderColor = UIColor.red.cgColor
+        for indxpath in selectedCell{
+            dic["characteristics[\(indxpath.row)\(indxpath.section)]"] = productDetail?.priceables?[indxpath.section].characteristics?[indxpath.row]._id ?? ""
+            characteristics.append(productDetail?.priceables?[indxpath.section].characteristics?[indxpath.row]._id ?? "")
+        }
+        dic["features[\(indexPath.section)]"] = productDetail?.priceables?[indexPath.section].feature?._id ?? ""
+        features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
+        checKCombination()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
+        if  selectedCell.contains(indexPath){
+            selectedCell.remove(at: selectedCell.index(of: indexPath)!)
+            dic.remove(at: dic.index(forKey: "characteristics[\(indexPath.row)\(indexPath.section)]")!)
+            dic.remove(at: dic.index(forKey: "features[\(indexPath.section)]")!)
+            characteristics.remove(at: characteristics.index(of: productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")!)
+            features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)
+            cell.characterImage.layer.borderWidth = 2.0
+            cell.characterImage.layer.borderColor = UIColor.clear.cgColor
+            checKCombination()
+        }
     }
 }

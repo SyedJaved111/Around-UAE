@@ -9,7 +9,6 @@
 import UIKit
 import DZNEmptyDataSet
 
-
 class VCHome: BaseController{
     
     @IBOutlet weak var btnViewMore: UIButton!
@@ -21,6 +20,7 @@ class VCHome: BaseController{
         didSet{
             self.tablView.delegate = self
             self.tablView.dataSource = self
+            self.tablView.alwaysBounceVertical = true
             self.tablView.addSubview(refreshControl)
         }
     }
@@ -34,7 +34,7 @@ class VCHome: BaseController{
     }()
     
     var groupWithDivisionList = [GroupDivisonData]()
-    let lang  = UserDefaults.standard.string(forKey: "i18n_language")
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
    
     
     override func viewDidLoad(){
@@ -57,6 +57,11 @@ class VCHome: BaseController{
         fetchGroupsWithDivisons(isRefresh: true)
     }
     
+    fileprivate func setupDelegates(){
+        self.tablView.emptyDataSetSource = self
+        self.tablView.emptyDataSetDelegate = self
+        self.tablView.reloadData()
+    }
     
     private func fetchGroupsWithDivisons(isRefresh: Bool){
         
@@ -74,19 +79,19 @@ class VCHome: BaseController{
                         self?.refreshControl.endRefreshing()
                     }
                     if let groupResponse = response{
-                        if(groupResponse.data ?? []).count == 0{
-                            self?.bannerView.isHidden = true
-                            self?.tablView.isHidden = true
-                            self?.tablView.reloadData()
-                        }else{
+                        if groupResponse.success!{
                             self?.groupWithDivisionList = groupResponse.data ?? []
-                            self?.bannerView.isHidden = false
-                            self?.tablView.isHidden = false
-                            self?.tablView.reloadData()
-                         }
+                            if(self?.groupWithDivisionList.count ?? 0) > 0{
+                                self?.bannerView.isHidden = false
+                            }
+                        }else{
+                            self?.bannerView.isHidden = true
+                            self?.alertMessage(message:(groupResponse.message?.en ?? "").localized, completionHandler: nil)
+                        }
                     }else{
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                        self?.alertMessage(message:(response?.message?.en ?? "").localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
@@ -96,6 +101,7 @@ class VCHome: BaseController{
                 }else {
                     self?.refreshControl.endRefreshing()
                 }
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -106,7 +112,11 @@ class VCHome: BaseController{
     }
     
     @IBAction func ViewAllClick(_ sender: Any){
-        self.tabBarController?.selectedIndex = 2
+        if AppSettings.sharedSettings.accountType == "seller"{
+           self.tabBarController?.selectedIndex = 1
+        }else{
+           self.tabBarController?.selectedIndex = 2
+        }
     }
     
     private func moveToCitiesList(){
@@ -159,12 +169,8 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
         self.navigationController?.pushViewController(vc, animated: true)
     }
-}
-
-extension VCHome : DZNEmptyDataSetSource, DZNEmptyDataSetDelegate{
-    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "No Data Is Avaliable!"
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
-        return NSAttributedString(string: str, attributes: attrs)
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchGroupsWithDivisons(isRefresh: false)
     }
 }

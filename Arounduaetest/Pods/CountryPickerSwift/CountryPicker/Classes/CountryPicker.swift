@@ -6,8 +6,10 @@
 //  Copyright © 2016 Taras Markevych. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import CoreTelephony
+
 /// CountryPickerDelegate
 ///
 /// - Parameters:
@@ -17,7 +19,7 @@ import CoreTelephony
 ///   - phoneCode: Phone digit code of country
 ///   - flag: Flag of country
 @objc public protocol CountryPickerDelegate {
-    func countryPhoneCodePicker(_ picker: CountryPicker, didSelectCountryWithName name: String, countryCode: String, phoneCode: String, flag: UIImage)
+    @objc func countryPhoneCodePicker(_ picker: CountryPicker, didSelectCountryWithName name: String, countryCode: String, phoneCode: String, flag: UIImage)
 }
 
 /// Structure of country code picker
@@ -41,16 +43,37 @@ public struct Country {
         self.flagName = flagName
     }
     
-    var flag: UIImage? {
+    public var flag: UIImage? {
         return UIImage(named: flagName, in: Bundle(for: CountryPicker.self), compatibleWith: nil)
     }
 }
 
-open class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
+open class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource, UIGestureRecognizerDelegate {
+    open var currentCountry: Country? = nil
+    @objc open var displayOnlyCountriesWithCodes: [String]?
+    @objc open var exeptCountriesWithCodes: [String]?
     
-    var countries: [Country]!
-    open weak var countryPickerDelegate: CountryPickerDelegate?
-    open var showPhoneNumbers: Bool = true
+    var countries: [Country] {
+        let allCountries: [Country] = CountryPicker.countryNamesByCode()
+        if let display = displayOnlyCountriesWithCodes {
+            let filtered = allCountries.filter { country in display.contains(where: { code in country.code == code }) }
+            return filtered
+        }
+        if let display = exeptCountriesWithCodes {
+            let filtered = allCountries.filter { country in display.contains(where: { code in country.code != code }) }
+            return filtered
+        }
+        return allCountries
+    }
+    @objc open weak var countryPickerDelegate: CountryPickerDelegate?
+    @objc open var showPhoneNumbers: Bool = false
+    open var theme: CountryViewTheme?
+    
+    
+    init() {
+        super.init(frame: .zero)
+        setup()
+    }
     
     /// init
     ///
@@ -67,10 +90,13 @@ open class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSo
     
     /// Setup country code picker
     func setup() {
-        countries = CountryPicker.countryNamesByCode()
-        
         super.dataSource = self
         super.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(pickerTapped(tapRecognizer:)))
+        tap.cancelsTouchesInView = false
+        tap.delegate = self
+        self.addGestureRecognizer(tap)
     }
     
     // MARK: - Country Methods
@@ -89,6 +115,7 @@ open class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSo
         
         self.selectRow(row, inComponent: 0, animated: true)
         let country = countries[row]
+        currentCountry = country
         if let countryPickerDelegate = countryPickerDelegate {
             countryPickerDelegate.countryPhoneCodePicker(self, didSelectCountryWithName: country.name!, countryCode: country.code!, phoneCode: country.phoneCode!, flag: country.flag!)
         }
@@ -108,6 +135,7 @@ open class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSo
         
         self.selectRow(row, inComponent: 0, animated: true)
         let country = countries[row]
+        currentCountry = country
         if let countryPickerDelegate = countryPickerDelegate {
             countryPickerDelegate.countryPhoneCodePicker(self, didSelectCountryWithName: country.name!, countryCode: country.code!, phoneCode: country.phoneCode!, flag: country.flag!)
         }
@@ -179,7 +207,11 @@ open class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSo
         var resultView: CountryView
         
         if view == nil {
-            resultView = CountryView()
+            if let theme = self.theme {
+                resultView = CountryView(theme: theme)
+            } else {
+                resultView = CountryView()
+            }
         } else {
             resultView = view as! CountryView
         }
@@ -197,10 +229,28 @@ open class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSo
     ///   - pickerView: CountryPickerView
     ///   - row: selectedRow
     ///   - component: description
-    open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    @objc open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let country = countries[row]
+        currentCountry = country
         if let countryPickerDelegate = countryPickerDelegate {
             countryPickerDelegate.countryPhoneCodePicker(self, didSelectCountryWithName: country.name!, countryCode: country.code!, phoneCode: country.phoneCode!, flag: country.flag!)
         }
     }
+    
+    @objc
+    func pickerTapped(tapRecognizer: UITapGestureRecognizer) {
+        if (tapRecognizer.state == .ended) {
+            let rowHeight: CGFloat = self.rowSize(forComponent: 0).height
+            let selectedRowFrame: CGRect = self.bounds.insetBy(dx: 0, dy: (self.frame.height - rowHeight) / 2.0)
+            let userTappedOnSelectedRow = selectedRowFrame.contains(tapRecognizer.location(in: self))
+            if (userTappedOnSelectedRow) {
+                _ = self.pickerView(self, didSelectRow: 0, inComponent: 0)
+            }
+        }
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool{
+        return true
+    }
+    
 }

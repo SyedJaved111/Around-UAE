@@ -13,6 +13,7 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
 
     @IBOutlet var collectionViewPager: ButtonBarView!
     var cityId = ""
+    
     let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCNearBy")
     let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCTopRated")
     
@@ -39,7 +40,6 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
         
         collectionViewPager.layer.borderWidth = 1
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
-        super.viewDidLoad()
         super.viewDidLoad()
     }
   

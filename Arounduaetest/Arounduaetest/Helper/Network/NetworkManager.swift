@@ -13,8 +13,7 @@ import SystemConfiguration
 class NetworkManager {
     
     lazy var authPlugin = AccessTokenPlugin(tokenClosure: self.tokenClosure())
-    lazy var provider:MoyaProvider<ServerAPI> = MoyaProvider<ServerAPI>(plugins: [authPlugin])
-    //MoyaProvider<ServerAPI>(manager: DefaultAlamofireManager.sharedManager,plugins: [authPlugin])
+    lazy var provider:MoyaProvider<ServerAPI> = MoyaProvider<ServerAPI>(manager: DefaultAlamofireManager.sharedManager,plugins: [authPlugin])
     
     static let networkError = NetworkError(status: Constants.NetworkError.parsing,message: Constants.NetworkError.parsingError)
     

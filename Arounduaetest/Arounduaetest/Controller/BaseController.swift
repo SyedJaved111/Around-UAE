@@ -1,6 +1,7 @@
 
 import UIKit
 import MBProgressHUD
+import DZNEmptyDataSet
 
 class BaseController: UIViewController {
 
@@ -47,5 +48,32 @@ extension UIViewController{
         }
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension BaseController: DZNEmptyDataSetSource,DZNEmptyDataSetDelegate {
+    
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return #imageLiteral(resourceName: "Store_img")
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "Sorry there is no data available".localized
+        let attribs = [
+            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 19),
+            NSAttributedStringKey.foregroundColor: UIColor.darkGray
+        ]
+        
+        return NSAttributedString(string: text, attributes: attribs)
+    }
+    
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+        let text = "Try Again!"
+        let attribs = [
+            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
+            NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)
+            ] as [NSAttributedStringKey : Any] as [NSAttributedStringKey : Any]
+        
+        return NSAttributedString(string: text, attributes: attribs)
     }
 }
