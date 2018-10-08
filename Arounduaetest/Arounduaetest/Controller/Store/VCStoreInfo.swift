@@ -12,7 +12,8 @@ import Cosmos
 import SDWebImage
 
 class VCStoreInfo: UIViewController,IndicatorInfoProvider {
-  
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet var lblInstinct: UILabel!
     @IBOutlet var lblAdress: UILabel!
     @IBOutlet var btnSubmitFeedBack: UIButtonMain!

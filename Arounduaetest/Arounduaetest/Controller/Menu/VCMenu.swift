@@ -10,6 +10,8 @@ import UIKit
 import SDWebImage
 
 class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     @IBOutlet weak var lblUserProfileMail: UILabel!
     @IBOutlet weak var lblUserProfilename: UILabel!
@@ -29,12 +31,19 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
        "About Us".localized]
     
     let defaults = UserDefaults.standard
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     let shareduserinfo = SharedData.sharedUserInfo
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        if(lang == "en"){
         lblMenuName += shareduserinfo.pages.map({$0.title?.en ?? ""})
+        }
+        else if(lang == "ar")
+        {
+           lblMenuName += shareduserinfo.pages.map({$0.title?.ar ?? ""})
+        }
         Menuimg += shareduserinfo.pages.map({$0.image ?? ""})
         lblMenuName.append("Language".localized)
         Menuimg.append("Language")

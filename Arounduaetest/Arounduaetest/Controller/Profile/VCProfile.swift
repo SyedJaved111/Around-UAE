@@ -13,7 +13,8 @@ import MBProgressHUD
 import GooglePlaces
 
 class VCProfile: BaseController {
-
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet var imgProfilePicture: UIImageView!
     @IBOutlet weak var txtUserName: UILabel!
     @IBOutlet weak var txtEmail: UILabel!
@@ -25,6 +26,17 @@ class VCProfile: BaseController {
     @IBOutlet weak var txtPhoneno: UILabel!
     @IBOutlet weak var scrollSubView: UIView!
 
+    
+    @IBOutlet weak var lblphoneno: UILabel!
+   
+    @IBOutlet weak var lbladdress: UILabel!
+    @IBOutlet weak var lblcnic: UILabel!
+    @IBOutlet weak var lblgender: UILabel!
+    @IBOutlet weak var lblemail: UILabel!
+    
+    @IBOutlet weak var lblcity: UILabel!
+    @IBOutlet weak var lblpassword: UILabel!
+    @IBOutlet weak var lblname: UILabel!
     var imagePicker = UIImagePickerController()
     var cameraPicker = UIImagePickerController()
     
@@ -38,9 +50,41 @@ class VCProfile: BaseController {
 
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
+        
+        self.title = "Profile".localized
+       
+         self.txtUserName.text = "Name".localized
+       self.txtEmail.text = "Email".localized
+       self.txtPassword.text = "Password".localized
+       self.txtCnic.text = "CNIC".localized
+        self.txtGender.text = "Gender".localized
+        self.txtCity.text = "City".localized
+       self.txtAddress.text = "Address".localized
+        self.txtPhoneno.text = "Phone no".localized
+        
+       self.lblphoneno.text = "Phone no".localized
+        self.lbladdress.text = "Address".localized
+        self.lblcnic.text = "CNIC".localized
+        self.lblgender.text = "Gender".localized
+        self.lblemail.text = "Email".localized
+        self.lblcity.text = "City".localized
+       self.lblpassword.text = "Password".localized
+        self.lblname.text = "Name".localized
+        
+        
+        if(lang == "en")
+        {
         self.addBackButton()
-        self.title = "Profile"
+        
+        }else if(lang == "ar")
+        {
+            self.showArabicBackButton()
+            self.title = "Profile".localized
+        }
         self.setupUserInfo(AppSettings.sharedSettings.user)
+        
+        
+        
     }
     
     @objc func methodOfReceivedNotification(notification: Notification){

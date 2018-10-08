@@ -108,3 +108,65 @@
 "Terms & Conditions" =   "Terms & Conditions";
 "Privacy Policy" = "Privacy Policy";
 "Logout" =   "Logout" ;
+"Error" = "Error";
+//"ProductList"
+"Products" = "Products";
+
+
+//"Profile"
+"Name" = "Name";
+"Email" = "Email";
+"Password" = "Password";
+"CNIC" = "CNIC";
+"Gender"  = "Gender";
+"City" = "City";
+"Address" = "Address";
+"Phone no" = "Phone no";
+//"VCPopupprofile"
+
+"Cancel" ="Cancel" ;
+"Submit" ="Submit" ;
+"Edit Name" = "Edit Name";
+"Please Enter your name" = "Please Enter your name" ;
+"Edit Email" = "Edit Email";
+"Please Enter your Email" = "Please Enter your Email";
+"Edit Gender" = "Edit Gender";
+"Please Enter your Gender" = "Please Enter your Gender";
+"Edit Phone no" = "Edit Phone no";
+"Edit CNIC" = "Edit CNIC";
+"Please Enter your CNIC " = "Please Enter your CNIC ";
+"Edit Gender" = "Edit Gender";
+"Please Select your Gender" = "Please Select your Gender";
+"CANCEL" = "CANCEL";
+"UPDATE" = "UPDATE";
+"Edit City" = "Edit city";
+"Please Enter your city" = "Please Enter your city";
+"Male" = "Male";
+"Female" = "Female";
+"Please Enter your Phone no" = "Please Enter your Phone no";
+"Please Enter Name" = "Please Enter Name";
+"Please Enter Email" = "Please Enter Email";
+"Please Enter Valid Email" = "Please Enter Valid Email";
+"Please Enter Password" = "Please Enter Password";
+"Please Enter Password Below 6 Characters" = "Please Enter Password Below 6 Characters";
+"Please Enter CNIC" = "Please Enter CNIC";
+"Please Enter Gender" = "Please Enter Gender";
+"Please Enter City" = "Please Enter City";
+"Please Enter Address" = "Please Enter Address";
+"Please Enter Phone No" = "Please Enter Phone No";
+
+//"Stores"
+"Stores" = "Stores";
+"Sorry there no data available" = "Sorry there no data available";
+"Empty List" = "Empty List";
+//"Resturant"
+"Resturants" = "Resturants";
+
+//"ProductDetail"
+"Product Detail" = "Product Detail";
+//"VCSToreTab"
+"Sorry there no data is available refresh it or try it later " = "Sorry there no data is available refresh it or try it later ";
+//"StoreInfo"
+"Store Info" =  "Store Info";
+//"Store Product"
+"Store Products" = "Store Products";

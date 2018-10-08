@@ -9,8 +9,9 @@
 import UIKit
 import XLPagerTabStrip
 
+let lang = UserDefaults.standard.string(forKey: "i18n_language")
 class VCStoreTab: ButtonBarPagerTabStripViewController {
-
+    
     @IBOutlet weak var viewEmptyList: UIView!
     @IBOutlet weak var lblEmpty: UILabel!
     @IBOutlet weak var lblMessage: UILabel!
@@ -55,8 +56,13 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.setNavigationBar()
+        if(lang == "en"){
         self.addBackButton()
-        self.title = "Stores"
+        }else if(lang == "ar")
+        {
+            self.showArabicBackButton()
+        }
+        self.title = "Stores".localized
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
     }
@@ -73,8 +79,10 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                     self?.finishLoading()
                     if let productResponse = response{
                         if productResponse.success!{
+                            if(lang == "en"){
                             let vcStoreInfo = self?.child_1 as! VCStoreInfo
                             vcStoreInfo.storeid = productResponse.data?._id ?? ""
+                            
                             vcStoreInfo.lblInstinct.text = productResponse.data?.storeName?.en ?? ""
                             vcStoreInfo.lblAdress.text = productResponse.data?.location ?? ""
                             vcStoreInfo.lblWords.text = productResponse.data?.description?.en ?? ""
@@ -84,13 +92,36 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                             
                             let vcStoreProducts = self?.child_2 as! VCStoreProducts
                             vcStoreProducts.productsArray = productResponse.data?.products ?? []
+                            }
+                            else if(lang == "ar")
+                            {
+                                let vcStoreInfo = self?.child_1 as! VCStoreInfo
+                                vcStoreInfo.storeid = productResponse.data?._id ?? ""
+                                
+                                vcStoreInfo.lblInstinct.text = productResponse.data?.storeName?.ar ?? ""
+                                vcStoreInfo.lblAdress.text = productResponse.data?.location ?? ""
+                                vcStoreInfo.lblWords.text = productResponse.data?.description?.ar ?? ""
+                                vcStoreInfo.storeImage.setShowActivityIndicator(true)
+                                vcStoreInfo.storeImage.setIndicatorStyle(.gray)
+                                vcStoreInfo.storeImage.sd_setImage(with: URL(string: productResponse.data?.image ?? ""))
+                                
+                                let vcStoreProducts = self?.child_2 as! VCStoreProducts
+                                vcStoreProducts.productsArray = productResponse.data?.products ?? []
+                            }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (productResponse.message?.en ?? "").localized, completionHandler: nil)
+                            }else if(lang == "ar")
+                            {
+                                self?.alertMessage(message: (productResponse.message?.ar ?? "").localized, completionHandler: nil)
+                            }
+                            
                         }
                     }else{
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)
                     }
-                }
+                    }
             })
         {[weak self](error) in
             DispatchQueue.main.async {

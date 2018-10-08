@@ -105,3 +105,65 @@
 "Terms & Conditions" =   "البنود و الظروف";
 "Privacy Policy" = "سياسة الخصوصية";
 "Logout" =   "الخروج";
+"Error" = "خطأ";
+//"ProductList"
+"Products" = "منتجات";
+
+//"Profile"
+"Name" = "اسم";
+"Email" = "البريد الإلكتروني";
+"Password" = "كلمه السر";
+"CNIC" = "ج ن ط ج";
+"Gender"  = "جنس";
+"City" = "مدينة";
+"Address" = "عنوان";
+"Phone no" = "رقم الهاتف";
+//"VCPopupprofile"
+
+"Cancel" ="إلغاء" ;
+"Submit" = "خضع" ;
+"Edit Name" = "تعديل الاسم";
+"Please Enter your name" = "من فضلك أدخل إسمك";
+"Edit Email" = "تحرير البريد الالكتروني";
+"Please Enter your Email" = "رجاءا أدخل بريدك الإلكتروني";
+"Edit Gender" = "تحرير الجنس";
+"Please Enter your Gender" = "يرجى إدخال نوع الجنس الخاص بك";
+"Edit Phone no" = "تحرير الهاتف لا";
+"Please Enter your  c n i c " =  "ج ن ط ج من فضلك أدخل";
+"Edit c n i c" = "تحرير ج ن ط ج ";
+"c n i c" = "ج ن ط ج";
+"Edit Gender" = "تحرير الجنس";
+"Please Select your Gender" = "يرجى تحديد نوع الجنس الخاص بك";
+"CANCEL" = "إلغاء";
+"UPDATE" = "تحديث";
+"Edit city" = "تحرير المدينة";
+"Please Enter your city" = "يرجى إدخال المدينة الخاصة بك";
+"Male" = "الذكر";
+"Female" = "إناثا";
+"Please Enter your Phone no" = "يرجى إدخال رقم الهاتف الخاص بك";
+"Please Enter Name" = "من فضلك أدخل الاسم";
+"Please Enter Email" = "يرجى إدخال البريد الإلكتروني";
+"Please Enter Valid Email" = "الرجاء إدخال بريد إلكتروني صحيح";
+"Please Enter Password" = "من فضلك أدخل كلمة المرور";
+"Please Enter Password Below 6 Characters" = "يرجى إدخال كلمة المرور أدناه ستة أحرف";
+"Please Enter CNIC" = "يرجى إدخال CNIC";
+"Please Enter Gender" = "يرجى إدخال الجنس";
+"Please Enter City" = "من فضلك أدخل المدينة";
+"Please Enter Address" = "يرجى إدخال العنوان";
+"Please Enter Phone No" = "يرجى إدخال رقم الهاتف";
+
+//"Stores"
+"Stores" = "مخازن";
+"Sorry there no data available" = "عذرا لا توجد بيانات متاحة";
+"Empty List" = "قائمة فارغة";
+//"Resturant"
+"Resturants" = "مطاعم";
+
+//"ProductDetail"
+"Product Detail" = "تفاصيل المنتج";
+//"VCSToreTab"
+"Sorry there no data is available refresh it or try it later " = "عذرًا ، لا توجد بيانات متوفرة لتحديثها أو تجربتها لاحقًا";
+//"StoreInfo"
+"Store Info" =  "معلومات المتجر";
+//"Store Product"
+"Store Products" = "منتجات المتجر";

@@ -11,7 +11,8 @@ import XLPagerTabStrip
 import SDWebImage
 
 class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
-   
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet var collectionViewManageProducts: UICollectionView!
     var productsArray = [Products]()
     
@@ -22,7 +23,7 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
-        return IndicatorInfo.init(title: "Store Products")
+        return IndicatorInfo.init(title: "Store Products".localized)
     }
     
     func favouriteTapped(cell: CellStore){

@@ -10,7 +10,8 @@ import UIKit
 import Cosmos
 
 class VCProductDetail: UIViewController {
-
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var prodcutPrice: UILabel!
     @IBOutlet weak var productname: UILabel!
@@ -50,6 +51,8 @@ class VCProductDetail: UIViewController {
     }
     
     private func setupProductDetsil(_ productdetail:Product){
+        if(lang == "en")
+        {
         productImage.setShowActivityIndicator(true)
         productImage.setIndicatorStyle(.gray)
         productImage.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
@@ -57,6 +60,16 @@ class VCProductDetail: UIViewController {
         productname.text = productdetail.productName?.en ?? ""
         ratingView.rating = 0.0
         productDescription.text = productdetail.description?.en ?? ""
+        }else if(lang == "ar")
+        {
+            productImage.setShowActivityIndicator(true)
+            productImage.setIndicatorStyle(.gray)
+            productImage.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
+            prodcutPrice.text = "$\(product.price?.usd ?? 0)"
+            productname.text = productdetail.productName?.ar ?? ""
+            ratingView.rating = 0.0
+            productDescription.text = productdetail.description?.ar ?? ""
+        }
     }
     
     @IBAction func productLike(_ sender: UIButton) {
@@ -68,7 +81,7 @@ class VCProductDetail: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Product Detail"
+        self.title = "Product Detail".localized
         self.addBackButton()
     }
     

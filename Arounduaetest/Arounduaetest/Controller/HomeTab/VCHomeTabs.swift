@@ -13,7 +13,7 @@ class VCHomeTabs: TTabBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNavigationBar()
-        self.title = "Around UAE"
+        self.title = "Around UAE".localized
         self.addNavigationButton()
     }
 

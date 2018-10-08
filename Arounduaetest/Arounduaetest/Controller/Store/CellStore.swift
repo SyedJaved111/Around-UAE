@@ -16,7 +16,8 @@ protocol storeCellDelegate{
 }
 
 class CellStore: UICollectionViewCell {
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet var UIButtonFavourite: UIButton!
     @IBOutlet var imgProducts: UIImageView!
     @IBOutlet var lblProductName: UILabel!
@@ -34,6 +35,7 @@ class CellStore: UICollectionViewCell {
     }
     
     func setupProductCell(product:Products){
+        if(lang == "en"){
         lblProductName.text = product.productName?.en
         ratingView.rating = Double(product.averageRating ?? 0)
 
@@ -41,6 +43,17 @@ class CellStore: UICollectionViewCell {
         imgProducts.setIndicatorStyle(.gray)
         productPrice.text = "$\(product.price?.usd ?? 0)"
         imgProducts.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
+        } else if(lang == "ar")
+        {
+            lblProductName.text = product.productName?.ar
+            ratingView.rating = Double(product.averageRating ?? 0)
+            
+            imgProducts.setShowActivityIndicator(true)
+            imgProducts.setIndicatorStyle(.gray)
+            productPrice.text = "$\(product.price?.usd ?? 0)"
+            imgProducts.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
+            
+        }
     }
     
     @IBAction func addToCart(_ sender: UIButton){

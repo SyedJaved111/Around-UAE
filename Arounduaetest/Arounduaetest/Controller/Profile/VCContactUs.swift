@@ -10,7 +10,8 @@ import UIKit
 import DropDown
 
 class VCContactUs: UIViewController{
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var appFeedBack: UILabel!
     @IBOutlet weak var txtAppFeedback: UICustomTextView!
     @IBOutlet weak var lblName: UILabel!
@@ -23,7 +24,8 @@ class VCContactUs: UIViewController{
     @IBOutlet weak var dropdown: UIButton!
     let menudropDown = DropDown()
     
-   
+    @IBOutlet weak var lblwhatyou: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         menudropDown.anchorView = dropdown
@@ -35,20 +37,41 @@ class VCContactUs: UIViewController{
         }
     }
 
-    override func viewWillAppear(_ animated: Bool){
+    override func viewWillAppear(_ animated: Bool)
+    {
         self.setNavigationBar()
         self.addBackButton()
         self.title = "Contact Us".localized
-        self.appFeedBack.text = "App Feedback".localized
-        self.txtAppFeedback.text = "   Comments...".localized
+        self.lblwhatyou.text = "What can we Help you with?".localized
+        //self.txtAppFeedback.placeholder = "App Feedback".localized
         self.lblName.text = "Name".localized
-        self.txtName.placeholder = "Name".localized
+        self.txtName.text = "Name".localized
         self.lblEmail.text = "Email".localized
-        self.txtEmail.placeholder = "Email".localized
+        self.txtEmail.text = "Email".localized
         self.lblYourComment.text = "Your Comment".localized
         self.txtComment.text = "Comment".localized
         self.btnSubmit.setTitle("Submit".localized, for: .normal)
+        
+        
+        if(lang == "ar")
+        {
+            self.showArabicBackButton()
+            self.txtEmail.textAlignment = .right
+            self.txtName.textAlignment = .right
+            self.txtComment.textAlignment = .right
+            self.txtAppFeedback.textAlignment = .right
+            
+        }else if(lang == "en")
+        {
+            
+            self.addBackButton()
+            self.txtEmail.textAlignment = .left
+            self.txtName.textAlignment = .left
+            self.txtComment.textAlignment = .left
+            self.txtAppFeedback.textAlignment = .left
+        }
     }
+    
     
     private func isCheck()->Bool{
         

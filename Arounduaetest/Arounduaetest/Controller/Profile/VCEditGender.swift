@@ -11,6 +11,10 @@ import DLRadioButton
 
 class VCEditGender: UIViewController {
     
+    @IBOutlet weak var btnupdate: UIButton!
+    @IBOutlet weak var btnCancel: UIButton!
+    @IBOutlet weak var lbldata: UILabel!
+    @IBOutlet weak var lblheading: UILabel!
     @IBOutlet var backView: UIView!
     @IBOutlet weak var maleRadio: DLRadioButton!
     @IBOutlet weak var femaleRadio: DLRadioButton!
@@ -27,7 +31,15 @@ class VCEditGender: UIViewController {
             femaleRadio.isSelected = true
         }
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        self.lblheading.text = "Edit Gender".localized
+        self.lbldata.text = "Please Select your Gender".localized
+        self.btnCancel.setTitle("CANCEL".localized, for: .normal)
+       self.btnupdate.setTitle("UPDATE".localized, for: .normal)
+        self.maleRadio.setTitle("Male".localized, for: .normal)
+        self.femaleRadio.setTitle("Female".localized, for: .normal)
+    }
     @IBAction func female(_ sender: DLRadioButton) {
         femaleRadio.isSelected = true
         maleRadio.isSelected = false

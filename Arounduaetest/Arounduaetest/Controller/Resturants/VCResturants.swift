@@ -9,7 +9,8 @@
 import UIKit
 
 class VCResturants: BaseController{
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var viewEmptyList: UIView!
     @IBOutlet weak var lblEmpty: UILabel!
     @IBOutlet weak var lblMessage: UILabel!
@@ -33,11 +34,18 @@ class VCResturants: BaseController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Resturants"
+        self.title = "Resturants".localized
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data available".localized
         self.setNavigationBar()
+        if(lang == "en"){
+    
         self.addBackButton()
+        }
+        else if(lang == "ar")
+        {
+            self.showArabicBackButton()
+        }
     }
     
     private func fetchResturantsData(){

@@ -57,7 +57,7 @@ class VCCart: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool){
-        self.title = "Cart"
+        self.title = "Cart".localized
         self.addBackButton()
     }
     

@@ -9,11 +9,14 @@
 import UIKit
 
 class VCPopUpprofile: UIViewController {
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var headinglbl: UILabel!
     @IBOutlet weak var TxtFiledName: UITextField!
     @IBOutlet weak var titlelbl: UILabel!
+    @IBOutlet weak var btnsubmit: UIButtonMain!
     
+    @IBOutlet weak var btncancel: UIButtonMain!
     var titlefield = ""
     var placeholdertxt = ""
     var headertxt = ""
@@ -24,21 +27,86 @@ class VCPopUpprofile: UIViewController {
         titlelbl.text = titlefield
         headinglbl.text = headertxt
         
+//        switch placeholdertxt {
+//            case "Name":
+//               TxtFiledName.text = AppSettings.sharedSettings.user.fullName
+//            case "Email":
+//               TxtFiledName.text = AppSettings.sharedSettings.user.email
+//            case "Gender":
+//               TxtFiledName.text = AppSettings.sharedSettings.user.gender
+//            case "Address":
+//               TxtFiledName.text = AppSettings.sharedSettings.user.address
+//            case "PhoneNo":
+//               TxtFiledName.text = AppSettings.sharedSettings.user.phone
+//            default:
+//                break
+//        }
+                  TxtFiledName.placeholder = "c n i c".localized
+
+                    self.headinglbl.text = "Edit c n i c".localized
+                    self.titlelbl.text = "Please Enter your  c n i c ".localized
+
+      
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+        
+        self.btncancel.setTitle("Cancel".localized, for: .normal)
+        self.btnsubmit.setTitle("Submit".localized, for: .normal)
+        
         switch placeholdertxt {
-            case "Name":
-               TxtFiledName.text = AppSettings.sharedSettings.user.fullName
-            case "Email":
-               TxtFiledName.text = AppSettings.sharedSettings.user.email
-            case "Gender":
-               TxtFiledName.text = AppSettings.sharedSettings.user.gender
-            case "Address":
-               TxtFiledName.text = AppSettings.sharedSettings.user.address
-            case "PhoneNo":
-               TxtFiledName.text = AppSettings.sharedSettings.user.phone
-            default:
-                break
+        case "Name":
+            TxtFiledName.placeholder = "Name".localized
+            self.headinglbl.text = "Edit Name".localized
+            self.titlelbl.text = "Please Enter your name".localized
+            
+        case "Email":
+            TxtFiledName.placeholder = "Email".localized
+            
+            self.headinglbl.text = "Edit Email".localized
+            self.titlelbl.text = "Please Enter your Email".localized
+        case "Gender":
+            TxtFiledName.placeholder = "Gender".localized
+            
+            self.headinglbl.text = "Edit Gender".localized
+            self.titlelbl.text = "Please Enter your Gender".localized
+            
+        case "Address":
+            TxtFiledName.placeholder = "Address".localized
+            
+            
+            
+        case "PhoneNo":
+            TxtFiledName.placeholder = "Phone no".localized
+            
+            self.headinglbl.text = "Edit Phone no".localized
+            self.titlelbl.text = "Please Enter your Phone no".localized
+        default:
+            break
+        }
+        
+        if(lang == "en")
+        {
+//            self.TxtFiledName.textAlignment = .left
+//            TxtFiledName.placeholder = "C N I C".localized
+//
+//            self.headinglbl.text = "Edit CNIC".localized
+//            self.titlelbl.text = "Please Enter your CNIC ".localized
+        }else if(lang == "ar")
+        {
+            self.TxtFiledName.textAlignment = .right
+//            TxtFiledName.placeholder = "c n i c".localized
+//
+//            self.headinglbl.text = "Edit c n i c".localized
+//            self.titlelbl.text = "Please Enter your  c n i c ".localized
+            
         }
     }
+        
+        
+    
     
     @IBAction func cancelClick(_ sender: Any) {
         dismiss(animated: true , completion: nil)
@@ -55,19 +123,19 @@ class VCPopUpprofile: UIViewController {
             case "Name":
                 
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Name", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Name".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.fullName = value
             case "Email":
                 
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Email", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Email".localized, completionHandler: nil)
                     return
                 }
                 
                 if !value.isValidEmail{
-                    let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Valid Email", okAction: {
+                    let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid Email".localized, okAction: {
                     })
                     self.present(alertView, animated: true, completion: nil)
                     return
@@ -76,7 +144,7 @@ class VCPopUpprofile: UIViewController {
                 AppSettings.sharedSettings.user.email = value
             case "Password":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Password", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Password".localized, completionHandler: nil)
                     return
                 }
                 
@@ -88,30 +156,30 @@ class VCPopUpprofile: UIViewController {
                 }
             case "CNIC":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter CNIC", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter CNIC".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.nic = value
             case "Gender":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Gender", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Gender".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.gender = value
             case "City":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter City", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter City".localized, completionHandler: nil)
                     return
                 }
             case "Address":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Address", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Address".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.address = value
             case "PhoneNo":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Phone No", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Phone No".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.phone = value

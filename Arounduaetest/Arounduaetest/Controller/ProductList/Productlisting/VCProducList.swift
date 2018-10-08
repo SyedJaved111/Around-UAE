@@ -9,7 +9,7 @@
 import UIKit
 import  XLPagerTabStrip
 class VCProducList: ButtonBarPagerTabStripViewController {
-    
+    let lang  = UserDefaults.standard.string(forKey: "i18n_language")
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .red
         settings.style.buttonBarItemBackgroundColor = .white
@@ -37,8 +37,15 @@ class VCProducList: ButtonBarPagerTabStripViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
-        self.addBackButton()
-        self.title = "Products"
+        
+        if(lang == "en"){
+            self.addBackButton()
+            self.title = "Products".localized
+        } else if(lang == "ar")
+        {
+           self.showArabicBackButton()
+            self.title = "Products".localized
+        }
     }
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCNearByProductList")

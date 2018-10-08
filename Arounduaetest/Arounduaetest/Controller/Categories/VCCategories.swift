@@ -10,7 +10,8 @@ import UIKit
 import XLPagerTabStrip
 
 class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDelegate{
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var viewEmptyList: UIView!
     @IBOutlet weak var lblEmpty: UILabel!
     @IBOutlet weak var lblMessage: UILabel!
@@ -119,12 +120,29 @@ extension VCCategories{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellCategories", for: indexPath) as! CellCategories
         let obj = grouplist[indexPath.row]
-        if obj.title?.en == "Stores"{
-            cell.setupCell(obj, groupImage: #imageLiteral(resourceName: "3"))
-        }else if obj.title?.en == "Resturants" {
+        if(lang == "en"){
+        if obj.title?.en == "Stores"
+        {
+              cell.setupCell(obj, groupImage: #imageLiteral(resourceName: "3"))
+        }else if obj.title?.en == "Resturants"
+        {
             cell.setupCell(obj, groupImage: #imageLiteral(resourceName: "4"))
-        }else{
+        }else
+        {
             cell.setupCell(obj, groupImage: nil)
+            }}
+        else if(lang == "ar")
+        {
+            if obj.title?.ar == "Stores"
+            {
+                cell.setupCell(obj, groupImage: #imageLiteral(resourceName: "3"))
+            }else if obj.title?.ar == "Resturants"
+            {
+                cell.setupCell(obj, groupImage: #imageLiteral(resourceName: "4"))
+            }else
+            {
+                cell.setupCell(obj, groupImage: nil)
+            }
         }
         return cell
     }
