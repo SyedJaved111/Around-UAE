@@ -16,7 +16,7 @@ import GooglePlaces
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let storyBoard = UIStoryboard.mainStoryboard
     static let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -74,11 +74,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func moveToLogin(){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
-        vc.ishownBackBtn = false
-        let nvc: UINavigationController = UINavigationController(rootViewController: vc)
-        self.window?.rootViewController = nvc
+        let lang = UserDefaults.standard.string(forKey: "i18n_language")
+        if lang == "ar"{
+            let rightViewController = storyBoard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
+            let nvc: UINavigationController = UINavigationController(rootViewController: rightViewController)
+            UIView.appearance().semanticContentAttribute = .forceRightToLeft
+            self.window?.rootViewController = nvc
+            self.window?.makeKeyAndVisible()
+        }else{
+            let leftViewController = storyBoard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
+            let nvc: UINavigationController = UINavigationController(rootViewController: leftViewController)
+            UIView.appearance().semanticContentAttribute = .forceLeftToRight
+            self.window?.rootViewController = nvc
+            self.window?.makeKeyAndVisible()
+        }
         self.window?.makeKeyAndVisible()
     }
     
@@ -96,6 +105,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nvc: UINavigationController = UINavigationController(rootViewController: logINN)
         self.window?.rootViewController = nvc
         self.window?.makeKeyAndVisible()
+    }
+}
+
+extension UIStoryboard {
+    
+    public static var mainStoryboard: UIStoryboard {
+        let bundle = Bundle.main
+        guard let name = bundle.object(forInfoDictionaryKey: "UIMainStoryboardFile") as? String else {
+            return UIStoryboard()
+        }
+        return UIStoryboard(name: name, bundle: bundle)
     }
 }
 

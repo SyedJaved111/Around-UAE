@@ -63,7 +63,7 @@ enum APIURL: String{
     case favouritePlaceListURL     = "auth/place/favourite/list"
     case getGroupsURL              = "groups"
     case getGroupWithDivisionURL   = "groups/divisions"
-    case makeProductFavouriteURL   = "product/favourite"
+    case makeProductFavouriteURL   = "auth/product/favourite"
     case getFavouriteProductsURL   = "auth/favourite/products"
     case productReviewURL          = "auth/product/review"
     case searchProductURL          = "product/search"

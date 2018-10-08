@@ -87,13 +87,20 @@
 		18D056A821677F2F007510BF /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D056A721677F2E007510BF /* DateExtensions.swift */; };
 		18D056AA2167824F007510BF /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D056A92167824F007510BF /* FileManager.swift */; };
 		18D056AC2167963C007510BF /* VCProductFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D056AB2167963C007510BF /* VCProductFilter.swift */; };
+		18E1C668216B36EE00446FAE /* VCRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C663216B36EA00446FAE /* VCRegister.swift */; };
+		18E1C669216B36EE00446FAE /* VCLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C664216B36EB00446FAE /* VCLogin.swift */; };
+		18E1C66A216B36EE00446FAE /* VCChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C665216B36EC00446FAE /* VCChangePassword.swift */; };
+		18E1C66B216B36EE00446FAE /* VCEmailVerfication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C666216B36ED00446FAE /* VCEmailVerfication.swift */; };
+		18E1C66C216B36EE00446FAE /* VCForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C667216B36EE00446FAE /* VCForgotPassword.swift */; };
+		18E1C67C216B391B00446FAE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18E1C67B216B391B00446FAE /* Localizable.strings */; };
+		18E1C67E216B392F00446FAE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18E1C67D216B392F00446FAE /* Localizable.strings */; };
+		18E1C680216B3BA200446FAE /* VCSelectLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C67F216B3BA200446FAE /* VCSelectLanguage.swift */; };
 		1F089D8D2160D46900505CDC /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F089D8C2160D46900505CDC /* TextFieldExtension.swift */; };
 		1F5561DD216143E1007B1A8E /* VCAboutUs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5561DC216143E1007B1A8E /* VCAboutUs.swift */; };
 		1F5561DF21614702007B1A8E /* VCPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5561DE21614702007B1A8E /* VCPages.swift */; };
 		1F5A3FCA215F8AA900B0CBC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F27215F8AA800B0CBC6 /* AppDelegate.swift */; };
 		1F5A3FD5215F8AA900B0CBC6 /* GeneralScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A3F35215F8AA800B0CBC6 /* GeneralScreen.strings */; };
 		1F5A3FD6215F8AA900B0CBC6 /* HomeTabs.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A3F37215F8AA800B0CBC6 /* HomeTabs.strings */; };
-		1F5A3FD7215F8AA900B0CBC6 /* LaunchScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A3F39215F8AA800B0CBC6 /* LaunchScreen.strings */; };
 		1F5A3FD8215F8AA900B0CBC6 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A3F3B215F8AA800B0CBC6 /* Main.strings */; };
 		1F5A3FD9215F8AA900B0CBC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A3F3D215F8AA800B0CBC6 /* Assets.xcassets */; };
 		1F5A3FDA215F8AA900B0CBC6 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F5A3F3E215F8AA800B0CBC6 /* GeneralScreen.storyboard */; };
@@ -116,11 +123,6 @@
 		1F5A3FED215F8AA900B0CBC6 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F5E215F8AA800B0CBC6 /* HomeTableViewCell.swift */; };
 		1F5A3FEE215F8AA900B0CBC6 /* VCHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F5F215F8AA800B0CBC6 /* VCHome.swift */; };
 		1F5A3FEF215F8AA900B0CBC6 /* VCHomeTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F60215F8AA800B0CBC6 /* VCHomeTabs.swift */; };
-		1F5A3FF0215F8AA900B0CBC6 /* VCChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F62215F8AA800B0CBC6 /* VCChangePassword.swift */; };
-		1F5A3FF1215F8AA900B0CBC6 /* VCEmailVerfication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F63215F8AA800B0CBC6 /* VCEmailVerfication.swift */; };
-		1F5A3FF2215F8AA900B0CBC6 /* VCForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F64215F8AA800B0CBC6 /* VCForgotPassword.swift */; };
-		1F5A3FF3215F8AA900B0CBC6 /* VCLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F65215F8AA800B0CBC6 /* VCLogin.swift */; };
-		1F5A3FF4215F8AA900B0CBC6 /* VCRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F66215F8AA800B0CBC6 /* VCRegister.swift */; };
 		1F5A3FF5215F8AA900B0CBC6 /* productlistingcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F68215F8AA800B0CBC6 /* productlistingcell.swift */; };
 		1F5A3FF6215F8AA900B0CBC6 /* CellT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F69215F8AA800B0CBC6 /* CellT.swift */; };
 		1F5A3FF7215F8AA900B0CBC6 /* VCDivisions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F6A215F8AA800B0CBC6 /* VCDivisions.swift */; };
@@ -129,7 +131,6 @@
 		1F5A3FFA215F8AA900B0CBC6 /* VCMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F6E215F8AA800B0CBC6 /* VCMenu.swift */; };
 		1F5A3FFB215F8AA900B0CBC6 /* VCProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F6F215F8AA800B0CBC6 /* VCProfile.swift */; };
 		1F5A3FFC215F8AA900B0CBC6 /* VCResturants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F71215F8AA800B0CBC6 /* VCResturants.swift */; };
-		1F5A3FFD215F8AA900B0CBC6 /* VCSelectLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F73215F8AA800B0CBC6 /* VCSelectLanguage.swift */; };
 		1F5A3FFE215F8AA900B0CBC6 /* VCSplash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F75215F8AA800B0CBC6 /* VCSplash.swift */; };
 		1F5A3FFF215F8AA900B0CBC6 /* CellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F77215F8AA800B0CBC6 /* CellStore.swift */; };
 		1F5A4000215F8AA900B0CBC6 /* CellStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3F78215F8AA800B0CBC6 /* CellStores.swift */; };
@@ -266,15 +267,25 @@
 		18D056A721677F2E007510BF /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		18D056A92167824F007510BF /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		18D056AB2167963C007510BF /* VCProductFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCProductFilter.swift; sourceTree = "<group>"; };
+		18E1C663216B36EA00446FAE /* VCRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCRegister.swift; sourceTree = "<group>"; };
+		18E1C664216B36EB00446FAE /* VCLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCLogin.swift; sourceTree = "<group>"; };
+		18E1C665216B36EC00446FAE /* VCChangePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCChangePassword.swift; sourceTree = "<group>"; };
+		18E1C666216B36ED00446FAE /* VCEmailVerfication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCEmailVerfication.swift; sourceTree = "<group>"; };
+		18E1C667216B36EE00446FAE /* VCForgotPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCForgotPassword.swift; sourceTree = "<group>"; };
+		18E1C66F216B37A400446FAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		18E1C674216B386900446FAE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/GeneralScreen.strings; sourceTree = "<group>"; };
+		18E1C675216B386A00446FAE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/HomeTabs.strings; sourceTree = "<group>"; };
+		18E1C676216B386B00446FAE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		18E1C677216B386C00446FAE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		18E1C678216B386D00446FAE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		18E1C67B216B391B00446FAE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		18E1C67D216B392F00446FAE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		18E1C67F216B3BA200446FAE /* VCSelectLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCSelectLanguage.swift; sourceTree = "<group>"; };
 		1F089D8C2160D46900505CDC /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		1F5561DC216143E1007B1A8E /* VCAboutUs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCAboutUs.swift; sourceTree = "<group>"; };
 		1F5561DE21614702007B1A8E /* VCPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPages.swift; sourceTree = "<group>"; };
 		1F5A3F26215F8AA800B0CBC6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F5A3F27215F8AA800B0CBC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1F5A3F36215F8AA800B0CBC6 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/GeneralScreen.strings; sourceTree = "<group>"; };
-		1F5A3F38215F8AA800B0CBC6 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/HomeTabs.strings; sourceTree = "<group>"; };
-		1F5A3F3A215F8AA800B0CBC6 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		1F5A3F3C215F8AA800B0CBC6 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		1F5A3F3D215F8AA800B0CBC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F5A3F3F215F8AA800B0CBC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/GeneralScreen.storyboard; sourceTree = "<group>"; };
 		1F5A3F41215F8AA800B0CBC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeTabs.storyboard; sourceTree = "<group>"; };
@@ -299,11 +310,6 @@
 		1F5A3F5E215F8AA800B0CBC6 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		1F5A3F5F215F8AA800B0CBC6 /* VCHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCHome.swift; sourceTree = "<group>"; };
 		1F5A3F60215F8AA800B0CBC6 /* VCHomeTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCHomeTabs.swift; sourceTree = "<group>"; };
-		1F5A3F62215F8AA800B0CBC6 /* VCChangePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCChangePassword.swift; sourceTree = "<group>"; };
-		1F5A3F63215F8AA800B0CBC6 /* VCEmailVerfication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCEmailVerfication.swift; sourceTree = "<group>"; };
-		1F5A3F64215F8AA800B0CBC6 /* VCForgotPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCForgotPassword.swift; sourceTree = "<group>"; };
-		1F5A3F65215F8AA800B0CBC6 /* VCLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCLogin.swift; sourceTree = "<group>"; };
-		1F5A3F66215F8AA800B0CBC6 /* VCRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCRegister.swift; sourceTree = "<group>"; };
 		1F5A3F68215F8AA800B0CBC6 /* productlistingcell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = productlistingcell.swift; sourceTree = "<group>"; };
 		1F5A3F69215F8AA800B0CBC6 /* CellT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellT.swift; sourceTree = "<group>"; };
 		1F5A3F6A215F8AA800B0CBC6 /* VCDivisions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCDivisions.swift; sourceTree = "<group>"; };
@@ -312,7 +318,6 @@
 		1F5A3F6E215F8AA800B0CBC6 /* VCMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCMenu.swift; sourceTree = "<group>"; };
 		1F5A3F6F215F8AA800B0CBC6 /* VCProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCProfile.swift; sourceTree = "<group>"; };
 		1F5A3F71215F8AA800B0CBC6 /* VCResturants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCResturants.swift; sourceTree = "<group>"; };
-		1F5A3F73215F8AA800B0CBC6 /* VCSelectLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCSelectLanguage.swift; sourceTree = "<group>"; };
 		1F5A3F75215F8AA800B0CBC6 /* VCSplash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCSplash.swift; sourceTree = "<group>"; };
 		1F5A3F77215F8AA800B0CBC6 /* CellStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellStore.swift; sourceTree = "<group>"; };
 		1F5A3F78215F8AA800B0CBC6 /* CellStores.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellStores.swift; sourceTree = "<group>"; };
@@ -561,12 +566,27 @@
 			path = ChatController;
 			sourceTree = "<group>";
 		};
+		18E1C679216B38DD00446FAE /* en.Iproj */ = {
+			isa = PBXGroup;
+			children = (
+				18E1C67D216B392F00446FAE /* Localizable.strings */,
+			);
+			path = en.Iproj;
+			sourceTree = "<group>";
+		};
+		18E1C67A216B38F800446FAE /* ar.Iproj */ = {
+			isa = PBXGroup;
+			children = (
+				18E1C67B216B391B00446FAE /* Localizable.strings */,
+			);
+			path = ar.Iproj;
+			sourceTree = "<group>";
+		};
 		1F5A3F34215F8AA800B0CBC6 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				1F5A3F35215F8AA800B0CBC6 /* GeneralScreen.strings */,
 				1F5A3F37215F8AA800B0CBC6 /* HomeTabs.strings */,
-				1F5A3F39215F8AA800B0CBC6 /* LaunchScreen.strings */,
 				1F5A3F3B215F8AA800B0CBC6 /* Main.strings */,
 				1F5A3F3D215F8AA800B0CBC6 /* Assets.xcassets */,
 				1F5A3F3E215F8AA800B0CBC6 /* GeneralScreen.storyboard */,
@@ -669,11 +689,11 @@
 		1F5A3F61215F8AA800B0CBC6 /* LoginRegister */ = {
 			isa = PBXGroup;
 			children = (
-				1F5A3F62215F8AA800B0CBC6 /* VCChangePassword.swift */,
-				1F5A3F63215F8AA800B0CBC6 /* VCEmailVerfication.swift */,
-				1F5A3F64215F8AA800B0CBC6 /* VCForgotPassword.swift */,
-				1F5A3F65215F8AA800B0CBC6 /* VCLogin.swift */,
-				1F5A3F66215F8AA800B0CBC6 /* VCRegister.swift */,
+				18E1C665216B36EC00446FAE /* VCChangePassword.swift */,
+				18E1C666216B36ED00446FAE /* VCEmailVerfication.swift */,
+				18E1C667216B36EE00446FAE /* VCForgotPassword.swift */,
+				18E1C664216B36EB00446FAE /* VCLogin.swift */,
+				18E1C663216B36EA00446FAE /* VCRegister.swift */,
 			);
 			path = LoginRegister;
 			sourceTree = "<group>";
@@ -711,7 +731,7 @@
 		1F5A3F72215F8AA800B0CBC6 /* SelectLanguage */ = {
 			isa = PBXGroup;
 			children = (
-				1F5A3F73215F8AA800B0CBC6 /* VCSelectLanguage.swift */,
+				18E1C67F216B3BA200446FAE /* VCSelectLanguage.swift */,
 			);
 			path = SelectLanguage;
 			sourceTree = "<group>";
@@ -745,6 +765,8 @@
 		1F5A3F92215F8AA900B0CBC6 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				18E1C67A216B38F800446FAE /* ar.Iproj */,
+				18E1C679216B38DD00446FAE /* en.Iproj */,
 				18D056A721677F2E007510BF /* DateExtensions.swift */,
 				18D056A92167824F007510BF /* FileManager.swift */,
 				1F5A3F94215F8AA900B0CBC6 /* Constants */,
@@ -987,10 +1009,11 @@
 				1F5A402C215F8AA900B0CBC6 /* Raleway-SemiBold.ttf in Resources */,
 				1F5A3FD5215F8AA900B0CBC6 /* GeneralScreen.strings in Resources */,
 				1F5A4021215F8AA900B0CBC6 /* Raleway-ExtraBold.ttf in Resources */,
+				18E1C67E216B392F00446FAE /* Localizable.strings in Resources */,
 				1F5A402E215F8AA900B0CBC6 /* Raleway-Thin.ttf in Resources */,
 				1F5A402B215F8AA900B0CBC6 /* Raleway-Regular.ttf in Resources */,
 				1F5A3FD6215F8AA900B0CBC6 /* HomeTabs.strings in Resources */,
-				1F5A3FD7215F8AA900B0CBC6 /* LaunchScreen.strings in Resources */,
+				18E1C67C216B391B00446FAE /* Localizable.strings in Resources */,
 				1F5A3FD9215F8AA900B0CBC6 /* Assets.xcassets in Resources */,
 				1F5A4024215F8AA900B0CBC6 /* Raleway-ExtraLightItalic.ttf in Resources */,
 				1F5A3FDB215F8AA900B0CBC6 /* HomeTabs.storyboard in Resources */,
@@ -1136,7 +1159,6 @@
 				1F5A3FE2215F8AA900B0CBC6 /* TopratedCell.swift in Sources */,
 				187BBA5D2161ECF70070D155 /* ApiUrls.swift in Sources */,
 				187BB98F2161EBFB0070D155 /* AuthManager.swift in Sources */,
-				1F5A3FF4215F8AA900B0CBC6 /* VCRegister.swift in Sources */,
 				18BA966C2163483F0009AE52 /* AllTabCell.swift in Sources */,
 				1F5A3FEA215F8AA900B0CBC6 /* VCContactUs.swift in Sources */,
 				187BB9912161EBFB0070D155 /* IndexManager.swift in Sources */,
@@ -1169,6 +1191,7 @@
 				187BB9842161EBFB0070D155 /* CitiesPlaces.swift in Sources */,
 				1F5A4005215F8AA900B0CBC6 /* VCStoreTab.swift in Sources */,
 				1F5A3FE4215F8AA900B0CBC6 /* VCCitiesCell.swift in Sources */,
+				18E1C668216B36EE00446FAE /* VCRegister.swift in Sources */,
 				1F5A3FFB215F8AA900B0CBC6 /* VCProfile.swift in Sources */,
 				18D05684216752BC007510BF /* NotificationExtras.swift in Sources */,
 				1F5A4013215F8AA900B0CBC6 /* Constants.swift in Sources */,
@@ -1178,7 +1201,6 @@
 				1F5A403C215F8AA900B0CBC6 /* UIScrollView+Extensions.swift in Sources */,
 				187BBA612161F8030070D155 /* ButtonExtension.swift in Sources */,
 				18BA966D2163483F0009AE52 /* VCCancelledProducts.swift in Sources */,
-				1F5A3FFD215F8AA900B0CBC6 /* VCSelectLanguage.swift in Sources */,
 				18D05686216752BC007510BF /* NotificationNotifications.swift in Sources */,
 				18D05683216752BC007510BF /* NotificationDescription.swift in Sources */,
 				18D0569B2167776C007510BF /* NewMessageModel.swift in Sources */,
@@ -1194,6 +1216,7 @@
 				187BBA5F2161ECF70070D155 /* Keys.swift in Sources */,
 				1F5A4033215F8AA900B0CBC6 /* SharedData.swift in Sources */,
 				1F5A4018215F8AA900B0CBC6 /* UIViewCustom.swift in Sources */,
+				18E1C680216B3BA200446FAE /* VCSelectLanguage.swift in Sources */,
 				187BBA5E2161ECF70070D155 /* Params.swift in Sources */,
 				1F5A401A215F8AA900B0CBC6 /* String.swift in Sources */,
 				18D0569A2167776C007510BF /* NewConversation.swift in Sources */,
@@ -1204,7 +1227,6 @@
 				1F5A4019215F8AA900B0CBC6 /* ScrollView-Extensions.swift in Sources */,
 				18D056A421677836007510BF /* ConversationViewController.swift in Sources */,
 				1F5A3FFE215F8AA900B0CBC6 /* VCSplash.swift in Sources */,
-				1F5A3FF2215F8AA900B0CBC6 /* VCForgotPassword.swift in Sources */,
 				18D056A2216777A8007510BF /* Keyboard.swift in Sources */,
 				18BB210F21650E8E005727F2 /* CellNearBy.swift in Sources */,
 				1F5A3FEB215F8AA900B0CBC6 /* DataCollectionViewCell.swift in Sources */,
@@ -1213,20 +1235,20 @@
 				18BA96692163483F0009AE52 /* CellCancelled.swift in Sources */,
 				18BA967A2163AF100009AE52 /* VCCart.swift in Sources */,
 				1F5A403B215F8AA900B0CBC6 /* TextView.swift in Sources */,
+				18E1C66A216B36EE00446FAE /* VCChangePassword.swift in Sources */,
 				1F5A401B215F8AA900B0CBC6 /* TTabBarViewController.swift in Sources */,
 				18D0568A216752BC007510BF /* NotificationParkingEnd.swift in Sources */,
 				187BB9892161EBFB0070D155 /* NetworkManager.swift in Sources */,
 				187BB98C2161EBFB0070D155 /* ProfileManager.swift in Sources */,
+				18E1C66B216B36EE00446FAE /* VCEmailVerfication.swift in Sources */,
 				187BB9852161EBFB0070D155 /* Response.swift in Sources */,
 				18D05687216752BC007510BF /* NotificationData.swift in Sources */,
 				18BA966F2163483F0009AE52 /* VCMyOrders.swift in Sources */,
 				187BBA692162372F0070D155 /* VCFavouriteTab.swift in Sources */,
-				1F5A3FF0215F8AA900B0CBC6 /* VCChangePassword.swift in Sources */,
 				1F5A4002215F8AA900B0CBC6 /* VCStoreInfo.swift in Sources */,
 				1F5A4034215F8AA900B0CBC6 /* GIFHeader.swift in Sources */,
 				18D0568C21675381007510BF /* NotificationDataCell.swift in Sources */,
 				1F5A4037215F8AA900B0CBC6 /* IndicatorView.swift in Sources */,
-				1F5A3FF3215F8AA900B0CBC6 /* VCLogin.swift in Sources */,
 				1F5A4035215F8AA900B0CBC6 /* GIFTextHeader.swift in Sources */,
 				1F5A4003215F8AA900B0CBC6 /* VCStoreProducts.swift in Sources */,
 				1F5A3FEF215F8AA900B0CBC6 /* VCHomeTabs.swift in Sources */,
@@ -1237,6 +1259,7 @@
 				187BB9802161EBFB0070D155 /* Store.swift in Sources */,
 				18D056A1216777A8007510BF /* ChatController.swift in Sources */,
 				1F5561DF21614702007B1A8E /* VCPages.swift in Sources */,
+				18E1C669216B36EE00446FAE /* VCLogin.swift in Sources */,
 				18D0567A216748D4007510BF /* NotificationVC.swift in Sources */,
 				18D0568E21676898007510BF /* NotificationCountModel .swift in Sources */,
 				18B150362164E4B800FF87A4 /* DefaultAlamofireManager.swift in Sources */,
@@ -1266,7 +1289,6 @@
 				1859BEEE2167A24B00BB79B9 /* VCSearch.swift in Sources */,
 				187BBA6321622C0D0070D155 /* VCPopUpprofile.swift in Sources */,
 				187BB9812161EBFB0070D155 /* Index.swift in Sources */,
-				1F5A3FF1215F8AA900B0CBC6 /* VCEmailVerfication.swift in Sources */,
 				18D056AC2167963C007510BF /* VCProductFilter.swift in Sources */,
 				1F5A403D215F8AA900B0CBC6 /* AppSettings.swift in Sources */,
 				18BB211121650E8E005727F2 /* VCProducList.swift in Sources */,
@@ -1274,6 +1296,7 @@
 				1F5A3FF8215F8AA900B0CBC6 /* VCtest.swift in Sources */,
 				1F5A3FEC215F8AA900B0CBC6 /* HomeCollectionView.swift in Sources */,
 				1F5A3FFC215F8AA900B0CBC6 /* VCResturants.swift in Sources */,
+				18E1C66C216B36EE00446FAE /* VCForgotPassword.swift in Sources */,
 				187BBA8521626BF40070D155 /* VCDesertSafari.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1284,7 +1307,6 @@
 		1F5A3F35215F8AA800B0CBC6 /* GeneralScreen.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1F5A3F36215F8AA800B0CBC6 /* ar */,
 				1F5A3F46215F8AA800B0CBC6 /* en */,
 			);
 			name = GeneralScreen.strings;
@@ -1293,24 +1315,14 @@
 		1F5A3F37215F8AA800B0CBC6 /* HomeTabs.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1F5A3F38215F8AA800B0CBC6 /* ar */,
 				1F5A3F47215F8AA800B0CBC6 /* en */,
 			);
 			name = HomeTabs.strings;
 			sourceTree = "<group>";
 		};
-		1F5A3F39215F8AA800B0CBC6 /* LaunchScreen.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1F5A3F3A215F8AA800B0CBC6 /* ar */,
-			);
-			name = LaunchScreen.strings;
-			sourceTree = "<group>";
-		};
 		1F5A3F3B215F8AA800B0CBC6 /* Main.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1F5A3F3C215F8AA800B0CBC6 /* ar */,
 				1F5A3F48215F8AA800B0CBC6 /* en */,
 			);
 			name = Main.strings;
@@ -1320,6 +1332,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1F5A3F3F215F8AA800B0CBC6 /* Base */,
+				18E1C674216B386900446FAE /* ar */,
 			);
 			name = GeneralScreen.storyboard;
 			sourceTree = "<group>";
@@ -1328,6 +1341,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1F5A3F41215F8AA800B0CBC6 /* Base */,
+				18E1C675216B386A00446FAE /* ar */,
 			);
 			name = HomeTabs.storyboard;
 			sourceTree = "<group>";
@@ -1336,6 +1350,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1F5A3F43215F8AA800B0CBC6 /* Base */,
+				18E1C676216B386B00446FAE /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1344,6 +1359,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				1F5A3F45215F8AA800B0CBC6 /* Base */,
+				18E1C66F216B37A400446FAE /* en */,
+				18E1C677216B386C00446FAE /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1352,6 +1369,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1F5A3FB8215F8AA900B0CBC6 /* en */,
+				18E1C678216B386D00446FAE /* ar */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -128,8 +128,7 @@ extension UIViewController {
     
     func showArabicBackButton() {
         hideBackButton()
-        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Ar-back"), style: .plain, target: self, action: #selector(onBackButtonClciked))
-        backButton.tintColor = UIColor.white
+        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back-ar"), style: .plain, target: self, action: #selector(onBackButtonClciked))
         navigationItem.leftBarButtonItem = backButton
     }
     

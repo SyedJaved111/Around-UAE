@@ -139,17 +139,17 @@ class VCProductDetail: UIViewController {
     
     @IBAction func makeProductFavourite(_ sender: Any){
         startLoading("")
-        ProductManager().makeProductFavourite(product._id!,
+        ProductManager().makeProductFavourite((productDetail?._id!)!,
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
-                        if(favouriteResponse.message?.en ?? "") == "Product disliked Successfully."{
+                        if(favouriteResponse.message?.en ?? "") == "Product liked Successfully."{
                             self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
                         }else{
-                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favouriteblack"), for:.normal)
                         }
                     }else{
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
@@ -208,10 +208,8 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         selectedCell.append(indexPath)
         cell.characterImage.layer.borderWidth = 2.0
         cell.characterImage.layer.borderColor = UIColor.red.cgColor
-        for indxpath in selectedCell{
-            dic["characteristics[\(indxpath.row)\(indxpath.section)]"] = productDetail?.priceables?[indxpath.section].characteristics?[indxpath.row]._id ?? ""
-            characteristics.append(productDetail?.priceables?[indxpath.section].characteristics?[indxpath.row]._id ?? "")
-        }
+        dic["characteristics[\(indexPath.row)\(indexPath.section)]"] = productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? ""
+        characteristics.append(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")
         dic["features[\(indexPath.section)]"] = productDetail?.priceables?[indexPath.section].feature?._id ?? ""
         features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
         checKCombination()
@@ -220,9 +218,17 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
         if  selectedCell.contains(indexPath){
-            selectedCell.remove(at: selectedCell.index(of: indexPath)!)
             dic.remove(at: dic.index(forKey: "characteristics[\(indexPath.row)\(indexPath.section)]")!)
-            dic.remove(at: dic.index(forKey: "features[\(indexPath.section)]")!)
+            var count = 0
+            for obj in selectedCell{
+                if obj.section == indexPath.section{
+                    count = count + 1
+                }
+            }
+            if count < 2{
+              dic.remove(at: dic.index(forKey: "features[\(indexPath.section)]")!)
+            }
+            selectedCell.remove(at: selectedCell.index(of: indexPath)!)
             characteristics.remove(at: characteristics.index(of: productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")!)
             features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)
             cell.characterImage.layer.borderWidth = 2.0
