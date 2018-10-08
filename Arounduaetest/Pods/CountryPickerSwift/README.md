@@ -1,6 +1,5 @@
 # CountryPicker
 
-[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Build Status](https://travis-ci.org/4taras4/CountryCode.svg?branch=master)](https://travis-ci.org/4taras4/CountryCode)
 [![Platform](https://img.shields.io/cocoapods/p/CountryPicker.svg?style=flat)](https://cocoapods.org/pods/CountryPickerSwift)
 [![Swift version](https://img.shields.io/badge/Swift-3.1-orange.svg)](https://cocoapods.org/pods/CountryPickerSwift)
@@ -28,7 +27,7 @@ class ViewController: UIViewController, CountryPickerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       //get current country
+       //get corrent country
         let locale = Locale.current
         let code = (locale as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String?
         //init Picker

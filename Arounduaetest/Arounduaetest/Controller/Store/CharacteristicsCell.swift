@@ -15,8 +15,8 @@ class CharacteristicsCell: UICollectionViewCell {
     
     func setupCell(_ image:String){
         characterImage.makeRound()
-        characterImage.setShowActivityIndicator(true)
-        characterImage.setIndicatorStyle(.gray)
+        characterImage.sd_addActivityIndicator()
+        characterImage.sd_setIndicatorStyle(.gray)
         characterImage.makeRound()
         //characterImage.sd_setImage(with: URL(string: image ))
     }

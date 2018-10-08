@@ -38,8 +38,8 @@ class TopratedCell: UICollectionViewCell {
         cosmosView.rating = Double(places.averageRating!)
         title.text = places.title?.en ?? ""
         
-        placeTitle.setShowActivityIndicator(true)
-        placeTitle.setIndicatorStyle(.gray)
+        placeTitle.sd_addActivityIndicator()
+        placeTitle.sd_setIndicatorStyle(.gray)
         placeTitle.sd_setImage(with: URL(string: places.images?.first?.path ?? ""))
     }
 }

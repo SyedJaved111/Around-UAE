@@ -147,7 +147,7 @@ class VCHomeTabs: TTabBarViewController {
             print(dictionary)
             let NotificationCount = NotificationCountModel.init(dictionary: dictionary as NSDictionary)
             
-            if (NotificationCount?.success)!{
+            if(NotificationCount?.success)!{
                 self.Count = "\(String(describing: NotificationCount!.data!.unseenNotificationsCount!))"
                 self.rightBarButton()
             }

@@ -118,7 +118,7 @@
     _numSkipped++;
   } else {
     [_mutableEvents addObject:@{
-                                @"event" : [eventDictionary mutableCopy],
+                                @"event" : eventDictionary,
                                 FBSDK_APPEVENTSTATE_ISIMPLICIT_KEY : @(isImplicit)
                                 }];
   }

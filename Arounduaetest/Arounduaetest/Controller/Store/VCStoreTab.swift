@@ -85,8 +85,8 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                             vcStoreInfo.lblInstinct.text = productResponse.data?.storeName?.en ?? ""
                             vcStoreInfo.lblAdress.text = productResponse.data?.location ?? ""
                             vcStoreInfo.lblWords.text = productResponse.data?.description?.en ?? ""
-                            vcStoreInfo.storeImage.setShowActivityIndicator(true)
-                            vcStoreInfo.storeImage.setIndicatorStyle(.gray)
+                            vcStoreInfo.storeImage.sd_addActivityIndicator()
+                            vcStoreInfo.storeImage.sd_setIndicatorStyle(.gray)
                             vcStoreInfo.storeImage.sd_setImage(with: URL(string: productResponse.data?.image ?? ""))
                             
                             let vcStoreProducts = self?.child_2 as! VCStoreProducts

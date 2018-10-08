@@ -10,11 +10,7 @@ import UIKit
 import Cosmos
 import XLPagerTabStrip
 
-class VCFavrouit: UIViewController,IndicatorInfoProvider{
-    
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
+class VCFavrouit: BaseController,IndicatorInfoProvider{
     
     @IBOutlet var favouriteProductTableView: UITableView!{
         didSet{
@@ -36,8 +32,6 @@ class VCFavrouit: UIViewController,IndicatorInfoProvider{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.title = "Products"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
     }
     
     private func getFavouriteProducts(){
@@ -49,7 +43,7 @@ class VCFavrouit: UIViewController,IndicatorInfoProvider{
                 self?.finishLoading()
                 if let FavouriteProductData = response{
                     if(FavouriteProductData.data?.products ?? []).count == 0{
-                        self?.viewEmptyList.isHidden = false
+                       
                     }else{
                         self?.favouriteProductList = FavouriteProductData.data?.products ?? []
                         self?.currentPage = FavouriteProductData.data?.pagination?.page ?? 1
@@ -57,7 +51,6 @@ class VCFavrouit: UIViewController,IndicatorInfoProvider{
                         self?.favouriteProductTableView.reloadData()
                     }
                 }else{
-                    self?.viewEmptyList.isHidden = false
                     self?.alertMessage(message: "Error".localized, completionHandler: nil)
                 }
             }
@@ -65,7 +58,6 @@ class VCFavrouit: UIViewController,IndicatorInfoProvider{
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.viewEmptyList.isHidden = false
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -74,11 +66,6 @@ class VCFavrouit: UIViewController,IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo.init(title: "Products")
     }
-    
-    @IBAction func tryAgain(_ sender: UIButton) {
-        self.viewEmptyList.isHidden = true
-        getFavouriteProducts()
-    }
 }
 
 extension VCFavrouit{
@@ -86,7 +73,7 @@ extension VCFavrouit{
     func initialUI(){
         
         favouriteProductTableView.spr_setTextHeader { [weak self] in
-            self?.viewEmptyList.isHidden = true
+            
             self?.currentPage = 0
              ProductManager().getFavouriteProducts("\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
@@ -94,7 +81,7 @@ extension VCFavrouit{
                         self?.favouriteProductTableView.spr_endRefreshing()
                         if let favouriteResponse = response{
                             if(favouriteResponse.data?.products ?? []).count == 0{
-                                self?.viewEmptyList.isHidden = false
+                               
                             }else{
                                 self?.favouriteProductList = favouriteResponse.data?.products ?? []
                                 self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
@@ -102,7 +89,7 @@ extension VCFavrouit{
                                 self?.favouriteProductTableView.reloadData()
                             }
                         }else{
-                            self?.viewEmptyList.isHidden = false
+                            
                             self?.alertMessage(message: "Error".localized, completionHandler: nil)
                         }
                     }
@@ -110,7 +97,7 @@ extension VCFavrouit{
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.favouriteProductTableView.spr_endRefreshing()
-                    self?.viewEmptyList.isHidden = false
+                    
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -150,7 +137,7 @@ extension VCFavrouit{
 extension VCFavrouit: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 133
+        return 118
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

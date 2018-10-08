@@ -21,8 +21,8 @@ class VCCitiesCell: UICollectionViewCell {
     
     func setupCities(_ city: Cities){
         lblGenralName.text = city.title?.en ?? ""
-        imgGenral.setShowActivityIndicator(true)
-        imgGenral.setIndicatorStyle(.gray)
+        imgGenral.sd_addActivityIndicator()
+        imgGenral.sd_setIndicatorStyle(.gray)
         imgGenral.sd_setImage(with: URL(string: city.image ?? ""))
     }
 }

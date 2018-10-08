@@ -58,7 +58,7 @@ enum ServerAPI {
     
     //Cart API's
     case GetCartProducts
-    case AddProdcutsCart([String:Any])
+    case AddProdcutsCart(dict:[String:Any])
     case DeleteProductCart(DeleteProductCartParams)
     case CartQuantityUpdate(CartQuantityUpdateParams)
     case Payment(PaymentParams)
@@ -354,7 +354,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return parameters
             
             case .SearchProduct(let searchTxt):
-                parameters["locale"] = searchTxt
+                parameters["locale"] = "en"
+                parameters["keyword"] = searchTxt
                 return parameters
             
             default:

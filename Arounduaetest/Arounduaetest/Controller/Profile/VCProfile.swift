@@ -89,8 +89,8 @@ class VCProfile: BaseController {
                         AppSettings.sharedSettings.user = uploadResponse.data!
                         NotificationCenter.default.post(name: Notification.Name("ProfileUpdated"), object: nil)
                         self?.imgProfilePicture.image = nil
-                        self?.imgProfilePicture.setShowActivityIndicator(true)
-                        self?.imgProfilePicture.setIndicatorStyle(.gray)
+                        self?.imgProfilePicture.sd_addActivityIndicator()
+                        self?.imgProfilePicture.sd_setIndicatorStyle(.gray)
                         self?.imgProfilePicture.sd_setImage(with: URL(string: uploadResponse.data!.image ?? ""))
                         self?.alertMessage(message: uploadResponse.message?.en ?? "", completionHandler: nil)
                     }else{
@@ -123,8 +123,8 @@ class VCProfile: BaseController {
                             AppSettings.sharedSettings.user = profileResponse.data!
                             NotificationCenter.default.post(name: Notification.Name("ProfileUpdated"), object: nil)
                             self?.imgProfilePicture.image = nil
-                            self?.imgProfilePicture.setShowActivityIndicator(true)
-                            self?.imgProfilePicture.setIndicatorStyle(.gray)
+                            self?.imgProfilePicture.sd_addActivityIndicator()
+                            self?.imgProfilePicture.sd_setIndicatorStyle(.gray)
                             self?.imgProfilePicture.sd_setImage(with: URL(string: profileResponse.data!.image ?? ""))
                             self?.alertMessage(message: profileResponse.message?.en ?? "", completionHandler: nil)
                             self?.setupUserInfo(profileResponse.data!)
@@ -201,8 +201,8 @@ class VCProfile: BaseController {
     }
     
     private func setupUserInfo(_ userInfo:User){
-         imgProfilePicture.setShowActivityIndicator(true)
-         imgProfilePicture.setIndicatorStyle(.gray)
+        imgProfilePicture.sd_addActivityIndicator()
+        imgProfilePicture.sd_setIndicatorStyle(.gray)
          imgProfilePicture.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.image ?? ""))
          txtUserName.text = AppSettings.sharedSettings.user.fullName
          txtEmail.text = AppSettings.sharedSettings.user.email

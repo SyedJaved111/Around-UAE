@@ -38,8 +38,6 @@ static FBSDKAccessToken *g_currentAccessToken;
 #define FBSDK_ACCESSTOKEN_USERID_KEY @"userID"
 #define FBSDK_ACCESSTOKEN_REFRESHDATE_KEY @"refreshDate"
 #define FBSDK_ACCESSTOKEN_EXPIRATIONDATE_KEY @"expirationDate"
-#define FBSDK_ACCESSTOKEN_DATA_EXPIRATIONDATE_KEY @"dataAccessExpirationDate"
-
 
 @implementation FBSDKAccessToken
 
@@ -56,25 +54,6 @@ static FBSDKAccessToken *g_currentAccessToken;
                      expirationDate:(NSDate *)expirationDate
                         refreshDate:(NSDate *)refreshDate
 {
-    return [self initWithTokenString:tokenString
-                         permissions:permissions
-                 declinedPermissions:declinedPermissions
-                               appID:appID
-                              userID:userID
-                      expirationDate:expirationDate
-                         refreshDate:refreshDate
-            dataAccessExpirationDate:[NSDate distantFuture]];
-}
-
-- (instancetype)initWithTokenString:(NSString *)tokenString
-                        permissions:(NSArray *)permissions
-                declinedPermissions:(NSArray *)declinedPermissions
-                              appID:(NSString *)appID
-                             userID:(NSString *)userID
-                     expirationDate:(NSDate *)expirationDate
-                        refreshDate:(NSDate *)refreshDate
-                  dataAccessExpirationDate:(NSDate *)dataAccessExpirationDate
-{
   if ((self = [super init])) {
     _tokenString = [tokenString copy];
     _permissions = [NSSet setWithArray:permissions];
@@ -83,7 +62,6 @@ static FBSDKAccessToken *g_currentAccessToken;
     _userID = [userID copy];
     _expirationDate = [expirationDate copy] ?: [NSDate distantFuture];
     _refreshDate = [refreshDate copy] ?: [NSDate date];
-    _dataAccessExpirationDate = [dataAccessExpirationDate copy] ?: [NSDate distantFuture];
   }
   return self;
 }
@@ -91,12 +69,6 @@ static FBSDKAccessToken *g_currentAccessToken;
 - (BOOL)hasGranted:(NSString *)permission
 {
   return [self.permissions containsObject:permission];
-
-}
-
-- (BOOL)isDataAccessExpired
-{
-    return [self.dataAccessExpirationDate compare:NSDate.date] == NSOrderedAscending;
 }
 
 - (BOOL)isExpired
@@ -165,8 +137,7 @@ static FBSDKAccessToken *g_currentAccessToken;
     [self.appID hash],
     [self.userID hash],
     [self.refreshDate hash],
-    [self.expirationDate hash],
-    [self.dataAccessExpirationDate hash]
+    [self.expirationDate hash]
   };
   return [FBSDKMath hashWithIntegerArray:subhashes count:sizeof(subhashes) / sizeof(subhashes[0])];
 }
@@ -191,8 +162,7 @@ static FBSDKAccessToken *g_currentAccessToken;
           [FBSDKInternalUtility object:self.appID isEqualToObject:token.appID] &&
           [FBSDKInternalUtility object:self.userID isEqualToObject:token.userID] &&
           [FBSDKInternalUtility object:self.refreshDate isEqualToObject:token.refreshDate] &&
-          [FBSDKInternalUtility object:self.expirationDate isEqualToObject:token.expirationDate] &&
-          [FBSDKInternalUtility object:self.dataAccessExpirationDate isEqualToObject:token.dataAccessExpirationDate] );
+          [FBSDKInternalUtility object:self.expirationDate isEqualToObject:token.expirationDate] );
 }
 
 #pragma mark - NSCopying
@@ -219,7 +189,6 @@ static FBSDKAccessToken *g_currentAccessToken;
   NSString *userID = [decoder decodeObjectOfClass:[NSString class] forKey:FBSDK_ACCESSTOKEN_USERID_KEY];
   NSDate *refreshDate = [decoder decodeObjectOfClass:[NSDate class] forKey:FBSDK_ACCESSTOKEN_REFRESHDATE_KEY];
   NSDate *expirationDate = [decoder decodeObjectOfClass:[NSDate class] forKey:FBSDK_ACCESSTOKEN_EXPIRATIONDATE_KEY];
-  NSDate *dataAccessExpirationDate = [decoder decodeObjectOfClass:[NSDate class] forKey:FBSDK_ACCESSTOKEN_DATA_EXPIRATIONDATE_KEY];
 
   return [self initWithTokenString:tokenString
                        permissions:[permissions allObjects]
@@ -227,8 +196,7 @@ static FBSDKAccessToken *g_currentAccessToken;
                              appID:appID
                             userID:userID
                     expirationDate:expirationDate
-                       refreshDate:refreshDate
-          dataAccessExpirationDate:dataAccessExpirationDate];
+                       refreshDate:refreshDate];
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder
@@ -240,7 +208,6 @@ static FBSDKAccessToken *g_currentAccessToken;
   [encoder encodeObject:self.userID forKey:FBSDK_ACCESSTOKEN_USERID_KEY];
   [encoder encodeObject:self.expirationDate forKey:FBSDK_ACCESSTOKEN_EXPIRATIONDATE_KEY];
   [encoder encodeObject:self.refreshDate forKey:FBSDK_ACCESSTOKEN_REFRESHDATE_KEY];
-  [encoder encodeObject:self.dataAccessExpirationDate forKey:FBSDK_ACCESSTOKEN_DATA_EXPIRATIONDATE_KEY];
 }
 
 @end

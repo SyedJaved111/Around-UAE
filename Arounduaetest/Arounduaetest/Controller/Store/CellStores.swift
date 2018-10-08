@@ -21,15 +21,15 @@ class CellStores: UICollectionViewCell {
     
     func setupStoreCell(_ store: Stores){
         lblStore.text = store.storeName?.en ?? ""
-        imgStores.setShowActivityIndicator(true)
-        imgStores.setIndicatorStyle(.gray)
+        imgStores.sd_addActivityIndicator()
+        imgStores.sd_setIndicatorStyle(.gray)
         imgStores.sd_setImage(with: URL(string: store.image ?? ""))
     }
     
     func setupSubDivisonCell(_ divisionData: GroupDivisonData){
         lblStore.text = divisionData.title?.en ?? ""
-        imgStores.setShowActivityIndicator(true)
-        imgStores.setIndicatorStyle(.gray)
+        imgStores.sd_addActivityIndicator()
+        imgStores.sd_setIndicatorStyle(.gray)
         imgStores.sd_setImage(with: URL(string: divisionData.image ?? ""))
     }
 }

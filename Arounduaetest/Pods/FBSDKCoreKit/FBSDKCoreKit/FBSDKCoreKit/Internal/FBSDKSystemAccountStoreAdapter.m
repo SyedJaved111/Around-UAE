@@ -257,8 +257,7 @@ static FBSDKSystemAccountStoreAdapter *_singletonInstance = nil;
                                                                                    appID:currentToken.appID
                                                                                   userID:currentToken.userID
                                                                           expirationDate:[NSDate distantFuture]
-                                                                             refreshDate:[NSDate date]
-                                                                dataAccessExpirationDate:[NSDate distantFuture]];
+                                                                             refreshDate:[NSDate date]];
           [FBSDKAccessToken setCurrentAccessToken:updatedToken];
         }
         if (handler) {

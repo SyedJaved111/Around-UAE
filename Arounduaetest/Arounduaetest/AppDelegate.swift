@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             statusBar.backgroundColor = UIColor(red:241/255, green:242/255, blue:243/255, alpha: 1)
         }
         
-        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.shared.enable = true
         GMSPlacesClient.provideAPIKey("AIzaSyBeblugMSfJeJtTRFB6lFGxejNtxBcVW_I")
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         GIDSignIn.sharedInstance().clientID = "726253961199-7djm89dcuppkndauve0pevkmlfmrimaf.apps.googleusercontent.com"

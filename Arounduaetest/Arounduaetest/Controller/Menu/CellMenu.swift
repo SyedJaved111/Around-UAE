@@ -24,8 +24,8 @@ class CellMenu: UITableViewCell {
         if let image = UIImage(named: imagestr){
             imgMenu.image = image
         }else{
-            imgMenu.setShowActivityIndicator(true)
-            imgMenu.setIndicatorStyle(.gray)
+            imgMenu.sd_addActivityIndicator()
+            imgMenu.sd_setIndicatorStyle(.gray)
             imgMenu.sd_setImage(with: URL(string:imagestr))
         }
     }

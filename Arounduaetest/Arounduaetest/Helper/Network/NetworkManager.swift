@@ -50,7 +50,7 @@ class NetworkManager {
     }
   
     //MARK: - Request
-    static func request(target: ServerAPI, success successCallback: @escaping (Data) -> Void, failure failureCallback: @escaping (NetworkError) -> Void, progress progressCallback: ((Double)-> Void)? = nil) {
+     static func request(target: ServerAPI, success successCallback: @escaping (Data) -> Void, failure failureCallback: @escaping (NetworkError) -> Void, progress progressCallback: ((Double)-> Void)? = nil) {
      if isAvailable {
         NetworkManager().provider.request(target, callbackQueue: nil,
                          

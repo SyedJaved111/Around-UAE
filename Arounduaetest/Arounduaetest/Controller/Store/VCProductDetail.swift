@@ -18,7 +18,8 @@ class VCProductDetail: UIViewController {
     @IBOutlet weak var favouriteBtn: UIButton!
     @IBOutlet weak var Productcounter: GMStepperCart!
     @IBOutlet weak var productDescription: UITextView!
-    
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var scrollview: UIScrollView!
     @IBOutlet weak var CollectionView: UICollectionView!{
         didSet{
             CollectionView.delegate = self
@@ -31,14 +32,20 @@ class VCProductDetail: UIViewController {
     var product:Products!
     var productDetail:Product?
     var selectedCell = [IndexPath]()
-    var dic = [String:Any]()
     var features = [String]()
     var characteristics = [String]()
     var combination:Combinations?
+    var dictionary:[String:Any]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getProductDetail()
+    }
+    
+    override func viewDidLayoutSubviews(){
+        super.updateViewConstraints()
+        collectionViewHeight.constant = CollectionView.contentSize.height
+        scrollview.contentSize = CGSize(width: UIScreen.main.bounds.width, height: scrollview.contentSize.height)
     }
     
     private func getProductDetail(){
@@ -70,8 +77,18 @@ class VCProductDetail: UIViewController {
     }
     
     private func checKCombination(){
+        var dic = [String:Any]()
+        
+        for i in 0..<features.count{
+           dic["features[\(i)]"] = features[i]
+        }
+        
+        for i in 0..<characteristics.count{
+           dic["characteristics[\(i)]"] = characteristics[i]
+        }
+        
         dic["product"] = product._id!
-        dic["quantity"] = "\(Int(Productcounter.value))"
+        dic["quantity"] = "1"//"\(Int(Productcounter.value))"
         
         if let combinations = productDetail?.combinations{
             for obj in combinations{
@@ -81,11 +98,20 @@ class VCProductDetail: UIViewController {
                 }else if obj.features! == features && obj.characteristics! == characteristics{
                     prodcutPrice.text = "$\(obj.price?.usd ?? 0)"
                     combination = obj
+                    dictionary = dic
                     break
                 }
             }
         }
     }
+    
+//    characteristics[0] = 5b8f6d565fae83149c238948
+//    characteristics[1] = 5b8f6d965fae83149c23894b
+//    features[0] = 5b8f6d105fae83149c238946
+//    features[1] = 5b8f6d375fae83149c238947
+//    product = 5bb732dd84b5e00f19012005
+//    quantity = 1
+//
     
     private func addToCartProduct(_ dict:[String:Any]){
         startLoading("")
@@ -114,8 +140,8 @@ class VCProductDetail: UIViewController {
     }
     
     private func setupProductDetsil(_ productdetail:Product){
-        productImage.setShowActivityIndicator(true)
-        productImage.setIndicatorStyle(.gray)
+        productImage.sd_addActivityIndicator()
+        productImage.sd_setIndicatorStyle(.gray)
         productImage.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
         prodcutPrice.text = "$\(product.price?.usd ?? 0)"
         productname.text = productdetail.productName?.en ?? ""
@@ -134,7 +160,9 @@ class VCProductDetail: UIViewController {
             self.alertMessage(message: "Product is not avaliable in your desired quantity", completionHandler: nil)
             return
         }
-       addToCartProduct(dic)
+        if dictionary != nil{
+           addToCartProduct(dictionary!)
+        }
     }
     
     @IBAction func makeProductFavourite(_ sender: Any){
@@ -208,9 +236,7 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         selectedCell.append(indexPath)
         cell.characterImage.layer.borderWidth = 2.0
         cell.characterImage.layer.borderColor = UIColor.red.cgColor
-        dic["characteristics[\(indexPath.row)\(indexPath.section)]"] = productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? ""
         characteristics.append(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")
-        dic["features[\(indexPath.section)]"] = productDetail?.priceables?[indexPath.section].feature?._id ?? ""
         features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
         checKCombination()
     }
@@ -218,16 +244,6 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
         if  selectedCell.contains(indexPath){
-            dic.remove(at: dic.index(forKey: "characteristics[\(indexPath.row)\(indexPath.section)]")!)
-            var count = 0
-            for obj in selectedCell{
-                if obj.section == indexPath.section{
-                    count = count + 1
-                }
-            }
-            if count < 2{
-              dic.remove(at: dic.index(forKey: "features[\(indexPath.section)]")!)
-            }
             selectedCell.remove(at: selectedCell.index(of: indexPath)!)
             characteristics.remove(at: characteristics.index(of: productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")!)
             features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)

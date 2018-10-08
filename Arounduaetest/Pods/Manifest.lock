@@ -7,57 +7,58 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
   - CardIO (5.4.1)
-  - Cosmos (12.0.1)
-  - CountryPickerSwift (1.7.4)
-  - DLRadioButton (1.4.11)
+  - Cosmos (16.0.0)
+  - CountryPickerSwift (1.7.1)
+  - DLRadioButton (1.4.12)
+  - DropDown (2.3.2)
   - DZNEmptyDataSet (1.8.1)
-  - FBSDKCoreKit (4.37.0):
+  - FBSDKCoreKit (4.33.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.37.0):
+  - FBSDKLoginKit (4.33.0):
     - FBSDKCoreKit
   - FlagKit (2.0.1)
-  - GoogleMaps/Base (2.5.0)
-  - GooglePlaces (2.5.0):
-    - GoogleMaps/Base (= 2.5.0)
-  - GoogleSignIn (4.1.1):
-    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
-    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+  - GoogleMaps/Base (2.7.0)
+  - GooglePlaces (2.7.0):
+    - GoogleMaps/Base (= 2.7.0)
+  - GoogleSignIn (4.1.2):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
     - GTMOAuth2 (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
-    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
-  - GTMOAuth2 (1.1.5):
+  - GoogleToolboxForMac/DebugUtils (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
+    - GoogleToolboxForMac/DebugUtils (= 2.1.4)
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
+  - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.1.12):
-    - GTMSessionFetcher/Full (= 1.1.12)
-  - GTMSessionFetcher/Core (1.1.12)
-  - GTMSessionFetcher/Full (1.1.12):
-    - GTMSessionFetcher/Core (= 1.1.12)
-  - ImageSlideshow (1.4.1):
-    - ImageSlideshow/Core (= 1.4.1)
-  - ImageSlideshow/Core (1.4.1)
-  - ImageSlideshow/SDWebImage (1.4.1):
+  - GTMSessionFetcher (1.1.15):
+    - GTMSessionFetcher/Full (= 1.1.15)
+  - GTMSessionFetcher/Core (1.1.15)
+  - GTMSessionFetcher/Full (1.1.15):
+    - GTMSessionFetcher/Core (= 1.1.15)
+  - ImageSlideshow (1.6.0):
+    - ImageSlideshow/Core (= 1.6.0)
+  - ImageSlideshow/Core (1.6.0)
+  - ImageSlideshow/SDWebImage (1.6.0):
     - ImageSlideshow/Core
-    - SDWebImage (~> 3.7)
-  - IQKeyboardManagerSwift (5.0.6)
+    - SDWebImage (< 5.0, >= 3.7)
+  - IQKeyboardManagerSwift (6.0.3)
   - KMPlaceholderTextView (1.3.0)
-  - MBProgressHUD (1.0.0)
+  - MBProgressHUD (1.1.0)
   - MIBadgeButton (0.0.7)
   - MIBadgeButton-Swift (0.5)
-  - Moya (10.0.0):
-    - Moya/Core (= 10.0.0)
-  - Moya/Core (10.0.0):
+  - Moya (11.0.2):
+    - Moya/Core (= 11.0.2)
+  - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - NVActivityIndicatorView (4.0.0):
-    - NVActivityIndicatorView/Presenter (= 4.0.0)
-  - NVActivityIndicatorView/Presenter (4.0.0)
+  - NVActivityIndicatorView (4.2.1):
+    - NVActivityIndicatorView/Presenter (= 4.2.1)
+  - NVActivityIndicatorView/Presenter (4.2.1)
   - ObjectMapper (3.1.0)
   - PayPal-iOS-SDK (2.18.1):
     - PayPal-iOS-SDK/CardIO (= 2.18.1)
@@ -67,22 +68,23 @@ PODS:
   - PayPal-iOS-SDK/Core (2.18.1)
   - RangeSeekSlider (1.7.0)
   - Result (3.2.4)
-  - SDWebImage (3.8.2):
-    - SDWebImage/Core (= 3.8.2)
-  - SDWebImage/Core (3.8.2)
+  - SDWebImage (4.3.3):
+    - SDWebImage/Core (= 4.3.3)
+  - SDWebImage/Core (4.3.3)
   - Socket.IO-Client-Swift (13.2.0):
     - Starscream (~> 3.0.2)
   - Starscream (3.0.5)
   - SwiftRangeSlider (2.0.0)
-  - SwiftyJSON (4.0.0)
-  - Toast-Swift (2.0.0)
-  - XLPagerTabStrip (8.0.0)
+  - SwiftyJSON (4.1.0)
+  - Toast-Swift (3.0.1)
+  - XLPagerTabStrip (8.0.1)
 
 DEPENDENCIES:
   - Alamofire
   - Cosmos
   - CountryPickerSwift
   - DLRadioButton
+  - DropDown
   - DZNEmptyDataSet
   - FBSDKLoginKit
   - FlagKit
@@ -107,6 +109,44 @@ DEPENDENCIES:
   - Toast-Swift
   - XLPagerTabStrip
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Bolts
+    - CardIO
+    - Cosmos
+    - CountryPickerSwift
+    - DLRadioButton
+    - DropDown
+    - DZNEmptyDataSet
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FlagKit
+    - GoogleMaps
+    - GooglePlaces
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GTMOAuth2
+    - GTMSessionFetcher
+    - ImageSlideshow
+    - IQKeyboardManagerSwift
+    - KMPlaceholderTextView
+    - MBProgressHUD
+    - MIBadgeButton
+    - Moya
+    - NVActivityIndicatorView
+    - ObjectMapper
+    - PayPal-iOS-SDK
+    - RangeSeekSlider
+    - Result
+    - SDWebImage
+    - Socket.IO-Client-Swift
+    - Starscream
+    - SwiftRangeSlider
+    - SwiftyJSON
+    - Toast-Swift
+    - XLPagerTabStrip
+
 EXTERNAL SOURCES:
   MIBadgeButton-Swift:
     :branch: master
@@ -121,39 +161,40 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
-  Cosmos: 4a9f57998a08788a1062c7b8eefbc62d2b590f39
-  CountryPickerSwift: 3d66c92f62ee95a617feff9cae611568ae9586c2
-  DLRadioButton: 0d04b8259e7bfd886571a1e9173c73fee7118f50
+  Cosmos: 7bcee0fa858a9355a214f2a181be5dffcee42c81
+  CountryPickerSwift: d46dcaadc64fd6e0f00c98dd23a432de858a5193
+  DLRadioButton: d7c4e225ed0e8013cef7be61455230c7557ad7c1
+  DropDown: 7f87abecc28f9b4edad810fe1211c5c018c257e5
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
-  FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
+  FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
+  FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
   FlagKit: 75c64346179f254d1753bebdc5b1f9cbe7890748
-  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
-  GooglePlaces: dd70d9d71ea1c7944846afe67de3712c99b30a77
-  GoogleSignIn: 3fdaa34a2ba04dbd7a25d7db39aecb0da98d5bdc
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GTMOAuth2: be83fd28d63ae3087e7d351b1f39c1a7e24ab6e7
-  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
-  ImageSlideshow: 1bb0e610e28a71e8936d57265d882f61714a470b
-  IQKeyboardManagerSwift: 02bfbb0dff71c66d0ab77d80d25dfce0c3717735
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
+  GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
+  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  ImageSlideshow: 9a1038da5669d2d337ae5ecda2ee8282ff14e9c5
+  IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
   KMPlaceholderTextView: 2bbcd19a273648a80a61e1e48f9743a24d8930e3
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MIBadgeButton: 7c34f180a194d152bb3817c05443eab3a01433cd
   MIBadgeButton-Swift: 9e57309b00b168d75ca8fecb45bc75124a8ffddf
-  Moya: adb58b0f4e58430db43cc6e2f6ebab1836501186
-  NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
+  Moya: a725035953bc1c0eb1be505ab903984501d82440
+  NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   PayPal-iOS-SDK: 10654cd111e911a9807bddb96fae81aacb8e9915
   RangeSeekSlider: 0386c5a9aa5ebcb2fa5238e8a627280cf46c7c0a
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   Socket.IO-Client-Swift: 4698ea9eb2955eecf7fdf06c487ff1597e4cd779
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
   SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
-  Toast-Swift: 5b2f8f720f7e78e48511f693df1f9c9a6e38a25a
-  XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
+  XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 8d58681ba6d6660016321abf4d61b2ae1e1c4bfa
+PODFILE CHECKSUM: b275da614e0fcd43b103f0f3b7517bb6d90034b9
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

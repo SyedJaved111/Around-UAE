@@ -73,21 +73,21 @@ static NSMutableArray<FBSDKDeviceLoginManager *> *g_loginManagerInstances;
       return;
     }
 
-    self->_codeInfo = [[FBSDKDeviceLoginCodeInfo alloc]
+    _codeInfo = [[FBSDKDeviceLoginCodeInfo alloc]
                                           initWithIdentifier:result[@"code"]
                                           loginCode:result[@"user_code"]
                                           verificationURL:[NSURL URLWithString:result[@"verification_uri"]]
                                           expirationDate:[[NSDate date] dateByAddingTimeInterval:[result[@"expires_in"] doubleValue]]
                                           pollingInterval:[result[@"interval"] integerValue]];
 
-    if (self->_isSmartLoginEnabled) {
-      [FBSDKDeviceRequestsHelper startAdvertisementService:self->_codeInfo.loginCode
+    if (_isSmartLoginEnabled) {
+      [FBSDKDeviceRequestsHelper startAdvertisementService:_codeInfo.loginCode
                                               withDelegate:self
       ];
     }
 
-    [self.delegate deviceLoginManager:self startedWithCodeInfo:self->_codeInfo];
-    [self _schedulePoll:self->_codeInfo.pollingInterval];
+    [self.delegate deviceLoginManager:self startedWithCodeInfo:_codeInfo];
+    [self _schedulePoll:_codeInfo.pollingInterval];
   }];
  }
 
@@ -153,8 +153,7 @@ static NSMutableArray<FBSDKDeviceLoginManager *> *g_loginManagerInstances;
                                                                                 appID:[FBSDKSettings appID]
                                                                                userID:userID
                                                                        expirationDate:nil
-                                                                          refreshDate:nil
-                                                             dataAccessExpirationDate:nil];
+                                                                          refreshDate:nil];
         FBSDKDeviceLoginManagerResult *result = [[FBSDKDeviceLoginManagerResult alloc] initWithToken:accessToken
                                                                                          isCancelled:NO];
         completeWithResult(result);
@@ -189,11 +188,11 @@ static NSMutableArray<FBSDKDeviceLoginManager *> *g_loginManagerInstances;
 - (void)_schedulePoll:(NSUInteger)interval
 {
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(interval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    if (self->_isCancelled) {
+    if (_isCancelled) {
       return;
     }
 
-    NSDictionary *parameters = @{ @"code": self->_codeInfo.identifier };
+    NSDictionary *parameters = @{ @"code": _codeInfo.identifier };
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"device/login_status"
                                                                    parameters:parameters
                                                                   tokenString:[FBSDKInternalUtility validateRequiredClientAccessToken]
@@ -201,7 +200,7 @@ static NSMutableArray<FBSDKDeviceLoginManager *> *g_loginManagerInstances;
                                                                         flags:FBSDKGraphRequestFlagNone];
     [request setGraphErrorRecoveryDisabled:YES];
     [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-      if (self->_isCancelled) {
+      if (_isCancelled) {
         return;
       }
       if (error) {

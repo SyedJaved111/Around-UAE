@@ -142,8 +142,8 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        IQKeyboardManager.sharedManager().enableAutoToolbar = false
-        IQKeyboardManager.sharedManager().enable = false
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.enable = false
         let lang = UserDefaults.standard.string(forKey: "i18n_language")
         
         if lang == "ar" {
@@ -160,8 +160,8 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        IQKeyboardManager.sharedManager().enableAutoToolbar = true
-        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardManager.shared.enable = true
         self.bottomConstraint.constant = 0;
     }
     
@@ -336,8 +336,8 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 {
                     let cell : ReceiverImageCell = tableView.dequeueReusableCell(withIdentifier: "ReceiverImageCell", for: indexPath) as!  ReceiverImageCell
                     
-                    cell.receiverImage.setShowActivityIndicator(true)
-                    cell.receiverImage.setIndicatorStyle(.gray)
+                    cell.receiverImage.sd_addActivityIndicator()
+                    cell.receiverImage.sd_setIndicatorStyle(.gray)
                     cell.receiverImage.sd_setImage(with: URL(string:objChat.content!) , completed: nil)
                   //  cell.receiverImageTime.text = self.getTimeFromTimeStamp(timeStamp: objChat.createdAt)
                     if let time = objChat.createdAt {
@@ -391,8 +391,8 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 if (objChat.mimeType == "image/jpeg" ||   objChat.mimeType == "image/png")
                 {
                     let cell : SenderImageCell = tableView.dequeueReusableCell(withIdentifier: "SenderImageCell", for: indexPath) as! SenderImageCell
-                    cell.senderImage.setShowActivityIndicator(true)
-                    cell.senderImage.setIndicatorStyle(.gray)
+                    cell.senderImage.sd_addActivityIndicator()
+                    cell.senderImage.sd_setIndicatorStyle(.gray)
                     cell.senderImage.sd_setImage(with: URL(string:objChat.content!), completed: nil)
                     if let time = objChat.createdAt {
                         

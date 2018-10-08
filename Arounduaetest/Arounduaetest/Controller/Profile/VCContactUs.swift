@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import DropDown
+import DropDown
 
 class VCContactUs: UIViewController{
     
@@ -21,18 +21,18 @@ class VCContactUs: UIViewController{
     @IBOutlet weak var txtComment: UITextView!
     @IBOutlet weak var btnSubmit: UIButtonMain!
     @IBOutlet weak var dropdown: UIButton!
-    //let menudropDown = DropDown()
+    let menudropDown = DropDown()
     
    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        menudropDown.anchorView = dropdown
-//        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        menudropDown.dataSource = ["App Feedback".localized,"Complaint".localized]
-//        menudropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-//            self.appFeedBack.text = item
-//        }
+        menudropDown.anchorView = dropdown
+        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.dataSource = ["App Feedback".localized,"Complaint".localized]
+        menudropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            self.appFeedBack.text = item
+        }
     }
 
     override func viewWillAppear(_ animated: Bool){
@@ -77,7 +77,7 @@ class VCContactUs: UIViewController{
     }
     
     @IBAction func dropDown(_ sender: Any){
-      // menudropDown.show()
+        menudropDown.show()
     }
     
     @IBAction func btnSubmitClick(_ sender: Any){

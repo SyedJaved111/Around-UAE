@@ -38,8 +38,8 @@ class CellStore: UICollectionViewCell {
         lblProductName.text = product.productName?.en
         ratingView.rating = Double(product.averageRating ?? 0)
 
-        imgProducts.setShowActivityIndicator(true)
-        imgProducts.setIndicatorStyle(.gray)
+        imgProducts.sd_addActivityIndicator()
+        imgProducts.sd_setIndicatorStyle(.gray)
         productPrice.text = "$\(product.price?.usd ?? 0)"
         imgProducts.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
         if AppSettings.sharedSettings.accountType == "seller"{

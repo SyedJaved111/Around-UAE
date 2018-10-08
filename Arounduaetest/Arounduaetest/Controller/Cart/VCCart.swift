@@ -17,7 +17,7 @@ class VCCart: UIViewController {
     
     var environment:String = PayPalEnvironmentSandbox {
         willSet(newEnvironment) {
-            if (newEnvironment != environment) {
+            if (newEnvironment != environment){
                 PayPalMobile.preconnect(withEnvironment: newEnvironment)
             }
         }
@@ -42,7 +42,7 @@ class VCCart: UIViewController {
     
     func configPayPal(){
         payPalConfig.acceptCreditCards = false
-        payPalConfig.merchantName = "Rent Car"
+        payPalConfig.merchantName = "Around UAE"
         payPalConfig.merchantPrivacyPolicyURL = URL(string: "https://www.paypal.com/webapps/mpp/ua/privacy-full")
         payPalConfig.merchantUserAgreementURL = URL(string: "https://www.paypal.com/webapps/mpp/ua/useragreement-full")
         payPalConfig.languageOrLocale = Locale.preferredLanguages[0]
@@ -133,7 +133,7 @@ class VCCart: UIViewController {
         let payment = PayPalPayment(amount: subtotal, currencyCode: "USD", shortDescription: "", intent: .sale)
         payment.items = items
         
-        if (payment.processable) {
+        if(payment.processable) {
             let paymentViewController = PayPalPaymentViewController(payment: payment, configuration: payPalConfig, delegate: self)
             present(paymentViewController!, animated: true, completion: nil)
         }

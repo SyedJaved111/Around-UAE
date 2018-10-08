@@ -79,8 +79,20 @@ struct Products: Decodable {
     let averageRating : Int?
     let images : [Images]?
     let price : Price?
+    let minPrice: Int?
+    let maxPrice: Int?
+    let avalaible: Int?
+    let reserved: Int?
+    let sold: Int?
+    let onlineSaleable: Bool?
 }
 
 struct SearchProductData : Decodable {
     let products : [Products]?
+}
+
+struct FeatureCharacterData : Decodable {
+    let title : Title?
+    let characteristics : [Characteristics]?
+    let _id : String?
 }

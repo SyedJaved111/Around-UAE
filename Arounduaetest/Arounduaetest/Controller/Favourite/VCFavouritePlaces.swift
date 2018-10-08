@@ -11,10 +11,6 @@ import  XLPagerTabStrip
 
 class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
     
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
-    
     @IBOutlet var favouritePlacesTableView: UITableView!{
         didSet{
             self.favouritePlacesTableView.delegate = self
@@ -35,8 +31,6 @@ class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.title = "Places"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
     }
     
     private func getFavouritePlaces(){
@@ -47,7 +41,7 @@ class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
                     self?.finishLoading()
                     if let FavouritePlacesData = response{
                         if(FavouritePlacesData.data?.places ?? []).count == 0{
-                            self?.viewEmptyList.isHidden = false
+                            
                         }else{
                             self?.favouritePlacesList = FavouritePlacesData.data?.places ?? []
                             self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
@@ -55,7 +49,7 @@ class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
                             self?.favouritePlacesTableView.reloadData()
                         }
                     }else{
-                        self?.viewEmptyList.isHidden = false
+                        
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)
                     }
                 }
@@ -63,7 +57,7 @@ class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.viewEmptyList.isHidden = false
+               
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -72,11 +66,6 @@ class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo.init(title: "Places")
     }
-    
-    @IBAction func tryAgain(_ sender: UIButton) {
-        self.viewEmptyList.isHidden = true
-        getFavouritePlaces()
-    }
 }
 
 extension VCFavouritePlaces{
@@ -84,7 +73,7 @@ extension VCFavouritePlaces{
     func initialUI(){
         
         favouritePlacesTableView.spr_setTextHeader { [weak self] in
-            self?.viewEmptyList.isHidden = true
+          
             self?.currentPage = 0
             CitiesPlacesManager().getFavouritePlacesList("\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
@@ -92,7 +81,7 @@ extension VCFavouritePlaces{
                         self?.favouritePlacesTableView.spr_endRefreshing()
                         if let FavouritePlacesData = response{
                             if(FavouritePlacesData.data?.places ?? []).count == 0{
-                                self?.viewEmptyList.isHidden = false
+                                
                             }else{
                                 self?.favouritePlacesList = FavouritePlacesData.data?.places ?? []
                                 self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
@@ -100,7 +89,7 @@ extension VCFavouritePlaces{
                                 self?.favouritePlacesTableView.reloadData()
                             }
                         }else{
-                            self?.viewEmptyList.isHidden = false
+                            
                             self?.alertMessage(message: "Error".localized, completionHandler: nil)
                         }
                     }
@@ -108,7 +97,7 @@ extension VCFavouritePlaces{
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.favouritePlacesTableView.spr_endRefreshing()
-                    self?.viewEmptyList.isHidden = false
+                    
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                     }
                 }

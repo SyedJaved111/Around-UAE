@@ -51,8 +51,8 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     func setupUserData(){
         lblUserProfileMail.text = AppSettings.sharedSettings.user.email!
         lblUserProfilename.text = AppSettings.sharedSettings.user.fullName!
-        imgUserProfile.setShowActivityIndicator(true)
-        imgUserProfile.setIndicatorStyle(.gray)
+        imgUserProfile.sd_addActivityIndicator()
+        imgUserProfile.sd_setIndicatorStyle(.gray)
         imgUserProfile.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.image ?? ""))
     }
     

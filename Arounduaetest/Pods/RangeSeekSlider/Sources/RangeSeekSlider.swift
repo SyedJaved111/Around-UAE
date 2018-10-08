@@ -489,11 +489,11 @@ import UIKit
         }
 
         if let nsstring = minLabel.string as? NSString {
-            minLabelTextSize = nsstring.size(withAttributes: [NSAttributedStringKey.font: minLabelFont])
+            minLabelTextSize = nsstring.size(withAttributes: [kCTFontAttributeName as NSAttributedStringKey: minLabelFont])
         }
 
         if let nsstring = maxLabel.string as? NSString {
-            maxLabelTextSize = nsstring.size(withAttributes: [NSAttributedStringKey.font: maxLabelFont])
+            maxLabelTextSize = nsstring.size(withAttributes: [kCTFontAttributeName as NSAttributedStringKey: maxLabelFont])
         }
     }
 

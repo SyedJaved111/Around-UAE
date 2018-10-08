@@ -32,8 +32,8 @@ class CellFavouritePlaces: UITableViewCell {
         lblFavouritProduct.text = place.title?.en
         lblFavouritUserName.text = "Denim Series Vavy"
         ratingView.rating = Double(place.averageRating ?? 0)
-        imgFavourit.setShowActivityIndicator(true)
-        imgFavourit.setIndicatorStyle(.gray)
+        imgFavourit.sd_addActivityIndicator()
+        imgFavourit.sd_setIndicatorStyle(.gray)
         imgFavourit.sd_setImage(with: URL(string: place.images?.first?.path ?? ""))
     }
     

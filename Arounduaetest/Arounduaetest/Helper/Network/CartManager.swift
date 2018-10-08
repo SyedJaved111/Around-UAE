@@ -31,7 +31,7 @@ class CartManager{
     //MARK: - Add Products In Cart
     func addCartProducts(_ params:[String:Any] ,successCallback : @escaping (Response<Product>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
-        NetworkManager.request(target: .AddProdcutsCart(params),
+        NetworkManager.request(target: .AddProdcutsCart(dict: params),
         success:
         {(response) in
             if let parsedResponse = ServerAPI.parseServerResponse(Response<Product>.self, from: response){

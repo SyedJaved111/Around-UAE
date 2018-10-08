@@ -31,8 +31,8 @@ class CellFavourit: UITableViewCell {
     func setupCellData(_ product: Products){
         lblFavouritProduct.text = product.productName?.en
         lblFavouritUserName.text = "Denim Series Vavy"
-        imgFavourit.setShowActivityIndicator(true)
-        imgFavourit.setIndicatorStyle(.gray)
+        imgFavourit.sd_addActivityIndicator()
+        imgFavourit.sd_setIndicatorStyle(.gray)
         imgFavourit.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
         lblFavouritProductprice.text = "$\(product.price?.usd ?? 0)"
         ratingView.rating = Double(product.averageRating ?? 0)
