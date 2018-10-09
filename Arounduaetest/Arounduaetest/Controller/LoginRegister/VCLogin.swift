@@ -149,28 +149,28 @@ class VCLogin: BaseController {
     }
     
     @IBAction func btnFacebookClick(_ sender: Any){
-//        let loginManager = FBSDKLoginManager()
-//        loginManager.logIn(withReadPermissions: ["email", "public_profile"], from: self)
-//        {[weak self](result, error) in
-//            if error != nil{
-//                print(error?.localizedDescription ?? "Nothing")
-//            }else if (result?.isCancelled)!{
-//                print("Cancel")
-//            }
-//            else{
-//                if(result?.grantedPermissions.contains("email"))!{
-//                     self?.logInFromFacebook()
-//                }
-//            }
-//        }
+        let loginManager = FBSDKLoginManager()
+        loginManager.logIn(withReadPermissions: ["email", "public_profile"], from: self)
+        {[weak self](result, error) in
+            if error != nil{
+                print(error?.localizedDescription ?? "Nothing")
+            }else if (result?.isCancelled)!{
+                print("Cancel")
+            }
+            else{
+                if(result?.grantedPermissions.contains("email"))!{
+                     self?.logInFromFacebook()
+                }
+            }
+        }
     }
     
     @IBAction func btnGoogleClick(_ sender: Any){
-//        let googleSignIn = GIDSignIn.sharedInstance()
-//        googleSignIn?.shouldFetchBasicProfile = true
-//        googleSignIn?.scopes = ["profile", "email"]
-//        googleSignIn?.delegate = self
-//        googleSignIn?.signIn()
+        let googleSignIn = GIDSignIn.sharedInstance()
+        googleSignIn?.shouldFetchBasicProfile = true
+        googleSignIn?.scopes = ["profile", "email"]
+        googleSignIn?.delegate = self
+        googleSignIn?.signIn()
     }
     
     @IBAction func btnRegisterNowClick(_ sender: Any){
@@ -230,44 +230,39 @@ extension VCLogin: GIDSignInUIDelegate, GIDSignInDelegate{
             print(error.localizedDescription)
         }
         if error == nil{
-            self.User.socialName = user.profile.name
-            self.User.socialEmail = user.profile.email
-            self.User.socialId = user.userID
-            self.User.isSocialLogin = 1
-            checkIsSocialLogin(check: 1,ID: user.userID)
+            let accessToken = GIDSignIn.sharedInstance().currentUser.authentication.idToken ?? ""
+            SocialLogin(0, socialId: user.userID,accesstoken: accessToken,email: user.profile.email, fullname: user.profile.name,authmethod: "google")
         }
     }
     
-    func checkIsSocialLogin(check: Int,ID: String){
+    func SocialLogin(_ type:Int,socialId:String,accesstoken:String,email:String,fullname:String,authmethod:String){
         startLoading("")
-        AuthManager().checkIsSocialLogin(check: check, socialID: ID,
-                                         successCallback:
-            {[weak self](response) in
-                DispatchQueue.main.async {
-                    self?.finishLoading()
-                    if let socialResponse = response{
-                        if (socialResponse.success!){
-                            self?.User.socialName = nil
-                            self?.User.socialEmail = nil
-                            self?.User.socialId = nil
-                            self?.User.isSocialLogin = -1
-                            self?.userProfileData(check: check, successResponse: socialResponse)
-                        }
-                        else{
-                            self?.appDelegate.moveToLogin()
-                        }
-                    }else{
-                        self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+        let param = (socialId,accesstoken,email,authmethod,fullname)
+        AuthManager().SocialLogin(param,
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let socialResponse = response{
+                    if (socialResponse.success!){
+                        self?.userProfileData(check: type, params: param, successResponse: socialResponse)
                     }
+                    else{
+                        self?.alertMessage(message: socialResponse.message?.en ?? "", completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
                 }
+            }
         }){[weak self](error) in
             DispatchQueue.main.async {
+                self?.finishLoading()
                 self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
     
-    private func userProfileData(check : Int, successResponse : Response<User>){
+    private func userProfileData(check : Int, params:SocialParams ,successResponse : Response<User>){
         
         AppSettings.sharedSettings.user = successResponse.data!
         let accountType = successResponse.data?.accountType ?? ""
@@ -277,14 +272,13 @@ extension VCLogin: GIDSignInUIDelegate, GIDSignInDelegate{
         
         if(successResponse.data?.isEmailVerified! == true){
             AppSettings.sharedSettings.isAutoLogin = true
-            AppSettings.sharedSettings.loginMethod = (check == 0) ? "local0" : "local1"
-    
-            if(accountType == "buyer"){
-                self.appDelegate.moveToHome()
-            }
-            else{
-                self.appDelegate.moveToHome()
-            }
+            AppSettings.sharedSettings.loginMethod = (check == 0) ? "google" : "facebook"
+            AppSettings.sharedSettings.socialId = params.id
+            AppSettings.sharedSettings.socialAccessToken = params.accessToken
+            AppSettings.sharedSettings.userEmail = params.email
+            AppSettings.sharedSettings.fullName = params.fullName
+
+            self.appDelegate.moveToHome()
         }else{
             self.moveToVCEmail()
         }
@@ -301,7 +295,6 @@ extension VCLogin{
     
     func logInFromFacebook() {
         if (FBSDKAccessToken.current() != nil) {
-            self.startLoading("")
             FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"]).start { (connection, result, error) in
                 
                 if error != nil{
@@ -315,6 +308,10 @@ extension VCLogin{
                         let email = results["email"] as? String,
                         let fullName = results["name"] as? String else {
                             return
+                    }
+                    let token = FBSDKAccessToken.current().tokenString ?? ""
+                    DispatchQueue.main.async {
+                        self.SocialLogin(1, socialId: facebookId,accesstoken: token,email: email, fullname: fullName,authmethod: "facebook")
                     }
                 }
             }

@@ -19,9 +19,6 @@ enum ServerAPI {
     case ResendVerification(userEmail: String)
     case ResetPassword(resetPasswordParams)
     
-    //Social API's
-    case checkIsSocialLogin(check:Int ,SocialId:String)
-    
     //Store API's
     case GetStores(pageNo:String)
     case StoreDetail(storeId:String)
@@ -76,6 +73,9 @@ enum ServerAPI {
     case GetGroups
     case GetGroupWithDivision
     case GetGroupsDivision(groupId:String)
+    
+    //Social API's
+    case SocialLogin(SocialParams)
 
     //Parser API's
     static func parseServerResponse<T>(_ type: T.Type, from data: Data)-> T? where T : Decodable{
@@ -101,7 +101,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         switch self {
           case .UserLogin,.ForgotPassword,.RegisterUser,
              .EmailVerification,.ResendVerification,
-             .ResetPassword,.CitiesPlaces,.SearchProduct:
+             .ResetPassword,.CitiesPlaces,.SearchProduct,.SocialLogin:
             return .none
           default:
             return .basic
@@ -122,15 +122,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return APIURL.resendverificationURL.rawValue
             case .ResetPassword:
                 return APIURL.resetPasswordURL.rawValue
-            case .checkIsSocialLogin(let check, let id):
-                switch check{
-                    case 0:
-                        return APIURL.facebookURL.rawValue + id
-                    case 1:
-                        return APIURL.googleURL.rawValue + id
-                    default:
-                        return ""
-                }
+            case .SocialLogin:
+                return APIURL.socialLoginURL.rawValue
             case .GetStores:
                 return APIURL.getStoreURL.rawValue
             case .StoreDetail:
@@ -227,9 +220,9 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
                .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
-               .Payment,.SearchProduct:
+               .Payment,.SearchProduct,.SocialLogin:
                 return .post
-          case .checkIsSocialLogin,.GetUserProfile,.RemoveImage,
+          case .GetUserProfile,.RemoveImage,
                .GetStoreSGDS,.GetFeaturesCharacters,.GetSiteSettings,
                .GetSliders,.GetCartProducts,
                .GetGroups,.GetGroupWithDivision:
@@ -355,7 +348,17 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             
             case .SearchProduct(let searchTxt):
                 parameters["locale"] = "en"
-                parameters["keyword"] = searchTxt
+                if searchTxt != "" && searchTxt.count > 0{
+                   parameters["keyword"] = searchTxt
+                }
+                return parameters
+            
+            case .SocialLogin(let params):
+                parameters[SocialKey.id.rawValue] = params.id
+                parameters[SocialKey.accessToken.rawValue] = params.accessToken
+                parameters[SocialKey.email.rawValue] = params.email
+                parameters[SocialKey.authMethod.rawValue] = params.authMethod
+                parameters[SocialKey.fullName.rawValue] = params.fullName
                 return parameters
             
             default:
@@ -383,13 +386,13 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
                .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
-               .Payment,.SearchProduct:
+               .Payment,.SearchProduct,.SocialLogin:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
           case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:
             return .uploadMultipart(multipartBody ?? [])
             
-          case .checkIsSocialLogin,.GetUserProfile,.RemoveImage,
+          case .GetUserProfile,.RemoveImage,
                .GetFeaturesCharacters,.GetStoreSGDS,.GetSiteSettings,
                .GetSliders,.GetCartProducts,.GetGroups,.GetGroupWithDivision:
             return .requestPlain

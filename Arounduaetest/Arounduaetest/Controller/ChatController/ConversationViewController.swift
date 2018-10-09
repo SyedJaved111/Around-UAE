@@ -41,8 +41,8 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
             addBackButton()
         }
         
-         //self.showLoader()
-        //hitConversation()
+        self.showLoader()
+        hitConversation()
         
     }
     @IBOutlet var conversationTableView: UITableView!{
@@ -101,7 +101,7 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
                 let Conversation = ConversationModel.init(dictionary: dictionary as NSDictionary)
                 
                
-                self.conversationArray +=  (Conversation?.data?.conversations!)!
+                self.conversationArray += (Conversation?.data?.conversations!)!
                 self.TotalPage = (Conversation?.data?.pagination?.pages!)!
                 print(self.TotalPage)
                 self.ObjPage =  (Conversation?.data?.pagination?.page!)!
@@ -233,18 +233,20 @@ extension ConversationViewController : UITableViewDelegate, UITableViewDataSourc
         let cell = self.conversationTableView.dequeueReusableCell(withIdentifier: "ConversationTableViewCell", for: indexPath) as! ConversationTableViewCell
         let conversationData = conversationArray[indexPath.row]
      
-        if(conversationData.person1?._id ==  AppSettings.sharedSettings.user._id!){
-                if let imgUrl = URL(string: (conversationData.person2?.image!)!) {
+        if(conversationData.person1?._id ==  AppSettings.sharedSettings.user._id ?? ""){
+                if let imgUrl = URL(string: (conversationData.person2?.image ?? "")) {
                     print(imgUrl)
                     cell.imageConversation.sd_setImage(with: imgUrl, placeholderImage:UIImage(named: "Placeholder-3"))
+                    cell.imageConversation.makeRound()
                 }
         
             cell.lblName.text = conversationData.person2?.fullName
         }
         else{
-            if let imgUrl = URL(string: (conversationData.person1?.image!)!) {
+            if let imgUrl = URL(string: (conversationData.person1?.image ?? "")) {
                 print(imgUrl)
                 cell.imageConversation.sd_setImage(with: imgUrl, placeholderImage:UIImage(named: "Placeholder-3"))
+                cell.imageConversation.makeRound()
             }
             
             cell.lblName.text = conversationData.person1?.fullName
@@ -263,7 +265,7 @@ extension ConversationViewController : UITableViewDelegate, UITableViewDataSourc
 
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            dateFormatter.timeZone = NSTimeZone(name: "UTC") as! TimeZone
+            dateFormatter.timeZone = NSTimeZone(name: "UTC")! as TimeZone
 
             let date = dateFormatter.date(from: time)
             print(date!)

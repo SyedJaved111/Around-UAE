@@ -86,7 +86,7 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
        
         let imageUrl = notificationArray[indexPath.row].sender?.image
        
-        if let url = URL(string: imageUrl!)
+        if let url = URL(string: imageUrl ?? "")
         {
             //print(url)
             //cell.imageView?.af_setImage(withURL: url)

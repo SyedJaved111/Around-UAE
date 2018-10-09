@@ -8,8 +8,9 @@
 
 import UIKit
 import  XLPagerTabStrip
+import DZNEmptyDataSet
 
-class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
+class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
     
     @IBOutlet var favouritePlacesTableView: UITableView!{
         didSet{
@@ -33,6 +34,13 @@ class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
         self.title = "Places"
     }
     
+    fileprivate func setupDelegates(){
+        self.favouritePlacesTableView.emptyDataSetSource = self
+        self.favouritePlacesTableView.emptyDataSetDelegate = self
+        self.favouritePlacesTableView.tableFooterView = UIView()
+        self.favouritePlacesTableView.reloadData()
+    }
+    
     private func getFavouritePlaces(){
         startLoading("")
         CitiesPlacesManager().getFavouritePlacesList("\(currentPage + 1)",successCallback:
@@ -40,24 +48,24 @@ class VCFavouritePlaces: UIViewController,IndicatorInfoProvider{
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let FavouritePlacesData = response{
-                        if(FavouritePlacesData.data?.places ?? []).count == 0{
-                            
-                        }else{
+                        if FavouritePlacesData.success!{
                             self?.favouritePlacesList = FavouritePlacesData.data?.places ?? []
                             self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
                             self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
-                            self?.favouritePlacesTableView.reloadData()
+                        }
+                        else{
+                            self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
                         }
                     }else{
-                        
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-               
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -80,24 +88,23 @@ extension VCFavouritePlaces{
                     DispatchQueue.main.async {
                         self?.favouritePlacesTableView.spr_endRefreshing()
                         if let FavouritePlacesData = response{
-                            if(FavouritePlacesData.data?.places ?? []).count == 0{
-                                
-                            }else{
+                            if FavouritePlacesData.success!{
                                 self?.favouritePlacesList = FavouritePlacesData.data?.places ?? []
                                 self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
                                 self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
-                                self?.favouritePlacesTableView.reloadData()
+                            }else{
+                                self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
                             }
                         }else{
-                            
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.favouritePlacesTableView.spr_endRefreshing()
-                    
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                     }
                 }
@@ -113,20 +120,25 @@ extension VCFavouritePlaces{
                     DispatchQueue.main.async {
                         self?.favouritePlacesTableView.spr_endRefreshing()
                         if let FavouritePlacesData = response{
-                            for place in FavouritePlacesData.data?.places ?? []{
-                                self?.favouritePlacesList.append(place)
+                            if FavouritePlacesData.success!{
+                                for place in FavouritePlacesData.data?.places ?? []{
+                                    self?.favouritePlacesList.append(place)
+                                }
+                                self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
+                                self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
+                            }else{
+                                self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
                             }
-                            self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
-                            self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
-                            self?.favouritePlacesTableView.reloadData()
                         }else{
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.favouritePlacesTableView.spr_endRefreshing()
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -149,5 +161,9 @@ extension VCFavouritePlaces:UITableViewDelegate,UITableViewDataSource{
         cell.setupCellData(favouritePlacesList[indexPath.row])
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        getFavouritePlaces()
     }
 }

@@ -32,7 +32,7 @@ class VCPopUpprofile: UIViewController {
             case "Gender":
                TxtFiledName.text = AppSettings.sharedSettings.user.gender
             case "Address":
-               TxtFiledName.text = AppSettings.sharedSettings.user.address
+                TxtFiledName.text = AppSettings.sharedSettings.user.address
             case "PhoneNo":
                TxtFiledName.text = AppSettings.sharedSettings.user.phone
             default:

@@ -21,16 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // status bar set
-        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
-            statusBar.backgroundColor = UIColor(red:241/255, green:242/255, blue:243/255, alpha: 1)
-        }
-        
+//        // status bar set
+//        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+//        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+//            statusBar.backgroundColor = UIColor(red:241/255, green:242/255, blue:243/255, alpha: 1)
+//        }
+//        
         IQKeyboardManager.shared.enable = true
-        GMSPlacesClient.provideAPIKey("AIzaSyBeblugMSfJeJtTRFB6lFGxejNtxBcVW_I")
+        //GMSPlacesClient.provideAPIKey("AIzaSyBeblugMSfJeJtTRFB6lFGxejNtxBcVW_I")
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        GIDSignIn.sharedInstance().clientID = "726253961199-7djm89dcuppkndauve0pevkmlfmrimaf.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().clientID = "865530906226-p6n78arp03f7o3gvc8bnca45g4hn8mqr.apps.googleusercontent.com"
         
         return true
     }

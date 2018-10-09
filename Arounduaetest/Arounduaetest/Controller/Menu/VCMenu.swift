@@ -8,6 +8,8 @@
 
 import UIKit
 import SDWebImage
+import FBSDKLoginKit
+import GoogleSignIn
 
 class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     
@@ -131,6 +133,17 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     }
     
     private func logOut(){
+        if let type = AppSettings.sharedSettings.loginMethod{
+            if type == "facebook"{
+                FBSDKLoginManager().logOut()
+                AppSettings.sharedSettings.socialAccessToken = nil
+                AppSettings.sharedSettings.socialId = nil
+            }else if type == "google"{
+                GIDSignIn.sharedInstance().signOut()
+                AppSettings.sharedSettings.socialAccessToken = nil
+                AppSettings.sharedSettings.socialId = nil
+            }
+        }
         AppSettings.sharedSettings.userEmail = nil
         AppSettings.sharedSettings.userPassword = nil
         AppSettings.sharedSettings.isAutoLogin = false

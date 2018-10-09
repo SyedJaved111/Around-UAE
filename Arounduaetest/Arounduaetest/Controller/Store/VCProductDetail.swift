@@ -78,17 +78,11 @@ class VCProductDetail: UIViewController {
     
     private func checKCombination(){
         var dic = [String:Any]()
-        
-        for i in 0..<features.count{
-           dic["features[\(i)]"] = features[i]
-        }
-        
-        for i in 0..<characteristics.count{
-           dic["characteristics[\(i)]"] = characteristics[i]
-        }
-        
+
+        dic["features"] = features
+        dic["characteristics"] = characteristics
         dic["product"] = product._id!
-        dic["quantity"] = "1"//"\(Int(Productcounter.value))"
+        dic["quantity"] = "\(Int(Productcounter.value))"
         
         if let combinations = productDetail?.combinations{
             for obj in combinations{
@@ -105,24 +99,19 @@ class VCProductDetail: UIViewController {
         }
     }
     
-//    characteristics[0] = 5b8f6d565fae83149c238948
-//    characteristics[1] = 5b8f6d965fae83149c23894b
-//    features[0] = 5b8f6d105fae83149c238946
-//    features[1] = 5b8f6d375fae83149c238947
-//    product = 5bb732dd84b5e00f19012005
-//    quantity = 1
-//
-    
     private func addToCartProduct(_ dict:[String:Any]){
+        var dictoinary = dict
+        dictoinary["quantity"] = "\(Int(Productcounter.value))"
         startLoading("")
-        CartManager().addCartProducts(dict,
+        CartManager().addCartProducts(dictoinary,
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
-                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                        self?.navigationController?.popViewController(animated: true)
                     }else{
                         self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
                     }

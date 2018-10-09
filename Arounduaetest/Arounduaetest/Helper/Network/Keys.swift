@@ -170,3 +170,11 @@ enum PaymentKey:String{
     case token = "token"
 }
 
+enum SocialKey:String{
+    case id = "id"
+    case accessToken = "accessToken"
+    case email = "email"
+    case authMethod = "authMethod"
+    case fullName = "fullName"
+}
+

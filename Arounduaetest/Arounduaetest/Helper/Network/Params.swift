@@ -127,3 +127,11 @@ typealias PaymentParams = (
     token:String
 )
 
+typealias SocialParams = (
+    id:String,
+    accessToken:String,
+    email:String,
+    authMethod:String,
+    fullName:String
+)
+

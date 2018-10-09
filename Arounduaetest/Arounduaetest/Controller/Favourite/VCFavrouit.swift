@@ -9,6 +9,7 @@
 import UIKit
 import Cosmos
 import XLPagerTabStrip
+import DZNEmptyDataSet
 
 class VCFavrouit: BaseController,IndicatorInfoProvider{
     
@@ -34,6 +35,13 @@ class VCFavrouit: BaseController,IndicatorInfoProvider{
         self.title = "Products"
     }
     
+    fileprivate func setupDelegates(){
+        self.favouriteProductTableView.emptyDataSetSource = self
+        self.favouriteProductTableView.emptyDataSetDelegate = self
+        self.favouriteProductTableView.tableFooterView = UIView()
+        self.favouriteProductTableView.reloadData()
+    }
+    
     private func getFavouriteProducts(){
         startLoading("")
         ProductManager().getFavouriteProducts("\(currentPage + 1)",
@@ -42,22 +50,23 @@ class VCFavrouit: BaseController,IndicatorInfoProvider{
             DispatchQueue.main.async {
                 self?.finishLoading()
                 if let FavouriteProductData = response{
-                    if(FavouriteProductData.data?.products ?? []).count == 0{
-                       
-                    }else{
+                    if FavouriteProductData.success!{
                         self?.favouriteProductList = FavouriteProductData.data?.products ?? []
                         self?.currentPage = FavouriteProductData.data?.pagination?.page ?? 1
                         self?.totalPages = FavouriteProductData.data?.pagination?.pages ?? 0
-                        self?.favouriteProductTableView.reloadData()
+                    }else{
+                        self?.alertMessage(message:(FavouriteProductData.message?.en ?? "").localized, completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                 }
+                self?.setupDelegates()
             }
         })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -73,31 +82,29 @@ extension VCFavrouit{
     func initialUI(){
         
         favouriteProductTableView.spr_setTextHeader { [weak self] in
-            
             self?.currentPage = 0
              ProductManager().getFavouriteProducts("\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         self?.favouriteProductTableView.spr_endRefreshing()
                         if let favouriteResponse = response{
-                            if(favouriteResponse.data?.products ?? []).count == 0{
-                               
-                            }else{
+                            if favouriteResponse.success!{
                                 self?.favouriteProductList = favouriteResponse.data?.products ?? []
                                 self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
-                                self?.favouriteProductTableView.reloadData()
+                            }else{
+                                self?.alertMessage(message:(favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
                         }else{
-                            
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.favouriteProductTableView.spr_endRefreshing()
-                    
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -113,20 +120,25 @@ extension VCFavrouit{
                     DispatchQueue.main.async {
                         self?.favouriteProductTableView.spr_endRefreshing()
                         if let favouriteResponse = response{
-                            for product in favouriteResponse.data?.products ?? []{
-                                self?.favouriteProductList.append(product)
+                            if favouriteResponse.success!{
+                                for product in favouriteResponse.data?.products ?? []{
+                                    self?.favouriteProductList.append(product)
+                                }
+                                self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
+                                self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
+                            }else{
+                                self?.alertMessage(message:(favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
-                            self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
-                            self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
-                            self?.favouriteProductTableView.reloadData()
                         }else{
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
                     self?.favouriteProductTableView.spr_endRefreshing()
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -149,5 +161,9 @@ extension VCFavrouit: UITableViewDelegate,UITableViewDataSource{
         cell.setupCellData(favouriteProductList[indexPath.row])
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        getFavouriteProducts()
     }
 }

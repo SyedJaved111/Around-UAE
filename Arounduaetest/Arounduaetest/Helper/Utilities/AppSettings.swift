@@ -59,6 +59,36 @@ class AppSettings{
         }
     }
     
+    var socialId:String?{
+        set{
+            UserDefaults.standard.set(newValue ?? "",forKey:"socialId")
+            UserDefaults.standard.synchronize()
+        }
+        get{
+            return UserDefaults.standard.string(forKey: "socialId")
+        }
+    }
+    
+    var socialAccessToken:String?{
+        set{
+            UserDefaults.standard.set(newValue ?? "",forKey:"accessToken")
+            UserDefaults.standard.synchronize()
+        }
+        get{
+            return UserDefaults.standard.string(forKey: "accessToken")
+        }
+    }
+    
+    var fullName:String?{
+        set{
+            UserDefaults.standard.set(newValue ?? "",forKey:"fullName")
+            UserDefaults.standard.synchronize()
+        }
+        get{
+            return UserDefaults.standard.string(forKey: "fullName")
+        }
+    }
+    
     var isAutoLogin:Bool?{
         set{
             UserDefaults.standard.set(newValue ?? "",forKey:"isAutoLogin")

@@ -114,8 +114,8 @@ class AuthManager{
      }
     
      //MARK: - SOCIAL_LOGIN
-     func checkIsSocialLogin(check : Int, socialID : String, successCallback : @escaping (Response<User>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
-        NetworkManager.request(target: .checkIsSocialLogin(check: check, SocialId: socialID),
+    func SocialLogin(_ params:SocialParams, successCallback : @escaping (Response<User>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .SocialLogin(params),
         success:
         {(response) in
             if let parsedResponse = ServerAPI.parseServerResponse(Response<User>.self, from: response){

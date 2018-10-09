@@ -79,7 +79,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Conversation"
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
          self.setupKeyboardScrolling()
@@ -310,7 +310,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         var sender = ""
         if(self.user.conversationArray.isEmpty){
-        if(self.user.personID==AppSettings.sharedSettings.user._id!){
+        if(self.user.personID==AppSettings.sharedSettings.user._id ?? "5b975f1966a12835a0373d08"){
             
              sender = "person1"
             }
@@ -959,6 +959,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             })
             
             self.socket.connect()
+            self.finishLoading()
         }
     }
 }

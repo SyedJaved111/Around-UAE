@@ -31,7 +31,20 @@ class User : Decodable{
     let updatedAt : String? = nil
     let addresses : [Addresses]? = nil
     var authorization: String? = nil
+}
 
+struct Language : Decodable {
+    
+}
+
+struct Google : Decodable {
+    let id : String?
+    let accessToken : String?
+}
+
+struct Facebook : Decodable {
+    let id : String?
+    let accessToken : String?
 }
 
 class Addresses : Decodable {

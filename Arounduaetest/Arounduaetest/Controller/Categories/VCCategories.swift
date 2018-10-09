@@ -157,7 +157,7 @@ extension VCCategories{
 }
 
 extension UICollectionView{
-    func  adjustDesign(width: CGFloat){
+    func adjustDesign(width: CGFloat){
         let collectionViewSize = self.collectionViewLayout as! UICollectionViewFlowLayout
         collectionViewSize.itemSize.width = width
     }

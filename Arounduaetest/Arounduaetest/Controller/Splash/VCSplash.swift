@@ -72,19 +72,14 @@ class VCSplash: BaseController {
                 if let value = AppSettings.sharedSettings.loginMethod{
                     if value == "local"{
                         logInFromEmail()
-                    }else if value == "local0"{
-                        if let userEmail = defaults.value(forKey: "userEmail") as? String{
-                            checkIsSocialLogin(check: 0, email : userEmail)
-                        }
-                    }else if value == "local1"{
-                        if let userEmail = defaults.value(forKey: "userEmail") as? String{
-                            checkIsSocialLogin(check: 1, email : userEmail)
-                        }
+                    }else if value == "google"{
+                        checkIsSocialLogin(check: 0)
+                    }else if value == "facebook"{
+                        checkIsSocialLogin(check: 1)
                     }else{
                        self.appDelegate.moveToLogin()
                     }
                 }
-                
             }else{
                 self.appDelegate.moveToLogin()
             }
@@ -93,6 +88,7 @@ class VCSplash: BaseController {
     
      private func logInFromEmail(){
         startLoading("")
+        
         if let userpassword = AppSettings.sharedSettings.userPassword,
            let useremail = AppSettings.sharedSettings.userEmail{
     
@@ -101,22 +97,15 @@ class VCSplash: BaseController {
             {[weak self](response) in
                 self?.finishLoading()
                 if let loginResponse = response{
-                        
                     if(loginResponse.success!){
-                        
                         AppSettings.sharedSettings.user = loginResponse.data!
                         let accountType = loginResponse.data?.accountType!
                         let authToken = loginResponse.data?.authorization!
                         AppSettings.sharedSettings.authToken = authToken
                         AppSettings.sharedSettings.loginMethod = "local"
                         AppSettings.sharedSettings.accountType = accountType
-                        
-                        if(accountType == "buyer"){
-                            self?.appDelegate.moveToHome()
-                        }else{
-                            self?.appDelegate.moveToHome()
-                        }
-                        
+                        self?.appDelegate.moveToHome()
+                    
                     }else{
                         self?.alertMessage(message: loginResponse.message?.en ?? "", completionHandler: {
                             self?.logInFromEmail()
@@ -141,47 +130,51 @@ class VCSplash: BaseController {
         }
     }
     
-    private func checkIsSocialLogin(check: Int, email : String){
+    private func checkIsSocialLogin(check: Int){
+        
+        guard let id = AppSettings.sharedSettings.socialId, let acesstoken = AppSettings.sharedSettings.socialAccessToken,
+            let email = AppSettings.sharedSettings.userEmail, let name = AppSettings.sharedSettings.fullName,
+            let authmethod = AppSettings.sharedSettings.loginMethod else{
+                return
+        }
+        let param = (id,acesstoken,email,authmethod,name)
         startLoading("")
-        AuthManager().checkIsSocialLogin(check: check, socialID: email,
+        AuthManager().SocialLogin((id,acesstoken,email,authmethod,name),
         successCallback:
         {[weak self](response) in
             self?.finishLoading()
             if let socialResponse = response{
                 if(socialResponse.success!){
-                    self?.userProfileData(check : check, successResponse : socialResponse)
+                    self?.userProfileData(check : check, params: param, successResponse : socialResponse)
                 }else{
                     self?.alertMessage(message: socialResponse.message?.en ?? "", completionHandler: {
-                        self?.checkIsSocialLogin(check: check, email : email)
+                        self?.checkIsSocialLogin(check: check)
                     })
                 }
             }else{
                 self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
-                    self?.checkIsSocialLogin(check: check, email : email)
+                    self?.checkIsSocialLogin(check: check)
                 })
             }
         })
         {[weak self](error) in
             self?.alertMessage(message: error.message, completionHandler: {
-                self?.checkIsSocialLogin(check: check, email : email)
+                self?.checkIsSocialLogin(check: check)
             })
         }
     }
     
-    private func userProfileData(check : Int, successResponse : Response<User>){
-        
+    private func userProfileData(check : Int, params:SocialParams ,successResponse : Response<User>){
         AppSettings.sharedSettings.user = successResponse.data!
         let accountType = successResponse.data?.accountType!
         let authToken = successResponse.data?.authorization!
         AppSettings.sharedSettings.authToken = authToken
         AppSettings.sharedSettings.accountType = accountType
-        AppSettings.sharedSettings.loginMethod = (check == 0) ? "local0" : "local1"
-        
-        if(accountType == "buyer"){
-            self.appDelegate.moveToHome()
-        }
-        else{
-            self.appDelegate.moveToHome()
-        }
+        AppSettings.sharedSettings.loginMethod = (check == 0) ? "google" : "facebook"
+        AppSettings.sharedSettings.socialId = params.id
+        AppSettings.sharedSettings.socialAccessToken = params.accessToken
+        AppSettings.sharedSettings.userEmail = params.email
+        AppSettings.sharedSettings.fullName = params.fullName
+        self.appDelegate.moveToHome()
     }
 }
