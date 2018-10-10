@@ -58,8 +58,8 @@ class VCHome: BaseController{
     }
     
     fileprivate func setupDelegates(){
-        self.tablView.emptyDataSetSource = self
-        self.tablView.emptyDataSetDelegate = self
+//        self.tablView.emptyDataSetSource = self
+//        self.tablView.emptyDataSetDelegate = self
         self.tablView.reloadData()
     }
     
@@ -129,7 +129,7 @@ class VCHome: BaseController{
 extension VCHome: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 230
+        return 235
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -170,7 +170,7 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
-        fetchGroupsWithDivisons(isRefresh: false)
-    }
+//    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+//        fetchGroupsWithDivisons(isRefresh: false)
+//    }
 }

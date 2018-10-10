@@ -14,8 +14,10 @@ import GooglePlaces
 import FlagKit
 
 class VCRegister: BaseController{
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
@@ -93,7 +95,7 @@ class VCRegister: BaseController{
     fileprivate func addButton(){
         if(lang == "en"){
         let button = UIButton()
-        button.setImage(image, for: .normal)
+        button.setImage(image!, for: .normal)
         button.frame = CGRect(x: 15, y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         button.addTarget(self, action: #selector(self.addBtn), for: .touchUpInside)
         txtPhoneNumber.leftView = button

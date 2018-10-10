@@ -33,7 +33,7 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NearbyCollectionview.adjustDesign(width: ((view.frame.size.width+20)/2.4))
+        NearbyCollectionview.adjustDesign(width: ((view.frame.size.width+20)/2.5))
         initialUI()
         fetchCitiesPlacesData()
     }

@@ -18,17 +18,40 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var imgUserProfile: UIImageView!
     @IBOutlet var profileTableView: UITableView!
     
-    var Menuimg = [
+    var Menuimgbuyer = [
         "Orders",
         "Settings",
         "Contact",
-        "AboutUs"]
+        "AboutUs",
+        "Globe"]
     
-    var lblMenuName = [
+    var lblMenuNamebuyer = [
        "My Orders".localized,
        "Change Settings".localized,
        "Contact Us".localized,
-       "About Us".localized]
+       "About Us".localized,
+       "Language".localized]
+    
+    
+    var Menuimgseller = [
+        "Products",
+        "Plus",
+        "Orders",
+        "Manage-Payment",
+        "Settings",
+        "Contact",
+        "AboutUs",
+        "Globe"]
+    
+    var lblMenuNameseller = [
+        "Manage Products".localized,
+        "Add Products".localized,
+        "My Orders".localized,
+        "Manage Payments".localized,
+        "Manage About Page".localized,
+        "Contact Us".localized,
+        "About Us".localized,
+        "Language".localized]
     
     let defaults = UserDefaults.standard
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -36,12 +59,21 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        lblMenuName += shareduserinfo.pages.map({$0.title?.en ?? ""})
-        Menuimg += shareduserinfo.pages.map({$0.image ?? ""})
-        lblMenuName.append("Language".localized)
-        Menuimg.append("Language")
-        lblMenuName.append("Logout".localized)
-        Menuimg.append("Logout")
+        if AppSettings.sharedSettings.accountType == "seller"{
+            lblMenuNameseller += shareduserinfo.pages.map({$0.title?.en ?? ""})
+            Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
+
+        }else{
+            lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.en ?? ""})
+            Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
+        }
+        
+        lblMenuNameseller.append("Logout".localized)
+        Menuimgseller.append("Logout")
+        lblMenuNamebuyer.append("Logout".localized)
+        Menuimgbuyer.append("Logout")
+        profileTableView.reloadData()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,38 +98,80 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lblMenuName.count
+        if AppSettings.sharedSettings.accountType == "seller"{
+            return Menuimgseller.count
+        }else{
+            return Menuimgbuyer.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellMenu") as! CellMenu
-        cell.setupMenu(lblMenuName[indexPath.row], imagestr: Menuimg[indexPath.row])
+        if AppSettings.sharedSettings.accountType == "seller"{
+            cell.setupMenu(lblMenuNameseller[indexPath.row], imagestr: Menuimgseller[indexPath.row])
+        }else{
+            cell.setupMenu(lblMenuNamebuyer[indexPath.row], imagestr: Menuimgbuyer[indexPath.row])
+        }
         cell.selectionStyle = .none
         return cell
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
         
-        let index = indexPath.row
-        switch index {
+        if AppSettings.sharedSettings.accountType == "seller"{
+            let index = indexPath.row
+            switch index {
             case 0:
-             moveToOrderVC()
+                break
             case 1:
-             break
+                break
             case 2:
-             moveToContactUs()
+                 moveToOrderVC()
             case 3:
-             moveToAboutUS()
+                break
             case 4:
-             moveTopage(txt: lblMenuName[indexPath.row])
+                break
             case 5:
-             moveTopage(txt: lblMenuName[indexPath.row])
+                moveToContactUs()
             case 6:
-             appDelegate.moveToSelectlanguage()
+                moveToAboutUS()
+            case 7:
+                appDelegate.moveToSelectlanguage()
+            case 8:
+                moveTopage(txt: "Terms and Conditions")
+            case 9:
+                moveTopage(txt: "Privacy Policy")
+            case 10:
+                self.logOut()
+            default:
+                return
+            }
+        }else{
+            let index = indexPath.row
+            switch index {
+            case 0:
+                moveToOrderVC()
+            case 1:
+                break
+            case 2:
+                moveToContactUs()
+            case 3:
+                moveToAboutUS()
+            case 4:
+                appDelegate.moveToSelectlanguage()
+            case 5:
+                moveTopage(txt: "Terms and Conditions")
+            case 6:
+                moveTopage(txt: "Privacy Policy")
             case 7:
                 self.logOut()
             default:
                 return
+            }
         }
     }
     

@@ -26,7 +26,7 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        TopratedCollectionView.adjustDesign(width: ((view.frame.size.width+20)/2.4))
+        TopratedCollectionView.adjustDesign(width: ((view.frame.size.width+20)/2.5))
         initialUI()
         fetchCitiesPlacesData()
     }
@@ -59,6 +59,7 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
             })
         {[weak self](error) in
             DispatchQueue.main.async{
+                self?.placeArray = [Places(_id: "", title: Title(en: "hello", ar: "hello"), averageRating: 3, images: [Images(path: "")])]
                 self?.finishLoading()
                 self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)

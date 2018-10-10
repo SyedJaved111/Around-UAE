@@ -51,10 +51,14 @@ class VCProductFilter: UIViewController {
                         self?.scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: (self?.scrollView.contentSize.height)!)
                     }
                     else{
-                        self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: {
+                           self?.getFeatureWithCharacteristics()
+                        })
                     }
                 }else{
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                      self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: {
+                      self?.getFeatureWithCharacteristics()
+                    })
                 }
             }
         })
