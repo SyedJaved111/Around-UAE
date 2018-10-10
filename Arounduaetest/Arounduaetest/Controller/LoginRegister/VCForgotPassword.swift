@@ -15,8 +15,8 @@ class VCForgotPassword: BaseController{
     @IBOutlet weak var lblForgotPassword: UILabel!
     @IBOutlet weak var txtEnterEmail: UITextField!
     @IBOutlet weak var btnSubmit: UIButtonMain!
-    
     @IBOutlet weak var btnResend: UIButtonMain!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

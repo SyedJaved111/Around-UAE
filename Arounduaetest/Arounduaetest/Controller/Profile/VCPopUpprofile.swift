@@ -39,7 +39,7 @@ class VCPopUpprofile: UIViewController {
                 break
         }
     }
-    
+
     @IBAction func cancelClick(_ sender: Any) {
         dismiss(animated: true , completion: nil)
     }
@@ -118,6 +118,7 @@ class VCPopUpprofile: UIViewController {
             default:
                 break
         }
+        
         updateProfile(AppSettings.sharedSettings.user)
     }
     

@@ -186,7 +186,7 @@ public class ConversationErrors {
 public class Conversations {
     public var _id : String?
     public var user : UserCon?
-    public var person2 : Person2?
+    public var store : StoreCon?
     public var createdAt : String?
     public var updatedAt : String?
     public var __v : Int?
@@ -226,7 +226,7 @@ public class Conversations {
         
         _id = dictionary["_id"] as? String
         if (dictionary["user"] != nil) { user = UserCon(dictionary: dictionary["user"] as! NSDictionary) }
-        if (dictionary["store"] != nil) { person2 = Person2(dictionary: dictionary["store"] as! NSDictionary) }
+        if (dictionary["store"] != nil) { store = StoreCon(dictionary: dictionary["store"] as! NSDictionary) }
         createdAt = dictionary["createdAt"] as? String
         updatedAt = dictionary["updatedAt"] as? String
         __v = dictionary["__v"] as? Int
@@ -254,7 +254,7 @@ public class Conversations {
         
         dictionary.setValue(self._id, forKey: "_id")
         dictionary.setValue(self.user?.dictionaryRepresentation(), forKey: "user")
-        dictionary.setValue(self.person2?.dictionaryRepresentation(), forKey: "person2")
+        dictionary.setValue(self.store?.dictionaryRepresentation(), forKey: "store")
         dictionary.setValue(self.createdAt, forKey: "createdAt")
         dictionary.setValue(self.updatedAt, forKey: "updatedAt")
         dictionary.setValue(self.__v, forKey: "__v")
@@ -403,9 +403,12 @@ public class UserCon {
     
 }
 
-public class Person2 {
+public class StoreCon {
     public var _id : String?
-    public var fullName : String?
+    public var storeName : StoreNameCon?
+    
+    
+
     public var image : String?
     public var createdAt : String?
     public var updatedAt : String?
@@ -420,12 +423,12 @@ public class Person2 {
      
      - returns: Array of Person2 Instances.
      */
-    public class func modelsFromDictionaryArray(array:NSArray) -> [Person2]
+    public class func modelsFromDictionaryArray(array:NSArray) -> [StoreCon]
     {
-        var models:[Person2] = []
+        var models:[StoreCon] = []
         for item in array
         {
-            models.append(Person2(dictionary: item as! NSDictionary)!)
+            models.append(StoreCon(dictionary: item as! NSDictionary)!)
         }
         return models
     }
@@ -443,7 +446,9 @@ public class Person2 {
     required public init?(dictionary: NSDictionary) {
         
         _id = dictionary["_id"] as? String
-        fullName = dictionary["fullName"] as? String
+        if (dictionary["storeName"] != nil) { storeName = StoreNameCon(dictionary: dictionary["storeName"] as! NSDictionary) }
+        
+        
         image = dictionary["image"] as? String
         createdAt = dictionary["createdAt"] as? String
         updatedAt = dictionary["updatedAt"] as? String
@@ -460,7 +465,7 @@ public class Person2 {
         let dictionary = NSMutableDictionary()
         
         dictionary.setValue(self._id, forKey: "_id")
-        dictionary.setValue(self.fullName, forKey: "fullName")
+        dictionary.setValue(self.storeName?.dictionaryRepresentation(), forKey: "storeName")
         dictionary.setValue(self.image, forKey: "image")
         dictionary.setValue(self.createdAt, forKey: "createdAt")
         dictionary.setValue(self.updatedAt, forKey: "updatedAt")
@@ -540,6 +545,63 @@ public class LastMessage {
         dictionary.setValue(self.updatedAt, forKey: "updatedAt")
         dictionary.setValue(self.content, forKey: "content")
         dictionary.setValue(self.__v, forKey: "__v")
+        
+        return dictionary
+    }
+    
+}
+public class StoreNameCon {
+    public var en : String?
+    public var ar : String?
+    
+    /**
+     Returns an array of models based on given dictionary.
+     
+     Sample usage:
+     let title_list = Title.modelsFromDictionaryArray(someDictionaryArrayFromJSON)
+     
+     - parameter array:  NSArray from JSON dictionary.
+     
+     - returns: Array of Title Instances.
+     */
+    public class func modelsFromDictionaryArray(array:NSArray) -> [StoreNameCon]
+    {
+        var models:[StoreNameCon] = []
+        for item in array
+        {
+            models.append(StoreNameCon(dictionary: item as! NSDictionary)!)
+        }
+        return models
+    }
+    
+    /**
+     Constructs the object based on the given dictionary.
+     
+     Sample usage:
+     let title = Title(someDictionaryFromJSON)
+     
+     - parameter dictionary:  NSDictionary from JSON.
+     
+     - returns: Title Instance.
+     */
+    required public init?(dictionary: NSDictionary) {
+        
+        en = dictionary["en"] as? String
+        ar = dictionary["ar"] as? String
+    }
+    
+    
+    /**
+     Returns the dictionary representation for the current instance.
+     
+     - returns: NSDictionary.
+     */
+    public func dictionaryRepresentation() -> NSDictionary {
+        
+        let dictionary = NSMutableDictionary()
+        
+        dictionary.setValue(self.en, forKey: "en")
+        dictionary.setValue(self.ar, forKey: "ar")
         
         return dictionary
     }

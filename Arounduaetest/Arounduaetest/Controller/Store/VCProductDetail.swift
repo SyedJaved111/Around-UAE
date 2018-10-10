@@ -129,7 +129,7 @@ class VCProductDetail: UIViewController {
     }
     
     private func setupProductDetsil(_ productdetail:Product){
-        productImage.sd_addActivityIndicator()
+        productImage.sd_setShowActivityIndicatorView(true)
         productImage.sd_setIndicatorStyle(.gray)
         productImage.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
         prodcutPrice.text = "$\(product.price?.usd ?? 0)"
@@ -149,6 +149,12 @@ class VCProductDetail: UIViewController {
             self.alertMessage(message: "Product is not avaliable in your desired quantity", completionHandler: nil)
             return
         }
+        
+        if features.count == 0 || characteristics.count == 0{
+            self.alertMessage(message: "Please Select Some Combination or Feature...", completionHandler: nil)
+            return
+        }
+        
         if dictionary != nil{
            addToCartProduct(dictionary!)
         }
@@ -182,6 +188,14 @@ class VCProductDetail: UIViewController {
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
+    }
+    
+    @IBAction func submitProductReview(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "movefromproductdetail", sender: product._id!)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
     }
 }
 

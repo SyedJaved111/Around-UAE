@@ -20,7 +20,7 @@ class DataCollectionViewCell: UICollectionViewCell {
     
     func setupCell(_ divison:Divisions){
         lblProducts.text = divison.title?.en
-        imgProducts.sd_addActivityIndicator()
+        imgProducts.sd_setShowActivityIndicatorView(true)
         imgProducts.sd_setIndicatorStyle(.gray)
         imgProducts.sd_setImage(with: URL(string: divison.image ?? ""))
     }

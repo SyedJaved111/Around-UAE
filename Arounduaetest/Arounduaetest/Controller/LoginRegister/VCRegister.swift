@@ -67,18 +67,10 @@ class VCRegister: BaseController{
 
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(true)
-        
-        
-        
         self.setNavigationBar()
        // self.addBackButton()
         self.setupLocalization()
-        
-        
     }
-    
-    
-    
     
     private func setupTxtPhone(){
         self.txtPhoneNumber.delegate = self

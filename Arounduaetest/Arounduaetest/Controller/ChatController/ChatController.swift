@@ -35,9 +35,9 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             txtMessage.backgroundColor = UIColor.white
             txtMessage.clipsToBounds = true
             txtMessage.layer.masksToBounds = true
-            txtMessage.layer.cornerRadius = 12
-            txtMessage.layer.borderWidth = 2
-            txtMessage.layer.borderColor = UIColor.clear.cgColor
+            //txtMessage.layer.cornerRadius = 12
+           // txtMessage.layer.borderWidth = 2
+            //txtMessage.layer.borderColor = UIColor.clear.cgColor
             let paddingView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
             txtMessage.leftView = paddingView
             let lang = UserDefaults.standard.string(forKey: "i18n_language")
@@ -310,22 +310,22 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         var sender = ""
         if(self.user.conversationArray.isEmpty){
-        if(self.user.personID==AppSettings.sharedSettings.user._id ?? "5b975f1966a12835a0373d08"){
-            
-             sender = "person1"
+            if(AppSettings.sharedSettings.accountType ==  "buyer"){
+
+             sender = "user"
             }
             else{
-                 sender = "person2"
+                 sender = "store"
             
             }
         }
         else{
-            if(self.user.conversationArray[self.user.conversationTableId].user?._id==AppSettings.sharedSettings.user._id!){
-                
-                sender = "person1"
+            if(AppSettings.sharedSettings.accountType ==  "buyer"){
+
+                sender = "user"
             }
             else{
-                sender = "person2"
+                sender = "store"
                 
             }
         }
@@ -847,7 +847,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     }else{
                         if(self.user.conversationArray[self.user.conversationTableId].user?._id==AppSettings.sharedSettings.user._id!){
                             
-                            self.screenTitle =  self.user.conversationArray[self.user.conversationTableId].person2?.fullName
+                            self.screenTitle =  self.user.conversationArray[self.user.conversationTableId].store?.storeName?.en
                             if(self.screenTitle == nil || self.screenTitle == "")
                             {
                                 self.title = "Chat".localized

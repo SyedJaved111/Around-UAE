@@ -127,18 +127,25 @@ class VCChangePassword: BaseController {
                 self?.finishLoading()
                 if let Response = response{
                     if(Response.success ?? false == true){
-                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
                     }else{
-                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
                     }
                 }else{
-                    self?.alertMessage(message: "Error",completionHandler: nil)
+                    self?.alertMessage(message: "Error",completionHandler: {
+                    self?.navigationController?.popViewController(animated: true)})
                 }
             }
         }){[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message,completionHandler: nil)
+                self?.alertMessage(message: error.message,completionHandler: {
+                self?.navigationController?.popViewController(animated: true)
+                })
             }
         }
     }

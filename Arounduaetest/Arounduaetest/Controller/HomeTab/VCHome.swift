@@ -49,8 +49,8 @@ class VCHome: BaseController{
     
     private func setupLocalization(){
         btnViewMore.setTitle("View More".localized, for: .normal)
-        lblKnow.text = "know more detals about various shope, location & tourist spots around UAE ".localized
-        lblGenralServices.text = "GENRAL SERVICES".localized
+        lblKnow.text = "know more details about various shops ,location & tourist spots around UAE".localized
+        lblGenralServices.text = "GENERAL SERVICES".localized
     }
     
     @objc func refreshTableView() {

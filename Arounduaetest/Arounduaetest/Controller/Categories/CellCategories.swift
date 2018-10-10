@@ -25,7 +25,7 @@ class CellCategories: UICollectionViewCell {
             imgCategory.image = Image
         }else{
 
-            imgCategory.sd_addActivityIndicator()
+            imgCategory.sd_setShowActivityIndicatorView(true)
             imgCategory.sd_setIndicatorStyle(.gray)
             imgCategory.sd_setImage(with: URL(string: group.image ?? ""))
         }

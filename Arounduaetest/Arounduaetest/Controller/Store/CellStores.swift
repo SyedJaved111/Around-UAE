@@ -21,7 +21,7 @@ class CellStores: UICollectionViewCell {
     
     func setupStoreCell(_ store: Stores){
         lblStore.text = store.storeName?.en ?? ""
-        imgStores.sd_addActivityIndicator()
+        imgStores.sd_setShowActivityIndicatorView(true)
         imgStores.sd_setIndicatorStyle(.gray)
         imgStores.sd_setImage(with: URL(string: store.image ?? ""))
     }

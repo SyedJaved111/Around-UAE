@@ -23,7 +23,7 @@ class VCPopUp: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textViewWriteComments.delegate = self
-        textViewWriteComments.text = "Commint..."
+        textViewWriteComments.text = "Comment..."
         textViewWriteComments.textColor = UIColor.lightGray
     }
     
@@ -41,7 +41,7 @@ class VCPopUp: UIViewController {
     }
     
     private func isCheckReview()->Bool{
-        guard let comment = textViewWriteComments.text, comment != "Commint..." else{
+        guard let comment = textViewWriteComments.text, comment != "Comment..." else{
             self.alertMessage(message: "Please Enter Your Comment!", completionHandler: nil)
             return false
         }

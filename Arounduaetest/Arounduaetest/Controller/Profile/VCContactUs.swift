@@ -26,6 +26,9 @@ class VCContactUs: UIViewController{
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        txtAppFeedback.delegate = self
+        txtAppFeedback.text = "Comment..."
+        txtAppFeedback.textColor = UIColor.lightGray
         menudropDown.anchorView = dropdown
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -73,6 +76,11 @@ class VCContactUs: UIViewController{
             return false
         }
         
+        guard let comment = txtAppFeedback.text, comment != "Comment..." else{
+            self.alertMessage(message: "Please Enter Your Comment!", completionHandler: nil)
+            return false
+        }
+        
         return true
     }
     
@@ -94,12 +102,18 @@ class VCContactUs: UIViewController{
             self?.finishLoading()
             if let contactResponse = response{
                 if contactResponse.success!{
-                   self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: nil)
+                   self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: {
+                     self?.navigationController?.popViewController(animated: true)
+                   })
                 }else{
-                    self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: {
+                     self?.navigationController?.popViewController(animated: true)
+                    })
                 }
             }else{
-                self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                  self?.navigationController?.popViewController(animated: true)
+                })
             }
         })
         {[weak self](error) in
@@ -108,3 +122,21 @@ class VCContactUs: UIViewController{
         }
     }
 }
+
+extension VCContactUs: UITextViewDelegate{
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if txtAppFeedback.textColor == UIColor.lightGray {
+            txtAppFeedback.text = nil
+            txtAppFeedback.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if txtAppFeedback.text.isEmpty {
+            txtAppFeedback.text = "Comment..."
+            txtAppFeedback.textColor = UIColor.lightGray
+        }
+    }
+}
+

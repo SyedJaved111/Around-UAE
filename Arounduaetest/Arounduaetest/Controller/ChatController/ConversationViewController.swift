@@ -233,14 +233,14 @@ extension ConversationViewController : UITableViewDelegate, UITableViewDataSourc
         let cell = self.conversationTableView.dequeueReusableCell(withIdentifier: "ConversationTableViewCell", for: indexPath) as! ConversationTableViewCell
         let conversationData = conversationArray[indexPath.row]
      
-        if(conversationData.user?._id ==  AppSettings.sharedSettings.user._id ?? ""){
-                if let imgUrl = URL(string: (conversationData.person2?.image ?? "")) {
+        if(AppSettings.sharedSettings.accountType ==  "buyer"){
+                if let imgUrl = URL(string: (conversationData.store?.image ?? "")) {
                     print(imgUrl)
                     cell.imageConversation.sd_setImage(with: imgUrl, placeholderImage:UIImage(named: "Placeholder-3"))
                     cell.imageConversation.makeRound()
                 }
         
-            cell.lblName.text = conversationData.person2?.fullName
+            cell.lblName.text = conversationData.store?.storeName?.en
         }
         else{
             if let imgUrl = URL(string: (conversationData.user?.image ?? "")) {
