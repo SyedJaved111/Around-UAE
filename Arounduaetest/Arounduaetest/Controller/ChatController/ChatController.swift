@@ -320,7 +320,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             }
         }
         else{
-            if(self.user.conversationArray[self.user.conversationTableId].person1?._id==AppSettings.sharedSettings.user._id!){
+            if(self.user.conversationArray[self.user.conversationTableId].user?._id==AppSettings.sharedSettings.user._id!){
                 
                 sender = "person1"
             }
@@ -799,8 +799,8 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 let Conversation = NewConversation.init(dictionary: dictionary as NSDictionary)
 
                 self.user.conversationID = (Conversation?.data?.conversation?._id!)!
-                self.user.personID = (Conversation?.data?.conversation?.person1?._id!)!
-                self.user.chatTitle = (Conversation?.data?.conversation?.person1?.fullName!)!
+                self.user.personID = (Conversation?.data?.conversation?.user?._id!)!
+                self.user.chatTitle = (Conversation?.data?.conversation?.user?.fullName!)!
 
                 print( self.user.conversationID)
                 let conversationID = [
@@ -845,7 +845,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     if(self.user.conversationArray.isEmpty){
                         
                     }else{
-                        if(self.user.conversationArray[self.user.conversationTableId].person1?._id==AppSettings.sharedSettings.user._id!){
+                        if(self.user.conversationArray[self.user.conversationTableId].user?._id==AppSettings.sharedSettings.user._id!){
                             
                             self.screenTitle =  self.user.conversationArray[self.user.conversationTableId].person2?.fullName
                             if(self.screenTitle == nil || self.screenTitle == "")
@@ -858,7 +858,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                             }
                         }
                         else{
-                          self.screenTitle =  self.user.conversationArray[self.user.conversationTableId].person1?.fullName
+                          self.screenTitle =  self.user.conversationArray[self.user.conversationTableId].user?.fullName
                             if(self.screenTitle == nil || self.screenTitle == "")
                             {
                                 self.title = "Chat".localized

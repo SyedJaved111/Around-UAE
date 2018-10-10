@@ -185,7 +185,7 @@ public class ConversationErrors {
 
 public class Conversations {
     public var _id : String?
-    public var person1 : Person1?
+    public var user : UserCon?
     public var person2 : Person2?
     public var createdAt : String?
     public var updatedAt : String?
@@ -225,8 +225,8 @@ public class Conversations {
     required public init?(dictionary: NSDictionary) {
         
         _id = dictionary["_id"] as? String
-        if (dictionary["person1"] != nil) { person1 = Person1(dictionary: dictionary["person1"] as! NSDictionary) }
-        if (dictionary["person2"] != nil) { person2 = Person2(dictionary: dictionary["person2"] as! NSDictionary) }
+        if (dictionary["user"] != nil) { user = UserCon(dictionary: dictionary["user"] as! NSDictionary) }
+        if (dictionary["store"] != nil) { person2 = Person2(dictionary: dictionary["store"] as! NSDictionary) }
         createdAt = dictionary["createdAt"] as? String
         updatedAt = dictionary["updatedAt"] as? String
         __v = dictionary["__v"] as? Int
@@ -253,7 +253,7 @@ public class Conversations {
         let dictionary = NSMutableDictionary()
         
         dictionary.setValue(self._id, forKey: "_id")
-        dictionary.setValue(self.person1?.dictionaryRepresentation(), forKey: "person1")
+        dictionary.setValue(self.user?.dictionaryRepresentation(), forKey: "user")
         dictionary.setValue(self.person2?.dictionaryRepresentation(), forKey: "person2")
         dictionary.setValue(self.createdAt, forKey: "createdAt")
         dictionary.setValue(self.updatedAt, forKey: "updatedAt")
@@ -336,7 +336,7 @@ public class ConversationPagination {
     
 }
 
-public class Person1 {
+public class UserCon {
     public var _id : String?
     public var fullName : String?
     public var image : String?
@@ -353,12 +353,12 @@ public class Person1 {
      
      - returns: Array of Person1 Instances.
      */
-    public class func modelsFromDictionaryArray(array:NSArray) -> [Person1]
+    public class func modelsFromDictionaryArray(array:NSArray) -> [UserCon]
     {
-        var models:[Person1] = []
+        var models:[UserCon] = []
         for item in array
         {
-            models.append(Person1(dictionary: item as! NSDictionary)!)
+            models.append(UserCon(dictionary: item as! NSDictionary)!)
         }
         return models
     }

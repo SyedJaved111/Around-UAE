@@ -185,7 +185,7 @@ public class ErrorsNewChat {
 
 public class Conversation {
     public var _id : String?
-    public var person1 : Person1?
+    public var user : UserCon?
     public var person2 : Person2?
     public var lastMessage : String?
     public var createdAt : String?
@@ -225,7 +225,7 @@ public class Conversation {
     required public init?(dictionary: NSDictionary) {
         
         _id = dictionary["_id"] as? String
-        if (dictionary["person1"] != nil) { person1 = Person1(dictionary: dictionary["person1"] as! NSDictionary) }
+        if (dictionary["user"] != nil) { user = UserCon(dictionary: dictionary["user"] as! NSDictionary) }
         if (dictionary["person2"] != nil) { person2 = Person2(dictionary: dictionary["person2"] as! NSDictionary) }
         lastMessage = dictionary["lastMessage"] as? String
         createdAt = dictionary["createdAt"] as? String
@@ -244,7 +244,7 @@ public class Conversation {
         let dictionary = NSMutableDictionary()
         
         dictionary.setValue(self._id, forKey: "_id")
-        dictionary.setValue(self.person1?.dictionaryRepresentation(), forKey: "person1")
+        dictionary.setValue(self.user?.dictionaryRepresentation(), forKey: "user")
         dictionary.setValue(self.person2?.dictionaryRepresentation(), forKey: "person2")
         dictionary.setValue(self.lastMessage, forKey: "lastMessage")
         dictionary.setValue(self.createdAt, forKey: "createdAt")
