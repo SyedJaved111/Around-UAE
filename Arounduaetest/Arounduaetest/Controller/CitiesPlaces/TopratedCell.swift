@@ -37,7 +37,6 @@ class TopratedCell: UICollectionViewCell {
     func setupPlaceCell(_ places:Places){
         cosmosView.rating = Double(places.averageRating!)
         title.text = places.title?.en ?? ""
-        
         placeTitle.sd_setShowActivityIndicatorView(true)
         placeTitle.sd_setIndicatorStyle(.gray)
         placeTitle.sd_setImage(with: URL(string: places.images?.first?.path ?? ""))

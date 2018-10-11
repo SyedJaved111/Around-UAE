@@ -27,7 +27,7 @@ struct PlacesData : Decodable {
 struct Places : Decodable {
     let _id : String?
     let title : Title?
-    let averageRating : Int?
+    let averageRating : Double?
     let images : [Images]?
 }
 

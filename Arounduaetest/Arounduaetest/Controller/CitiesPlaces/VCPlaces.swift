@@ -50,8 +50,8 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController]{
-        (child_1 as! VCNearBy).cityid = cityId
-        (child_2 as! VCTopRated).cityid = cityId
+        (child_1 as? VCNearBy)?.cityid = cityId
+        (child_2 as? VCTopRated)?.cityid = cityId
         return [child_1,child_2]
     }
 }

@@ -44,7 +44,6 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
         self.NearbyCollectionview.reloadData()
     }
     
-    
     private func fetchCitiesPlacesData(){
 
 //        guard let latitude = lat, let longitude = long else{

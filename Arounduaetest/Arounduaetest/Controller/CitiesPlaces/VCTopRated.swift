@@ -78,7 +78,7 @@ extension VCTopRated{
         
         TopratedCollectionView.spr_setTextHeader { [weak self] in
             self?.currentPage = 0
-            CitiesPlacesManager().getCitiesPlaces((self?.cityid ?? "0","\(self?.currentPage ?? 0)","",""),successCallback:
+            CitiesPlacesManager().getCitiesPlaces((self?.cityid ?? "0","\((self?.currentPage ?? 0) + 1)","",""),successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         self?.TopratedCollectionView.spr_endRefreshing()
