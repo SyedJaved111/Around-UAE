@@ -159,11 +159,46 @@ extension VCFavrouit: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellFavourit") as! CellFavourit
         cell.setupCellData(favouriteProductList[indexPath.row])
+        cell.delegate = self
         cell.selectionStyle = .none
         return cell
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
         getFavouriteProducts()
+    }
+}
+
+extension VCFavrouit: PotocolCellFavourite{
+    
+    func tapOnfavouritecell(cell: CellFavourit) {
+        let indexpath = favouriteProductTableView.indexPath(for: cell)
+        let product = favouriteProductList[indexpath?.row ?? 0]
+        startLoading("")
+        ProductManager().makeProductFavourite(product._id ?? "",
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let favouriteResponse = response{
+                    if favouriteResponse.success!{
+                        if AppSettings.sharedSettings.user.favouriteProducts?.contains(product._id ?? "") ?? false{
+                            self?.favouriteProductList.remove(at: indexpath?.row ?? 0)
+                            self?.favouriteProductTableView.reloadData()
+                        }
+                    }else{
+                        self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
 }

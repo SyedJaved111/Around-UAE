@@ -140,7 +140,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
             case 6:
                 moveToAboutUS()
             case 7:
-                appDelegate.moveToSelectlanguage()
+                moveToSelectLanguage()
             case 8:
                 moveTopage(txt: "Terms and Conditions")
             case 9:
@@ -162,7 +162,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
             case 3:
                 moveToAboutUS()
             case 4:
-                appDelegate.moveToSelectlanguage()
+                moveToSelectLanguage()
             case 5:
                 moveTopage(txt: "Terms and Conditions")
             case 6:
@@ -184,6 +184,13 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     func moveToContactUs(){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCContactUs") as! VCContactUs
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func moveToSelectLanguage(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCSelectLanguage") as! VCSelectLanguage
+        vc.isFromMenu = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

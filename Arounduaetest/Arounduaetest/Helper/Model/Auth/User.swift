@@ -1,59 +1,92 @@
-//
-//  User.swift
-//  AroundUAE
-//
-//  Created by Apple on 19/09/2018.
-//  Copyright © 2018 Apple. All rights reserved.
-//
 
 import Foundation
 
-class User : Decodable{
-    var userType : String? = nil
-    var accountType : String? = nil
-    var stores : [String]? = nil
-    let favouritePlaces : [String]? = nil
-    let favouriteProducts : [String]? = nil
-    var gender : String? = nil
-    var image : String? = nil
-    let isCartProcessing : Bool? = nil
-    var nic : String? = nil
-    let isActive : Bool? = nil
-    var isEmailVerified : Bool? = nil
-    let verificationCode : Int? = nil
-    let _id : String? = nil
-    var fullName : String? = nil
-    var email : String? = nil
-    var phone : String? = nil
-    var password : String? = nil
-    var address : String? = nil
-    let createdAt : String? = nil
-    let updatedAt : String? = nil
-    let addresses : [Addresses]? = nil
-    var authorization: String? = nil
-}
+public class User:Decodable{
+	 var userType : String?
+	 var accountType : String?
+	 var stores : [String]?
+	 var favouritePlaces :Array<String>?
+	 var favouriteProducts :Array<String>?
+	 var gender : String?
+	 var image : String?
+	 var isCartProcessing : Bool?
+	 var nic : String?
+	 var isActive : Bool?
+	 var isEmailVerified : Bool?
+	 var _id : String?
+	 var fullName : String?
+	 var email : String?
+	 var phone : String?
+	 var address : String?
+	 var createdAt : String?
+	 var updatedAt : String?
+	 var addresses : Array<String>?
+	 var authorization : String?
 
-struct Language : Decodable {
-    
-}
+    public class func modelsFromDictionaryArray(array:NSArray) -> [User]
+    {
+        var models:[User] = []
+        for item in array
+        {
+            models.append(User(dictionary: item as! NSDictionary)!)
+        }
+        return models
+    }
 
-struct Google : Decodable {
-    let id : String?
-    let accessToken : String?
-}
+	required public init?(dictionary: NSDictionary) {
 
-struct Facebook : Decodable {
-    let id : String?
-    let accessToken : String?
-}
+		userType = dictionary["userType"] as? String
+		accountType = dictionary["accountType"] as? String
+		
+        if(dictionary["stores"] != nil){
+            stores = (dictionary["stores"] as! NSArray) as? Array<String>
+        }
+        
+        if(dictionary["favouritePlaces"] != nil){
+            favouritePlaces = (dictionary["favouritePlaces"] as! NSArray) as? Array<String>
+        }
+       
+        if(dictionary["favouriteProducts"] != nil){
+            favouriteProducts = (dictionary["favouriteProducts"] as! NSArray) as? Array<String>
+        }
+        
+		gender = dictionary["gender"] as? String
+		image = dictionary["image"] as? String
+		isCartProcessing = dictionary["isCartProcessing"] as? Bool
+		nic = dictionary["nic"] as? String
+		isActive = dictionary["isActive"] as? Bool
+		isEmailVerified = dictionary["isEmailVerified"] as? Bool
+		_id = dictionary["_id"] as? String
+		fullName = dictionary["fullName"] as? String
+		email = dictionary["email"] as? String
+		phone = dictionary["phone"] as? String
+		address = dictionary["address"] as? String
+		createdAt = dictionary["createdAt"] as? String
+		updatedAt = dictionary["updatedAt"] as? String
+        authorization = dictionary["authorization"] as? String
+	}
 
-class Addresses : Decodable {
-    let email : String? = nil
-    let phone : String? = nil
-    let address1 : String? = nil
-    let address2 : String? = nil
-    let address3 : String? = nil
-    let addressType : String? = nil
-    let _id : String? = nil
-    let fullName : String? = nil
+	public func dictionaryRepresentation() -> NSDictionary {
+
+		let dictionary = NSMutableDictionary()
+
+		dictionary.setValue(self.userType, forKey: "userType")
+		dictionary.setValue(self.accountType, forKey: "accountType")
+		dictionary.setValue(self.gender, forKey: "gender")
+		dictionary.setValue(self.image, forKey: "image")
+		dictionary.setValue(self.isCartProcessing, forKey: "isCartProcessing")
+		dictionary.setValue(self.nic, forKey: "nic")
+		dictionary.setValue(self.isActive, forKey: "isActive")
+		dictionary.setValue(self.isEmailVerified, forKey: "isEmailVerified")
+		dictionary.setValue(self._id, forKey: "_id")
+		dictionary.setValue(self.fullName, forKey: "fullName")
+		dictionary.setValue(self.email, forKey: "email")
+		dictionary.setValue(self.phone, forKey: "phone")
+		dictionary.setValue(self.address, forKey: "address")
+		dictionary.setValue(self.createdAt, forKey: "createdAt")
+		dictionary.setValue(self.updatedAt, forKey: "updatedAt")
+		dictionary.setValue(self.authorization, forKey: "authorization")
+
+		return dictionary
+	}
 }

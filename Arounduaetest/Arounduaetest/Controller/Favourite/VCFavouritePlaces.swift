@@ -159,11 +159,47 @@ extension VCFavouritePlaces:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellFavouritePlaces") as! CellFavouritePlaces
         cell.setupCellData(favouritePlacesList[indexPath.row])
+        cell.delegate = self
         cell.selectionStyle = .none
         return cell
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
         getFavouritePlaces()
+    }
+}
+
+extension VCFavouritePlaces: PotocolCellFavourite{
+    
+    func tapOnfavouritePlacescell(cell: CellFavouritePlaces){
+        let indexpath = favouritePlacesTableView.indexPath(for: cell)
+        let place = favouritePlacesList[indexpath?.row ?? 0]
+        startLoading("")
+        CitiesPlacesManager().makePlaceFavourite(place._id ?? "",
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let favouriteResponse = response{
+                    if favouriteResponse.success!{
+                        AppSettings.sharedSettings.user = favouriteResponse.data!
+                        if AppSettings.sharedSettings.user.favouritePlaces?.contains(place._id ?? "") ?? false{
+                            self?.favouritePlacesList.remove(at: indexpath?.row ?? 0)
+                            self?.favouritePlacesTableView.reloadData()
+                        }
+                    }else{
+                        self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
 }

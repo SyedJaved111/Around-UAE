@@ -26,7 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
 //            statusBar.backgroundColor = UIColor(red:241/255, green:242/255, blue:243/255, alpha: 1)
 //        }
-//        
+//
+        //TODO: - Enter your credentials
+        PayPalMobile .initializeWithClientIds(forEnvironments: [PayPalEnvironmentSandbox: "AR9DVJvSCQyaYqojNmNyjPaz14YM17PkPJ3KlyCbDfEOg4WYZAYctEF5s6Dxkxx-jVWva2xCXOXHWGvl"])
         IQKeyboardManager.shared.enable = true
         GMSPlacesClient.provideAPIKey("AIzaSyBeblugMSfJeJtTRFB6lFGxejNtxBcVW_I")
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

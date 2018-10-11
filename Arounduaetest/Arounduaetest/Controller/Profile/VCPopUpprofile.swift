@@ -129,7 +129,7 @@ class VCPopUpprofile: UIViewController {
     private func updateProfile(_ user:User){
      
         let uiimage = UIImage(named: "def")
-        let params = (user.fullName!,user.email!,user.phone!,user.address!,user.gender!,uiimage)
+        let params = (user.fullName ?? "",user.email ?? "",user.phone ?? "",user.address ?? "",user.gender ?? "",uiimage)
         startLoading("")
         ProfileManager().updateProfile(params, successCallback:
             {[weak self](response) in

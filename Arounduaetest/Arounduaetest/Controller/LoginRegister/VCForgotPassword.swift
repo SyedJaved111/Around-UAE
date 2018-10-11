@@ -26,12 +26,7 @@ class VCForgotPassword: BaseController{
         //self.addBackButton()
         self.Forgotlocalaiz()
         self.title = "Forgot Password".localized
-        
-//        self.lblForgotPassword.text = "Forgot your password? Enter your email below ".localized
-//        self.txtEnterEmail.placeholder = "Enter Email".localized
-//        self.btnSubmit.setTitle("Submit".localized, for: .normal)
     }
-    
     
     func Forgotlocalaiz()
     {

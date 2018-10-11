@@ -164,7 +164,7 @@ class VCSplash: BaseController {
         }
     }
     
-    private func userProfileData(check : Int, params:SocialParams ,successResponse : Response<User>){
+    private func userProfileData(check : Int, params:SocialParams ,successResponse : UserModel){
         AppSettings.sharedSettings.user = successResponse.data!
         let accountType = successResponse.data?.accountType!
         let authToken = successResponse.data?.authorization!

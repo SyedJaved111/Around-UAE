@@ -65,16 +65,14 @@ class CitiesPlacesManager{
     }
     
     //MARK: - MAKE PLACE FAVOURITE
-    func makePlaceFavourite(_ placeid:String ,successCallback : @escaping (Response<User>?) -> Void,
+    func makePlaceFavourite(_ placeid:String ,successCallback : @escaping (UserModel?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .MakePlaceFavourite(placeId: placeid),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<User>.self, from: response){
-                successCallback(parsedResponse)
-            }else{
-                failureCallback(NetworkManager.networkError)
-            }
+            let someDictionaryFromJSON = try! JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
+            let json4Swift_Base = UserModel(dictionary: someDictionaryFromJSON as NSDictionary)
+            successCallback(json4Swift_Base)
         },
         failure:
         {(error) in

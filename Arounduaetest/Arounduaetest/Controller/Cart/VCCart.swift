@@ -24,7 +24,7 @@ class VCCart: UIViewController {
     }
     
     var payPalConfig = PayPalConfiguration()
-    var cartProductList = [Product]()
+    var cartProductList = [ProductUAE]()
     
     @IBOutlet weak var cartscrollview: UIScrollView!
     @IBOutlet weak var myTbleView: UITableView!{
@@ -63,7 +63,10 @@ class VCCart: UIViewController {
                             self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
+                            self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.price?.usd ?? 0}).reduce(0, +) ?? 0)"
                             self?.myTbleView.reloadData()
+                            self?.tableheightconstraint.constant = (self?.myTbleView.contentSize.height)!
+                            self?.cartscrollview.contentSize = CGSize(width: UIScreen.main.bounds.width, height: (self?.cartscrollview.contentSize.height)!)
                         }
                     }else{
                         self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
@@ -81,21 +84,18 @@ class VCCart: UIViewController {
         }
     }
     
-    private func deleteCartProduct(_ product:Product){
+    private func deleteCartProduct(_ product:ProductUAE,row:Int){
         startLoading("")
-        CartManager().deleteCartProducts((product._id!,product._id!),
+        CartManager().deleteCartProducts(((product.product?._id!)!,product.combination!),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
                 self?.finishLoading()
                 if let cartProductData = response{
                     if cartProductData.success!{
-                        if(cartProductData.data ?? []).count == 0{
-                            self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
-                        }else{
-                            self?.cartProductList = cartProductData.data ?? []
-                            self?.myTbleView.reloadData()
-                        }
+                         self?.cartProductList.remove(at: row)
+                         self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.price?.usd ?? 0}).reduce(0, +) ?? 0)"
+                         self?.myTbleView.reloadData()
                     }else{
                         self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
                     }
@@ -115,6 +115,7 @@ class VCCart: UIViewController {
     override func viewWillAppear(_ animated: Bool){
         self.title = "Cart"
         self.addBackButton()
+        PayPalMobile.preconnect(withEnvironment: environment)
     }
     
     override func viewDidLayoutSubviews(){
@@ -126,11 +127,11 @@ class VCCart: UIViewController {
     @IBAction func ContinueClick(_ sender: Any) {
         var items = [PayPalItem]()
         for obj in cartProductList{
-            let item = PayPalItem(name: obj.productName?.en ?? "", withQuantity: 1, withPrice: NSDecimalNumber(string: "\(obj.price?.usd ?? 0)"), withCurrency: "USD", withSku: "Hip-0037")
+            let item = PayPalItem(name: obj.product?.productName?.en ?? "", withQuantity: UInt(obj.quantity ?? 0), withPrice: NSDecimalNumber(string: "\(obj.price?.usd ?? 0)"), withCurrency: "USD", withSku: "Hip-0037")
             items.append(item)
         }
         let subtotal = PayPalItem.totalPrice(forItems: items)
-        let payment = PayPalPayment(amount: subtotal, currencyCode: "USD", shortDescription: "", intent: .sale)
+        let payment = PayPalPayment(amount: subtotal, currencyCode: "USD", shortDescription: "Some Description About product", intent: .sale)
         payment.items = items
         
         if(payment.processable) {
@@ -148,7 +149,7 @@ class VCCart: UIViewController {
 extension VCCart: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 126
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -158,6 +159,7 @@ extension VCCart: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell") as! CartCell
         cell.delegate = self
+        cell.setupCartCell(cartProductList[indexPath.row])
         return cell
     }
     
@@ -169,7 +171,7 @@ extension VCCart: UITableViewDelegate,UITableViewDataSource{
 extension VCCart: Cartprotocol{
     func tapOnDeleteProduct(cell:CartCell){
         let indxpath = myTbleView.indexPath(for: cell)
-        deleteCartProduct(cartProductList[(indxpath?.row)!])
+        deleteCartProduct(cartProductList[(indxpath?.row)!], row: indxpath?.row ?? 0)
     }
 }
 
@@ -194,7 +196,7 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
             print("id is  --->%@",payauid)
             print("paystate is ----->%@",paystate)
             
-            //self.sendPaymentToServer(bookingId : "\(self.User.bookingId!)", paypaId : payauid)
+            self.sendPyamentToServer(payauid)
         })
     }
     
@@ -208,9 +210,9 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
         print("PayPal Profile Sharing Authorization Canceled")
     }
     
-    private func sendPyamentToServer(_ paymentId:String, token:String){
+    private func sendPyamentToServer(_ paymentId:String){
         startLoading("")
-        CartManager().Payment((paymentId,token),
+        CartManager().Payment(paymentId,
         successCallback:
         {[weak self](response) in
             

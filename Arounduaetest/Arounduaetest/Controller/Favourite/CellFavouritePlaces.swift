@@ -18,6 +18,7 @@ class CellFavouritePlaces: UITableViewCell {
     @IBOutlet weak var imgFavourit: UIImageView!
     @IBOutlet weak var lblFavouritProductprice: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
+     var delegate : PotocolCellFavourite?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,12 +33,12 @@ class CellFavouritePlaces: UITableViewCell {
         lblFavouritProduct.text = place.title?.en
         lblFavouritUserName.text = "Denim Series Vavy"
         ratingView.rating = Double(place.averageRating ?? 0)
-        imgFavourit.sd_addActivityIndicator()
+        imgFavourit.sd_setShowActivityIndicatorView(true)
         imgFavourit.sd_setIndicatorStyle(.gray)
         imgFavourit.sd_setImage(with: URL(string: place.images?.first?.path ?? ""))
     }
     
     @IBAction func heartClick(_ sender: Any){
-        
+        delegate?.tapOnfavouritePlacescell!(cell: self)
     }
 }

@@ -11,13 +11,18 @@ import UIKit
 class VCSelectLanguage: UIViewController {
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     @IBOutlet weak var lblSelectLanguage: UILabel!
     @IBOutlet weak var lblSelctlanguageContinue: UILabel!
     @IBOutlet weak var btnEnglish: UIButtonMain!
     @IBOutlet weak var btnArabic: UIButtonMain!
+    var isFromMenu = false
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        if isFromMenu{
+            addBackButton()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,10 +30,7 @@ class VCSelectLanguage: UIViewController {
         self.title = "Language".localized
         self.lblSelectLanguage.text = "Select Language".localized
         self.lblSelctlanguageContinue.text = "Select language to continue with".localized
-        
-        
         self.btnEnglish.setTitle("English".localized, for: .normal)
-        
         self.btnArabic.setTitle("عربى".localized, for: .normal)
     }
     
@@ -38,20 +40,22 @@ class VCSelectLanguage: UIViewController {
 
     @IBAction func btnEnglishClick(_ sender: Any){
         UserDefaults.standard.set("en", forKey: "i18n_language")
-        goToLogin()
+        if AppSettings.sharedSettings.isAutoLogin ?? false{
+           appDelegate.moveToHome()
+        }else{
+           moveToLogin()
+        }
     }
     
     @IBAction func btnArabicClick(_ sender: Any){
         UserDefaults.standard.set("ar", forKey: "i18n_language")
-        goToLogin()
+        moveToLogin()
     }
     
-    private func goToLogin(){
-        self.appDelegate.moveToLogin()
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
-//        self.navigationController?.pushViewController(vc, animated: true)
+    func moveToLogin(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCLogin") as! VCLogin
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

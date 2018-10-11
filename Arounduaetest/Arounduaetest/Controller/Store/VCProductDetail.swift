@@ -77,8 +77,8 @@ class VCProductDetail: UIViewController {
     }
     
     private func checKCombination(){
+        
         var dic = [String:Any]()
-
         dic["features"] = features
         dic["characteristics"] = characteristics
         dic["product"] = product._id!
@@ -110,13 +110,18 @@ class VCProductDetail: UIViewController {
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
-                        self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
-                        self?.navigationController?.popViewController(animated: true)
+                        self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
                     }else{
-                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
                     }
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                        self?.navigationController?.popViewController(animated: true)
+                    })
                 }
             }
         })
@@ -144,15 +149,22 @@ class VCProductDetail: UIViewController {
     }
     
     @IBAction func addtocartclick(_ sender: Any){
-        guard let comb = combination,
-           let avaliablecount = comb.avalaible,avaliablecount > Int(Productcounter.value) else{
-            self.alertMessage(message: "Product is not avaliable in your desired quantity", completionHandler: nil)
-            return
-        }
         
         if features.count == 0 || characteristics.count == 0{
             self.alertMessage(message: "Please Select Some Combination or Feature...", completionHandler: nil)
             return
+        }
+        
+        checKCombination()
+        
+        guard let comb = combination,
+            let avaliablecount = comb.avalaible,avaliablecount > Int(Productcounter.value) else{
+                self.alertMessage(message: "Product is not avaliable in your desired quantity", completionHandler: nil)
+                return
+        }
+        
+        if Productcounter.value != 0.0{
+            
         }
         
         if dictionary != nil{
@@ -241,7 +253,6 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         cell.characterImage.layer.borderColor = UIColor.red.cgColor
         characteristics.append(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")
         features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
-        checKCombination()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -252,7 +263,6 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
             features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)
             cell.characterImage.layer.borderWidth = 2.0
             cell.characterImage.layer.borderColor = UIColor.clear.cgColor
-            checKCombination()
         }
     }
 }

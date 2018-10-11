@@ -47,20 +47,12 @@ class VCLogin: BaseController {
 //            }
 //        }
         self.setupLocalization()
-        
-//        if let myImage = UIImage(named: "Username"){
-//            txtEmail.withImage(direction: .Left, image: myImage, colorSeparator: UIColor.black, colorBorder: UIColor.lightGray)
-//        }
-//
-//        if let myImage1 = UIImage(named: "Password"){
-//            txtPassword.withImage(direction: .Left, image: myImage1, colorSeparator: UIColor.black, colorBorder: UIColor.lightGray)
-//        }
     }
     
     func TxtFfieldLocalaiz()
     {
-        var  passwordimg = UIImage(named: "Password")
-        var  userimg = UIImage(named: "Username")
+        let  passwordimg = UIImage(named: "Password")
+        let  userimg = UIImage(named: "Username")
         
         if (lang == "ar"){
             
@@ -262,7 +254,7 @@ extension VCLogin: GIDSignInUIDelegate, GIDSignInDelegate{
         }
     }
     
-    private func userProfileData(check : Int, params:SocialParams ,successResponse : Response<User>){
+    private func userProfileData(check : Int, params:SocialParams ,successResponse : UserModel){
         
         AppSettings.sharedSettings.user = successResponse.data!
         let accountType = successResponse.data?.accountType ?? ""

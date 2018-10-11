@@ -122,11 +122,6 @@ typealias CartQuantityUpdateParams = (
     combination:String
 )
 
-typealias PaymentParams = (
-    payerId:String,
-    token:String
-)
-
 typealias SocialParams = (
     id:String,
     accessToken:String,

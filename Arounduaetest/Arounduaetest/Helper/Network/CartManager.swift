@@ -11,16 +11,19 @@ import Foundation
 class CartManager{
 
     //MARK: - GetCartProducts
-    func getCartProducts(successCallback : @escaping (Response<[Product]>?) -> Void,
+    func getCartProducts(successCallback : @escaping (Json4Swift_Base?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .GetCartProducts,
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
-                successCallback(parsedResponse)
-            }else{
-                failureCallback(NetworkManager.networkError)
-            }
+            let someDictionaryFromJSON = try! JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
+            let json4Swift_Base = Json4Swift_Base(dictionary: someDictionaryFromJSON as NSDictionary)
+            successCallback(json4Swift_Base)
+//            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
+//                successCallback(parsedResponse)
+//            }else{
+//                failureCallback(NetworkManager.networkError)
+//            }
         },
         failure:
             {(error) in
@@ -47,16 +50,19 @@ class CartManager{
     }
     
     //MARK: - Delete Products In Cart
-    func deleteCartProducts(_ params:DeleteProductCartParams ,successCallback : @escaping (Response<[Product]>?) -> Void,
+    func deleteCartProducts(_ params:DeleteProductCartParams ,successCallback : @escaping (DeletModelMain?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .DeleteProductCart(params),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
-                successCallback(parsedResponse)
-            }else{
-                failureCallback(NetworkManager.networkError)
-            }
+            let someDictionaryFromJSON = try! JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
+            let json4Swift_Base = DeletModelMain(dictionary: someDictionaryFromJSON as NSDictionary)
+            successCallback(json4Swift_Base)
+//            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
+//                successCallback(parsedResponse)
+//            }else{
+//                failureCallback(NetworkManager.networkError)
+//            }
         },
         failure:
         {(error) in
@@ -65,9 +71,9 @@ class CartManager{
     }
     
     //MARK: - Payment In Cart
-    func Payment(_ params:PaymentParams ,successCallback : @escaping (Response<[Product]>?) -> Void,
+    func Payment(_ payerid:String ,successCallback : @escaping (Response<[Product]>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
-        NetworkManager.request(target: .Payment(params),
+        NetworkManager.request(target: .Payment(payerId: payerid),
         success:
         {(response) in
             if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){

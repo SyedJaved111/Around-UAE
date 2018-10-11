@@ -58,7 +58,7 @@ enum ServerAPI {
     case AddProdcutsCart(dict:[String:Any])
     case DeleteProductCart(DeleteProductCartParams)
     case CartQuantityUpdate(CartQuantityUpdateParams)
-    case Payment(PaymentParams)
+    case Payment(payerId:String)
     
     //Cities & Places
     case GetCities(pageNo:String)
@@ -341,9 +341,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             case .AddProdcutsCart(let params):
                 return params
             
-            case .Payment(let params):
-                parameters[PaymentKey.payerId.rawValue] = params.payerId
-                parameters[PaymentKey.token.rawValue] = params.token
+            case .Payment(let payerid):
+                parameters[PaymentKey.payerId.rawValue] = payerid
                 return parameters
             
             case .SearchProduct(let searchTxt):
@@ -359,6 +358,11 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 parameters[SocialKey.email.rawValue] = params.email
                 parameters[SocialKey.authMethod.rawValue] = params.authMethod
                 parameters[SocialKey.fullName.rawValue] = params.fullName
+                return parameters
+            
+            case .DeleteProductCart(let params):
+                parameters[DeleteProductCartKey.product.rawValue] = params.product
+                parameters[DeleteProductCartKey.combination.rawValue] = params.combination
                 return parameters
             
             default:
