@@ -18,13 +18,13 @@ class VCProfile: BaseController {
     @IBOutlet weak var txtUserName: UILabel!
     @IBOutlet weak var txtEmail: UILabel!
     @IBOutlet weak var txtPassword: UILabel!
-    @IBOutlet weak var txtCnic: UILabel!
     @IBOutlet weak var txtGender: UILabel!
     @IBOutlet weak var txtCity: UILabel!
     @IBOutlet weak var txtAddress: UILabel!
     @IBOutlet weak var txtPhoneno: UILabel!
     @IBOutlet weak var scrollSubView: UIView!
-
+    @IBOutlet weak var cnicImage: UIImageView!
+    var isUpdateProfile = false
     var imagePicker = UIImagePickerController()
     var cameraPicker = UIImagePickerController()
     
@@ -139,12 +139,18 @@ class VCProfile: BaseController {
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message.localized,completionHandler : nil)
             }
         }
     }
     
     @IBAction func editBtnTap(_ sender: UIButton) {
+        isUpdateProfile = false
+        picImage()
+    }
+    
+    @IBAction func updateProfileBtnTap(_ sender: UIButton) {
+        isUpdateProfile = true
         picImage()
     }
     
@@ -207,7 +213,9 @@ class VCProfile: BaseController {
          txtUserName.text = AppSettings.sharedSettings.user.fullName
          txtEmail.text = AppSettings.sharedSettings.user.email
          txtPassword.text = "********"
-         txtCnic.text = AppSettings.sharedSettings.user.nic
+         cnicImage.sd_setShowActivityIndicatorView(true)
+         cnicImage.sd_setIndicatorStyle(.gray)
+         cnicImage.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.nic ?? ""))
          txtGender.text = AppSettings.sharedSettings.user.gender
          txtCity.text = AppSettings.sharedSettings.user.address
          txtAddress.text = AppSettings.sharedSettings.user.address
@@ -225,16 +233,16 @@ class VCProfile: BaseController {
             self.openGallery()
         }
         
-        let pictureAction = UIAlertAction(title: "Remove Profile Picture".localized, style: .default) {
-            UIAlertAction in self.removeProfilePicture()
-        }
-        
+//        let pictureAction = UIAlertAction(title: "Remove Profile Picture".localized, style: .default) {
+//            UIAlertAction in self.removeProfilePicture()
+//        }
+//
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) {
             UIAlertAction in self.cancel()
         }
         alert.addAction(cameraAction)
         alert.addAction(libraryAction)
-        alert.addAction(pictureAction)
+        //alert.addAction(pictureAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
     }
@@ -266,8 +274,7 @@ class VCProfile: BaseController {
     
     private func updateProfile(_ user:User){
         
-        let uiimage = UIImage(named: "def")
-        let params = (user.fullName!,user.email!,user.phone!,user.address!,user.gender!,uiimage)
+        let params = (user.fullName ?? "",user.email ?? "",user.phone ?? "",user.address ?? "",user.gender ?? "",cnicImage.image ?? UIImage())
         startLoading("")
         ProfileManager().updateProfile(params, successCallback:
             {[weak self](response) in
@@ -318,7 +325,12 @@ extension VCProfile: UIImagePickerControllerDelegate, UINavigationControllerDele
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            uploadImage(image)
+            if isUpdateProfile{
+                cnicImage.image = image
+                updateProfile(AppSettings.sharedSettings.user)
+            }else{
+                uploadImage(image)
+            }
         }
         dismiss(animated: true, completion: nil)
     }

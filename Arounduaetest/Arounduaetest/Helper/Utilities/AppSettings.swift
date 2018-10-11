@@ -5,7 +5,7 @@ import UIKit
 class AppSettings{
     
     static var sharedSettings = AppSettings()
-    var user:User = User(dictionary: [:])!
+    var user:User = User.object
     
     private init(){}
     

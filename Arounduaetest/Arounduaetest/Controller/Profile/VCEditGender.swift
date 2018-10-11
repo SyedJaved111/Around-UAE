@@ -58,7 +58,7 @@ class VCEditGender: UIViewController {
     private func updateProfile(_ user:User){
         
         let uiimage = UIImage(named: "def")
-        let params = (user.fullName ?? "", user.email ?? "", user.phone ?? "", user.address ?? "", user.gender ?? "",uiimage)
+        let params = (user.fullName ?? "", user.email ?? "", user.phone ?? "", user.address ?? "", user.gender ?? "",uiimage ?? UIImage())
         startLoading("")
         ProfileManager().updateProfile(params, successCallback:
             {[weak self](response) in

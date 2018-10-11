@@ -9,11 +9,16 @@
 import UIKit
 import SDWebImage
 
+protocol HomeProtocol {
+    func tapOnViewAll(cell:HomeTableViewCell)
+}
+
 class HomeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var CollecView: HomeCollectionView!
     @IBOutlet weak var btnViewAll: UIButton!
     @IBOutlet weak var lblCategoryName: UILabel!
+    var delegate:HomeProtocol?
 
     func setCollectionViewDataSourceDelegate
         <D: UICollectionViewDataSource & UICollectionViewDelegate>
@@ -23,5 +28,9 @@ class HomeTableViewCell: UITableViewCell {
         CollecView.dataSource = dataSourceDelegate
         CollecView.tag = row
         CollecView.reloadData()
+    }
+    
+    @IBAction func viewAll(_ sender:UIButton){
+        delegate?.tapOnViewAll(cell: self)
     }
 }

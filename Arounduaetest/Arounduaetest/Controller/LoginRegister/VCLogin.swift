@@ -254,7 +254,7 @@ extension VCLogin: GIDSignInUIDelegate, GIDSignInDelegate{
         }
     }
     
-    private func userProfileData(check : Int, params:SocialParams ,successResponse : UserModel){
+    private func userProfileData(check : Int, params:SocialParams ,successResponse : Response<User>){
         
         AppSettings.sharedSettings.user = successResponse.data!
         let accountType = successResponse.data?.accountType ?? ""

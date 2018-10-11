@@ -81,7 +81,8 @@ enum ServerAPI {
     static func parseServerResponse<T>(_ type: T.Type, from data: Data)-> T? where T : Decodable{
         do {
             return try JSONDecoder().decode(type, from: data)
-        } catch {
+        } catch(let error) {
+            print(error.localizedDescription)
             return nil
         }
     }
@@ -428,8 +429,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.address).data(using: .utf8)!), name: updateProfileKey.ADDRESS.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.gender).data(using: .utf8)!), name: updateProfileKey.GENDER.rawValue))
             
-            if let image = parameters.nic,let profileImageData = UIImageJPEGRepresentation(image, 0.8){
-                 multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+            if let profileImageData = UIImageJPEGRepresentation(parameters.nic, 0.8){
+             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
                  name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
               }
             

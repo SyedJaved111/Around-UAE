@@ -30,10 +30,9 @@ class VCProductFilter: UIViewController {
         getFeatureWithCharacteristics()
     }
     
-    override func viewDidLayoutSubviews(){
-        super.updateViewConstraints()
-        filterTableConstraint.constant = filterTableView.contentSize.height
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: filterTableView.contentSize.height + 50)
+    private func setViewHeight(){
+        filterTableConstraint.constant = filterTableView.contentSize.height + 50
+        self.filterTableView.setNeedsDisplay()
     }
     
     private func getFeatureWithCharacteristics(){
@@ -47,8 +46,7 @@ class VCProductFilter: UIViewController {
                     if productsResponse.success!{
                         self?.featuresArray = productsResponse.data ?? []
                         self?.filterTableView.reloadData()
-                        self?.filterTableConstraint.constant = (self?.filterTableView.contentSize.height)!
-                        self?.scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: (self?.scrollView.contentSize.height)!)
+                        self?.setViewHeight()
                     }
                     else{
                         self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: {

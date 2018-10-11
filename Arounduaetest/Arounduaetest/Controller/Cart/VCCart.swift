@@ -60,13 +60,15 @@ class VCCart: UIViewController {
                 if let cartProductData = response{
                     if cartProductData.success!{
                         if(cartProductData.data ?? []).count == 0{
-                            self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
+                            self?.btnCheckout.isEnabled = false
+                            self?.btnCheckout.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
                             self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.price?.usd ?? 0}).reduce(0, +) ?? 0)"
                             self?.myTbleView.reloadData()
-                            self?.tableheightconstraint.constant = (self?.myTbleView.contentSize.height)!
-                            self?.cartscrollview.contentSize = CGSize(width: UIScreen.main.bounds.width, height: (self?.cartscrollview.contentSize.height)!)
+                            self?.btnCheckout.isEnabled = true
+                            self?.btnCheckout.backgroundColor = #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)
+                            self?.setViewHeight()
                         }
                     }else{
                         self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
@@ -118,10 +120,10 @@ class VCCart: UIViewController {
         PayPalMobile.preconnect(withEnvironment: environment)
     }
     
-    override func viewDidLayoutSubviews(){
-        super.updateViewConstraints()
-        tableheightconstraint.constant = myTbleView.contentSize.height
-        cartscrollview.contentSize = CGSize(width: UIScreen.main.bounds.width, height: myTbleView.contentSize.height + 180)
+
+    private func setViewHeight(){
+        tableheightconstraint.constant = myTbleView.contentSize.height + 50
+        self.myTbleView.setNeedsDisplay()
     }
 
     @IBAction func ContinueClick(_ sender: Any) {

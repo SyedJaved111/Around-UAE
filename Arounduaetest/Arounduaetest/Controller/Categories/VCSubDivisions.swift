@@ -21,7 +21,7 @@ class VCSubDivisions: BaseController {
     
     var subDivisonlist = [GroupDivisonData]()
     var groupId = ""
-    
+    var groupName = ""
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -37,7 +37,7 @@ class VCSubDivisions: BaseController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "SubCategories"
+        self.title = groupName
         self.setNavigationBar()
         self.addBackButton()
     }

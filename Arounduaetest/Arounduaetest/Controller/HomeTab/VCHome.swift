@@ -111,12 +111,12 @@ class VCHome: BaseController{
         moveToCitiesList()
     }
     
-    @IBAction func ViewAllClick(_ sender: Any){
-        if AppSettings.sharedSettings.accountType == "seller"{
-           self.tabBarController?.selectedIndex = 1
-        }else{
-           self.tabBarController?.selectedIndex = 2
-        }
+    private func moveToSubDivisons(_ groupId:String,groupname:String){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCSubDivisions") as! VCSubDivisions
+        vc.groupId = groupId
+        vc.groupName = groupname
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func moveToCitiesList(){
@@ -140,6 +140,7 @@ extension VCHome: UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell") as! HomeTableViewCell
         let obj = groupWithDivisionList[indexPath.row]
         cell.lblCategoryName.text = obj.title?.en
+        cell.delegate = self
         return cell
     }
     
@@ -174,3 +175,16 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
 //        fetchGroupsWithDivisons(isRefresh: false)
 //    }
 }
+
+extension VCHome: HomeProtocol{
+    
+    func tapOnViewAll(cell:HomeTableViewCell){
+        let indx = tablView.indexPath(for: cell)
+        moveToSubDivisons(groupWithDivisionList[indx?.row ?? 0]._id ?? "", groupname: groupWithDivisionList[indx?.row ?? 0].title?.en ?? "")
+    }
+}
+
+
+
+
+

@@ -128,14 +128,15 @@ extension VCCategories{
         }else if indexPath.row == 1{
             self.moveToResturants()
         }else{
-            self.moveToSubDivisons(grouplist[indexPath.row]._id ?? "")
+            self.moveToSubDivisons(grouplist[indexPath.row]._id ?? "", groupname: grouplist[indexPath.row].title?.en ?? "")
         }
     }
     
-    private func moveToSubDivisons(_ groupId:String){
+    private func moveToSubDivisons(_ groupId:String,groupname:String){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCSubDivisions") as! VCSubDivisions
         vc.groupId = groupId
+        vc.groupName = groupname
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

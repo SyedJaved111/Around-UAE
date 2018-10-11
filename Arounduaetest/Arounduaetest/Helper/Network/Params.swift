@@ -49,7 +49,7 @@ typealias updateProfileParams = (
     phone:String,
     address:String,
     gender:String,
-    nic:UIImage?
+    nic:UIImage
 )
 
 typealias AboutPageParams = (
