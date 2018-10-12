@@ -87,5 +87,23 @@ class CartManager{
             failureCallback(error)
         })
     }
+    
+    //MARK: - Update Cart Quantity
+    func UpdateCartQuantity(_ params:CartQuantityUpdateParams ,successCallback : @escaping (Response<[Product]>?) -> Void,
+        failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .CartQuantityUpdate(params),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
 }
 

@@ -64,7 +64,7 @@ class VCCart: UIViewController {
                             self?.btnCheckout.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
-                            self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.price?.usd ?? 0}).reduce(0, +) ?? 0)"
+                            self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                             self?.myTbleView.reloadData()
                             self?.btnCheckout.isEnabled = true
                             self?.btnCheckout.backgroundColor = #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)
@@ -96,7 +96,7 @@ class VCCart: UIViewController {
                 if let cartProductData = response{
                     if cartProductData.success!{
                          self?.cartProductList.remove(at: row)
-                         self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.price?.usd ?? 0}).reduce(0, +) ?? 0)"
+                         self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                          self?.myTbleView.reloadData()
                     }else{
                         self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
@@ -106,6 +106,32 @@ class VCCart: UIViewController {
                 }
             }
         })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
+    }
+    
+    private func updateCartQuantity(_ product:ProductUAE,row:Int){
+        CartManager().UpdateCartQuantity(("\(product.quantity!)",(product.product?._id!)!,product.combination!),successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let cartProductData = response{
+                        if cartProductData.success!{
+                            var obj = self?.cartProductList[row].price
+                            self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.price?.usd ?? 0}).reduce(0, +) ?? 0)"
+                            self?.myTbleView.reloadData()
+                        }else{
+                            self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
+                        }
+                    }else{
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                }
+            })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
@@ -171,6 +197,11 @@ extension VCCart: UITableViewDelegate,UITableViewDataSource{
 }
 
 extension VCCart: Cartprotocol{
+    func tapQuantity(cell: CartCell) {
+        let indxpath = myTbleView.indexPath(for: cell)
+        updateCartQuantity(cartProductList[(indxpath?.row)!], row: indxpath?.row ?? 0)
+    }
+    
     func tapOnDeleteProduct(cell:CartCell){
         let indxpath = myTbleView.indexPath(for: cell)
         deleteCartProduct(cartProductList[(indxpath?.row)!], row: indxpath?.row ?? 0)
@@ -227,3 +258,4 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
         }
     }
 }
+

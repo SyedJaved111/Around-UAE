@@ -94,6 +94,7 @@
 		18D056A821677F2F007510BF /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D056A721677F2E007510BF /* DateExtensions.swift */; };
 		18D056AA2167824F007510BF /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D056A92167824F007510BF /* FileManager.swift */; };
 		18D056AC2167963C007510BF /* VCProductFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D056AB2167963C007510BF /* VCProductFilter.swift */; };
+		18DB5AED21706D940012C69B /* SomeProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB5AEC21706D940012C69B /* SomeProduct.swift */; };
 		18E1C668216B36EE00446FAE /* VCRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C663216B36EA00446FAE /* VCRegister.swift */; };
 		18E1C669216B36EE00446FAE /* VCLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C664216B36EB00446FAE /* VCLogin.swift */; };
 		18E1C66A216B36EE00446FAE /* VCChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C665216B36EC00446FAE /* VCChangePassword.swift */; };
@@ -190,7 +191,6 @@
 		1F5A403C215F8AA900B0CBC6 /* UIScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3FC6215F8AA900B0CBC6 /* UIScrollView+Extensions.swift */; };
 		1F5A403D215F8AA900B0CBC6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5A3FC8215F8AA900B0CBC6 /* AppSettings.swift */; };
 		1F7F0A0C216A746F00A2B052 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F0A0B216A746F00A2B052 /* ProductDetailView.swift */; };
-		1FB69376216FB021003D5C34 /* SomeProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB69375216FB021003D5C34 /* SomeProduct.swift */; };
 		1FB6937E216FD45E003D5C34 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB6937D216FD45E003D5C34 /* User.swift */; };
 		1FB69380216FD5FE003D5C34 /* SomeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB6937F216FD5FE003D5C34 /* SomeMessage.swift */; };
 /* End PBXBuildFile section */
@@ -283,6 +283,7 @@
 		18D056A721677F2E007510BF /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		18D056A92167824F007510BF /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		18D056AB2167963C007510BF /* VCProductFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCProductFilter.swift; sourceTree = "<group>"; };
+		18DB5AEC21706D940012C69B /* SomeProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeProduct.swift; sourceTree = "<group>"; };
 		18E1C663216B36EA00446FAE /* VCRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCRegister.swift; sourceTree = "<group>"; };
 		18E1C664216B36EB00446FAE /* VCLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCLogin.swift; sourceTree = "<group>"; };
 		18E1C665216B36EC00446FAE /* VCChangePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCChangePassword.swift; sourceTree = "<group>"; };
@@ -389,7 +390,6 @@
 		1F5A403E215F8B1700B0CBC6 /* Arounduaetest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Arounduaetest-Bridging-Header.h"; sourceTree = "<group>"; };
 		1F71AEFB21551A6E00C9CF46 /* Around UAE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Around UAE.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F7F0A0B216A746F00A2B052 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
-		1FB69375216FB021003D5C34 /* SomeProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SomeProduct.swift; path = ../../../../../../codegen_5bbf78804b4e5/SomeProduct.swift; sourceTree = "<group>"; };
 		1FB6937D216FD45E003D5C34 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1FB6937F216FD5FE003D5C34 /* SomeMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SomeMessage.swift; sourceTree = "<group>"; };
 		43859246273BE100417C9206 /* Pods-Arounduaetest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arounduaetest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Arounduaetest/Pods-Arounduaetest.debug.xcconfig"; sourceTree = "<group>"; };
@@ -468,12 +468,12 @@
 				18C59AF5216F7809003DB1B3 /* SomeDeleteProduct.swift */,
 				18C59AEB216F7194003DB1B3 /* ProductUAE.swift */,
 				18C59AE5216F718C003DB1B3 /* Json4Swift_Base.swift */,
-				1FB69375216FB021003D5C34 /* SomeProduct.swift */,
 				18C59AE7216F718E003DB1B3 /* SomePrice.swift */,
 				18C59AE9216F7191003DB1B3 /* SomeProductName.swift */,
 				18C59AEA216F7192003DB1B3 /* Total.swift */,
 				187BB96B2161EBFB0070D155 /* Product.swift */,
 				18C59AF7216F7847003DB1B3 /* DeletModelMain.swift */,
+				18DB5AEC21706D940012C69B /* SomeProduct.swift */,
 			);
 			path = ProductModel;
 			sourceTree = "<group>";
@@ -1242,7 +1242,6 @@
 				187BB9822161EBFB0070D155 /* Slider.swift in Sources */,
 				18C59AEF216F7194003DB1B3 /* SomePrice.swift in Sources */,
 				18BA9674216399A90009AE52 /* VCEditGender.swift in Sources */,
-				1FB69376216FB021003D5C34 /* SomeProduct.swift in Sources */,
 				187BB9902161EBFB0070D155 /* StoreManager.swift in Sources */,
 				188191B52164F65300FEA31D /* GMSteper.swift in Sources */,
 				187BBA6A2162372F0070D155 /* VCFavrouit.swift in Sources */,
@@ -1260,6 +1259,7 @@
 				1F5A4017215F8AA900B0CBC6 /* UITextFieldCustom.swift in Sources */,
 				18C59AF2216F7194003DB1B3 /* Total.swift in Sources */,
 				1F5A4000215F8AA900B0CBC6 /* CellStores.swift in Sources */,
+				18DB5AED21706D940012C69B /* SomeProduct.swift in Sources */,
 				1F5A4001215F8AA900B0CBC6 /* VCPopUp.swift in Sources */,
 				1F5A4019215F8AA900B0CBC6 /* ScrollView-Extensions.swift in Sources */,
 				1FB6937E216FD45E003D5C34 /* User.swift in Sources */,

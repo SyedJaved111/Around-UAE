@@ -17,11 +17,20 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
         super.viewDidLoad()
         collectionViewProductnearby.adjustDesign(width: (view.frame.size.width+24)/2.3)
         searchProducts()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("SearchCompleted"), object: nil)
+    }
+    
+
+    @objc func methodOfReceivedNotification(notification: Notification){
+        if let data = notification.object as? [Products]{
+           productarray = data
+           collectionViewProductnearby.reloadData()
+        }
     }
     
     private func searchProducts(){
         startLoading("")
-        ProductManager().SearchProduct("",
+        ProductManager().SearchProduct(("",0,0,[String](),""),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {

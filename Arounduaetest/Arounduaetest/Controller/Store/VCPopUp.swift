@@ -9,6 +9,10 @@
 import UIKit
 import Cosmos
 
+var productid:String?
+var placeid:String?
+var storeid:String?
+
 class VCPopUp: UIViewController {
 
     @IBOutlet var lblHowsExperience: UILabel!
@@ -17,8 +21,6 @@ class VCPopUp: UIViewController {
     @IBOutlet var btnCancel: UIButtonMain!
     @IBOutlet var btnSubmit: UIButtonMain!
     @IBOutlet weak var ratingView: CosmosView!
-    var placeid = ""
-    var storeid = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,16 +54,18 @@ class VCPopUp: UIViewController {
         if !isCheckReview(){
             return
         }
-        if placeid != ""{
+        if let _ = placeid{
            placeReview()
-        }else{
+        }else if let _ = storeid{
            storeReview()
+        }else if let _ = productid{
+           productReview()
         }
     }
     
     private func storeReview(){
         startLoading("")
-        StoreManager().storeReview((storeid,"\(ratingView.rating)",textViewWriteComments.text!),
+        StoreManager().storeReview((storeid!,"\(ratingView.rating)",textViewWriteComments.text!),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async{
@@ -87,7 +91,7 @@ class VCPopUp: UIViewController {
     
     private func placeReview(){
         startLoading("")
-        CitiesPlacesManager().submitPlaceReview((placeid,"\(ratingView.rating)",textViewWriteComments.text!),
+        CitiesPlacesManager().submitPlaceReview((placeid!,"\(ratingView.rating)",textViewWriteComments.text!),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async{
@@ -115,28 +119,31 @@ class VCPopUp: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-//    ProductManager().submitProductReview((productid,"\(ratingView.rating)",textViewWriteComments.text!),
-//    successCallback:
-//    {[weak self](response) in
-//    DispatchQueue.main.async{
-//    self?.finishLoading()
-//    if let reviewResponse = response{
-//    if reviewResponse.success!{
-//    self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
-//    }else{
-//    self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
-//    }
-//    }else{
-//    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
-//    }
-//    }
-//    })
-//    {[weak self](error) in
-//    DispatchQueue.main.async {
-//    self?.finishLoading()
-//    self?.alertMessage(message: error.message, completionHandler: nil)
-//    }
-//    }
+    private func productReview(){
+        startLoading("")
+        ProductManager().submitProductReview((productid!,"\(ratingView.rating)",textViewWriteComments.text!),
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async{
+                self?.finishLoading()
+                if let reviewResponse = response{
+                    if reviewResponse.success!{
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                    }else{
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
+    }
 }
 
 extension VCPopUp: UITextViewDelegate{

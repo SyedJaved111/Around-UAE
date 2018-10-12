@@ -46,6 +46,12 @@ class CellStore: UICollectionViewCell {
            UIButtonFavourite.isHidden = true
            addtocartBtn.isHidden = true
         }
+        
+        if AppSettings.sharedSettings.user.favouritePlaces?.contains((product._id!)) ?? false{
+            self.UIButtonFavourite.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+        }else{
+            self.UIButtonFavourite.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+        }
     }
     
     @IBAction func addToCart(_ sender: UIButton){

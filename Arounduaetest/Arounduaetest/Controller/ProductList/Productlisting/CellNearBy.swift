@@ -23,12 +23,11 @@ class CellNearBy: UICollectionViewCell {
     override func awakeFromNib() {
         btnFavrouitnearby.makeRound()
         btnFavrouitnearby.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        
+//        self.layer.borderWidth = 1
+//        self.layer.borderColor = UIColor.lightGray.cgColor
+//        
         lblpricenearby.text = nil
         uiviewcomosenearby.rating = 0.0
-        lblproductBrandnamenearby.text = nil
         lblproductnamenearby.text = nil
         imgproductneaby.image = nil
     }

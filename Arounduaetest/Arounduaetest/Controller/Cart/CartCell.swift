@@ -11,12 +11,17 @@ import SDWebImage
 
 protocol Cartprotocol{
     func tapOnDeleteProduct(cell:CartCell)
+    func tapQuantity(cell:CartCell)
 }
 
 class CartCell: UITableViewCell {
 
     @IBOutlet weak var imgProduct: UIImageView!
-    @IBOutlet weak var viewStepper: GMStepperCart!
+    @IBOutlet weak var viewStepper: GMStepperCart!{
+        didSet{
+            self.delegate?.tapQuantity(cell: self)
+        }
+    }
     @IBOutlet weak var lblProductPrice: UILabel!
     @IBOutlet weak var lblusername: UILabel!
     @IBOutlet weak var lblProductname: UILabel!
@@ -36,6 +41,7 @@ class CartCell: UITableViewCell {
         lblProductPrice.text = "$\(product.price?.usd ?? 0)"
         lblusername.text = product.product?.productName?.en
         lblProductname.text = product.product?.productName?.en
+        viewStepper.value = product.quantity ?? 0.0
     }
     
     @IBAction func btnCancelClick(_ sender: Any){

@@ -52,7 +52,7 @@ class VCProducList: ButtonBarPagerTabStripViewController {
         
     @objc func btnSearchClick() {
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCSearch") as! VCSearch
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCProductFilter") as! VCProductFilter
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

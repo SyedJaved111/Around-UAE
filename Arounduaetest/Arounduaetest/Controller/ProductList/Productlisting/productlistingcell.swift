@@ -24,8 +24,8 @@ class productlistingcell: UICollectionViewCell {
     override func awakeFromNib() {
         btnFavrouit.makeRound()
         btnFavrouit.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.lightGray.cgColor
+//        self.layer.borderWidth = 1
+//        self.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     @IBAction func btnFavrouitclick(_ sender: Any) {

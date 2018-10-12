@@ -178,3 +178,12 @@ enum SocialKey:String{
     case fullName = "fullName"
 }
 
+enum SearchKey:String{
+    case locale = "locale"
+    case minPrice = "minPrice"
+    case maxPrice = "maxPrice"
+    case location = "location"
+    case key = "keyword"
+}
+
+

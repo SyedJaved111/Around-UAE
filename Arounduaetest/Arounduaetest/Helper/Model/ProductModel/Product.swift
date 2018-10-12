@@ -76,7 +76,7 @@ struct FavouriteProductData : Decodable {
 struct Products: Decodable {
     let _id : String?
     let productName : ProductName?
-    let averageRating : Int?
+    let averageRating : Double?
     let images : [Images]?
     let price : Price?
     let minPrice: Int?

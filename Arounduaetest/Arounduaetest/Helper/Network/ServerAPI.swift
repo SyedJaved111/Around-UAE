@@ -46,7 +46,7 @@ enum ServerAPI {
     case MakeProductFavourite(productId:String)
     case GetFavouriteProducts(pageNo:String)
     case ProductReview(ProductReviewParams)
-    case SearchProduct(searchtxt:String)
+    case SearchProduct(SearchParams)
     
     //Index API's
     case GetSiteSettings
@@ -346,10 +346,19 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 parameters[PaymentKey.payerId.rawValue] = payerid
                 return parameters
             
-            case .SearchProduct(let searchTxt):
-                parameters["locale"] = "en"
-                if searchTxt != "" && searchTxt.count > 0{
-                   parameters["keyword"] = searchTxt
+            case .SearchProduct(let params):
+                parameters[SearchKey.locale.rawValue] = "en"
+                if params.maxPrice != -1 {
+                    parameters[SearchKey.maxPrice.rawValue] = params.maxPrice
+                }
+                if params.minPrice != -1 {
+                    parameters[SearchKey.minPrice.rawValue] = params.minPrice
+                }
+                if params.location.count != 0{
+                    parameters[SearchKey.location.rawValue] = params.location
+                }
+                if params.key != ""{
+                    parameters[SearchKey.key.rawValue] = params.key
                 }
                 return parameters
             
@@ -364,6 +373,12 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             case .DeleteProductCart(let params):
                 parameters[DeleteProductCartKey.product.rawValue] = params.product
                 parameters[DeleteProductCartKey.combination.rawValue] = params.combination
+                return parameters
+            
+            case .CartQuantityUpdate(let params):
+                parameters[CartQuantityUpdateKey.product.rawValue] = params.product
+                parameters[CartQuantityUpdateKey.quantity.rawValue] = params.quantity
+                parameters[CartQuantityUpdateKey.combination.rawValue] = params.combination
                 return parameters
             
             default:

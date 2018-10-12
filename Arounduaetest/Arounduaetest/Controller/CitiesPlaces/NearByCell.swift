@@ -41,5 +41,11 @@ class NearByCell: UICollectionViewCell {
         placeTitle.sd_setShowActivityIndicatorView(true)
         placeTitle.sd_setIndicatorStyle(.gray)
         placeTitle.sd_setImage(with: URL(string: places.images?.first?.path ?? ""))
+        
+        if AppSettings.sharedSettings.user.favouritePlaces?.contains((places._id!)) ?? false{
+            self.btnFavourit.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+        }else{
+            self.btnFavourit.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+        }
     }
 }

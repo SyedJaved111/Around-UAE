@@ -59,7 +59,6 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
             })
         {[weak self](error) in
             DispatchQueue.main.async{
-                self?.placeArray = [Places(_id: "", title: Title(en: "hello", ar: "hello"), averageRating: 3, images: [Images(path: "")])]
                 self?.finishLoading()
                 self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)

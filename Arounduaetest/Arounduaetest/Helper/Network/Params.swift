@@ -130,3 +130,11 @@ typealias SocialParams = (
     fullName:String
 )
 
+typealias SearchParams = (
+    locale:String,
+    minPrice:Double,
+    maxPrice:Double,
+    location:[String],
+    key:String
+)
+

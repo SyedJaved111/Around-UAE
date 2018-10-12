@@ -4,7 +4,7 @@ import Foundation
 public class ProductUAE {
     
 	public var _id : String?
-	public var quantity : Int?
+	public var quantity : Double?
 	public var price : SomePrice?
 	public var total : Total?
 	public var product : SomeProduct?
@@ -21,7 +21,7 @@ public class ProductUAE {
 
 	required public init?(dictionary: NSDictionary) {
 		_id = dictionary["_id"] as? String
-		quantity = dictionary["quantity"] as? Int
+		quantity = dictionary["quantity"] as? Double
 		if (dictionary["price"] != nil) { price = SomePrice(dictionary: dictionary["price"] as! NSDictionary) }
 		if (dictionary["total"] != nil) { total = Total(dictionary: dictionary["total"] as! NSDictionary) }
 		if (dictionary["product"] != nil) { product = SomeProduct(dictionary: dictionary["product"] as! NSDictionary) }

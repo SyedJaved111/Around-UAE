@@ -9,6 +9,7 @@
 import UIKit
 import Cosmos
 import MapKit
+import CoreLocation
 
 class VCDesertSafari: UIViewController {
 
@@ -23,11 +24,14 @@ class VCDesertSafari: UIViewController {
     @IBOutlet weak var lblDesrtsfari: UILabel!
     @IBOutlet weak var imgBaner: UIImageView!
     @IBOutlet weak var btnlikeimg: UIButtonMain!
+   
     var placeid = ""
+    var locationManager: CLLocationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getPlaceDetailById()
+        mapkitlocation.showsUserLocation = true
     }
     
     private func getPlaceDetailById(){
@@ -42,7 +46,7 @@ class VCDesertSafari: UIViewController {
           DispatchQueue.main.async {
             self?.finishLoading()
                 if let responsedetail = response{
-                    self?.alertMessage(message: (responsedetail.message?.en ?? "").localized, completionHandler: nil)
+                    self?.setupPlaceDetail(responsedetail.data!)
                 }else{
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                 }
@@ -56,19 +60,37 @@ class VCDesertSafari: UIViewController {
         }
     }
     
+    private func setupPlaceDetail(_ place:Places){
+      lblDesription.text = place.description?.en ?? ""
+      strcomos.rating = place.averageRating ?? 0.0
+      lblDesrtsfari.text = place.title?.en ?? ""
+      imgBaner.sd_setShowActivityIndicatorView(true)
+      imgBaner.sd_setIndicatorStyle(.gray)
+      imgBaner.sd_setImage(with: URL(string: place.images?.first?.path ?? ""))
+        if AppSettings.sharedSettings.user.favouritePlaces?.contains(placeid) ?? false{
+            self.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+        }else{
+            self.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+        }
+      let location = CLLocation(latitude: place.location![1], longitude: place.location![0])
+      let region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1000, 1000)
+      mapkitlocation.setRegion(region, animated: true)
+    }
+    
     private func setFavourite(_ placeid: String){
         startLoading("")
         CitiesPlacesManager().makePlaceFavourite(placeid,
         successCallback:
         {[weak self](response) in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async{
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
-                        if(storeResponse.message?.en ?? "") == "Place liked Successfully."{
-                            self?.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
-                        }else{
+                        AppSettings.sharedSettings.user = storeResponse.data!
+                        if AppSettings.sharedSettings.user.favouritePlaces?.contains(placeid) ?? false{
                             self?.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+                        }else{
+                            self?.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
                         }
                     }
                 }else{
@@ -84,7 +106,8 @@ class VCDesertSafari: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    
+    override func viewWillAppear(_ animated: Bool){
         self.title = "Desert Safari"
         self.addBackButton()
     }
@@ -101,8 +124,7 @@ class VCDesertSafari: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "movetopop"{
-            let dvc = segue.destination as! VCPopUp
-            dvc.placeid = sender as! String
+            placeid = (sender as? String)!
         }
     }
     
@@ -118,3 +140,4 @@ class VCDesertSafari: UIViewController {
         
     }
 }
+

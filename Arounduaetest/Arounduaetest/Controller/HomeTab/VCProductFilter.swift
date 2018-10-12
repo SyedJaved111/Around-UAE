@@ -74,8 +74,23 @@ class VCProductFilter: UIViewController {
             return
         }
         
+        var max = 0.0
+        var min = 0.0
+        
+        if ViewRanger.maximumValue != 0.0{
+            max = ViewRanger.maximumValue
+        }else{
+            max = -1
+        }
+        
+        if ViewRanger.minimumValue != 0.0{
+            min = ViewRanger.minimumValue
+        }else{
+            min = -1
+        }
+        
         startLoading("")
-        ProductManager().SearchProduct(txt,
+        ProductManager().SearchProduct(("",min,max,[String](),txt),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
@@ -101,10 +116,8 @@ class VCProductFilter: UIViewController {
     }
     
     private func moveToFilteredProducts(products:[Products]){
-        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCFilteredProductList") as! VCFilteredProductList
-        vc.productarray = products
-        self.navigationController?.pushViewController(vc, animated: true)
+         NotificationCenter.default.post(name: Notification.Name("SearchCompleted"), object: products)
+         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnSearch(_ sender: UIButton){

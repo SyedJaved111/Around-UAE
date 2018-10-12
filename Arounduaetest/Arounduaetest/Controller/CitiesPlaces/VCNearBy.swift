@@ -14,7 +14,7 @@ import DZNEmptyDataSet
 
 class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
    
-    var locationManager:CLLocationManager!
+    let locationManager = CLLocationManager()
 
     @IBOutlet weak var NearbyCollectionview: UICollectionView!{
         didSet{
@@ -36,6 +36,13 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
         NearbyCollectionview.adjustDesign(width: ((view.frame.size.width+20)/2.5))
         initialUI()
         fetchCitiesPlacesData()
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
     
     fileprivate func setupDelegates(){
@@ -45,13 +52,8 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
     }
     
     private func fetchCitiesPlacesData(){
-
-//        guard let latitude = lat, let longitude = long else{
-//
-//        }
-
         startLoading("")
-        CitiesPlacesManager().getCitiesPlaces((cityid,"\(currentPage + 1)","\(72.2327)","\(52.8765)"),successCallback:
+        CitiesPlacesManager().getCitiesPlaces((cityid,"\(currentPage + 1)","",""),successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
@@ -80,24 +82,12 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Stores"
-        determineMyCurrentLocation()
     }
 
-    func determineMyCurrentLocation() {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0] as CLLocation
-        long = userLocation.coordinate.longitude
-        lat = userLocation.coordinate.latitude
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        lat = locValue.latitude
+        long = locValue.longitude
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
@@ -111,7 +101,7 @@ extension VCNearBy{
         
         NearbyCollectionview.spr_setTextHeader { [weak self] in
             self?.currentPage = 0
-            CitiesPlacesManager().getCitiesPlaces((self?.cityid ?? "0","\(self?.currentPage ?? 0)","",""),successCallback:
+            CitiesPlacesManager().getCitiesPlaces((self?.cityid ?? "0","\((self?.currentPage ?? 0) + 1)","",""),successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         self?.NearbyCollectionview.spr_endRefreshing()

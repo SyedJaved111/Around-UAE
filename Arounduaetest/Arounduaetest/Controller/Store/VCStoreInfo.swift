@@ -33,13 +33,14 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     }
     
     @IBAction func review(_ sender: Any){
-        self.performSegue(withIdentifier: "movetopopfromstores", sender: storeid)
+        if AppSettings.sharedSettings.accountType == "buyer"{
+            self.performSegue(withIdentifier: "movetopopfromstores", sender: storeid)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "movetopopfromstores"{
-            let dvc = segue.destination as! VCPopUp
-            dvc.storeid = sender as! String
+            storeid = (sender as? String)!
         }
     }
 }

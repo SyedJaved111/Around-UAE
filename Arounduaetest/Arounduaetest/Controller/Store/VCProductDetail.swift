@@ -140,6 +140,11 @@ class VCProductDetail: UIViewController {
         prodcutPrice.text = "$\(product.price?.usd ?? 0)"
         productname.text = productdetail.productName?.en ?? ""
         ratingView.rating = 0.0
+        if AppSettings.sharedSettings.user.favouritePlaces?.contains(productdetail._id ?? "") ?? false{
+            self.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+        }else{
+            self.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+        }
         productDescription.text = productdetail.description?.en ?? ""
     }
     
@@ -163,8 +168,9 @@ class VCProductDetail: UIViewController {
                 return
         }
         
-        if Productcounter.value != 0.0{
-            
+        if Productcounter.value == 0.0{
+            self.alertMessage(message: "Please Select Your Quantity", completionHandler: nil)
+            return
         }
         
         if dictionary != nil{
@@ -181,10 +187,10 @@ class VCProductDetail: UIViewController {
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
-                        if(favouriteResponse.message?.en ?? "") == "Product liked Successfully."{
-                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+                        if AppSettings.sharedSettings.user.favouritePlaces?.contains((self?.productDetail?._id!)!) ?? false{
+                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
                         }else{
-                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favouriteblack"), for:.normal)
+                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
                         }
                     }else{
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
@@ -203,11 +209,17 @@ class VCProductDetail: UIViewController {
     }
     
     @IBAction func submitProductReview(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "movefromproductdetail", sender: product._id!)
+        if AppSettings.sharedSettings.accountType == "buyer"{
+           self.performSegue(withIdentifier: "movefromproductdetail", sender: (productDetail?._id!))
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "movefromproductdetail"{
+            if let value = sender as? String{
+               productid = value
+            }
+        }
     }
 }
 
