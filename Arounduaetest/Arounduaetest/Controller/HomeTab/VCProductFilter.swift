@@ -22,6 +22,8 @@ class VCProductFilter: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
 
     var featuresArray = [FeatureCharacterData]()
+    var max = 0.0
+    var min = 0.0
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -68,24 +70,22 @@ class VCProductFilter: UIViewController {
         }
     }
     
+    @IBAction func rangeSliderValuesChanged(_ rangeSlider: RangeSlider){
+        max = rangeSlider.upperValue
+        min = rangeSlider.lowerValue
+    }
+    
     private func searchProducts(){
         guard let txt = txtfiledEnterKeyword.text, txt.count > 0 else{
             alertMessage(message: "Please Enter Search Keyword..", completionHandler: nil)
             return
         }
         
-        var max = 0.0
-        var min = 0.0
-        
-        if ViewRanger.maximumValue != 0.0{
-            max = ViewRanger.maximumValue
-        }else{
+        if ViewRanger.maximumValue == 0.0{
             max = -1
         }
         
-        if ViewRanger.minimumValue != 0.0{
-            min = ViewRanger.minimumValue
-        }else{
+        if ViewRanger.minimumValue == 0.0{
             min = -1
         }
         

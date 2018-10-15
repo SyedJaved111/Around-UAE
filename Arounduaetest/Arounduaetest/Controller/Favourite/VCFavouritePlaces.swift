@@ -43,8 +43,8 @@ class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
     
     private func getFavouritePlaces(){
         startLoading("")
-        CitiesPlacesManager().getFavouritePlacesList("\(currentPage + 1)",successCallback:
-            {[weak self](response) in
+        CitiesPlacesManager().getFavouritePlacesList("\(1)",successCallback:
+        {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let FavouritePlacesData = response{
@@ -149,7 +149,7 @@ extension VCFavouritePlaces{
 extension VCFavouritePlaces:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 133
+        return 118
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -182,11 +182,12 @@ extension VCFavouritePlaces: PotocolCellFavourite{
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
-                        AppSettings.sharedSettings.user = favouriteResponse.data!
-                        if AppSettings.sharedSettings.user.favouritePlaces?.contains(place._id ?? "") ?? false{
+                    
+                 if AppSettings.sharedSettings.user.favouritePlaces?.contains(place._id ?? "") ?? false{
                             self?.favouritePlacesList.remove(at: indexpath?.row ?? 0)
                             self?.favouritePlacesTableView.reloadData()
                         }
+                        AppSettings.sharedSettings.user = favouriteResponse.data!
                     }else{
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
                     }

@@ -18,7 +18,7 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
     let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCTopRated")
     
     override func viewDidLoad(){
-        settings.style.buttonBarBackgroundColor = UIColor.red
+        settings.style.buttonBarBackgroundColor = .red
         settings.style.buttonBarItemBackgroundColor = .white
         settings.style.selectedBarBackgroundColor = #colorLiteral(red: 0.9607843137, green: 0.003921568627, blue: 0.2039215686, alpha: 1)
         

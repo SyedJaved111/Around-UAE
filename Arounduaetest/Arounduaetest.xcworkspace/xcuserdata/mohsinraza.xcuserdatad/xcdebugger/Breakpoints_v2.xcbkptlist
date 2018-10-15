@@ -73,13 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Arounduaetest/Helper/Network/ServerAPI.swift"
-            timestampString = "560985812.403486"
+            filePath = "Arounduaetest/Controller/Profile/VCProfile.swift"
+            timestampString = "560985812.403553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "parseServerResponse(_:from:)"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
+            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,13 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Arounduaetest/Controller/Profile/VCProfile.swift"
-            timestampString = "560985812.403553"
+            filePath = "Arounduaetest/Helper/Network/ServerAPI.swift"
+            timestampString = "561316611.3379689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
-            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "parseServerResponse(_:from:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

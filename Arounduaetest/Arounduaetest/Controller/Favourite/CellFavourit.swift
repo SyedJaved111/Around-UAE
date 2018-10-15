@@ -18,7 +18,6 @@ import SDWebImage
 class CellFavourit: UITableViewCell {
 
     @IBOutlet weak var BtnHeart: UIButton!
-    @IBOutlet weak var lblFavouritUserName: UILabel!
     @IBOutlet weak var lblFavouritProduct: UILabel!
     @IBOutlet weak var lblFavouritProductprice: UILabel!
     @IBOutlet weak var imgFavourit: UIImageView!
@@ -27,7 +26,6 @@ class CellFavourit: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-         lblFavouritUserName.text = nil
          lblFavouritProduct.text = nil
          imgFavourit.image = nil
          ratingView.rating = 0.0
@@ -36,10 +34,9 @@ class CellFavourit: UITableViewCell {
     
     func setupCellData(_ product: Products){
         lblFavouritProduct.text = product.productName?.en
-        lblFavouritUserName.text = "Denim Series Vavy"
         imgFavourit.sd_setShowActivityIndicatorView(true)
         imgFavourit.sd_setIndicatorStyle(.gray)
-        imgFavourit.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
+        imgFavourit.sd_setImage(with: URL(string: product.images?.first?.path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
         lblFavouritProductprice.text = "$\(product.price?.usd ?? 0)"
         ratingView.rating = Double(product.averageRating ?? 0)
     }

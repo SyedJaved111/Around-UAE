@@ -97,13 +97,18 @@ struct FeatureCharacterData : Decodable {
     let _id : String?
 }
 
+struct CombinatonTotal:Decodable{
+    let usd : Int?
+    let aed : Double?
+}
+
 struct CombinatonData: Decodable{
     let _id : String?
     let features : [String]?
     let characteristics : [String]?
     let quantity : Int?
-    let price : Int?
-    let total : Int?
+    let price : Price?
+    let total : CombinatonTotal?
     let product : String?
     let user : String?
     let combination : String?

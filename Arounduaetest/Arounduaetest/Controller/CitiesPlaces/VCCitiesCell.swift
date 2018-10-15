@@ -23,6 +23,6 @@ class VCCitiesCell: UICollectionViewCell {
         lblGenralName.text = city.title?.en ?? ""
         imgGenral.sd_setShowActivityIndicatorView(true)
         imgGenral.sd_setIndicatorStyle(.gray)
-        imgGenral.sd_setImage(with: URL(string: city.image ?? ""))
+        imgGenral.sd_setImage(with: URL(string: city.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
     }
 }

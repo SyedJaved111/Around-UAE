@@ -4,7 +4,7 @@ import Foundation
 
 public class Total {
 	public var usd : Int?
-	public var aed : Int?
+	public var aed : Double?
 
 
     public class func modelsFromDictionaryArray(array:NSArray) -> [Total]
@@ -20,7 +20,7 @@ public class Total {
 	required public init?(dictionary: NSDictionary) {
 
 		usd = dictionary["usd"] as? Int
-		aed = dictionary["aed"] as? Int
+		aed = dictionary["aed"] as? Double
 	}
 
 	public func dictionaryRepresentation() -> NSDictionary {

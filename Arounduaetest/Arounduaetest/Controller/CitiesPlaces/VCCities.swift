@@ -10,10 +10,6 @@ import UIKit
 
 class VCCities: BaseController{
 
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
-
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             self.collectionView.delegate = self
@@ -34,44 +30,43 @@ class VCCities: BaseController{
 
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Cities"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
         self.setNavigationBar()
         self.addBackButton()
     }
+    
+    fileprivate func setupDelegates(){
+         self.collectionView.emptyDataSetSource = self
+         self.collectionView.emptyDataSetDelegate = self
+         self.collectionView.reloadData()
+    }
 
     private func fetchCitiesData(){
-
         startLoading("")
-        CitiesPlacesManager().getCities("\(currentPage + 1)",successCallback:
+        CitiesPlacesManager().getCities("\(1)",successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let citiesResponse = response{
-                        if(citiesResponse.data?.cities ?? []).count == 0{
-                            self?.viewEmptyList.isHidden = false
-                        }else{
+                        if(citiesResponse.success!){
                             self?.CitiesArray = citiesResponse.data?.cities ?? []
                             self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                             self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
-                            self?.collectionView.reloadData()
+                        }else{
+                            self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
                         }
-                    }else{
-                        self?.alertMessage(message: "Error".localized, completionHandler: {self?.viewEmptyList.isHidden = false})
+                     }else{
+                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async{
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: {self?.viewEmptyList.isHidden = false})
+                self?.setupDelegates()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
-    }
-    
-    @IBAction func tryAgain(_ sender: UIButton) {
-        self.viewEmptyList.isHidden = true
-        fetchCitiesData()
     }
 }
 
@@ -80,31 +75,29 @@ extension VCCities{
     func initialUI(){
         
         collectionView.spr_setTextHeader { [weak self] in
-            self?.viewEmptyList.isHidden = true
             self?.currentPage = 0
             CitiesPlacesManager().getCities("\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         self?.collectionView.spr_endRefreshing()
                         if let citiesResponse = response{
-                            if(citiesResponse.data?.cities ?? []).count == 0{
-                                self?.viewEmptyList.isHidden = false
-                            }else{
+                            if(citiesResponse.success!){
                                 self?.CitiesArray = citiesResponse.data?.cities ?? []
                                 self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
-                                self?.collectionView.reloadData()
+                            }else{
+                                self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
                         }else{
-                            self?.viewEmptyList.isHidden = false
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
-                    self?.collectionView.spr_endRefreshing()
-                    self?.viewEmptyList.isHidden = false
+                    self?.finishLoading()
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -120,20 +113,25 @@ extension VCCities{
                     DispatchQueue.main.async {
                         self?.collectionView.spr_endRefreshing()
                         if let citiesResponse = response{
-                            for city in citiesResponse.data?.cities ?? []{
-                                self?.CitiesArray.append(city)
+                            if citiesResponse.success!{
+                                for city in citiesResponse.data?.cities ?? []{
+                                    self?.CitiesArray.append(city)
+                                }
+                                self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
+                                self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
+                            }else{
+                                self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
                             }
-                            self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
-                            self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
-                            self?.collectionView.reloadData()
                         }else{
-                            self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
                 DispatchQueue.main.async {
-                    self?.collectionView.spr_endRefreshing()
+                    self?.finishLoading()
+                    self?.setupDelegates()
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
@@ -165,5 +163,9 @@ extension VCCities:UICollectionViewDelegate,UICollectionViewDataSource {
         let vc = storyboard.instantiateViewController(withIdentifier: "VCPlaces") as! VCPlaces
         vc.cityId = cityId
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchCitiesData()
     }
 }

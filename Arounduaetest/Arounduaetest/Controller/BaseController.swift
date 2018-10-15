@@ -10,7 +10,7 @@ class BaseController: UIViewController {
     }
     
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
     
     func showAlert(_ message: String, tryAgainClouser:@escaping (UIAlertAction)->Void){

@@ -44,7 +44,7 @@ class VCFavrouit: BaseController,IndicatorInfoProvider{
     
     private func getFavouriteProducts(){
         startLoading("")
-        ProductManager().getFavouriteProducts("\(currentPage + 1)",
+        ProductManager().getFavouriteProducts("\(1)",
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
@@ -182,11 +182,11 @@ extension VCFavrouit: PotocolCellFavourite{
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
-                        AppSettings.sharedSettings.user = favouriteResponse.data!
                         if AppSettings.sharedSettings.user.favouritePlaces?.contains(product._id ?? "") ?? false{
                             self?.favouriteProductList.remove(at: indexpath?.row ?? 0)
                             self?.favouriteProductTableView.reloadData()
                         }
+                        AppSettings.sharedSettings.user = favouriteResponse.data!
                     }else{
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
                     }

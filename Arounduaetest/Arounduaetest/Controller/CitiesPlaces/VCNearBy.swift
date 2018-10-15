@@ -53,7 +53,7 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
     
     private func fetchCitiesPlacesData(){
         startLoading("")
-        CitiesPlacesManager().getCitiesPlaces((cityid,"\(currentPage + 1)","",""),successCallback:
+        CitiesPlacesManager().getCitiesPlaces((cityid,"\(1)","",""),successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
