@@ -20,6 +20,8 @@ class VCProductDetail: UIViewController {
     @IBOutlet weak var productDescription: UITextView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollview: UIScrollView!
+    @IBOutlet weak var reviewBtn: UIButton!
+    @IBOutlet weak var favouritImage: UIImageView!
     @IBOutlet weak var CollectionView: UICollectionView!{
         didSet{
             CollectionView.delegate = self
@@ -140,10 +142,12 @@ class VCProductDetail: UIViewController {
         prodcutPrice.text = "$\(product.price?.usd ?? 0)"
         productname.text = productdetail.productName?.en ?? ""
         ratingView.rating = 0.0
-        if AppSettings.sharedSettings.user.favouritePlaces?.contains(productdetail._id ?? "") ?? false{
-            self.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+        if AppSettings.sharedSettings.user.favouritePlaces?.contains((productDetail?._id!)!) ?? false{
+            self.favouritImage.image = #imageLiteral(resourceName: "Favourite-red")
+            self.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
-            self.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+            self.favouritImage.image = #imageLiteral(resourceName: "Favourite")
+            self.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
         }
         productDescription.text = productdetail.description?.en ?? ""
     }
@@ -151,6 +155,13 @@ class VCProductDetail: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Product Detail"
         self.addBackButton()
+        if AppSettings.sharedSettings.accountType == "seller"{
+            self.reviewBtn.backgroundColor = #colorLiteral(red: 0.06274509804, green: 0.04705882353, blue: 0.03137254902, alpha: 1)
+            self.reviewBtn.isUserInteractionEnabled = false
+        }else{
+            self.reviewBtn.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
+            self.reviewBtn.isUserInteractionEnabled = true
+        }
     }
     
     @IBAction func addtocartclick(_ sender: Any){
@@ -187,10 +198,13 @@ class VCProductDetail: UIViewController {
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
+                        AppSettings.sharedSettings.user = favouriteResponse.data!
                         if AppSettings.sharedSettings.user.favouritePlaces?.contains((self?.productDetail?._id!)!) ?? false{
-                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+                            self?.favouritImage.image = #imageLiteral(resourceName: "Favourite-red")
+                            self?.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                         }else{
-                            self?.favouriteBtn.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+                            self?.favouritImage.image = #imageLiteral(resourceName: "Favourite")
+                            self?.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
                         }
                     }else{
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
@@ -210,16 +224,15 @@ class VCProductDetail: UIViewController {
     
     @IBAction func submitProductReview(_ sender: UIButton) {
         if AppSettings.sharedSettings.accountType == "buyer"{
-           self.performSegue(withIdentifier: "movefromproductdetail", sender: (productDetail?._id!))
+            moveToPopVC((productDetail?._id!)!)
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "movefromproductdetail"{
-            if let value = sender as? String{
-               productid = value
-            }
-        }
+    private func moveToPopVC(_ productid:String){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCPopUp") as! VCPopUp
+        vc.productid = productid
+        self.present(vc, animated: true, completion: nil)
     }
 }
 

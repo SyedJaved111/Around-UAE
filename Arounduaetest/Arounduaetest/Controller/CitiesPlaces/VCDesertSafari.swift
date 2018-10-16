@@ -24,7 +24,8 @@ class VCDesertSafari: UIViewController {
     @IBOutlet weak var lblDesrtsfari: UILabel!
     @IBOutlet weak var imgBaner: UIImageView!
     @IBOutlet weak var btnlikeimg: UIButtonMain!
-   
+    @IBOutlet weak var favouriteImage: UIImageView!
+    
     var placeid = ""
     var locationManager: CLLocationManager = CLLocationManager()
     
@@ -68,9 +69,11 @@ class VCDesertSafari: UIViewController {
       imgBaner.sd_setIndicatorStyle(.gray)
       imgBaner.sd_setImage(with: URL(string: place.images?.first?.path ?? ""))
         if AppSettings.sharedSettings.user.favouritePlaces?.contains(placeid) ?? false{
-            self.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+            self.favouriteImage.image = #imageLiteral(resourceName: "Favourite-red")
+            self.btnlikeimg.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
-            self.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+            self.favouriteImage.image = #imageLiteral(resourceName: "Favourite")
+            self.btnlikeimg.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
         }
       let location = CLLocation(latitude: place.location![1], longitude: place.location![0])
       let region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1000, 1000)
@@ -88,9 +91,11 @@ class VCDesertSafari: UIViewController {
                     if storeResponse.success!{
                         AppSettings.sharedSettings.user = storeResponse.data!
                         if AppSettings.sharedSettings.user.favouritePlaces?.contains(placeid) ?? false{
-                            self?.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+                            self?.favouriteImage.image = #imageLiteral(resourceName: "Favourite-red")
+                            self?.btnlikeimg.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                         }else{
-                            self?.btnlikeimg.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+                            self?.favouriteImage.image = #imageLiteral(resourceName: "Favourite")
+                            self?.btnlikeimg.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
                         }
                     }
                 }else{
@@ -119,7 +124,14 @@ class VCDesertSafari: UIViewController {
     }
     
     @IBAction func review(_ sender: Any){
-       self.performSegue(withIdentifier: "movetopop", sender: placeid)
+        moveToPopVC(placeid)
+    }
+    
+    private func moveToPopVC(_ placeid:String){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCPopUp") as! VCPopUp
+        vc.placeid = placeid
+        self.present(vc, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

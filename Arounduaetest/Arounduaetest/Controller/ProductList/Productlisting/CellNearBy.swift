@@ -18,6 +18,7 @@ class CellNearBy: UICollectionViewCell {
     @IBOutlet weak var lblproductBrandnamenearby: UILabel!
     @IBOutlet weak var lblproductnamenearby: UILabel!
     @IBOutlet weak var btnFavrouitnearby: UIButton!
+    @IBOutlet weak var btnFavrouitnearbyImage: UIImageView!
     @IBOutlet weak var imgproductneaby: UIImageView!
     
     override func awakeFromNib() {
@@ -35,15 +36,22 @@ class CellNearBy: UICollectionViewCell {
     func setupNearbyData(product:Products){
         lblproductnamenearby.text = product.productName?.en
         uiviewcomosenearby.rating = Double(product.averageRating ?? 0)
-        
         imgproductneaby.sd_addActivityIndicator()
         imgproductneaby.sd_setIndicatorStyle(.gray)
         lblpricenearby.text = "$\(product.price?.usd ?? 0)"
-        
         imgproductneaby.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
+        
         if AppSettings.sharedSettings.accountType == "seller"{
             btnFavrouitnearby.isHidden = true
             btnaddtocartnearby.isHidden = true
+        }
+        
+        if AppSettings.sharedSettings.user.favouritePlaces?.contains((product._id!)) ?? false{
+            self.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite-red")
+            self.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        }else{
+            self.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite")
+            self.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
         }
     }
     

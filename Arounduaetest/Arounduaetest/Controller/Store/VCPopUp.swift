@@ -9,10 +9,6 @@
 import UIKit
 import Cosmos
 
-var productid:String?
-var placeid:String?
-var storeid:String?
-
 class VCPopUp: UIViewController {
 
     @IBOutlet var lblHowsExperience: UILabel!
@@ -21,6 +17,10 @@ class VCPopUp: UIViewController {
     @IBOutlet var btnCancel: UIButtonMain!
     @IBOutlet var btnSubmit: UIButtonMain!
     @IBOutlet weak var ratingView: CosmosView!
+    
+    var placeid:String?
+    var productid:String?
+    var storeid:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +72,9 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: {
+                             self?.dismiss(animated: true, completion: nil)
+                        })
                     }else{
                         self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
                     }
@@ -98,7 +100,9 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: {
+                            self?.dismiss(animated: true, completion: nil)
+                        })
                     }else{
                         self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
                     }
@@ -128,7 +132,9 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: {
+                            self?.dismiss(animated: true, completion: nil)
+                        })
                     }else{
                         self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
                     }

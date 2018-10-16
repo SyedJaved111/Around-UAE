@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		104C714CBB5E5F58D0F39894 /* Pods_Arounduaetest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD924187F4C1019A42E1BB69 /* Pods_Arounduaetest.framework */; };
+		184EE4A32175EAD300EFD6B5 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184EE4A22175EAD300EFD6B5 /* Filter.swift */; };
 		1859BEEE2167A24B00BB79B9 /* VCSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859BEED2167A24B00BB79B9 /* VCSearch.swift */; };
 		187BB97E2161EBFB0070D155 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BB9622161EBFB0070D155 /* Message.swift */; };
 		187BB97F2161EBFB0070D155 /* GroupDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BB9642161EBFB0070D155 /* GroupDivision.swift */; };
@@ -196,6 +197,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184EE4A22175EAD300EFD6B5 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		1859BEED2167A24B00BB79B9 /* VCSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCSearch.swift; sourceTree = "<group>"; };
 		187BB9622161EBFB0070D155 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		187BB9642161EBFB0070D155 /* GroupDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDivision.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			children = (
 				187BB9682161EBFB0070D155 /* Index.swift */,
 				187BB9692161EBFB0070D155 /* Slider.swift */,
+				184EE4A22175EAD300EFD6B5 /* Filter.swift */,
 			);
 			path = IndexModel;
 			sourceTree = "<group>";
@@ -1187,6 +1190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18BA966A2163483F0009AE52 /* PendingTabCell.swift in Sources */,
+				184EE4A32175EAD300EFD6B5 /* Filter.swift in Sources */,
 				187BBA6C2162372F0070D155 /* CellFavouritePlaces.swift in Sources */,
 				1F5A3FE2215F8AA900B0CBC6 /* TopratedCell.swift in Sources */,
 				187BBA5D2161ECF70070D155 /* ApiUrls.swift in Sources */,

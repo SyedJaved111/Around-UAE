@@ -34,13 +34,14 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     
     @IBAction func review(_ sender: Any){
         if AppSettings.sharedSettings.accountType == "buyer"{
-            self.performSegue(withIdentifier: "movetopopfromstores", sender: storeid)
+            moveToPopVC()
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "movetopopfromstores"{
-            storeid = (sender as? String)!
-        }
+    private func moveToPopVC(){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCPopUp") as! VCPopUp
+        vc.productid = storeid
+        self.present(vc, animated: true, completion: nil)
     }
 }

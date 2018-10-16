@@ -63,4 +63,22 @@ class IndexManager{
             failureCallback(error)
         })
     }
+    
+    //MARK: - ContactUs
+    func getSearchFilterData(successCallback : @escaping (Response<FilterData>?) -> Void,
+        failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .SearchFilter,
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<FilterData>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
 }

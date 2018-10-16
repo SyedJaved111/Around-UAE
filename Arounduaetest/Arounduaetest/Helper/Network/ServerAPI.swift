@@ -52,6 +52,7 @@ enum ServerAPI {
     case GetSiteSettings
     case GetSliders
     case ContactUs(ContactUSParams)
+    case SearchFilter
     
     //Cart API's
     case GetCartProducts
@@ -102,7 +103,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         switch self {
           case .UserLogin,.ForgotPassword,.RegisterUser,
              .EmailVerification,.ResendVerification,
-             .ResetPassword,.CitiesPlaces,.SearchProduct,.SocialLogin:
+             .ResetPassword,.CitiesPlaces,.SearchProduct,.SocialLogin,.SearchFilter:
             return .none
           default:
             return .basic
@@ -205,6 +206,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return APIURL.paymentURL.rawValue
             case .SearchProduct:
                 return APIURL.searchProductURL.rawValue
+            case .SearchFilter:
+                return APIURL.filterURL.rawValue
         }
     }
 
@@ -226,7 +229,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
           case .GetUserProfile,.RemoveImage,
                .GetStoreSGDS,.GetFeaturesCharacters,.GetSiteSettings,
                .GetSliders,.GetCartProducts,
-               .GetGroups,.GetGroupWithDivision:
+               .GetGroups,.GetGroupWithDivision,.SearchFilter:
                 return .get
          }
     }
@@ -414,7 +417,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             
           case .GetUserProfile,.RemoveImage,
                .GetFeaturesCharacters,.GetStoreSGDS,.GetSiteSettings,
-               .GetSliders,.GetCartProducts,.GetGroups,.GetGroupWithDivision:
+               .GetSliders,.GetCartProducts,.GetGroups,.GetGroupWithDivision,.SearchFilter :
             return .requestPlain
        }
     }

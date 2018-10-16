@@ -56,8 +56,8 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
     }
     
     private func setupDefaultGroups(){
-         storeGroup = Groups(title: Title(en: "Stores", ar: "Stores"), image: nil, isActive: true, isFeatured: true, _id: "0123456")
-         resturantGroup = Groups(title: Title(en: "Resturants", ar: "Resturants"), image: nil, isActive: true, isFeatured: true, _id: "0123456")
+        storeGroup = Groups(title: Title(en: "Stores", ar: "Stores"),divisions:nil, image: nil, isActive: true, isFeatured: true, _id: "0123456")
+        resturantGroup = Groups(title: Title(en: "Resturants", ar: "Resturants"),divisions:nil, image: nil, isActive: true, isFeatured: true, _id: "0123456")
     }
     
     private func fetchGroupsData(isRefresh: Bool){
