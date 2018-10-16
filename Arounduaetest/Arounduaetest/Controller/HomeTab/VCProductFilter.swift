@@ -20,6 +20,18 @@ class VCProductFilter: UIViewController {
     @IBOutlet weak var filterTableView: UITableView!
     @IBOutlet weak var filterTableConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var selectGroupBtn: UIButton!
+    @IBOutlet weak var selectDivisionBtn: UIButton!
+    @IBOutlet weak var selectSectionBtn: UIButton!
+    
+    @IBOutlet weak var selectGroupArrow: UIImageView!
+    @IBOutlet weak var selectDivisionArrow: UIImageView!
+    @IBOutlet weak var selectSectionArrow: UIImageView!
+    
+    @IBOutlet weak var selectGrouplbl: UILabel!
+    @IBOutlet weak var selectDivisionlbl: UILabel!
+    @IBOutlet weak var selectSectionlbl: UILabel!
 
     var featuresArray = [FeatureCharacterData]()
     var filterdata:FilterData?
@@ -41,7 +53,7 @@ class VCProductFilter: UIViewController {
     }
     
     private func setViewHeight(){
-        filterTableConstraint.constant = filterTableView.contentSize.height + 135
+        filterTableConstraint.constant = filterTableView.contentSize.height + 28
         self.filterTableView.setNeedsDisplay()
     }
     
@@ -169,12 +181,91 @@ class VCProductFilter: UIViewController {
         self.setNavigationBar()
         self.addBackButton()
     }
+    
+    @IBAction func groupSelection(_ sender: UIButton){
+        let menudropDown = DropDown()
+        menudropDown.anchorView = sender
+        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        var groupsarray = [String]()
+        groupsarray.insert("Select Group", at: 0)
+        groupsarray += (filterdata?.groups?.map({$0.title?.en ?? ""})) ?? []
+        menudropDown.dataSource = groupsarray
+        menudropDown.selectionAction = {(index: Int, item: String) in
+            self.groupIndex = index
+            self.selectGrouplbl.text = item
+            
+            if item == "Select Group"{
+                self.selectSectionBtn.isHidden = true
+                self.selectSectionlbl.isHidden = true
+                self.selectSectionArrow.isHidden = true
+                
+                self.selectDivisionBtn.isHidden = true
+                self.selectDivisionlbl.isHidden = true
+                self.selectDivisionArrow.isHidden = true
+                
+            }else{
+                self.selectDivisionlbl.text = "Select Divison"
+                self.selectDivisionBtn.isHidden = false
+                self.selectDivisionlbl.isHidden = false
+                self.selectDivisionArrow.isHidden = false
+            }
+        }
+        menudropDown.show()
+    }
+    
+    @IBAction func divisionSelection(_ sender: UIButton){
+        let menudropDown = DropDown()
+        menudropDown.anchorView = sender
+        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        var divisionsarray = [String]()
+        divisionsarray.insert("Select Division", at: 0)
+        divisionsarray += (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
+        menudropDown.dataSource = divisionsarray
+        menudropDown.selectionAction = {(index: Int, item: String) in
+            self.divisionIndex = index
+            self.selectDivisionlbl.text = item
+            
+            if item == "Select Division"{
+                self.selectSectionBtn.isHidden = true
+                self.selectSectionlbl.isHidden = true
+                self.selectSectionArrow.isHidden = true
+            }else{
+                self.selectSectionlbl.text = "Select Section"
+                self.selectSectionBtn.isHidden = false
+                self.selectSectionlbl.isHidden = false
+                self.selectSectionArrow.isHidden = false
+            }
+        }
+        menudropDown.show()
+    }
+    
+    @IBAction func sectionSelection(_ sender: UIButton){
+        let menudropDown = DropDown()
+        menudropDown.anchorView = sender
+        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        var sectionsarray = [String]()
+        sectionsarray.insert("Select Section", at: 0)
+        sectionsarray += (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
+        menudropDown.dataSource = sectionsarray
+        menudropDown.selectionAction = {(index: Int, item: String) in
+            self.selectSectionlbl.text = item
+            if item == "Select Section"{
+                
+            }else{
+                
+            }
+        }
+        menudropDown.show()
+    }
 }
 
 extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCellProtocol{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
