@@ -8,18 +8,17 @@
 
 import UIKit
 import XLPagerTabStrip
+
 class VCDilverdProducts: UIViewController,UITableViewDataSource,UITableViewDelegate,IndicatorInfoProvider {
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
@@ -29,8 +28,8 @@ class VCDilverdProducts: UIViewController,UITableViewDataSource,UITableViewDeleg
         cell.selectionStyle = .none
         return cell
     }
-    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Delivered".localized)
-    }
     
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Completed".localized)
+    }
 }

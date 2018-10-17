@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PendingTabCell: UITableViewCell {
 
@@ -18,25 +19,36 @@ class PendingTabCell: UITableViewCell {
     @IBOutlet weak var lblPendingPrice: UILabel!
     @IBOutlet weak var lblPendingProduct: UILabel!
     @IBOutlet weak var imgPending: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        lblPending.text = nil
+        lblStatusPending.text = nil
+        lblPendingValue.text = nil
+        lblPendingquantity.text = nil
+        lblPendingPrice.text = nil
+        lblPendingProduct.text = nil
+        imgPending.image = nil
+    }
+    
+    func setupCellData(order:OrderData){
+        lblStatusPending.text = order.status
+        lblPendingValue.text = nil
+        lblPendingquantity.text = "\(order.orderDetails?.count ?? 0)"
+        lblPendingPrice.text = "\(order.charges ?? 0)"
+        lblPendingProduct.text = nil
+        
+        imgPending.sd_setShowActivityIndicatorView(true)
+        imgPending.sd_setIndicatorStyle(.gray)
+        imgPending.sd_setImage(with: URL(string: order.orderDetails?.first?.images?.first ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         self.ButtonDesign()
     }
     
     func ButtonDesign() {
-        self.btnPending.layer.cornerRadius = 5
-        
+        self.btnPending.layer.cornerRadius = 2
     }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

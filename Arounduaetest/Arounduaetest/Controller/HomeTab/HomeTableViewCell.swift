@@ -15,7 +15,7 @@ protocol HomeProtocol {
 
 class HomeTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var CollecView: HomeCollectionView!
+    @IBOutlet weak var CollecView: UICollectionView!
     @IBOutlet weak var btnViewAll: UIButton!
     @IBOutlet weak var lblCategoryName: UILabel!
     var delegate:HomeProtocol?

@@ -30,7 +30,6 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),for: UIControlEvents.valueChanged)
         refreshControl.tintColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
-        
         return refreshControl
     }()
     

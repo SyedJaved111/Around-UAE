@@ -75,6 +75,12 @@ enum ServerAPI {
     case GetGroupWithDivision
     case GetGroupsDivision(groupId:String)
     
+    //ORDER API's
+    case ShowConfirmedShippedCompletedOrders(storeid:String,status:String)
+    case ShipOrderProduct(orderDetailid:String,storeid:String)
+    case OrderDetail(orderid:String)
+    case MakeProductComplete(orderDetailid:String)
+    
     //Social API's
     case SocialLogin(SocialParams)
 
@@ -208,6 +214,14 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 return APIURL.searchProductURL.rawValue
             case .SearchFilter:
                 return APIURL.filterURL.rawValue
+            case .ShowConfirmedShippedCompletedOrders:
+                return APIURL.showConfirmedShippedCompletedOrdersURL.rawValue
+            case .ShipOrderProduct:
+                return APIURL.shipOrderProductURL.rawValue
+            case .OrderDetail:
+                return APIURL.OrderDetailURL.rawValue
+            case .MakeProductComplete:
+                return APIURL.MakeProductCompleteURL.rawValue
         }
     }
 
@@ -224,7 +238,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
                .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
-               .Payment,.SearchProduct,.SocialLogin:
+               .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
+               .ShipOrderProduct,.OrderDetail,.MakeProductComplete:
                 return .post
           case .GetUserProfile,.RemoveImage,
                .GetStoreSGDS,.GetFeaturesCharacters,.GetSiteSettings,
@@ -384,6 +399,26 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 parameters[CartQuantityUpdateKey.combination.rawValue] = params.combination
                 return parameters
             
+            case .ShowConfirmedShippedCompletedOrders(let storeid,let status):
+                if storeid != ""{
+                    parameters["store"] = storeid
+                }
+                parameters["status"] = status
+                return parameters
+            
+            case .ShipOrderProduct(let orderDetail,let store):
+                parameters["orderDetailId"] = orderDetail
+                parameters["store"] = store
+                return parameters
+            
+            case .OrderDetail(let orderid):
+                parameters["order"] = orderid
+                return parameters
+            
+            case .MakeProductComplete(let orderDetailid):
+                parameters["orderDetailId"] = orderDetailid
+                return parameters
+            
             default:
                 return nil
           }
@@ -409,7 +444,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
                .GetFavouriteProducts,.ProductReview,.StoreReview,
                .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
-               .Payment,.SearchProduct,.SocialLogin:
+               .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
+               .ShipOrderProduct,.OrderDetail,.MakeProductComplete:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
           case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:

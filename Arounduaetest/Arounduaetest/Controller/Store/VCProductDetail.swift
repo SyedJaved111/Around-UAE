@@ -81,8 +81,6 @@ class VCProductDetail: UIViewController {
     private func checKCombination(){
         
         var dic = [String:Any]()
-        dic["features"] = features
-        dic["characteristics"] = characteristics
         dic["product"] = product._id!
         dic["quantity"] = "\(Int(Productcounter.value))"
         
@@ -104,6 +102,7 @@ class VCProductDetail: UIViewController {
     private func addToCartProduct(_ dict:[String:Any]){
         var dictoinary = dict
         dictoinary["quantity"] = "\(Int(Productcounter.value))"
+        dictoinary["combination"] = combination?._id ?? ""
         startLoading("")
         CartManager().addCartProducts(dictoinary,
         successCallback:
@@ -239,7 +238,7 @@ class VCProductDetail: UIViewController {
 extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return productDetail?.priceables?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -259,7 +258,7 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CharacteristicsCell", for: indexPath) as! CharacteristicsCell
-        cell.setupCell(productDetail?.priceables?[indexPath.row].characteristics?[indexPath.row].image ?? "")
+        cell.setupCell(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row].image ?? "")
         if selectedCell.contains(indexPath){
             cell.characterImage.layer.borderWidth = 2.0
             cell.characterImage.layer.borderColor = UIColor.red.cgColor

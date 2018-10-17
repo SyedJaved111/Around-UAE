@@ -69,4 +69,9 @@ enum APIURL: String{
     case searchProductURL          = "product/search"
     case socialLoginURL            = "social-login"
     case filterURL                 = "search-filters"
+    
+    case showConfirmedShippedCompletedOrdersURL = "auth/orders/show"
+    case shipOrderProductURL                    = "auth/ship/product"
+    case OrderDetailURL                         = "auth/order/detail"
+    case MakeProductCompleteURL                 = "auth/complete/product"
 }

@@ -1,0 +1,123 @@
+///* 
+//Copyright (c) 2018 Swift Models Generated from JSON powered by http://www.json4swift.com
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//*/
+//
+//import Foundation
+// 
+///* For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
+//
+//public class OrderData {
+//    public var _id : String?
+//    public var orderDetails : Array<OrderDetails>?
+//    public var status : String?
+//    public var charges : Int?
+//    public var orderNumber : String?
+//    public var payerStatus : String?
+//    public var orderStatus : String?
+//    public var firstName : String?
+//    public var lastName : String?
+//    public var payerId : String?
+//    public var payerEmail : String?
+//    public var paymentId : String?
+//    public var state : String?
+//    public var paymentMethod : String?
+//    public var currency : String?
+//    public var transactionDetails : String?
+//    public var user : String?
+//    //public var addresses : Array<Addresses>?
+//    public var createdAt : String?
+//    public var updatedAt : String?
+//
+///**
+//    Returns an array of models based on given dictionary.
+//    
+//    Sample usage:
+//    let data_list = Data.modelsFromDictionaryArray(someDictionaryArrayFromJSON)
+//
+//    - parameter array:  NSArray from JSON dictionary.
+//
+//    - returns: Array of Data Instances.
+//*/
+//    public class func modelsFromDictionaryArray(array:NSArray) -> [OrderData]
+//    {
+//        var models:[OrderData] = []
+//        for item in array
+//        {
+//            models.append(OrderData(dictionary: item as! NSDictionary)!)
+//        }
+//        return models
+//    }
+//
+///**
+//    Constructs the object based on the given dictionary.
+//    
+//    Sample usage:
+//    let data = Data(someDictionaryFromJSON)
+//
+//    - parameter dictionary:  NSDictionary from JSON.
+//
+//    - returns: Data Instance.
+//*/
+//    required public init?(dictionary: NSDictionary) {
+//
+//        _id = dictionary["_id"] as? String
+//        if (dictionary["orderDetails"] != nil) { orderDetails = OrderDetails.modelsFromDictionaryArray(array: dictionary["orderDetails"] as! NSArray) }
+//        status = dictionary["status"] as? String
+//        charges = dictionary["charges"] as? Int
+//        orderNumber = dictionary["orderNumber"] as? String
+//        payerStatus = dictionary["payerStatus"] as? String
+//        orderStatus = dictionary["orderStatus"] as? String
+//        firstName = dictionary["firstName"] as? String
+//        lastName = dictionary["lastName"] as? String
+//        payerId = dictionary["payerId"] as? String
+//        payerEmail = dictionary["payerEmail"] as? String
+//        paymentId = dictionary["paymentId"] as? String
+//        state = dictionary["state"] as? String
+//        paymentMethod = dictionary["paymentMethod"] as? String
+//        currency = dictionary["currency"] as? String
+//        transactionDetails = dictionary["transactionDetails"] as? String
+//        user = dictionary["user"] as? String
+//        //if (dictionary["addresses"] != nil) { addresses = Addresses.modelsFromDictionaryArray(dictionary["addresses"] as! NSArray) }
+//        createdAt = dictionary["createdAt"] as? String
+//        updatedAt = dictionary["updatedAt"] as? String
+//    }
+//
+//        
+///**
+//    Returns the dictionary representation for the current instance.
+//    
+//    - returns: NSDictionary.
+//*/
+//    public func dictionaryRepresentation() -> NSDictionary {
+//
+//        let dictionary = NSMutableDictionary()
+//
+//        dictionary.setValue(self._id, forKey: "_id")
+//        dictionary.setValue(self.status, forKey: "status")
+//        dictionary.setValue(self.charges, forKey: "charges")
+//        dictionary.setValue(self.orderNumber, forKey: "orderNumber")
+//        dictionary.setValue(self.payerStatus, forKey: "payerStatus")
+//        dictionary.setValue(self.orderStatus, forKey: "orderStatus")
+//        dictionary.setValue(self.firstName, forKey: "firstName")
+//        dictionary.setValue(self.lastName, forKey: "lastName")
+//        dictionary.setValue(self.payerId, forKey: "payerId")
+//        dictionary.setValue(self.payerEmail, forKey: "payerEmail")
+//        dictionary.setValue(self.paymentId, forKey: "paymentId")
+//        dictionary.setValue(self.state, forKey: "state")
+//        dictionary.setValue(self.paymentMethod, forKey: "paymentMethod")
+//        dictionary.setValue(self.currency, forKey: "currency")
+//        dictionary.setValue(self.transactionDetails, forKey: "transactionDetails")
+//        dictionary.setValue(self.user, forKey: "user")
+//        dictionary.setValue(self.createdAt, forKey: "createdAt")
+//        dictionary.setValue(self.updatedAt, forKey: "updatedAt")
+//
+//        return dictionary
+//    }
+//
+//}

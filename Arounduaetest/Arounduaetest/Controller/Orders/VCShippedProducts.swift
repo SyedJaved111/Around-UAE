@@ -11,16 +11,14 @@ import XLPagerTabStrip
 
 class VCShippedProducts: UIViewController,UITableViewDataSource,UITableViewDelegate,IndicatorInfoProvider {
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
@@ -34,7 +32,4 @@ class VCShippedProducts: UIViewController,UITableViewDataSource,UITableViewDeleg
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo.init(title: "Shipped")
     }
-    
-
-    
 }

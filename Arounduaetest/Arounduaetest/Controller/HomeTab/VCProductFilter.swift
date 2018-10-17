@@ -9,7 +9,7 @@
 import UIKit
 import SwiftRangeSlider
 import DropDown
-
+var isFromHome = false
 class VCProductFilter: UIViewController {
     
     @IBOutlet weak var btnSearchclick: UIButtonMain!
@@ -32,7 +32,7 @@ class VCProductFilter: UIViewController {
     @IBOutlet weak var selectGrouplbl: UILabel!
     @IBOutlet weak var selectDivisionlbl: UILabel!
     @IBOutlet weak var selectSectionlbl: UILabel!
-
+    
     var featuresArray = [FeatureCharacterData]()
     var filterdata:FilterData?
     var filterArray = [Int]()
@@ -98,7 +98,15 @@ class VCProductFilter: UIViewController {
                 if let filterResponse = response{
                     if filterResponse.success!{
                         self?.filterdata = filterResponse.data
-                        self?.filterArray.append(1)
+                        self?.filterdata?.groups?.insert(Groups(title:Title(en:"Select Group", ar: ""), divisions: nil, image: nil, isActive: nil, isFeatured: nil, _id: nil), at: 0)
+                        
+                        for var obj in (self?.filterdata?.groups) ?? []{
+                              obj.divisions?.insert(Divisions(title: Title(en:"Select Division", ar: ""), sections: nil, image: nil, isActive: nil, _id: nil), at: 0)
+                            for var ob in obj.divisions ?? []{
+                              ob.sections?.insert(Sections(title: Title(en:"Select Division", ar: ""), image: nil, isActive: nil, _id: nil), at: 0)
+                            }
+                        }
+                        
                         self?.filterTableView.reloadData()
                         self?.setViewHeight()
                     }
@@ -169,7 +177,14 @@ class VCProductFilter: UIViewController {
     
     private func moveToFilteredProducts(products:[Products]){
          NotificationCenter.default.post(name: Notification.Name("SearchCompleted"), object: products)
-         self.navigationController?.popViewController(animated: true)
+        
+        if isFromHome{
+            let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func btnSearch(_ sender: UIButton){
@@ -187,9 +202,7 @@ class VCProductFilter: UIViewController {
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        var groupsarray = [String]()
-        groupsarray.insert("Select Group", at: 0)
-        groupsarray += (filterdata?.groups?.map({$0.title?.en ?? ""})) ?? []
+        let groupsarray = (filterdata?.groups?.map({$0.title?.en ?? ""})) ?? []
         menudropDown.dataSource = groupsarray
         menudropDown.selectionAction = {(index: Int, item: String) in
             self.groupIndex = index
@@ -219,9 +232,7 @@ class VCProductFilter: UIViewController {
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        var divisionsarray = [String]()
-        divisionsarray.insert("Select Division", at: 0)
-        divisionsarray += (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
+        let divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
         menudropDown.dataSource = divisionsarray
         menudropDown.selectionAction = {(index: Int, item: String) in
             self.divisionIndex = index
@@ -246,19 +257,27 @@ class VCProductFilter: UIViewController {
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        var sectionsarray = [String]()
-        sectionsarray.insert("Select Section", at: 0)
-        sectionsarray += (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
+        
+        guard let _ = filterdata?.groups?[safe:groupIndex]?.divisions?[safe:divisionIndex]?.sections else {
+            return
+        }
+        
+        let sectionsarray = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
         menudropDown.dataSource = sectionsarray
         menudropDown.selectionAction = {(index: Int, item: String) in
-            self.selectSectionlbl.text = item
             if item == "Select Section"{
-                
+                self.selectSectionlbl.text = "Select Section"
             }else{
-                
+                self.selectSectionlbl.text = item
             }
         }
         menudropDown.show()
+    }
+}
+
+extension Collection where Indices.Iterator.Element == Index {
+    subscript (safe index: Index) -> Iterator.Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }
 
@@ -269,72 +288,19 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
-            return featuresArray.count
-        }else{
-            return filterArray.count
-        }
+        return featuresArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
         let cell = tableView.dequeueReusableCell(withIdentifier: "featureCell", for: indexPath) as! featureCell
-        var groupsarray = [String]()
-        var divisionsarray = [String]()
-        
         cell.delegate = self
         cell.menudropDown.anchorView = cell.backgroundBtn
         cell.menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cell.menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        if indexPath.section == 0{
-            cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
-            cell.menudropDown.dataSource = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
-            cell.menudropDown.selectionAction = {(index: Int, item: String) in
-            cell.featureName.text = item
-            }
-        }else{
-            if indexPath.row == 0{
-                groupsarray = (filterdata?.groups?.map({$0.title?.en ?? ""})) ?? []
-                groupsarray.insert("Select Group", at: 0)
-                cell.menudropDown.dataSource = groupsarray
-                cell.featureName.text = groupsarray.first ?? ""
-                cell.menudropDown.selectionAction = {[weak self](index: Int, item: String) in
-                cell.featureName.text = item
-                self?.groupIndex = index
-                //self?.filterTableView.reloadData()
-                  if !(self?.isDivisonShown)! && index != 0{
-                    self?.counter = (self?.counter ?? 0) + 1
-                    self?.filterArray.append(self?.counter ?? 0)
-                    self?.filterTableView.reloadData()
-                    self?.setViewHeight()
-                 }
-              }
-            }else if indexPath.row == 1{
-                isDivisonShown = true
-                divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
-                divisionsarray.insert("Select Division", at: 0)
-                cell.menudropDown.dataSource = divisionsarray
-                cell.featureName.text = divisionsarray.first ?? ""
-                cell.menudropDown.selectionAction = {[weak self](index: Int, item: String) in
-                    cell.featureName.text = item
-                    self?.divisionIndex = index
-                    self?.filterTableView.reloadData()
-                    if !(self?.isSectionShown)! && index != 0{
-                        self?.counter = (self?.counter ?? 0) + 1
-                        self?.filterArray.append(self?.counter ?? 0)
-                        self?.filterTableView.reloadData()
-                        self?.setViewHeight()
-                    }
-                }
-            }else{
-                isSectionShown = true
-                
-                cell.menudropDown.dataSource = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
-                cell.menudropDown.selectionAction = {(index: Int, item: String) in
-                    cell.featureName.text = item
-                }
-            }
-        }
+        cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
+        cell.menudropDown.dataSource = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
+        cell.menudropDown.selectionAction = {(index: Int, item: String) in
+        cell.featureName.text = item}
         return cell
     }
     
