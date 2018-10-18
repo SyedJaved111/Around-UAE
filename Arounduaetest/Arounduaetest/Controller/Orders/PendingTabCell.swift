@@ -11,44 +11,66 @@ import SDWebImage
 
 class PendingTabCell: UITableViewCell {
 
-    @IBOutlet weak var lblPending: UILabel!
-    @IBOutlet weak var lblStatusPending: UILabel!
-    @IBOutlet weak var btnPending: UIButton!
-    @IBOutlet weak var lblPendingValue: UILabel!
-    @IBOutlet weak var lblPendingquantity: UILabel!
-    @IBOutlet weak var lblPendingPrice: UILabel!
-    @IBOutlet weak var lblPendingProduct: UILabel!
-    @IBOutlet weak var imgPending: UIImageView!
+    @IBOutlet weak var orderlblTxt: UILabel!
+    @IBOutlet weak var lblChargestxt: UILabel!
+    @IBOutlet weak var lblDatetxt: UILabel!
+    @IBOutlet weak var lblStatusTxt: UILabel!
+    @IBOutlet weak var lblcombinatonDetail: UILabel!
+    @IBOutlet weak var confirmImage: UIImageView!
+    @IBOutlet weak var eyeBtn: UIButton!
+    var str = ""
+    var x = " "
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        lblPending.text = nil
-        lblStatusPending.text = nil
-        lblPendingValue.text = nil
-        lblPendingquantity.text = nil
-        lblPendingPrice.text = nil
-        lblPendingProduct.text = nil
-        imgPending.image = nil
+        orderlblTxt.text = nil
+        lblChargestxt.text = nil
+        lblDatetxt.text = nil
+        lblStatusTxt.text = nil
+        confirmImage.image = nil
     }
     
     func setupCellData(order:OrderData){
-        lblStatusPending.text = order.status
-        lblPendingValue.text = nil
-        lblPendingquantity.text = "\(order.orderDetails?.count ?? 0)"
-        lblPendingPrice.text = "\(order.charges ?? 0)"
-        lblPendingProduct.text = nil
+        orderlblTxt.text = order.payerId
+        lblChargestxt.text = "$\(order.charges ?? 0)"
         
-        imgPending.sd_setShowActivityIndicatorView(true)
-        imgPending.sd_setIndicatorStyle(.gray)
-        imgPending.sd_setImage(with: URL(string: order.orderDetails?.first?.images?.first ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.ButtonDesign()
+        str = "Quantity: \(order.orderDetails?.count ?? 0) "
+        
+        for obj in (order.orderDetails?.first?.combinationDetail) ?? []{
+            str += (obj.feature?.title?.en ?? "")+" "+(obj.characteristic?.title?.en ?? "")
+        }
+        
+        lblcombinatonDetail.text = str
+        lblDatetxt.text = order.createdAt
+        lblStatusTxt.text = order.status?.capitalized
+        
+        eyeBtn.layer.cornerRadius = 15
+        eyeBtn.clipsToBounds = true
+        
+        confirmImage.sd_setShowActivityIndicatorView(true)
+        confirmImage.sd_setIndicatorStyle(.gray)
+        confirmImage.sd_setImage(with: URL(string: order.orderDetails?.first?.images?.first ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
     }
     
-    func ButtonDesign() {
-        self.btnPending.layer.cornerRadius = 2
+    func setupSellerCellData(order:SellerOrder){
+        orderlblTxt.text = order._id
+        //lblChargestxt.text = "$\(order.charges ?? 0)"
+        
+        str = "Quantity: \(order.quantity ?? 0) "
+        
+        for obj in (order.combinationDetail) ?? []{
+            str += (obj.feature?.title?.en ?? "")+" "+(obj.characteristic?.title?.en ?? "")
+        }
+        
+        lblcombinatonDetail.text = str
+        lblDatetxt.text = order.createdAt
+        lblStatusTxt.text = order.status?.capitalized
+        
+        eyeBtn.layer.cornerRadius = 15
+        eyeBtn.clipsToBounds = true
+        
+        confirmImage.sd_setShowActivityIndicatorView(true)
+        confirmImage.sd_setIndicatorStyle(.gray)
+        confirmImage.sd_setImage(with: URL(string: order.images?.first ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
     }
 }

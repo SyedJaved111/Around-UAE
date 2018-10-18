@@ -99,16 +99,9 @@ class VCHomeTabs: TTabBarViewController {
     }
     
     func setsocketIOS(){
-        
-        
-        
+
         guard let userToken = AppSettings.sharedSettings.authToken else {return}
-        
-        
-        
-        
-        // let userToken = UserDefaults.standard.value(forKey: "userAuthToken") as? String
-        
+   
         let usertoken = [
             "token":  userToken
         ]
@@ -119,9 +112,6 @@ class VCHomeTabs: TTabBarViewController {
             .path("/around-uae/socket.io"),
             .connectParams(usertoken),
             .log(true)]
-        
-        
-        
         
         self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae")! , config: specs)
         

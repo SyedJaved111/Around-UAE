@@ -45,22 +45,11 @@ class OrderManager{
         })
     }
     
-    //MARK: - ShowConfiremed/Shipped/completed Order
+    //MARK: - ShowConfiremed/Shipped/completedOrder
     func ShowAllCompleted(_ storeid:String,status:String, successCallback : @escaping (Response<[OrderData]>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .ShowConfirmedShippedCompletedOrders(storeid: storeid, status: status),
         success:
         {(response) in
-            print(response)
-            let someDictionaryFromJSON = try! JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
-            print(someDictionaryFromJSON)
-//               let dictionary = someDictionaryFromJSON as! [String: AnyObject]
-//            let objUserr = OrderMain.init(dictionary: dictionary as NSDictionary)
-//               print(objUserr?.data?._id)
-            
-            
-            //
-            //let json4Swift_Base = OrderMain(dictionary: someDictionaryFromJSON as NSDictionary)
-        //    successCallback(objUserr)
             if let parsedResponse = ServerAPI.parseServerResponse(Response<[OrderData]>.self, from: response){
                 successCallback(parsedResponse)
             }else{
@@ -68,6 +57,23 @@ class OrderManager{
             }
         },
         failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
+    
+    //MARK: - ShowConfiremed/Shipped/completedOrder
+    func ShowSellerAllCompleted(_ storeid:String,status:String, successCallback : @escaping (Response<[SellerOrder]>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .ShowConfirmedShippedCompletedOrders(storeid: storeid, status: status),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<[SellerOrder]>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+         failure:
         {(error) in
             failureCallback(error)
         })

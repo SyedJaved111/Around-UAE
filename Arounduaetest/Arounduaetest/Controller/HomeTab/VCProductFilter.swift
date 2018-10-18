@@ -53,7 +53,7 @@ class VCProductFilter: UIViewController {
     }
     
     private func setViewHeight(){
-        filterTableConstraint.constant = filterTableView.contentSize.height + 28
+        filterTableConstraint.constant = filterTableView.contentSize.height + 45
         self.filterTableView.setNeedsDisplay()
     }
     
@@ -98,15 +98,6 @@ class VCProductFilter: UIViewController {
                 if let filterResponse = response{
                     if filterResponse.success!{
                         self?.filterdata = filterResponse.data
-                        self?.filterdata?.groups?.insert(Groups(title:Title(en:"Select Group", ar: ""), divisions: nil, image: nil, isActive: nil, isFeatured: nil, _id: nil), at: 0)
-                        
-                        for var obj in (self?.filterdata?.groups) ?? []{
-                              obj.divisions?.insert(Divisions(title: Title(en:"Select Division", ar: ""), sections: nil, image: nil, isActive: nil, _id: nil), at: 0)
-                            for var ob in obj.divisions ?? []{
-                              ob.sections?.insert(Sections(title: Title(en:"Select Division", ar: ""), image: nil, isActive: nil, _id: nil), at: 0)
-                            }
-                        }
-                        
                         self?.filterTableView.reloadData()
                         self?.setViewHeight()
                     }

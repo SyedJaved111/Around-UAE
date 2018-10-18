@@ -6,7 +6,7 @@ struct User : Decodable {
 	let accountType : String?
 	let stores : [String]?
 	let favouritePlaces : [String]?
-	//let favouriteProducts : [String]? = nil
+	//let favouriteProducts : [Any]?
 	var gender : String?
 	let image : String?
 	let isCartProcessing : Bool?

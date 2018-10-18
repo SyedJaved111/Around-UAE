@@ -25,6 +25,7 @@ class VCCart: UIViewController {
     
     var payPalConfig = PayPalConfiguration()
     var cartProductList = [ProductUAE]()
+    var total = 0
     
     @IBOutlet weak var cartscrollview: UIScrollView!
     @IBOutlet weak var myTbleView: UITableView!{
@@ -65,6 +66,7 @@ class VCCart: UIViewController {
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
                             self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
+                            self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
                             self?.myTbleView.reloadData()
                             self?.btnCheckout.isEnabled = true
                             self?.btnCheckout.backgroundColor = #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)
@@ -114,16 +116,24 @@ class VCCart: UIViewController {
         }
     }
     
-    private func updateCartQuantity(_ product:ProductUAE,row:Int){
+    private func updateCartQuantity(_ product:ProductUAE,cell:CartCell){
+        let indxpath = myTbleView.indexPath(for: cell)
+        startLoading("")
         CartManager().UpdateCartQuantity(("\(product.quantity!)",(product.product?._id!)!,product.combination!),successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let cartProductData = response{
+                        var price = 0
                         if cartProductData.success!{
-                            var obj = self?.cartProductList[row].price
-                            self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.price?.usd ?? 0}).reduce(0, +) ?? 0)"
-                            self?.myTbleView.reloadData()
+                            if(self?.total ?? 0) == 0{return}
+                            if cell.increaseValue{
+                               price = (self?.total ?? 0) + (self?.cartProductList[indxpath?.row ?? 0].price?.usd ?? 0)
+                            }else{
+                               price = (self?.total ?? 0) - (self?.cartProductList[indxpath?.row ?? 0].price?.usd ?? 0)
+                            }
+                            self?.total = price
+                            self?.lblTotalPrice.text = "$\(price)"
                         }else{
                             self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
                         }
@@ -199,7 +209,7 @@ extension VCCart: UITableViewDelegate,UITableViewDataSource{
 extension VCCart: Cartprotocol{
     func tapQuantity(cell: CartCell) {
         let indxpath = myTbleView.indexPath(for: cell)
-        updateCartQuantity(cartProductList[(indxpath?.row)!], row: indxpath?.row ?? 0)
+        updateCartQuantity(cartProductList[(indxpath?.row)!], cell: cell)
     }
     
     func tapOnDeleteProduct(cell:CartCell){
@@ -248,7 +258,22 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
         CartManager().Payment(paymentId,
         successCallback:
         {[weak self](response) in
-            
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let paymentData = response{
+                    if paymentData.success!{
+                        self?.alertMessage(message: paymentData.message?.en ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
+                    }else{
+                        self?.alertMessage(message: paymentData.message?.en ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
+                    }
+                }else{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                }
+            }
         })
         {[weak self](error) in
             DispatchQueue.main.async {

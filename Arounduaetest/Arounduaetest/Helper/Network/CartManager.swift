@@ -19,11 +19,6 @@ class CartManager{
             let someDictionaryFromJSON = try! JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
             let json4Swift_Base = Json4Swift_Base(dictionary: someDictionaryFromJSON as NSDictionary)
             successCallback(json4Swift_Base)
-//            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
-//                successCallback(parsedResponse)
-//            }else{
-//                failureCallback(NetworkManager.networkError)
-//            }
         },
         failure:
             {(error) in
@@ -58,11 +53,6 @@ class CartManager{
             let someDictionaryFromJSON = try! JSONSerialization.jsonObject(with: response, options: .allowFragments) as! [String: Any]
             let json4Swift_Base = DeletModelMain(dictionary: someDictionaryFromJSON as NSDictionary)
             successCallback(json4Swift_Base)
-//            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
-//                successCallback(parsedResponse)
-//            }else{
-//                failureCallback(NetworkManager.networkError)
-//            }
         },
         failure:
         {(error) in
@@ -71,12 +61,12 @@ class CartManager{
     }
     
     //MARK: - Payment In Cart
-    func Payment(_ payerid:String ,successCallback : @escaping (Response<[Product]>?) -> Void,
+    func Payment(_ payerid:String ,successCallback : @escaping (Response<[CartPaymentModel]>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .Payment(payerId: payerid),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<[CartPaymentModel]>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)
@@ -89,12 +79,12 @@ class CartManager{
     }
     
     //MARK: - Update Cart Quantity
-    func UpdateCartQuantity(_ params:CartQuantityUpdateParams ,successCallback : @escaping (Response<[Product]>?) -> Void,
+    func UpdateCartQuantity(_ params:CartQuantityUpdateParams ,successCallback : @escaping (Response<UpdateCartQuantity>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .CartQuantityUpdate(params),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<[Product]>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<UpdateCartQuantity>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)
@@ -106,4 +96,3 @@ class CartManager{
         })
     }
 }
-

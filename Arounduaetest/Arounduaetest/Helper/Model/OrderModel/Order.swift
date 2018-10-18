@@ -12,7 +12,7 @@ struct OrderData : Decodable {
     let _id : String?
     let orderDetails : [SomeOrderDetails]?
     let status : String?
-    let charges : Int?
+    let charges : Double?
     let orderNumber : String?
     let payerStatus : String?
     let orderStatus : String?
@@ -47,9 +47,31 @@ struct SomeOrderDetails : Decodable {
     let image : String?
 }
 
+struct SellerOrder : Decodable {
+    let _id : String?
+    let price : Price?
+    let total : OrderTotal?
+    let quantity : Int?
+    let status : String?
+    let order : Order?
+    let product : Product?
+    let store : String?
+    let combinationDetail : [CombinationDetail]?
+    let images : [String]?
+    let createdAt : String?
+    let updatedAt : String?
+    let image : String?
+}
+
+struct Order : Decodable {
+    let _id : String?
+    let user : User?
+    let addresses : [Addresses]?
+}
+
 struct OrderTotal : Decodable {
     let usd : Int?
-    let aed : Int?
+    let aed : Double?
 }
 
 struct OrderProduct : Decodable {
@@ -75,4 +97,34 @@ struct CombinationDetail : Decodable {
 struct Characteristic : Decodable {
     let _id : String?
     let title : Title?
+}
+
+struct CartPaymentModel : Decodable {
+    let price : Int?
+    let total : Int?
+    let quantity : Int?
+    let status : String?
+    let _id : String?
+    let order : String?
+    let product : String?
+    let store : String?
+    let combinationDetail : [CombinationDetail]?
+    let images : [String]?
+    let createdAt : String?
+    let updatedAt : String?
+    let __v : Int?
+}
+
+struct UpdateCartQuantity : Decodable {
+    let total : OrderTotal?
+    let quantity : Int?
+    let _id : String?
+    let user : String?
+    let product : String?
+    let store : String?
+    //let combinationDetail : [CombinationDetail]?
+    let combination : String?
+    let price : Price?
+    let createdAt : String?
+    let updatedAt : String?
 }

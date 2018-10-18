@@ -20,8 +20,10 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
         }
     }
     
-    var ConfirmedOrderList = [SomeOrderDetails]()
+    var ConfirmedOrderList = [OrderData]()
+    var ConfirmedOrderSellerList = [SellerOrder]()
     var orderData:OrderData?
+    var storeid = ""
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -51,38 +53,73 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
         if isRefresh == false{
             startLoading("")
         }
-        
-         OrderManager().ShowAllCompleted("", status: "confirmed",successCallback:
-            {[weak self](response) in
+       
+        if AppSettings.sharedSettings.accountType == "seller"{
+            OrderManager().ShowSellerAllCompleted(storeid, status: "confirmed",successCallback:
+                {[weak self](response) in
+                    DispatchQueue.main.async {
+                        if isRefresh == false {
+                            self?.finishLoading()
+                        }else {
+                            self?.refreshControl.endRefreshing()
+                        }
+                        
+                        if let orderResponse = response{
+                            if orderResponse.success!{
+                                self?.ConfirmedOrderSellerList = orderResponse.data ?? []
+                            }else{
+                                self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
+                            }
+                        }else{
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        }
+                        self?.setupDelegates()
+                    }
+                })
+            {[weak self](error) in
                 DispatchQueue.main.async {
                     if isRefresh == false {
                         self?.finishLoading()
                     }else {
                         self?.refreshControl.endRefreshing()
                     }
-                    
-                    if let orderResponse = response{
-                        if orderResponse.success!{
-                            self?.ConfirmedOrderList = orderResponse.data?.first?.orderDetails ?? []
-                            self?.orderData = orderResponse.data?.first
-                        }else{
-                            self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
+                    self?.setupDelegates()
+                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                }
+            }
+        }else{
+            OrderManager().ShowAllCompleted("", status: "confirmed",successCallback:
+                {[weak self](response) in
+                    DispatchQueue.main.async {
+                        if isRefresh == false {
+                            self?.finishLoading()
+                        }else {
+                            self?.refreshControl.endRefreshing()
                         }
-                    }else{
-                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        
+                        if let orderResponse = response{
+                            if orderResponse.success!{
+                                self?.ConfirmedOrderList = orderResponse.data ?? []
+                                self?.orderData = orderResponse.data?.first
+                            }else{
+                                self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
+                            }
+                        }else{
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        }
+                        self?.setupDelegates()
+                    }
+                })
+            {[weak self](error) in
+                DispatchQueue.main.async {
+                    if isRefresh == false {
+                        self?.finishLoading()
+                    }else {
+                        self?.refreshControl.endRefreshing()
                     }
                     self?.setupDelegates()
+                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
-            })
-        {[weak self](error) in
-            DispatchQueue.main.async {
-                if isRefresh == false {
-                    self?.finishLoading()
-                }else {
-                    self?.refreshControl.endRefreshing()
-                }
-                self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
     }
@@ -95,21 +132,50 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
 extension VCPendingProducts: UITableViewDataSource,UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
+        return 83
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ConfirmedOrderList.count
+        if AppSettings.sharedSettings.accountType == "seller"{
+            return ConfirmedOrderSellerList.count
+        }else{
+            return ConfirmedOrderList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PendingTabCell")  as! PendingTabCell
-        cell.lblPendingProduct.text = ConfirmedOrderList[indexPath.row].status
         cell.selectionStyle = .none
-        if let order = orderData{
-           cell.setupCellData(order: order)
+        
+        if AppSettings.sharedSettings.accountType == "seller"{
+            cell.setupSellerCellData(order: ConfirmedOrderSellerList[indexPath.row])
+        }else{
+            cell.setupCellData(order: ConfirmedOrderList[indexPath.row])
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if AppSettings.sharedSettings.accountType == "seller"{
+            moveToSellerOrderDetail(ConfirmedOrderSellerList[indexPath.row])
+        }else{
+            moveToDetail(ConfirmedOrderList[indexPath.row])
+        }
+    }
+    
+    private func moveToSellerOrderDetail(_ sellerOrder:SellerOrder){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SellerOrderDetail") as! SellerOrderDetail
+        vc.sellerOrder = sellerOrder
+        vc.storeid = storeid
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func moveToDetail(_ orderdetail:OrderData){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderDetail") as! VCOrderDetail
+        vc.orderData = orderdetail
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){

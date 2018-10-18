@@ -5,6 +5,7 @@ import XLPagerTabStrip
 class VCMyOrders: ButtonBarPagerTabStripViewController {
     
     @IBOutlet var collectionViewPager: ButtonBarView!
+    var storeid = ""
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .red
         settings.style.buttonBarItemBackgroundColor = .white
@@ -36,9 +37,12 @@ class VCMyOrders: ButtonBarPagerTabStripViewController {
         self.title = "My Orders"
     }
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-      let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCPendingProducts")
-      let child_3 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCShippedProducts")
-      let child_4 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCDilverdProducts")
+      let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCPendingProducts") as! VCPendingProducts
+      let child_3 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCShippedProducts") as! VCShippedProducts
+      let child_4 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCDilverdProducts") as! VCDilverdProducts
+        child_2.storeid = storeid
+        child_3.storeid = storeid
+        child_4.storeid = storeid
         return [child_2,child_3,child_4]
     }
 }

@@ -130,7 +130,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
             case 1:
                 break
             case 2:
-                 moveToOrderVC()
+                 moveToOrderStores()
             case 3:
                 break
             case 4:
@@ -210,6 +210,12 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     func moveToOrderVC(){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCMyOrders") as! VCMyOrders
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func moveToOrderStores(){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderStore") as! VCOrderStore
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
