@@ -27,7 +27,7 @@ class VCCities: BaseController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.adjustDesign(width: ((view.frame.size.width+20)/2.3))
+        collectionView.adjustDesign(width: ((view.frame.size.width+20)/2.5))
         initialUI()
         fetchCitiesData()
     }

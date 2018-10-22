@@ -15,6 +15,7 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var btnViewAll: UIButton!
     @IBOutlet weak var lblCategoryName: UILabel!
 
+   
     func setCollectionViewDataSourceDelegate
         <D: UICollectionViewDataSource & UICollectionViewDelegate>
         (dataSourceDelegate: D, forRow row: Int) {

@@ -11,7 +11,7 @@ import Foundation
 //MARK: - Urls
 enum APIURL: String{
     
-    case mainURL                   = "http://216.200.116.25/around-uae/api/"
+    case mainURL                   = "http://216.200.116.25/around-uae/api/login"
     case loginURL                  = "login"
     case forgotpasswordURL         = "forgot/password"
     case registrationURL           = "register"
