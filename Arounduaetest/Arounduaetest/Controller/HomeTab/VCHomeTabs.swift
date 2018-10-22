@@ -43,6 +43,7 @@ class VCHomeTabs: TTabBarViewController {
     @objc func btnSearchClick (_ sender: Any){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProductFilter") as! VCProductFilter
+        isFromHome = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -113,7 +114,7 @@ class VCHomeTabs: TTabBarViewController {
             .connectParams(usertoken),
             .log(true)]
         
-        self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae")! , config: specs)
+        self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/")! , config: specs)
         
         self.socket = manager.defaultSocket
         

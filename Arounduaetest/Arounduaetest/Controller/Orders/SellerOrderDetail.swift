@@ -17,12 +17,17 @@ class SellerOrderDetail: UIViewController {
     @IBOutlet weak var sellerEmail: UILabel!
     @IBOutlet weak var shippingaddresss: UILabel!
     @IBOutlet weak var billingAddress: UILabel!
+    @IBOutlet weak var orderPrice: UILabel!
     @IBOutlet weak var orderImage: UIImageView!
     @IBOutlet weak var orderNumber: UILabel!
     @IBOutlet weak var orderQuantity: UILabel!
     @IBOutlet weak var orderDate: UILabel!
     @IBOutlet weak var orderStatus: UILabel!
     @IBOutlet weak var shippedBtn: UIButton!
+    
+    @IBOutlet weak var boxesImage: UIImageView!
+    @IBOutlet weak var shadowImage: UIImageView!
+    
     
     var sellerOrder:SellerOrder!
     var storeid = ""
@@ -35,7 +40,7 @@ class SellerOrderDetail: UIViewController {
             shippedBtn.backgroundColor = #colorLiteral(red: 0.8549019608, green: 0.2039215686, blue: 0.3294117647, alpha: 1)
         }else{
             shippedBtn.isEnabled = false
-            shippedBtn.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            shippedBtn.backgroundColor = #colorLiteral(red: 0.4352941176, green: 0.4431372549, blue: 0.4745098039, alpha: 1)
         }
     }
     
@@ -46,39 +51,84 @@ class SellerOrderDetail: UIViewController {
         sellerNasme.text = sellerOrder.order?.user?.fullName
         sellerPhoneNumber.text = sellerOrder.order?.user?.phone
         sellerEmail.text = sellerOrder.order?.user?.email
-        shippingaddresss.text = sellerOrder.order?.addresses?[1].address1
+        
+        if((sellerOrder.order?.addresses?.count) ?? 0) > 1{
+          shippingaddresss.text = sellerOrder.order?.addresses?[1].address1
+        }else{
+          shippingaddresss.text = sellerOrder.order?.addresses?.first?.address1
+        }
+        
+        if(sellerOrder.quantity ?? 0) > 0{
+            boxesImage.image = #imageLiteral(resourceName: "Slide")
+            shadowImage.image = #imageLiteral(resourceName: "Bg")
+        }else{
+            boxesImage.image = nil
+            shadowImage.image = nil
+        }
         billingAddress.text = sellerOrder.order?.addresses?.first?.address1
+        
+        let string = sellerOrder.createdAt!
+        let dateFormatter = DateFormatter()
+        let tempLocale = dateFormatter.locale
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        let date = dateFormatter.date(from: string)!
+        dateFormatter.dateFormat = "d MMM yyyy"
+        dateFormatter.locale = tempLocale
+        let dateString = dateFormatter.string(from: date)
+        orderDate.text = dateString
+        orderStatus.text = sellerOrder.status?.capitalized
+        orderNumber.text = sellerOrder.product?.productName?.en?.capitalized
+        orderPrice.text = "$\(sellerOrder.price?.usd ?? 0)"
+        var str = ""
+        str = "Quantity: \(sellerOrder.quantity ?? 0) "
+        
+        for obj in (sellerOrder?.combinationDetail) ?? []{
+            str += " "
+            str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+        }
+        orderQuantity.text = str
     }
     
     @IBAction func shippedOrder(_ sender: UIButton) {
-        startLoading("")
-        OrderManager().ShipOrderDetail(sellerOrder.order?._id ?? "", storeid: storeid,
-        successCallback:
-        {[weak self](response) in
-            DispatchQueue.main.async {
-                self?.finishLoading()
-                if let shippedResponse = response{
-                    if shippedResponse.success!{
-                        self?.alertMessage(message:(shippedResponse.message?.en ?? "").localized, completionHandler: {
-                            self?.navigationController?.popViewController(animated: true)
-                        })
-                    }else{
-                        self?.alertMessage(message:(shippedResponse.message?.en ?? "").localized, completionHandler: {
-                            self?.navigationController?.popViewController(animated: true)
-                        })
+        
+        let alert = UIAlertController(title:"Alert", message: "Do you want to ship the order??", preferredStyle: .alert)
+        let actionyes = UIAlertAction(title: "Yes", style: .default) { (action:UIAlertAction) in
+            self.startLoading("")
+            OrderManager().ShipOrderDetail(self.sellerOrder.store ?? "", storeid: self.storeid,
+            successCallback:
+                {[weak self](response) in
+                    DispatchQueue.main.async {
+                        self?.finishLoading()
+                        if let shippedResponse = response{
+                            if shippedResponse.success!{
+                                self?.alertMessage(message:(shippedResponse.message?.en ?? "").localized, completionHandler: {
+                                    self?.navigationController?.popViewController(animated: true)
+                                })
+                            }else{
+                                self?.alertMessage(message:(shippedResponse.message?.en ?? "").localized, completionHandler: {
+                                    self?.navigationController?.popViewController(animated: true)
+                                })
+                            }
+                        }else{
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        }
                     }
-                }else{
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                },
+                failureCallback:
+                {[weak self](error) in
+                    DispatchQueue.main.async {
+                        self?.finishLoading()
+                        self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
-            }
-        },
-        failureCallback:
-        {[weak self](error) in
-            DispatchQueue.main.async {
-                self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
-            }
-        })
+            })
+        }
+        let actionno = UIAlertAction(title: "No", style: .default) { (action:UIAlertAction) in
+            
+        }
+        alert.addAction(actionyes)
+        alert.addAction(actionno)
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {

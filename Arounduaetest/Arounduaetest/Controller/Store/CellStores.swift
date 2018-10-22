@@ -28,7 +28,7 @@ class CellStores: UICollectionViewCell {
     
     func setupSubDivisonCell(_ divisionData: GroupDivisonData){
         lblStore.text = divisionData.title?.en ?? ""
-        imgStores.sd_addActivityIndicator()
+        imgStores.sd_setShowActivityIndicatorView(true)
         imgStores.sd_setIndicatorStyle(.gray)
         imgStores.sd_setImage(with: URL(string: divisionData.image ?? ""))
     }

@@ -9,6 +9,7 @@
 import UIKit
 import SwiftRangeSlider
 import DropDown
+
 var isFromHome = false
 class VCProductFilter: UIViewController {
     
@@ -98,6 +99,7 @@ class VCProductFilter: UIViewController {
                 if let filterResponse = response{
                     if filterResponse.success!{
                         self?.filterdata = filterResponse.data
+                        self?.filterdata?.groups?.insert(Groups(title: Title(en: "Select Group", ar: nil), divisions: nil, image: nil, isActive: nil, isFeatured: nil, _id: nil), at: 0)
                         self?.filterTableView.reloadData()
                         self?.setViewHeight()
                     }
@@ -167,14 +169,13 @@ class VCProductFilter: UIViewController {
     }
     
     private func moveToFilteredProducts(products:[Products]){
-         NotificationCenter.default.post(name: Notification.Name("SearchCompleted"), object: products)
-        
         if isFromHome{
+            NotificationCenter.default.post(name: Notification.Name("SearchCompleted"), object: products)
+            self.navigationController?.popViewController(animated: true)
+        }else{
             let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
             self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -223,7 +224,8 @@ class VCProductFilter: UIViewController {
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        let divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
+        var divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
+        divisionsarray.insert("Select Division", at: 0)
         menudropDown.dataSource = divisionsarray
         menudropDown.selectionAction = {(index: Int, item: String) in
             self.divisionIndex = index
@@ -253,7 +255,8 @@ class VCProductFilter: UIViewController {
             return
         }
         
-        let sectionsarray = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
+        var sectionsarray = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
+        sectionsarray.insert("Select Selection", at: 0)
         menudropDown.dataSource = sectionsarray
         menudropDown.selectionAction = {(index: Int, item: String) in
             if item == "Select Section"{

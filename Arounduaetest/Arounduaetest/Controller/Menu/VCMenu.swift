@@ -17,6 +17,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var lblUserProfilename: UILabel!
     @IBOutlet weak var imgUserProfile: UIImageView!
     @IBOutlet var profileTableView: UITableView!
+    @IBOutlet var profileView: UIView!
     
     var Menuimgbuyer = [
         "Orders",
@@ -32,23 +33,14 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
        "About Us".localized,
        "Language".localized]
     
-    
     var Menuimgseller = [
-        "Products",
-        "Plus",
         "Orders",
-        "Manage-Payment",
-        "Settings",
         "Contact",
         "AboutUs",
         "Globe"]
     
     var lblMenuNameseller = [
-        "Manage Products".localized,
-        "Add Products".localized,
         "My Orders".localized,
-        "Manage Payments".localized,
-        "Manage About Page".localized,
         "Contact Us".localized,
         "About Us".localized,
         "Language".localized]
@@ -62,10 +54,13 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
         if AppSettings.sharedSettings.accountType == "seller"{
             lblMenuNameseller += shareduserinfo.pages.map({$0.title?.en ?? ""})
             Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
+            profileView.removeFromSuperview()
+            profileTableView.reloadData()
 
         }else{
             lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.en ?? ""})
             Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
+            profileView.isHidden = false
         }
         
         lblMenuNameseller.append("Logout".localized)
@@ -73,7 +68,6 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
         lblMenuNamebuyer.append("Logout".localized)
         Menuimgbuyer.append("Logout")
         profileTableView.reloadData()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,7 +110,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 50
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -126,26 +120,18 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
             let index = indexPath.row
             switch index {
             case 0:
-                break
+                moveToOrderStores()
             case 1:
-                break
-            case 2:
-                 moveToOrderStores()
-            case 3:
-                break
-            case 4:
-                break
-            case 5:
                 moveToContactUs()
-            case 6:
+            case 2:
                 moveToAboutUS()
-            case 7:
+            case 3:
                 moveToSelectLanguage()
-            case 8:
+            case 4:
                 moveTopage(txt: "Terms and Conditions")
-            case 9:
+            case 5:
                 moveTopage(txt: "Privacy Policy")
-            case 10:
+            case 6:
                 self.logOut()
             default:
                 return

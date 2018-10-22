@@ -22,6 +22,9 @@ class OrderDetailCell: UITableViewCell {
     @IBOutlet weak var lblCharges: UILabel!
     @IBOutlet weak var orderImage: UIImageView!
     @IBOutlet weak var cellBtn: UIButton!
+    @IBOutlet weak var boxesImage: UIImageView!
+    @IBOutlet weak var shadowImage: UIImageView!
+    
     var str = ""
     var delegate: OrderDetailPrortocol?
     
@@ -32,6 +35,8 @@ class OrderDetailCell: UITableViewCell {
         storeName.text = ""
         lblStatus.text = ""
         lblCharges.text = ""
+        boxesImage.image = nil
+        shadowImage.image = nil
     }
     
     func setupData(order:SomeOrderDetails){
@@ -45,7 +50,16 @@ class OrderDetailCell: UITableViewCell {
         str = "Quantity: \(0)"
         
         for obj in (order.combinationDetail) ?? []{
-            str += (obj.feature?.title?.en ?? "")+" "+(obj.characteristic?.title?.en ?? "")
+            str += " "
+            str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+        }
+
+        if(order.quantity ?? 0) > 0{
+            boxesImage.image = #imageLiteral(resourceName: "Slide")
+            shadowImage.image = #imageLiteral(resourceName: "Bg")
+        }else{
+            boxesImage.image = nil
+            shadowImage.image = nil
         }
         
         lblOrderName.text = order._id 

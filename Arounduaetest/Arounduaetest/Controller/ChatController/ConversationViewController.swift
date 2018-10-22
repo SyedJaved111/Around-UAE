@@ -73,7 +73,7 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
             
        
             
-            self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae")! , config: specs)
+            self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/")! , config: specs)
             
             self.socket = manager.defaultSocket
             

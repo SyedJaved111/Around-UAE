@@ -21,7 +21,7 @@ class VCDilverdProducts: BaseController,IndicatorInfoProvider {
     }
     
     var ConfirmedOrderList = [OrderData]()
-     var ConfirmedOrderSellerList = [SellerOrder]()
+    var ConfirmedOrderSellerList = [SellerOrder]()
     var orderData:OrderData?
     var storeid = ""
     
@@ -132,7 +132,7 @@ class VCDilverdProducts: BaseController,IndicatorInfoProvider {
 extension VCDilverdProducts: UITableViewDataSource,UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 83
+        return 94
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

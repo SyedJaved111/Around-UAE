@@ -10,13 +10,33 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
         didSet{
             collectionViewProductnearby.delegate = self
             collectionViewProductnearby.dataSource = self
+            collectionViewProductnearby.alwaysBounceVertical = true
+            collectionViewProductnearby.addSubview(refreshControl)
         }
+    }
+    
+    fileprivate func setupDelegates(){
+        self.collectionViewProductnearby.emptyDataSetSource = self
+        self.collectionViewProductnearby.emptyDataSetDelegate = self
+        self.collectionViewProductnearby.reloadData()
+    }
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(refreshTableView),for: UIControlEvents.valueChanged)
+        refreshControl.tintColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
+        return refreshControl
+    }()
+    
+    @objc func refreshTableView() {
+        searchProducts(isRefresh: true)
     }
     
     override func viewDidLoad(){
         super.viewDidLoad()
         collectionViewProductnearby.adjustDesign(width: (view.frame.size.width+24)/2.3)
-        searchProducts()
+        searchProducts(isRefresh: false)
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("SearchCompleted"), object: nil)
     }
     
@@ -27,13 +47,20 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
         }
     }
     
-    private func searchProducts(){
-        startLoading("")
+    private func searchProducts(isRefresh: Bool){
+        if isRefresh == false{
+            startLoading("")
+        }
+        
         ProductManager().SearchProduct(("",0,0,[String](),""),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
-                self?.finishLoading()
+                if isRefresh == false {
+                    self?.finishLoading()
+                }else {
+                    self?.refreshControl.endRefreshing()
+                }
                 if let productsResponse = response{
                     if productsResponse.success!{
                         self?.productarray = productsResponse.data?.products ?? []
@@ -45,11 +72,17 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
                 }else{
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                 }
+                self?.setupDelegates()
             }
         })
         {[weak self](error) in
             DispatchQueue.main.async {
-                self?.finishLoading()
+                if isRefresh == false {
+                    self?.finishLoading()
+                }else {
+                    self?.refreshControl.endRefreshing()
+                }
+                self?.setupDelegates()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -79,5 +112,9 @@ extension VCTopratedProductList: UICollectionViewDelegate,UICollectionViewDataSo
             vc.product = productarray[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        searchProducts(isRefresh: false)
     }
 }
