@@ -53,6 +53,14 @@ class VCOrderStore: BaseController{
                     if let storeResponse = response{
                         if storeResponse.success!{
                             self?.storelist = storeResponse.data?.stores ?? []
+                            let array = self?.storelist.map({$0._id})
+                            for i in 0..<(AppSettings.sharedSettings.user.stores?.count ?? 0){
+                                if array?.contains((AppSettings.sharedSettings.user.stores ?? [])[i]) ?? false{
+                                    
+                                }else{
+                                  self?.storelist.remove(at: i)
+                                }
+                            }
                             self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                             self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
                         }else{

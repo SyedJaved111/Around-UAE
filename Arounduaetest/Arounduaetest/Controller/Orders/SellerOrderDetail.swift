@@ -95,7 +95,7 @@ class SellerOrderDetail: UIViewController {
         let alert = UIAlertController(title:"Alert", message: "Do you want to ship the order??", preferredStyle: .alert)
         let actionyes = UIAlertAction(title: "Yes", style: .default) { (action:UIAlertAction) in
             self.startLoading("")
-            OrderManager().ShipOrderDetail(self.sellerOrder.store ?? "", storeid: self.storeid,
+            OrderManager().ShipOrderDetail(self.sellerOrder.product?._id ?? "", storeid: self.storeid,
             successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {

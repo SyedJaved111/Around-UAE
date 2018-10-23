@@ -270,23 +270,39 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
-        selectedCell.append(indexPath)
-        cell.characterImage.layer.borderWidth = 2.0
-        cell.characterImage.layer.borderColor = UIColor.red.cgColor
-        characteristics.append(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")
-        features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
+//        selectedCell.append(indexPath)
+//        cell.characterImage.layer.borderWidth = 2.0
+//        cell.characterImage.layer.borderColor = UIColor.red.cgColor
+//        characteristics.append(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")
+//        features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
+//    }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
-        if  selectedCell.contains(indexPath){
-            selectedCell.remove(at: selectedCell.index(of: indexPath)!)
-            characteristics.remove(at: characteristics.index(of: productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")!)
-            features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)
-            cell.characterImage.layer.borderWidth = 2.0
-            cell.characterImage.layer.borderColor = UIColor.clear.cgColor
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
+//        if  selectedCell.contains(indexPath){
+//            selectedCell.remove(at: selectedCell.index(of: indexPath)!)
+//            characteristics.remove(at: characteristics.index(of: productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")!)
+//            features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)
+//            cell.characterImage.layer.borderWidth = 2.0
+//            cell.characterImage.layer.borderColor = UIColor.clear.cgColor
+//        }
+//    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedRows = self.CollectionView.indexPathsForSelectedItems!
+        //let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
+
+        for selectedRow in selectedRows {
+            if (selectedRow.section == indexPath.section) && (selectedRow.row != indexPath.row) {
+                //cell.characterImage.layer.borderWidth = 2.0/
+                //cell.characterImage.layer.borderColor = UIColor.clear.cgColor
+                self.CollectionView.deselectItem(at: selectedRow, animated: false)
+            }else{
+               //cell.characterImage.layer.borderWidth = 2.0
+                //cell.characterImage.layer.borderColor = UIColor.red.cgColor
+            }
         }
     }
 }
