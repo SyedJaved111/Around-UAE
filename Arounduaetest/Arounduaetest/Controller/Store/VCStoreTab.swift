@@ -33,12 +33,13 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarItemBackgroundColor = .white
         settings.style.selectedBarBackgroundColor = #colorLiteral(red: 0.9607843137, green: 0.003921568627, blue: 0.2039215686, alpha: 1)
         
-        settings.style.buttonBarItemFont = UIFont(name: "Raleway-Medium", size: 15)!
+        settings.style.buttonBarItemFont = UIFont(name: "Raleway-Medium", size: 16)!
         settings.style.selectedBarHeight = 4
-        settings.style.buttonBarMinimumLineSpacing = 0.4
+        settings.style.buttonBarMinimumLineSpacing = 0.5
         settings.style.buttonBarItemTitleColor = .red
         settings.style.selectedBarBackgroundColor = UIColor.red
-        settings.style.buttonBarBackgroundColor = #colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1);        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
+        settings.style.buttonBarBackgroundColor = #colorLiteral(red: 0.968627451, green: 0.9764705882, blue: 0.9803921569, alpha: 1);
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         

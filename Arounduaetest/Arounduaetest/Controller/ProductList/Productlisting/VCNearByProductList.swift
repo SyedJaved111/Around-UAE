@@ -103,6 +103,10 @@ extension VCNearByProductList: UICollectionViewDelegate,UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellNearBy", for: indexPath) as! CellNearBy
         cell.setupNearbyData(product: productarray[indexPath.row])
+        
+        cell.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        cell.layer.borderWidth = 0.5
+        cell.layer.cornerRadius = 2
         return cell
     }
     

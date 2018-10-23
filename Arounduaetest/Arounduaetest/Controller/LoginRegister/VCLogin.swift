@@ -32,6 +32,8 @@ class VCLogin: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
         self.TxtFfieldLocalaiz()
@@ -77,6 +79,7 @@ class VCLogin: BaseController {
         self.title = "Login".localized
         self.txtEmail.placeholder = "Username".localized
         self.txtPassword.placeholder = "Password".localized
+         txtPassword.attributedPlaceholder = NSAttributedString(string: "Password".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
         self.btnLogin.setTitle("Login".localized, for: .normal)
         self.btnRegisterNow.setTitle("Register now".localized, for: .normal)
         self.btnForgetYourPassword.setTitle("Forgot your password?".localized, for: .normal)

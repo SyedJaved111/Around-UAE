@@ -146,7 +146,7 @@ class VCProductDetail: UIViewController {
             self.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
             self.favouritImage.image = #imageLiteral(resourceName: "Favourite")
-            self.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
+            self.favouriteBtn.backgroundColor = #colorLiteral(red: 0.6, green: 0.537254902, blue: 0.4901960784, alpha: 1)
         }
         productDescription.text = productdetail.description?.en ?? ""
     }
@@ -203,7 +203,7 @@ class VCProductDetail: UIViewController {
                             self?.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                         }else{
                             self?.favouritImage.image = #imageLiteral(resourceName: "Favourite")
-                            self?.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
+                            self?.favouriteBtn.backgroundColor = #colorLiteral(red: 0.6, green: 0.537254902, blue: 0.4901960784, alpha: 1)
                         }
                     }else{
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)

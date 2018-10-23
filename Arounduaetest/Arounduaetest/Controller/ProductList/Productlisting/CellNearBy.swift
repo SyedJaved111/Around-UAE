@@ -50,8 +50,8 @@ class CellNearBy: UICollectionViewCell {
             self.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite-red")
             self.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
-            self.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite")
-            self.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
+            self.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite-red")
+            self.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         }
     }
     

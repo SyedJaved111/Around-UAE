@@ -31,7 +31,7 @@ class VCSelectLanguage: UIViewController {
         self.lblSelectLanguage.text = "Select Language".localized
         self.lblSelctlanguageContinue.text = "Select language to continue with".localized
         self.btnEnglish.setTitle("English".localized, for: .normal)
-        self.btnArabic.setTitle("عربى".localized, for: .normal)
+        self.btnArabic.setTitle("Arabic".localized, for: .normal) //"عربى".localized
     }
     
     override var prefersStatusBarHidden: Bool {

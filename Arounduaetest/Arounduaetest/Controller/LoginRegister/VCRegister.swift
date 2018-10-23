@@ -140,6 +140,7 @@ class VCRegister: BaseController{
         
         
         self.lblGenderText.text = "Gender".localized
+        
         self.radioMale.setTitle("Male".localized, for: .normal)
         self.radioFemale.setTitle("Female".localized, for: .normal)
         self.btnRegister.setTitle("Register".localized, for: .normal)
@@ -150,11 +151,20 @@ class VCRegister: BaseController{
         self.txtAddress.placeholder = "Address".localized
         self.txtLastName.placeholder = "Last Name".localized
         self.txtPhoneNumber.placeholder = "Phone no".localized
-        self.txtFirstName.placeholder = "First Name".localized
+         self.txtFirstName.placeholder = "First Name".localized
         self.txtAttachNIC.setTitle("Attach NIC Copy".localized, for: .normal)
         self.txtConfirmPassword.placeholder = "Confirm Password".localized
         self.txtPasspord.placeholder = "Password".localized
         self.txtEmail.placeholder = "Email".localized
+        
+        //MARK -: PlaceHolderColore
+        txtAddress.attributedPlaceholder = NSAttributedString(string: "Address".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+        txtLastName.attributedPlaceholder = NSAttributedString(string: "Last Name".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+        txtPhoneNumber.attributedPlaceholder = NSAttributedString(string: "Phone no".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+       txtFirstName.attributedPlaceholder = NSAttributedString(string: "First Name".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+       txtConfirmPassword.attributedPlaceholder = NSAttributedString(string: "Confirm Password".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+       txtPasspord.attributedPlaceholder = NSAttributedString(string: "Password".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+       txtEmail.attributedPlaceholder = NSAttributedString(string: "Email".localized, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
         
         
         if(lang == "ar")
