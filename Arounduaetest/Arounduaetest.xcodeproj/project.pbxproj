@@ -51,6 +51,9 @@
 		18B150332164D02600FF87A4 /* GMSteperCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B150312164D02500FF87A4 /* GMSteperCart.swift */; };
 		18B150342164D02600FF87A4 /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B150322164D02500FF87A4 /* CartCell.swift */; };
 		18B150362164E4B800FF87A4 /* DefaultAlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B150352164E4B800FF87A4 /* DefaultAlamofireManager.swift */; };
+		18B557F6217DDEDE0077F939 /* Customheader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B557F5217DDEDE0077F939 /* Customheader.swift */; };
+		18B557F8217DE0380077F939 /* CustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B557F7217DE0380077F939 /* CustomHeader.xib */; };
+		18B557FA217DFF6E0077F939 /* VCChangeSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B557F9217DFF6E0077F939 /* VCChangeSetting.swift */; };
 		18BA96662163483F0009AE52 /* VCShippedProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BA965B2163483E0009AE52 /* VCShippedProducts.swift */; };
 		18BA966A2163483F0009AE52 /* PendingTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BA965F2163483E0009AE52 /* PendingTabCell.swift */; };
 		18BA966C2163483F0009AE52 /* AllTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BA96612163483E0009AE52 /* AllTabCell.swift */; };
@@ -239,6 +242,9 @@
 		18B150312164D02500FF87A4 /* GMSteperCart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSteperCart.swift; sourceTree = "<group>"; };
 		18B150322164D02500FF87A4 /* CartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
 		18B150352164E4B800FF87A4 /* DefaultAlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlamofireManager.swift; sourceTree = "<group>"; };
+		18B557F5217DDEDE0077F939 /* Customheader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customheader.swift; sourceTree = "<group>"; };
+		18B557F7217DE0380077F939 /* CustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomHeader.xib; sourceTree = "<group>"; };
+		18B557F9217DFF6E0077F939 /* VCChangeSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCChangeSetting.swift; sourceTree = "<group>"; };
 		18BA965B2163483E0009AE52 /* VCShippedProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCShippedProducts.swift; sourceTree = "<group>"; };
 		18BA965F2163483E0009AE52 /* PendingTabCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PendingTabCell.swift; sourceTree = "<group>"; };
 		18BA96612163483E0009AE52 /* AllTabCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllTabCell.swift; sourceTree = "<group>"; };
@@ -749,6 +755,9 @@
 			children = (
 				1F5A3F6D215F8AA800B0CBC6 /* CellMenu.swift */,
 				1F5A3F6E215F8AA800B0CBC6 /* VCMenu.swift */,
+				18B557F5217DDEDE0077F939 /* Customheader.swift */,
+				18B557F7217DE0380077F939 /* CustomHeader.xib */,
+				18B557F9217DFF6E0077F939 /* VCChangeSetting.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -1035,6 +1044,7 @@
 				1F5A402B215F8AA900B0CBC6 /* Raleway-Regular.ttf in Resources */,
 				1F5A3FD6215F8AA900B0CBC6 /* HomeTabs.strings in Resources */,
 				1F5A3FD9215F8AA900B0CBC6 /* Assets.xcassets in Resources */,
+				18B557F8217DE0380077F939 /* CustomHeader.xib in Resources */,
 				1F5A4024215F8AA900B0CBC6 /* Raleway-ExtraLightItalic.ttf in Resources */,
 				1F5A3FDB215F8AA900B0CBC6 /* HomeTabs.storyboard in Resources */,
 				1F5A401E215F8AA900B0CBC6 /* Raleway-BlackItalic.ttf in Resources */,
@@ -1286,10 +1296,12 @@
 				18B150342164D02600FF87A4 /* CartCell.swift in Sources */,
 				1F5A403A215F8AA900B0CBC6 /* TextAutoFooter.swift in Sources */,
 				187BB9802161EBFB0070D155 /* Store.swift in Sources */,
+				18B557F6217DDEDE0077F939 /* Customheader.swift in Sources */,
 				18C59AED216F7194003DB1B3 /* Json4Swift_Base.swift in Sources */,
 				18D056A1216777A8007510BF /* ChatController.swift in Sources */,
 				1F5561DF21614702007B1A8E /* VCPages.swift in Sources */,
 				18E1C669216B36EE00446FAE /* VCLogin.swift in Sources */,
+				18B557FA217DFF6E0077F939 /* VCChangeSetting.swift in Sources */,
 				18D0567A216748D4007510BF /* NotificationVC.swift in Sources */,
 				18D0568E21676898007510BF /* NotificationCountModel .swift in Sources */,
 				18B150362164E4B800FF87A4 /* DefaultAlamofireManager.swift in Sources */,

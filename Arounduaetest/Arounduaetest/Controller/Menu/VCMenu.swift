@@ -11,17 +11,20 @@ import SDWebImage
 import FBSDKLoginKit
 import GoogleSignIn
 
-class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
+class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHeaderDelegate {
     
-    @IBOutlet weak var lblUserProfileMail: UILabel!
-    @IBOutlet weak var lblUserProfilename: UILabel!
-    @IBOutlet weak var imgUserProfile: UIImageView!
+    func didTapButton(in section: Int) {
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCProfile") as! VCProfile
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBOutlet var profileTableView: UITableView!
-    @IBOutlet var profileView: UIView!
-    
+   
     var Menuimgbuyer = [
         "Orders",
         "Settings",
+        "ChangePassword",
         "Contact",
         "AboutUs",
         "Globe"]
@@ -29,6 +32,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     var lblMenuNamebuyer = [
        "My Orders".localized,
        "Change Settings".localized,
+       "Change Password".localized,
        "Contact Us".localized,
        "About Us".localized,
        "Language".localized]
@@ -54,13 +58,11 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
         if AppSettings.sharedSettings.accountType == "seller"{
             lblMenuNameseller += shareduserinfo.pages.map({$0.title?.en ?? ""})
             Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
-            profileView.removeFromSuperview()
             profileTableView.reloadData()
 
         }else{
             lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.en ?? ""})
             Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
-            profileView.isHidden = false
         }
         
         lblMenuNameseller.append("Logout".localized)
@@ -71,24 +73,28 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        ImgDesign()
+        super.viewWillAppear(true)
         self.setNavigationBar()
-        setupUserData()
     }
     
-    func setupUserData(){
-        lblUserProfileMail.text = AppSettings.sharedSettings.user.email!
-        lblUserProfilename.text = AppSettings.sharedSettings.user.fullName!
-        imgUserProfile.sd_setShowActivityIndicatorView(true)
-        imgUserProfile.sd_setIndicatorStyle(.gray)
-        imgUserProfile.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.image ?? ""))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+         let headerView = Bundle.main.loadNibNamed("CustomHeader", owner: self, options: nil)?.first as! CustomHeader
+        headerView.lblUserProfileMail.text = AppSettings.sharedSettings.user.email!
+        headerView.lblUserProfilename.text = AppSettings.sharedSettings.user.fullName!
+        headerView.imgUserProfile.sd_setShowActivityIndicatorView(true)
+        headerView.imgUserProfile.sd_setIndicatorStyle(.gray)
+        headerView.imgUserProfile.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.image ?? ""))
+        headerView.sectionNumber = section
+        headerView.delegate = self
+        
+        return headerView
     }
     
-    func ImgDesign(){
-        self.imgUserProfile.layer.cornerRadius = 30
-        self.imgUserProfile.clipsToBounds = true
-        self.imgUserProfile.layer.borderWidth = 0.5
-        self.imgUserProfile.layer.borderColor = UIColor.lightGray.cgColor
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if AppSettings.sharedSettings.accountType == "seller"{
+            return 0
+        }
+        return 90
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -107,6 +113,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
             cell.setupMenu(lblMenuNamebuyer[indexPath.row], imagestr: Menuimgbuyer[indexPath.row])
         }
         cell.selectionStyle = .none
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -142,18 +149,20 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
             case 0:
                 moveToOrderVC()
             case 1:
-                break
+                moveToChangeSetting()
             case 2:
-                moveToContactUs()
+                moveToChangePassword()
             case 3:
-                moveToAboutUS()
+                moveToContactUs()
             case 4:
-                moveToSelectLanguage()
+                moveToAboutUS()
             case 5:
-                moveTopage(txt: "Terms and Conditions")
+                moveToSelectLanguage()
             case 6:
-                moveTopage(txt: "Privacy Policy")
+                moveTopage(txt: "Terms and Conditions")
             case 7:
+                moveTopage(txt: "Privacy Policy")
+            case 8:
                 self.logOut()
             default:
                 return
@@ -161,9 +170,15 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate {
         }
     }
     
-    @IBAction func ProfileClick(_ sender: Any){
+    private func moveToChangePassword(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCChangePassword") as! VCChangePassword
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func moveToChangeSetting(){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCProfile") as! VCProfile
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCChangeSetting") as! VCChangeSetting
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

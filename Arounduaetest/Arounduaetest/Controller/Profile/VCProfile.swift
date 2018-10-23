@@ -17,7 +17,6 @@ class VCProfile: BaseController {
     @IBOutlet var imgProfilePicture: UIImageView!
     @IBOutlet weak var txtUserName: UILabel!
     @IBOutlet weak var txtEmail: UILabel!
-    @IBOutlet weak var txtPassword: UILabel!
     @IBOutlet weak var txtGender: UILabel!
     @IBOutlet weak var txtCity: UILabel!
     @IBOutlet weak var txtAddress: UILabel!
@@ -162,23 +161,19 @@ class VCProfile: BaseController {
             case 2:
             valueTuple = ("Email","Edit Email","Please Enter your email")
             case 3:
-            valueTuple = ("0","","")
-            case 4:
             valueTuple = ("CNIC","Edit CNIC","Please Enter your cnic")
-            case 5:
+            case 4:
             valueTuple = ("1","","")
-            case 6:
+            case 5:
             valueTuple = ("City","Edit City","Please Enter your city")
-            case 7:
+            case 6:
             valueTuple = ("2","","")
-            case 8:
+            case 7:
             valueTuple = ("PhoneNo","Edit PhoneNo","Please Enter your phone no")
         default:
             break
         }
-        if valueTuple.0 == "0"{
-            moveToChangePassword()
-        }else if valueTuple.0 == "1"{
+        if valueTuple.0 == "1"{
             self.performSegue(withIdentifier: "movetogender", sender: AppSettings.sharedSettings.user.gender!)
         }else if valueTuple.0 == "2"{
             let autoComplete = GMSAutocompleteViewController()
@@ -207,15 +202,14 @@ class VCProfile: BaseController {
     }
     
     private func setupUserInfo(_ userInfo:User){
-        imgProfilePicture.sd_setShowActivityIndicatorView(true)
-        imgProfilePicture.sd_setIndicatorStyle(.gray)
+         imgProfilePicture.sd_setShowActivityIndicatorView(true)
+         imgProfilePicture.sd_setIndicatorStyle(.gray)
          imgProfilePicture.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.image ?? ""))
          txtUserName.text = AppSettings.sharedSettings.user.fullName
          txtEmail.text = AppSettings.sharedSettings.user.email
-         txtPassword.text = "********"
          cnicImage.sd_setShowActivityIndicatorView(true)
          cnicImage.sd_setIndicatorStyle(.gray)
-         cnicImage.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.nic ?? ""))
+         cnicImage.sd_setImage(with: URL(string: AppSettings.sharedSettings.user.nic ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
          txtGender.text = AppSettings.sharedSettings.user.gender
          txtCity.text = AppSettings.sharedSettings.user.address
          txtAddress.text = AppSettings.sharedSettings.user.address

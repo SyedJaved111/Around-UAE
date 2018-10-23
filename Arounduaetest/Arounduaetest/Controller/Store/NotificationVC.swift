@@ -33,7 +33,6 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         self.title = "Notifications"
        
        addBackButton()
-//
 //        let deleteBtn = UIButton(type: .system)
 //        deleteBtn.setImage(#imageLiteral(resourceName: "Delete").withRenderingMode(.alwaysOriginal), for: .normal)
 //        deleteBtn.frame = CGRect(x: 0, y:0, width: 30, height: 30)

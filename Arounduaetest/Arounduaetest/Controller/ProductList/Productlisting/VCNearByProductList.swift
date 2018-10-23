@@ -31,17 +31,24 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
     }
     
     @objc func refreshTableView() {
-        searchProducts(isRefresh: true)
+        if isFromHome{
+            searchProducts(isRefresh: true, searchTxt: "")
+        }else{
+            searchProducts(isRefresh: true, searchTxt: searchKeyword)
+        }
     }
     
     override func viewDidLoad(){
         super.viewDidLoad()
         collectionViewProductnearby.adjustDesign(width: (view.frame.size.width+24)/2.3)
-        searchProducts(isRefresh: false)
+        if isFromHome{
+            searchProducts(isRefresh: false, searchTxt: "")
+        }else{
+            searchProducts(isRefresh: false, searchTxt: searchKeyword)
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("SearchCompleted"), object: nil)
     }
     
-
     @objc func methodOfReceivedNotification(notification: Notification){
         if let data = notification.object as? [Products]{
            productarray = data
@@ -49,12 +56,12 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
         }
     }
     
-    private func searchProducts(isRefresh: Bool){
+    private func searchProducts(isRefresh: Bool,searchTxt:String){
         if isRefresh == false{
             startLoading("")
         }
         
-        ProductManager().SearchProduct(("",0,0,[String](),""),
+        ProductManager().SearchProduct(("",0,0,[String](),searchTxt),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
@@ -116,7 +123,11 @@ extension VCNearByProductList: UICollectionViewDelegate,UICollectionViewDataSour
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
-        searchProducts(isRefresh: false)
+        if isFromHome{
+            searchProducts(isRefresh: false, searchTxt: "")
+        }else{
+            searchProducts(isRefresh: false, searchTxt: searchKeyword)
+        }
     }
 }
 

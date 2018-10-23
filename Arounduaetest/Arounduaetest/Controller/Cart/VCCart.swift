@@ -119,14 +119,13 @@ class VCCart: UIViewController {
     private func updateCartQuantity(_ product:ProductUAE,cell:CartCell){
         let indxpath = myTbleView.indexPath(for: cell)
         startLoading("")
-        CartManager().UpdateCartQuantity(("\(product.quantity!)",(product.product?._id!)!,product.combination!),successCallback:
+        CartManager().UpdateCartQuantity(("\(cell.viewStepper.value)",(product.product?._id!)!,product.combination!),successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let cartProductData = response{
                         var price = 0
                         if cartProductData.success!{
-                            if(self?.total ?? 0) == 0{return}
                             if cell.increaseValue{
                                price = (self?.total ?? 0) + (self?.cartProductList[indxpath?.row ?? 0].price?.usd ?? 0)
                             }else{
@@ -155,7 +154,6 @@ class VCCart: UIViewController {
         self.addBackButton()
         PayPalMobile.preconnect(withEnvironment: environment)
     }
-    
 
     private func setViewHeight(){
         tableheightconstraint.constant = myTbleView.contentSize.height + 50

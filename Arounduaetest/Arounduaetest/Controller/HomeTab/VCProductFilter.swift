@@ -33,6 +33,7 @@ class VCProductFilter: UIViewController {
     @IBOutlet weak var selectGrouplbl: UILabel!
     @IBOutlet weak var selectDivisionlbl: UILabel!
     @IBOutlet weak var selectSectionlbl: UILabel!
+    @IBOutlet weak var searchBtnHeight: NSLayoutConstraint!
     
     var featuresArray = [FeatureCharacterData]()
     var filterdata:FilterData?
@@ -44,6 +45,8 @@ class VCProductFilter: UIViewController {
     var divisionIndex = 0
     var isDivisonShown = false
     var isSectionShown = false
+    let dispatchGroup = DispatchGroup()
+    
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -51,20 +54,29 @@ class VCProductFilter: UIViewController {
         self.txtfiledEnterKeyword.txtfildborder()
         getFeatureWithCharacteristics()
         getFilterSearcData()
+        dispatchGroup.notify(queue: .main) {
+            self.selectGroupBtn.isHidden = false
+            self.selectGroupArrow.isHidden = false
+            self.selectGrouplbl.isHidden = false
+            self.btnSearchclick.isHidden = false
+            self.setViewHeight()
+            self.finishLoading()
+        }
     }
     
     private func setViewHeight(){
-        filterTableConstraint.constant = filterTableView.contentSize.height + 45
+        filterTableConstraint.constant = filterTableView.contentSize.height + 10
         self.filterTableView.setNeedsDisplay()
     }
     
     private func getFeatureWithCharacteristics(){
         startLoading("")
+        dispatchGroup.enter()
         ProductManager().getFeaturesCharacters(
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
-                self?.finishLoading()
+                self?.dispatchGroup.leave()
                 if let productsResponse = response{
                     if productsResponse.success!{
                         self?.featuresArray = productsResponse.data ?? []
@@ -85,6 +97,7 @@ class VCProductFilter: UIViewController {
         })
         {[weak self](error) in
             DispatchQueue.main.async {
+                self?.dispatchGroup.leave()
                 self?.finishLoading()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
@@ -92,16 +105,16 @@ class VCProductFilter: UIViewController {
     }
     
     private func getFilterSearcData(){
+        dispatchGroup.enter()
         IndexManager().getSearchFilterData(successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
-                self?.finishLoading()
+                self?.dispatchGroup.leave()
                 if let filterResponse = response{
                     if filterResponse.success!{
                         self?.filterdata = filterResponse.data
                         self?.filterdata?.groups?.insert(Groups(title: Title(en: "Select Group", ar: nil), divisions: nil, image: nil, isActive: nil, isFeatured: nil, _id: nil), at: 0)
                         self?.filterTableView.reloadData()
-                        self?.setViewHeight()
                     }
                     else{
                         self?.alertMessage(message: (filterResponse.message?.en ?? "").localized, completionHandler: {
@@ -117,6 +130,7 @@ class VCProductFilter: UIViewController {
         })
         {[weak self](error) in
             DispatchQueue.main.async {
+                self?.dispatchGroup.leave()
                 self?.finishLoading()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
@@ -175,6 +189,7 @@ class VCProductFilter: UIViewController {
         }else{
             let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
+            searchKeyword = txtfiledEnterKeyword.text!
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -190,6 +205,7 @@ class VCProductFilter: UIViewController {
     }
     
     @IBAction func groupSelection(_ sender: UIButton){
+    
         let menudropDown = DropDown()
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -201,6 +217,8 @@ class VCProductFilter: UIViewController {
             self.selectGrouplbl.text = item
             
             if item == "Select Group"{
+                self.searchBtnHeight.constant = 25
+                self.view.setNeedsDisplay()
                 self.selectSectionBtn.isHidden = true
                 self.selectSectionlbl.isHidden = true
                 self.selectSectionArrow.isHidden = true
@@ -210,6 +228,8 @@ class VCProductFilter: UIViewController {
                 self.selectDivisionArrow.isHidden = true
                 
             }else{
+                self.searchBtnHeight.constant = 78
+                self.view.setNeedsDisplay()
                 self.selectDivisionlbl.text = "Select Divison"
                 self.selectDivisionBtn.isHidden = false
                 self.selectDivisionlbl.isHidden = false
@@ -232,10 +252,14 @@ class VCProductFilter: UIViewController {
             self.selectDivisionlbl.text = item
             
             if item == "Select Division"{
+                self.searchBtnHeight.constant = 78
+                self.view.setNeedsDisplay()
                 self.selectSectionBtn.isHidden = true
                 self.selectSectionlbl.isHidden = true
                 self.selectSectionArrow.isHidden = true
             }else{
+                self.searchBtnHeight.constant = 136
+                self.view.setNeedsDisplay()
                 self.selectSectionlbl.text = "Select Section"
                 self.selectSectionBtn.isHidden = false
                 self.selectSectionlbl.isHidden = false
@@ -246,6 +270,8 @@ class VCProductFilter: UIViewController {
     }
     
     @IBAction func sectionSelection(_ sender: UIButton){
+        searchBtnHeight.constant = 136
+        self.view.setNeedsDisplay()
         let menudropDown = DropDown()
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -292,7 +318,9 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
         cell.menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cell.menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
-        cell.menudropDown.dataSource = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
+        var array = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
+        array.insert("Select", at: 0)
+        cell.menudropDown.dataSource = array
         cell.menudropDown.selectionAction = {(index: Int, item: String) in
         cell.featureName.text = item}
         return cell
@@ -338,7 +366,7 @@ extension UITextField{
     func txtfildborder(){
         self.layer.borderWidth = 0.5
         self.layer.cornerRadius = 3
-        self.layer.borderColor = #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
+        self.layer.borderColor = #colorLiteral(red: 0.7025088241, green: 0.7148430643, blue: 0.7723167519, alpha: 1)
         self.clipsToBounds = true
     }
 }
