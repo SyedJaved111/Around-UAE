@@ -49,11 +49,21 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
                             self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                             self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                self?.alertMessage(message:(placeResponse.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                     }else{
+                        if(lang == "en")
+                        {
                         self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                    }
+                        }else{
+                            self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                        }}
                     self?.setupDelegates()
                 }
             })
@@ -87,10 +97,23 @@ extension VCTopRated{
                                 self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
+                                }else
+                                {
+                                   self?.alertMessage(message:(placeResponse.message?.ar ?? "").localized, completionHandler: nil)
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }
+                            else{
+                                 self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }
+                            
                         }
                         self?.setupDelegates()
                     }
@@ -121,10 +144,24 @@ extension VCTopRated{
                                 self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
+                                }else
+                                {
+                                    self?.alertMessage(message:(placeResponse.message?.ar ?? "").localized, completionHandler: nil)
+                                    
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                                
+                            }
                         }
                         self?.setupDelegates()
                     }
@@ -159,7 +196,7 @@ extension VCTopRated: UICollectionViewDataSource,UICollectionViewDelegate{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Toprated")
+        return IndicatorInfo(title: "Toprated".localized)
     }
     
     private func moveToPlaceDetail(_ placeid:String){

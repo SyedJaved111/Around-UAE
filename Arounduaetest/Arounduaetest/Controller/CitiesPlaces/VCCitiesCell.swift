@@ -20,7 +20,12 @@ class VCCitiesCell: UICollectionViewCell {
     }
     
     func setupCities(_ city: Cities){
-        lblGenralName.text = city.title?.en ?? ""
+        if(lang == "en"){
+         lblGenralName.text = city.title?.en ?? ""
+        }else
+        {
+         lblGenralName.text = city.title?.ar ?? ""
+        }
         imgGenral.sd_setShowActivityIndicatorView(true)
         imgGenral.sd_setIndicatorStyle(.gray)
         imgGenral.sd_setImage(with: URL(string: city.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))

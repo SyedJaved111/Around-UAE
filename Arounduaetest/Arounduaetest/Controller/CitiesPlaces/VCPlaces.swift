@@ -45,8 +45,14 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
   
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
-        self.addBackButton()
-        self.title = "Places"
+        if(lang == "en")
+        {
+             self.addBackButton()
+        }else{
+           self.showArabicBackButton()
+        }
+       
+        self.title = "Places".localized
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController]{

@@ -35,10 +35,17 @@ class VCProducList: ButtonBarPagerTabStripViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         self.setNavigationBar()
-        self.addBackButton()
+        if(lang == "en")
+        {
+            self.addBackButton()
+        }else{
+            self.showArabicBackButton()
+        }
+        
         self.addProductFilter()
-        self.title = "Products"
+        self.title = "Products".localized
     }
     
     private func addProductFilter(){

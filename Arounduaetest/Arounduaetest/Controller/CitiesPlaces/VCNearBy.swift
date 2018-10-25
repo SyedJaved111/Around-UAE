@@ -183,7 +183,7 @@ extension VCNearBy: UICollectionViewDataSource,UICollectionViewDelegate{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "NearBy")
+        return IndicatorInfo(title: "NearBy".localized)
     }
     
     private func moveToPlaceDetail(_ placeid:String){

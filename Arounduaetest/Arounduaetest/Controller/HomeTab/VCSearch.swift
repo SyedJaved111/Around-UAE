@@ -44,10 +44,23 @@ class VCSearch: UIViewController {
                             self?.setViewHeight()
                         }
                         else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
+                            }else{
+                                
+                                self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                     }else{
-                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        if(lang == "en")
+                        {
+                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            
+                        }else{
+                            
+                             self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                        }
                     }
                 }
             })
@@ -64,7 +77,7 @@ class VCSearch: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Product Filter"
+        self.title = "Product Filter".localized
         self.addBackButton()
         self.setNavigationBar()
     }
@@ -78,12 +91,24 @@ extension VCSearch: UITableViewDelegate,UITableViewDataSource,featureCellProtoco
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "featureCell", for: indexPath) as! featureCell
+        if(lang == "en")
+        {
         cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
+        }else
+        {
+             cell.featureName.text = featuresArray[indexPath.row].title?.ar ?? ""
+        }
         cell.delegate = self
         cell.menudropDown.anchorView = cell.backgroundBtn
         cell.menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cell.menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if(lang == "en")
+        {
         cell.menudropDown.dataSource = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""}))!
+        }else{
+             cell.menudropDown.dataSource = (featuresArray[indexPath.row].characteristics?.map({$0.title?.ar ?? ""}))!
+            
+        }
         cell.menudropDown.selectionAction = {(index: Int, item: String) in
             cell.featureName.text = item
         }

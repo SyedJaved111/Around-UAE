@@ -29,9 +29,16 @@ class VCCities: BaseController{
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Cities"
+        self.title = "Cities".localized
         self.setNavigationBar()
-        self.addBackButton()
+        if(lang == "en")
+        {
+         self.addBackButton()
+        }else{
+            self.showArabicBackButton()
+        }
+        
+        
     }
     
     fileprivate func setupDelegates(){
@@ -52,11 +59,25 @@ class VCCities: BaseController{
                             self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                             self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                self?.alertMessage(message:(citiesResponse.message?.ar ?? "").localized, completionHandler: nil)
+                            }
+                            
                         }
                      }else{
+                        if(lang == "en")
+                        {
                         self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        }else
+                        {
+                            self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                        }
                     }
+                        
                     self?.setupDelegates()
                 }
             })
@@ -86,10 +107,22 @@ extension VCCities{
                                 self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
+                                }else
+                                {
+                                    self?.alertMessage(message:(citiesResponse.message?.ar ?? "").localized, completionHandler: nil)
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                 self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                         self?.setupDelegates()
                     }
@@ -120,10 +153,22 @@ extension VCCities{
                                 self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
+                                }else
+                                {
+                                  self?.alertMessage(message:(citiesResponse.message?.ar ?? "").localized, completionHandler: nil)
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                         self?.setupDelegates()
                     }

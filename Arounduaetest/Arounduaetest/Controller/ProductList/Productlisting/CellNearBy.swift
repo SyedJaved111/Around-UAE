@@ -34,7 +34,12 @@ class CellNearBy: UICollectionViewCell {
     }
     
     func setupNearbyData(product:Products){
+        if(lang == "en"){
         lblproductnamenearby.text = product.productName?.en
+        }else
+        {
+            lblproductnamenearby.text = product.productName?.ar
+        }
         uiviewcomosenearby.rating = Double(product.averageRating ?? 0)
         imgproductneaby.sd_addActivityIndicator()
         imgproductneaby.sd_setIndicatorStyle(.gray)

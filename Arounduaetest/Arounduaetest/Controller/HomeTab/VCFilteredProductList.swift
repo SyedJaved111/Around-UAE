@@ -22,7 +22,11 @@ class VCFilteredProductList: UIViewController,UICollectionViewDelegate,UICollect
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellNearBy", for: indexPath) as! CellNearBy
+        if(lang == "en"){
         cell.lblproductnamenearby.text = productarray[indexPath.row].productName?.en
+       }else {
+         cell.lblproductnamenearby.text = productarray[indexPath.row].productName?.ar
+        }
         return cell
     }
 }

@@ -93,8 +93,8 @@
 // "TabsHome"
 "Around UAE" = "حول الإمارات";
 "View More" = "عرض المزيد";
-"know more detals about various shope, location & tourist spots around UAE " = "معرفة المزيد من التفاصيل حول مختلف المحلات التجارية والمواقع السياحية في جميع أنحاء الإمارات العربية المتحدة ";
-"GENRAL SERVICES" = "خدمات عامة";
+"know more details about various shops ,location & tourist spots around UAE " = "معرفة المزيد من التفاصيل حول مختلف المحلاتمعرفة المزيد من التفاصيل حول مختلف المحلات التجارية والمواقع والمناطق السياحية في جميع أنحاء الإمارات العربية المتحدة";
+"GENERAL SERVICES" = "خدمات عامة";
 "Empty List" = "قائمة فارغة";
 
 "Sorry there no data is available refresh it or try it later " = "عذرًا ، لا توجد بيانات متوفرة لتحديثها أو تجربتها لاحقًا";
@@ -276,6 +276,7 @@
 "Camera" = "الة تصوير";
 "Stores" = "مخازن";
 "Resturants" = "مطاعم";
+<<<<<<< HEAD
 "Please Enter Your Comment!" = "من فضلك أدخل تعليقك";
 "Hows was your experience with instinct Store?" = "هل كانت تجربتك مع متجر غريزة؟";
 "Write Comments..." = "اكتب التعليقات ...";
@@ -285,3 +286,22 @@
 "Please Select Some Combination or Feature..." = "الرجاء تحديد بعض الدمج أو الميزة ...";
 "Product is not avaliable in your desired quantity" = "المنتج غير متوفر في الكمية المطلوبة";
 "Please Select Your Quantity" = "يرجى اختيار الكمية الخاصة بك";
+=======
+//VCProductFilter
+"Please Enter Search Keyword.." = "يرجى إدخال كلمة البحث.";
+"Search" = "بحث";
+"Select Section" = "اختر القسم";
+//VCSearch
+"Product Filter" = "تصفية المنتج";
+//VCproductlist
+"Products" = "منتجات";
+//VCNEarBy
+"Near By" = "مجاوز";
+//VCTopRated
+"Top Rated" = "أعلى التقييمات";
+// VCPlaces
+"Places" = "أماكن";
+"NearBy" = "مجاوز";
+"Toprated" =  "أعلى التقييمات";
+"Cities"  = "مدن";
+>>>>>>> origin/UpdatedAroundUAE
