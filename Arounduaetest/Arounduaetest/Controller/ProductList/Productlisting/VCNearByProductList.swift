@@ -75,10 +75,23 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
                         self?.productarray = productsResponse.data?.products ?? []
                     }
                     else{
+                        if(lang == "en")
+                        {
                         self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
+                        }else
+                        {
+                           self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: nil)
+                        }
                     }
                 }else{
+                    if(lang == "en")
+                    {
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                    }else{
+                        
+                         self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                    }
+                    
                 }
                 self?.setupDelegates()
             }
@@ -97,7 +110,7 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
-        return IndicatorInfo(title: "Near By")
+        return IndicatorInfo(title: "Near By".localized)
     }
 }
 

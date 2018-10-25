@@ -96,8 +96,8 @@
 //"TabHomes"
 "Around UAE" = "Around UAE";
 "View More" = "View More";
-"know more detals about various shope, location & tourist spots around UAE " = "know more detals about various shope, location & tourist spots around UAE";
-"GENRAL SERVICES" = "GENRAL SERVICES";
+"know more details about various shops ,location & tourist spots around UAE"= "know more details about various shops ,location & tourist spots around UAE";
+"GENERAL SERVICES" = "GENERAL SERVICES";
 "Empty List" = "Empty List";
 
 "Sorry there no data is available refresh it or try it later " = "Sorry there no data is available refresh it or try it later ";
@@ -277,3 +277,21 @@
 "Library" = "Library";
 "Stores" = "Stores";
 "Resturants" = "Resturants";
+
+//VCProductFilter
+"Please Enter Search Keyword.." = "Please Enter Search Keyword..";
+"Search" = "Search";
+"Select Section" = "Select Section";
+//VCSearch
+"Product Filter" = "Product Filter";
+//VCproductlist
+"Products" = "Products";
+//VCNEarBy
+"Near By" = "Near By";
+//VCTopRated
+"Top Rated" = "Top Rated";
+// VCPlaces
+"Places" = "Places";
+"NearBy" = "NearBy";
+"Toprated" =  "Toprated";
+"Cities"  = "Cities";

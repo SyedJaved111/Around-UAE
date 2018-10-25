@@ -84,14 +84,30 @@ class VCProductFilter: UIViewController {
                         self?.setViewHeight()
                     }
                     else{
+                        if(lang == "en")
+                        {
                         self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: {
                            self?.getFeatureWithCharacteristics()
                         })
+                            
+                        }else
+                        {
+                            self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: {
+                                self?.getFeatureWithCharacteristics()})
+                        }
                     }
                 }else{
+                    if(lang == "en"){
                       self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: {
                       self?.getFeatureWithCharacteristics()
-                    })
+                      })
+                        
+                    }else
+                    {
+                        self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: {
+                            self?.getFeatureWithCharacteristics()
+                        })
+                    }
                 }
             }
         })
@@ -117,14 +133,30 @@ class VCProductFilter: UIViewController {
                         self?.filterTableView.reloadData()
                     }
                     else{
+                        if(lang == "en")
+                        {
                         self?.alertMessage(message: (filterResponse.message?.en ?? "").localized, completionHandler: {
                             self?.getFeatureWithCharacteristics()
                         })
+                        }else
+                        {
+                            self?.alertMessage(message: (filterResponse.message?.ar ?? "").localized, completionHandler: {
+                                self?.getFeatureWithCharacteristics()
+                            })
+                        }
                     }
                 }else{
+                    if(lang == "en")
+                    {
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: {
                         self?.getFeatureWithCharacteristics()
                     })
+                    }else{
+                        self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: {
+                            self?.getFeatureWithCharacteristics()
+                        })
+                        
+                    }
                 }
             }
         })
@@ -144,7 +176,7 @@ class VCProductFilter: UIViewController {
     
     private func searchProducts(){
         guard let txt = txtfiledEnterKeyword.text, txt.count > 0 else{
-            alertMessage(message: "Please Enter Search Keyword..", completionHandler: nil)
+            alertMessage(message: "Please Enter Search Keyword..".localized, completionHandler: nil)
             return
         }
         
@@ -167,10 +199,23 @@ class VCProductFilter: UIViewController {
                         self?.moveToFilteredProducts(products: productsResponse.data?.products ?? [])
                     }
                     else{
+                        if(lang == "en")
+                        {
                       self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
+                        }else{
+                             self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: nil)
+                        }
+                        
                     }
                 }else{
+                    if(lang == "en")
+                    {
                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                    }else
+                    {
+                         self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                    }
+                    
                 }
             }
         })
@@ -199,9 +244,16 @@ class VCProductFilter: UIViewController {
     }
    
     override func viewWillAppear(_ animated: Bool){
-        self.title = "Search"
+        self.title = "Search".localized
         self.setNavigationBar()
-        self.addBackButton()
+        if(lang == "en")
+        {
+            self.addBackButton()
+        }else
+        {
+            self.showArabicBackButton()
+        }
+        
     }
     
     @IBAction func groupSelection(_ sender: UIButton){
@@ -210,8 +262,15 @@ class VCProductFilter: UIViewController {
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if(lang == "en")
+        {
         let groupsarray = (filterdata?.groups?.map({$0.title?.en ?? ""})) ?? []
-        menudropDown.dataSource = groupsarray
+            menudropDown.dataSource = groupsarray
+        }else{
+             let groupsarray = (filterdata?.groups?.map({$0.title?.ar ?? ""})) ?? []
+                menudropDown.dataSource = groupsarray
+        }
+        
         menudropDown.selectionAction = {(index: Int, item: String) in
             self.groupIndex = index
             self.selectGrouplbl.text = item
@@ -244,9 +303,17 @@ class VCProductFilter: UIViewController {
         menudropDown.anchorView = sender
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if(lang == "en")
+        {
         var divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
         divisionsarray.insert("Select Division", at: 0)
         menudropDown.dataSource = divisionsarray
+        }else{
+            var divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.ar ?? ""})) ?? []
+            divisionsarray.insert("Select Division", at: 0)
+             menudropDown.dataSource = divisionsarray
+        }
+       
         menudropDown.selectionAction = {(index: Int, item: String) in
             self.divisionIndex = index
             self.selectDivisionlbl.text = item
@@ -280,13 +347,28 @@ class VCProductFilter: UIViewController {
         guard let _ = filterdata?.groups?[safe:groupIndex]?.divisions?[safe:divisionIndex]?.sections else {
             return
         }
-        
+        if(lang == "en")
+        {
         var sectionsarray = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
         sectionsarray.insert("Select Selection", at: 0)
         menudropDown.dataSource = sectionsarray
+        }else
+        {
+            var sectionsarray = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.ar ?? ""})) ?? []
+            sectionsarray.insert("Select Selection", at: 0)
+            menudropDown.dataSource = sectionsarray
+            
+        }
         menudropDown.selectionAction = {(index: Int, item: String) in
+            
             if item == "Select Section"{
-                self.selectSectionlbl.text = "Select Section"
+                if(lang == "en"){
+                self.selectSectionlbl.text = "Select Section".localized
+                }
+                else
+                {
+                     self.selectSectionlbl.text = "Select Section".localized
+                }
             }else{
                 self.selectSectionlbl.text = item
             }
@@ -317,10 +399,19 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
         cell.menudropDown.anchorView = cell.backgroundBtn
         cell.menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cell.menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if(lang == "en")
+        {
         cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
         var array = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
         array.insert("Select", at: 0)
         cell.menudropDown.dataSource = array
+        }else
+        {
+            cell.featureName.text = featuresArray[indexPath.row].title?.ar ?? ""
+            var array = (featuresArray[indexPath.row].characteristics?.map({$0.title?.ar ?? ""})) ?? []
+            array.insert("Select", at: 0)
+            cell.menudropDown.dataSource = array
+        }
         cell.menudropDown.selectionAction = {(index: Int, item: String) in
         cell.featureName.text = item}
         return cell

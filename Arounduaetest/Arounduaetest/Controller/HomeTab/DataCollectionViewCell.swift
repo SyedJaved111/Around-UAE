@@ -19,7 +19,12 @@ class DataCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell(_ divison:Divisions){
+        
+        if lang == "en"{
         lblProducts.text = divison.title?.en
+        }else{
+             lblProducts.text = divison.title?.ar
+        }
         imgProducts.sd_setShowActivityIndicatorView(true)
         imgProducts.sd_setIndicatorStyle(.gray)
         imgProducts.sd_setImage(with: URL(string: divison.image ?? ""))

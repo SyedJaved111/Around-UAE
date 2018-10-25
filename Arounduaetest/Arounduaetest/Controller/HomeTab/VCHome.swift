@@ -86,10 +86,25 @@ class VCHome: BaseController{
                             }
                         }else{
                             self?.bannerView.isHidden = true
+                            if(self!.lang == "en")
+                            {
                             self?.alertMessage(message:(groupResponse.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                            self?.alertMessage(message:(groupResponse.message?.ar ?? "").localized, completionHandler: nil)
+                            }
+                            
+                            
                         }
                     }else{
+                        if(self?.lang == "en")
+                        {
                         self?.alertMessage(message:(response?.message?.en ?? "").localized, completionHandler: nil)
+                        }
+                        else{
+                            self?.alertMessage(message:(response?.message?.ar ?? "").localized, completionHandler: nil)
+                            
+                        }
                     }
                     self?.setupDelegates()
                 }
