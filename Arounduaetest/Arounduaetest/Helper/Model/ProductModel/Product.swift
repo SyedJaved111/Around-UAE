@@ -6,6 +6,7 @@ struct Product : Decodable {
 	let productName : ProductName?
 	let description : Description?
 	let about : About?
+    let hasCombinations:Bool?
 	let reviews : [String]?
 	let combinations : [Combinations]?
 	let priceables : [Priceables]?

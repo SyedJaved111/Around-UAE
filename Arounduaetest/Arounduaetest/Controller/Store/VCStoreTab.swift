@@ -58,9 +58,12 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         super.viewWillAppear(true)
        
         self.setNavigationBar()
-        //self.addNotificationButton()
-        self.addBackButton()
-        self.title = "Stores"
+        if(lang == "ar"){
+            showArabicBackButton()
+        }else{
+            self.addBackButton()
+        }
+        self.title = "Stores".localized
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
     }
@@ -82,9 +85,10 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                             
                             if let vcStoreInfo = self?.child_1 as? VCStoreInfo{
                                 vcStoreInfo.storeid = productResponse.data?._id ?? ""
-                                vcStoreInfo.lblInstinct.text = productResponse.data?.storeName?.en ?? ""
+                                vcStoreInfo.lblInstinct.text = (lang == "en") ? productResponse.data?.storeName?.en ?? "" :
+                                    productResponse.data?.storeName?.ar ?? ""
                                 vcStoreInfo.lblAdress.text = productResponse.data?.location ?? ""
-                                vcStoreInfo.lblWords.text = productResponse.data?.description?.en ?? ""
+                                vcStoreInfo.lblWords.text = (lang == "en") ? productResponse.data?.description?.en ?? "" : productResponse.data?.description?.ar ?? ""
                                 vcStoreInfo.storeImage.sd_addActivityIndicator()
                                 vcStoreInfo.storeImage.sd_setIndicatorStyle(.gray)
                                 vcStoreInfo.storeImage.sd_setImage(with: URL(string: productResponse.data?.image ?? ""))
@@ -93,7 +97,7 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                                 vcStoreProducts.productsArray = productResponse.data?.products ?? []
                             }
                         }else{
-                            self?.alertMessage(message: (productResponse.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
                         }
                     }else{
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)

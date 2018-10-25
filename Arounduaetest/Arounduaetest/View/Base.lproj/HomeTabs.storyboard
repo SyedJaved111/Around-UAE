@@ -1947,7 +1947,7 @@
                                                         <real key="value" value="17"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="view:V2D-gr-bCP:value"/>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="C69957E9-0E62-4335-AD5E-EE6505DF6929"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="A29C6630-38BE-4BC8-9E1E-90DF32475CBF"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T7-rc-cm6">
@@ -2064,6 +2064,7 @@
                         <outlet property="lblWords" destination="VLs-Kd-5Tq" id="yBr-Bt-vZp"/>
                         <outlet property="ratingView" destination="V2D-gr-bCP" id="eNf-yW-3un"/>
                         <outlet property="storeImage" destination="suj-Uj-NYt" id="wIC-oj-4dC"/>
+                        <outlet property="submitFeedbackBtn" destination="aQn-sX-TZF" id="jaZ-iV-SuN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gkj-1d-QGF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2271,7 +2272,7 @@
                                                                     <real key="value" value="0.0"/>
                                                                 </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="view:V2D-gr-bCP:value"/>
-                                                                <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="C69957E9-0E62-4335-AD5E-EE6505DF6929"/>
+                                                                <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="A29C6630-38BE-4BC8-9E1E-90DF32475CBF"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                     </subviews>
@@ -5785,10 +5786,7 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJi-DM-KmQ">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="22"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="50" id="FpM-zc-dYU"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                                                             <color key="textColor" red="0.86666666670000003" green="0.16078431369999999" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -5984,10 +5982,7 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa3-QV-9Bj">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="22"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="50" id="Gr7-DX-AyY"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                                                             <color key="textColor" red="0.86666666670000003" green="0.16078431369999999" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -8006,9 +8001,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Attach" width="200" height="200"/>
-        <image name="Banner-Image" width="1080" height="524"/>
-        <image name="C69957E9-0E62-4335-AD5E-EE6505DF6929" width="200" height="200">
+        <image name="A29C6630-38BE-4BC8-9E1E-90DF32475CBF" width="200" height="200">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
 ExQZHh8jJCsuMTtDR0tPUlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdz
@@ -10807,6 +10800,8 @@ lwACe58AAo0LAAKNDQACjRIAAo0gAAKNJAACjSsAAo0wAAKNPQACjUAAAo1NAAKNUgACjVoAAo1dAAKN
 YgACjWoAAo1tAAKNfwACjYIAAo2HAAAAAAAABAEAAAAAAAAAWQAAAAAAAAAAAAAAAAACjYk
 </mutableData>
         </image>
+        <image name="Attach" width="200" height="200"/>
+        <image name="Banner-Image" width="1080" height="524"/>
         <image name="Cancel" width="200" height="200"/>
         <image name="Category" width="400" height="300"/>
         <image name="Chat" width="25" height="25"/>

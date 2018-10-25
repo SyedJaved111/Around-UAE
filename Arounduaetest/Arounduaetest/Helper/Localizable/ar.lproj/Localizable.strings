@@ -276,6 +276,7 @@
 "Camera" = "الة تصوير";
 "Stores" = "مخازن";
 "Resturants" = "مطاعم";
+
 //VCProductFilter
 "Please Enter Search Keyword.." = "يرجى إدخال كلمة البحث.";
 "Search" = "بحث";
@@ -293,3 +294,13 @@
 "NearBy" = "مجاوز";
 "Toprated" =  "أعلى التقييمات";
 "Cities"  = "مدن";
+
+"Please Enter Your Comment!" = "من فضلك أدخل تعليقك";
+"Hows was your experience with instinct Store?" = "هل كانت تجربتك مع متجر غريزة؟";
+"Write Comments..." = "اكتب التعليقات ...";
+"Submit Feedback" = "إرسال ملاحظات";
+"Comment..." = "اكتب التعليقات ...";
+"Add to Cart" = "أضف إلى السلة";
+"Please Select Some Combination or Feature..." = "الرجاء تحديد بعض الدمج أو الميزة ...";
+"Product is not avaliable in your desired quantity" = "المنتج غير متوفر في الكمية المطلوبة";
+"Please Select Your Quantity" = "يرجى اختيار الكمية الخاصة بك";

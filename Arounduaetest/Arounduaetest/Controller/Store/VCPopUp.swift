@@ -25,7 +25,7 @@ class VCPopUp: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textViewWriteComments.delegate = self
-        textViewWriteComments.text = "Comment..."
+        textViewWriteComments.text = "Comment...".localized
         textViewWriteComments.textColor = UIColor.lightGray
     }
     
@@ -36,15 +36,20 @@ class VCPopUp: UIViewController {
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         lblSubmitFeedBack.text = "Submit Feedback".localized
-        //lblSubmitFeedBack.text = "Hows was your experience with instinct Store?".localized
-        //textViewWriteComments.text = "Write Comments...".localized
+        lblHowsExperience.text = "Hows was your experience with instinct Store?".localized
+        textViewWriteComments.text = "Write Comments...".localized
         btnSubmit.setTitle("Submit".localized, for: .normal)
         btnCancel.setTitle("Cancel".localized, for: .normal)
+        if lang == "en"{
+            textViewWriteComments.textAlignment = .left
+        }else{
+            textViewWriteComments.textAlignment = .right
+        }
     }
     
     private func isCheckReview()->Bool{
-        guard let comment = textViewWriteComments.text, comment != "Comment..." else{
-            self.alertMessage(message: "Please Enter Your Comment!", completionHandler: nil)
+        guard let comment = textViewWriteComments.text,comment != "Comment...".localized else{
+            self.alertMessage(message: "Please Enter Your Comment!".localized, completionHandler: nil)
             return false
         }
         return true
@@ -72,14 +77,14 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
                              self?.dismiss(animated: true, completion: nil)
                         })
                     }else{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -100,11 +105,11 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true, completion: nil)
                         })
                     }else{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
@@ -132,11 +137,11 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true, completion: nil)
                         })
                     }else{
-                        self?.alertMessage(message: reviewResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
@@ -163,7 +168,7 @@ extension VCPopUp: UITextViewDelegate{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textViewWriteComments.text.isEmpty {
-            textViewWriteComments.text = "Commint..."
+            textViewWriteComments.text = "Comment...".localized
             textViewWriteComments.textColor = UIColor.lightGray
         }
     }

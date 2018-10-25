@@ -23,7 +23,7 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
-        return IndicatorInfo.init(title: "Store Products")
+        return IndicatorInfo.init(title: "Store Products".localized)
     }
     
     func favouriteTapped(cell: CellStore){
@@ -43,7 +43,7 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
         {[weak self](response) in
             DispatchQueue.main.async {
                 if let favouriteResponse = response{
-                    self?.alertMessage(message: favouriteResponse.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
                 }else{
                     self?.alertMessage(message: "Error".localized, completionHandler: nil)
                 }
