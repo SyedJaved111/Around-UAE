@@ -34,8 +34,6 @@ class VCHome: BaseController{
     }()
     
     var groupWithDivisionList = [GroupDivisonData]()
-    let lang = UserDefaults.standard.string(forKey: "i18n_language")
-   
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -58,8 +56,8 @@ class VCHome: BaseController{
     }
     
     fileprivate func setupDelegates(){
-//        self.tablView.emptyDataSetSource = self
-//        self.tablView.emptyDataSetDelegate = self
+        self.tablView.emptyDataSetSource = self
+        self.tablView.emptyDataSetDelegate = self
         self.tablView.reloadData()
     }
     
@@ -86,25 +84,17 @@ class VCHome: BaseController{
                             }
                         }else{
                             self?.bannerView.isHidden = true
-                            if(self!.lang == "en")
+                            if(lang == "en")
                             {
-                            self?.alertMessage(message:(groupResponse.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }else
                             {
-                            self?.alertMessage(message:(groupResponse.message?.ar ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
-                            
-                            
                         }
                     }else{
-                        if(self?.lang == "en")
-                        {
-                        self?.alertMessage(message:(response?.message?.en ?? "").localized, completionHandler: nil)
-                        }
-                        else{
-                            self?.alertMessage(message:(response?.message?.ar ?? "").localized, completionHandler: nil)
-                            
-                        }
+                       
+                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }
@@ -117,7 +107,7 @@ class VCHome: BaseController{
                     self?.refreshControl.endRefreshing()
                 }
                 self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -192,9 +182,9 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-//    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
-//        fetchGroupsWithDivisons(isRefresh: false)
-//    }
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchGroupsWithDivisons(isRefresh: false)
+    }
 }
 
 extension VCHome: HomeProtocol{

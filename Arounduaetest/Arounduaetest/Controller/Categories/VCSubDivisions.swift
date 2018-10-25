@@ -84,7 +84,7 @@ class VCSubDivisions: BaseController {
                     self?.refreshControl.endRefreshing()
                 }
                 self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }

@@ -78,14 +78,18 @@ class SellerOrderDetail: UIViewController {
         let dateString = dateFormatter.string(from: date)
         orderDate.text = dateString
         orderStatus.text = sellerOrder.status?.capitalized
-        orderNumber.text = sellerOrder.product?.productName?.en?.capitalized
-        orderPrice.text = "$\(sellerOrder.price?.usd ?? 0)"
+        orderNumber.text = (lang == "en") ? sellerOrder.product?.productName?.en?.capitalized : sellerOrder.product?.productName?.ar?.capitalized
+        orderPrice.text = (currency == "aed") ? "$\(sellerOrder.price?.aed ?? 0)" : "$\(sellerOrder.price?.usd ?? 0)"
         var str = ""
         str = "Quantity: \(sellerOrder.quantity ?? 0) "
         
         for obj in (sellerOrder?.combinationDetail) ?? []{
             str += " "
-            str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+            if lang == "en"{
+                str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+            }else{
+                str += (obj.feature?.title?.ar ?? "")+": "+(obj.characteristic?.title?.ar ?? "")
+            }
         }
         orderQuantity.text = str
     }
@@ -102,16 +106,16 @@ class SellerOrderDetail: UIViewController {
                         self?.finishLoading()
                         if let shippedResponse = response{
                             if shippedResponse.success!{
-                                self?.alertMessage(message:(shippedResponse.message?.en ?? "").localized, completionHandler: {
+                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                                     self?.navigationController?.popViewController(animated: true)
                                 })
                             }else{
-                                self?.alertMessage(message:(shippedResponse.message?.en ?? "").localized, completionHandler: {
+                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                                     self?.navigationController?.popViewController(animated: true)
                                 })
                             }
                         }else{
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }
                 },
@@ -119,7 +123,7 @@ class SellerOrderDetail: UIViewController {
                 {[weak self](error) in
                     DispatchQueue.main.async {
                         self?.finishLoading()
-                        self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                        self?.alertMessage(message: error.message, completionHandler: nil)
                 }
             })
         }

@@ -59,7 +59,11 @@ class OrderDetailCell: UITableViewCell {
         
         for obj in (order.combinationDetail) ?? []{
             str += " "
-            str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+            if lang == "en"{
+                str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+            }else{
+                str += (obj.feature?.title?.ar ?? "")+": "+(obj.characteristic?.title?.ar ?? "")
+            }
         }
 
         if(order.quantity ?? 0) > 0{
@@ -72,10 +76,9 @@ class OrderDetailCell: UITableViewCell {
         
         lblOrderName.text = order._id 
         lblOrderList.text = str
-        storeName.text = order.product?.productName?.en ?? ""
+        storeName.text = (lang == "en") ? order.product?.productName?.en ?? "" : order.product?.productName?.ar ?? ""
         lblStatus.text = order.status
-        lblCharges.text = "$\(order.price?.usd ?? 0)"
-        
+        lblCharges.text = (currency == "aed") ? "$\(order.price?.aed ?? 0)" : "$\(order.price?.usd ?? 0)"
         orderImage.sd_setShowActivityIndicatorView(true)
         orderImage.sd_setIndicatorStyle(.gray)
         orderImage.sd_setImage(with: URL(string: (order.image ?? "")), placeholderImage: #imageLiteral(resourceName: "Category"))

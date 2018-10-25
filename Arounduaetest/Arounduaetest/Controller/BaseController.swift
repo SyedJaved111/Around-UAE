@@ -17,7 +17,7 @@ class BaseController: UIViewController {
         
         let alert = UIAlertController(title: "Alert".localized, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: tryAgainClouser)
+        let okAction = UIAlertAction(title: "Try Again!".localized, style: UIAlertActionStyle.default, handler: tryAgainClouser)
         
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
@@ -68,7 +68,7 @@ extension BaseController: DZNEmptyDataSetSource,DZNEmptyDataSetDelegate {
     }
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
-        let text = "Try Again!"
+        let text = "Try Again!".localized
         let attribs = [
             NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
             NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)

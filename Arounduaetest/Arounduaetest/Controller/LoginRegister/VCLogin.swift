@@ -14,7 +14,6 @@ import GoogleSignIn
 class VCLogin: BaseController {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var bgColor = UIColor(red: 157/255, green: 157/255, blue: 157/255, alpha: 1.0)
     var User = SharedData.sharedUserInfo
     let defaults = UserDefaults.standard
@@ -39,13 +38,6 @@ class VCLogin: BaseController {
     
     override func viewWillAppear(_ animated: Bool){
         self.setNavigationBar()
-//        if ishownBackBtn{
-//            if lang == "ar"{
-//                self.showArabicBackButton()
-//            }else if lang == "en"{
-//                addBackButton()
-//            }
-//        }
         self.setupLocalization()
     }
     
@@ -194,10 +186,10 @@ class VCLogin: BaseController {
                                 self?.moveToVCEmail()
                             }
                         }else{
-                            self?.alertMessage(message: loginResponse.message?.en ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             },failureCallback:
@@ -235,10 +227,10 @@ extension VCLogin: GIDSignInUIDelegate, GIDSignInDelegate{
                         self?.userProfileData(check: type, params: param, successResponse: socialResponse)
                     }
                     else{
-                        self?.alertMessage(message: socialResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         }){[weak self](error) in

@@ -63,10 +63,10 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
                             self?.currentPage = citiesPlacesResponse.data?.pagination?.page ?? 1
                             self?.totalPages = citiesPlacesResponse.data?.pagination?.pages ?? 0
                         }else{
-                            self?.alertMessage(message:(citiesPlacesResponse.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }
@@ -75,7 +75,7 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
             DispatchQueue.main.async{
                 self?.finishLoading()
                 self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -111,10 +111,10 @@ extension VCNearBy{
                                 self?.currentPage = citiesPlacesResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = citiesPlacesResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(citiesPlacesResponse.message?.en ?? "").localized, completionHandler: nil)
+                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -123,7 +123,7 @@ extension VCNearBy{
                 DispatchQueue.main.async {
                     self?.NearbyCollectionview.spr_endRefreshing()
                     self?.setupDelegates()
-                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                    self?.alertMessage(message: error.message, completionHandler: nil)
                     }
                 }
             }
@@ -144,10 +144,10 @@ extension VCNearBy{
                                 self?.currentPage = cityplacesResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = cityplacesResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(cityplacesResponse.message?.en ?? "").localized, completionHandler: nil)
+                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -156,7 +156,7 @@ extension VCNearBy{
                 DispatchQueue.main.async {
                     self?.NearbyCollectionview.spr_endRefreshing()
                     self?.setupDelegates()
-                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                    self?.alertMessage(message: error.message, completionHandler: nil)
                 }
             }
         }

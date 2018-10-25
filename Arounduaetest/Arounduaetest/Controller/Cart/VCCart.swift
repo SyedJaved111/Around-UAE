@@ -65,15 +65,20 @@ class VCCart: UIViewController {
                             self?.btnCheckout.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
-                            self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
-                            self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
+                            if lang == "en"{
+                                self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
+                                self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
+                            }else{
+                                self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.aed ?? 0}).reduce(0, +) ?? 0)"
+                                self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
+                            }
                             self?.myTbleView.reloadData()
                             self?.btnCheckout.isEnabled = true
                             self?.btnCheckout.backgroundColor = #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)
                             self?.setViewHeight()
                         }
                     }else{
-                        self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.alertMessage(message: "Error".localized, completionHandler: nil)
@@ -83,7 +88,7 @@ class VCCart: UIViewController {
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -101,10 +106,10 @@ class VCCart: UIViewController {
                          self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                          self?.myTbleView.reloadData()
                     }else{
-                        self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -134,17 +139,17 @@ class VCCart: UIViewController {
                             self?.total = price
                             self?.lblTotalPrice.text = "$\(price)"
                         }else{
-                            self?.alertMessage(message: cartProductData.message?.en ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -184,7 +189,7 @@ class VCCart: UIViewController {
             present(paymentViewController!, animated: true, completion: nil)
         }
         else{
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Payment not processalbe: \(payment)", okAction:nil)
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Payment not processalbe: \(payment)".localized, okAction:nil)
             self.present(alertView, animated: true, completion: nil)
             print("Payment not processalbe: \(payment)")
         }
@@ -229,7 +234,7 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
     
     func payPalPaymentDidCancel(_ paymentViewController: PayPalPaymentViewController){
         paymentViewController.dismiss(animated: true, completion: nil)
-        let alertView = AlertView.prepare(title: "Alert".localized, message: "PayPal Payment Cancelled", okAction:nil)
+        let alertView = AlertView.prepare(title: "Alert".localized, message: "PayPal Payment Cancelled".localized, okAction:nil)
         self.present(alertView, animated: true, completion: nil)
     }
     
@@ -251,7 +256,7 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
     }
     
     func userDidCancel(_ profileSharingViewController: PayPalProfileSharingViewController){
-        let alertView = AlertView.prepare(title: "Alert".localized, message: "PayPal Profile Sharing Authorization Canceled", okAction:nil)
+        let alertView = AlertView.prepare(title: "Alert".localized, message: "PayPal Profile Sharing Authorization Canceled".localized, okAction:nil)
         self.present(alertView, animated: true, completion: nil)
         print("PayPal Profile Sharing Authorization Canceled")
     }
@@ -269,16 +274,16 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
                 self?.finishLoading()
                 if let paymentData = response{
                     if paymentData.success!{
-                        self?.alertMessage(message: paymentData.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: paymentData.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })

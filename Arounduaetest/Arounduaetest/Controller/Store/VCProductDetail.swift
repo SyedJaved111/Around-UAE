@@ -84,25 +84,30 @@ class VCProductDetail: UIViewController {
         dic["product"] = product._id!
         dic["quantity"] = "\(Int(Productcounter.value))"
         
-        if let combinations = productDetail?.combinations{
-            for obj in combinations{
-                if obj.features! != features && obj.characteristics! != characteristics {
-                    self.alertMessage(message: "Could not find combination!!", completionHandler: nil)
-                    return
-                }else if obj.features! == features && obj.characteristics! == characteristics{
-                    prodcutPrice.text = (lang == "en") ? "$\(obj.price?.usd ?? 0)" : "$\(obj.price?.aed ?? 0)"
-                    combination = obj
-                    dictionary = dic
-                    break
+        if productDetail?.hasCombinations ?? false{
+            if let combinations = productDetail?.combinations{
+                for obj in combinations{
+                    if obj.features! != features || obj.characteristics! != characteristics {
+                        self.alertMessage(message: "Could not find combination!!", completionHandler: nil)
+                    }else if obj.features! == features && obj.characteristics! == characteristics{
+                        prodcutPrice.text = (lang == "en") ? "$\(obj.price?.usd ?? 0)" : "$\(obj.price?.aed ?? 0)"
+                        combination = obj
+                        dictionary = dic
+                        break
+                    }
                 }
             }
+        }else{
+            dictionary = dic
         }
     }
     
     private func addToCartProduct(_ dict:[String:Any]){
         var dictoinary = dict
         dictoinary["quantity"] = "\(Int(Productcounter.value))"
-        dictoinary["combination"] = combination?._id ?? ""
+        if combination != nil{
+           dictoinary["combination"] = combination?._id ?? ""
+        }
         startLoading("")
         CartManager().addCartProducts(dictoinary,
         successCallback:
@@ -274,39 +279,29 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
-//        selectedCell.append(indexPath)
-//        cell.characterImage.layer.borderWidth = 2.0
-//        cell.characterImage.layer.borderColor = UIColor.red.cgColor
-//        characteristics.append(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")
-//        features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
-//    }
-    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
-//        if  selectedCell.contains(indexPath){
-//            selectedCell.remove(at: selectedCell.index(of: indexPath)!)
-//            characteristics.remove(at: characteristics.index(of: productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")!)
-//            features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)
-//            cell.characterImage.layer.borderWidth = 2.0
-//            cell.characterImage.layer.borderColor = UIColor.clear.cgColor
-//        }
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
+        selectedCell.append(indexPath)
+        cell.characterImage.layer.borderWidth = 2.0
+        cell.characterImage.layer.borderColor = UIColor.red.cgColor
+        characteristics.append(productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")
+        features.append(productDetail?.priceables?[indexPath.section].feature?._id ?? "")
         let selectedRows = self.CollectionView.indexPathsForSelectedItems!
-        //let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
-
         for selectedRow in selectedRows {
-            if (selectedRow.section == indexPath.section) && (selectedRow.row != indexPath.row) {
-                //cell.characterImage.layer.borderWidth = 2.0/
-                //cell.characterImage.layer.borderColor = UIColor.clear.cgColor
+            if(selectedRow.section == indexPath.section) && (selectedRow.row != indexPath.row) {
                 self.CollectionView.deselectItem(at: selectedRow, animated: false)
-            }else{
-               //cell.characterImage.layer.borderWidth = 2.0
-                //cell.characterImage.layer.borderColor = UIColor.red.cgColor
             }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CharacteristicsCell
+        if  selectedCell.contains(indexPath){
+            selectedCell.remove(at: selectedCell.index(of: indexPath)!)
+            characteristics.remove(at: characteristics.index(of: productDetail?.priceables?[indexPath.section].characteristics?[indexPath.row]._id ?? "")!)
+            features.remove(at: features.index(of: productDetail?.priceables?[indexPath.section].feature?._id ?? "")!)
+            cell.characterImage.layer.borderWidth = 2.0
+            cell.characterImage.layer.borderColor = UIColor.clear.cgColor
         }
     }
 }

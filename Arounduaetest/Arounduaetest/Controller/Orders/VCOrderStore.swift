@@ -64,10 +64,10 @@ class VCOrderStore: BaseController{
                             self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                             self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
                         }else{
-                            self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                         self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }
@@ -76,7 +76,7 @@ class VCOrderStore: BaseController{
             DispatchQueue.main.async {
                 self?.finishLoading()
                 self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -98,10 +98,10 @@ extension VCOrderStore{
                                 self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                                 self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -110,7 +110,7 @@ extension VCOrderStore{
                 DispatchQueue.main.async {
                     self?.collectionViewStores.spr_endRefreshing()
                     self?.setupDelegates()
-                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                    self?.alertMessage(message: error.message, completionHandler: nil)
                 }
             }
         }
@@ -132,10 +132,10 @@ extension VCOrderStore{
                                 self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                                 self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                             self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -144,7 +144,7 @@ extension VCOrderStore{
                 DispatchQueue.main.async {
                     self?.collectionViewStores.spr_endRefreshing()
                     self?.setupDelegates()
-                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                    self?.alertMessage(message: error.message, completionHandler: nil)
                 }
             }
         }

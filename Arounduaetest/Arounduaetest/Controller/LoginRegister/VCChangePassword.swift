@@ -9,7 +9,6 @@
 import UIKit
 
 class VCChangePassword: BaseController {
-    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     @IBOutlet weak var lblEnterNewPassword: UILabel!
     @IBOutlet weak var txtOldPassword: UITextField!
@@ -127,16 +126,16 @@ class VCChangePassword: BaseController {
                 self?.finishLoading()
                 if let Response = response{
                     if(Response.success ?? false == true){
-                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: "Error",completionHandler: {
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",completionHandler: {
                     self?.navigationController?.popViewController(animated: true)})
                 }
             }

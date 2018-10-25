@@ -10,7 +10,6 @@ import UIKit
 
 class VCForgotPassword: BaseController{
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     @IBOutlet weak var lblForgotPassword: UILabel!
     @IBOutlet weak var txtEnterEmail: UITextField!
@@ -23,7 +22,6 @@ class VCForgotPassword: BaseController{
 
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
-        //self.addBackButton()
         self.Forgotlocalaiz()
         self.title = "Forgot Password".localized
     }
@@ -37,21 +35,13 @@ class VCForgotPassword: BaseController{
         self.txtEnterEmail.placeholder  = "Enter Code".localized
         self.btnSubmit.setTitle("Submit".localized, for: .normal)
         self.btnResend.setTitle("Resend".localized, for: .normal)
-        if(lang == "ar")
-        {
+        if(lang == "ar"){
             self.showArabicBackButton()
             self.txtEnterEmail.textAlignment = .right
-            
-            
-        }else if(lang == "en")
-        {
+        }else if(lang == "en"){
             self.addBackButton()
-            
             self.txtEnterEmail.textAlignment = .left
         }
-        
-        
-        
     }
     
     
@@ -82,27 +72,27 @@ class VCForgotPassword: BaseController{
         startLoading("")
         AuthManager().forgotPassword(useremail,
         successCallback:
-        {[weak self](resposne) in
+        {[weak self](response) in
              DispatchQueue.main.async {
-                if let forgetesponse = resposne{
+                if let forgetesponse = response{
                     if(forgetesponse.success ?? false == true){
                         self?.finishLoading()
-                        self?.alertMessage(message: forgetesponse.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.moveToChangePassword()
                         })
                     }else{
                         self?.finishLoading()
-                        self?.alertMessage(message: forgetesponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.finishLoading()
-                    self?.alertMessage(message: "Error",  completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler: nil)
                 }
             }
         }){[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message,  completionHandler: nil)
+                self?.alertMessage(message: error.message,completionHandler: nil)
             }
         }
     }

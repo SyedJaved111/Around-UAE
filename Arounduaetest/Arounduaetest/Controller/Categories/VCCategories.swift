@@ -77,10 +77,10 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
                         self?.grouplist.insert((self?.storeGroup)!, at: 0)
                         self?.grouplist.insert((self?.resturantGroup)!, at:1)
                     }else{
-                        self?.alertMessage(message:(groupResponse.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
                 self?.setupDelegates()
             }
@@ -93,7 +93,7 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
                     self?.refreshControl.endRefreshing()
                 }
                 self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }

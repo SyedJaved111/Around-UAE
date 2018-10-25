@@ -343,3 +343,14 @@
 "Submit Feedback" = "Submit Feedback";
 "Share on"  = "Share on";
 "Location" = "Location";
+
+"Internet Not Available" = "Internet Not Available";
+"Please Try Again" = "Please Try Again";
+"Couldn't parse data" = "Couldn't parse data";
+"Please Try Again." = "Please Try Again.";
+"Server Not Available" = "Server Not Available";
+"Server Not Availabe, Please Try Later." = "Server Not Availabe, Please Try Later.";
+"Network Time Out, Please Try Again." = "Network Time Out, Please Try Again.";
+"Unable To Login" = "Unable To Login";
+"Try Again!" = "Try Again!";
+"Sorry there is no data available" = "Sorry there is no data available";

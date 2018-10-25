@@ -107,23 +107,24 @@ extension VCOrderDetail:UITableViewDelegate,UITableViewDataSource,OrderDetailPro
                 self?.finishLoading()
                 if let completedResponse = response{
                     if completedResponse.success!{
-                        self?.alertMessage(message:(completedResponse.message?.en ?? "").localized, completionHandler: {
+                        
+                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message:(completedResponse.message?.en ?? "").localized, completionHandler: {
+                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }

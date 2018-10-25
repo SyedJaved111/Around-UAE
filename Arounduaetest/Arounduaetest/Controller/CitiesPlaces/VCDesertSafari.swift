@@ -50,20 +50,14 @@ class VCDesertSafari: UIViewController {
                 if let responsedetail = response{
                     self?.setupPlaceDetail(responsedetail.data!)
                 }else{
-                    if(lang == "en")
-                    {
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                    }else
-                    {
-                         self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                    }
+                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
             }
             }
         })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -114,13 +108,7 @@ class VCDesertSafari: UIViewController {
                         }
                     }
                 }else{
-                    if(lang == "en")
-                    {
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                    }else
-                    {
-                        self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                    }
+                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })

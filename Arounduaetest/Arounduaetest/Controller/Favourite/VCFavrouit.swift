@@ -55,22 +55,10 @@ class VCFavrouit: BaseController,IndicatorInfoProvider{
                         self?.currentPage = FavouriteProductData.data?.pagination?.page ?? 1
                         self?.totalPages = FavouriteProductData.data?.pagination?.pages ?? 0
                     }else{
-                        if(lang == "en")
-                        {
-                        self?.alertMessage(message:(FavouriteProductData.message?.en ?? "").localized, completionHandler: nil)
-                        }else
-                        {
-                             self?.alertMessage(message:(FavouriteProductData.message?.ar ?? "").localized, completionHandler: nil)
-                        }
+                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    if(lang == "en")
-                    {
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                    }else
-                    {
-                     self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                    }
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
                 self?.setupDelegates()
             }
@@ -79,7 +67,7 @@ class VCFavrouit: BaseController,IndicatorInfoProvider{
             DispatchQueue.main.async {
                 self?.finishLoading()
                 self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -105,23 +93,10 @@ extension VCFavrouit{
                                 self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
-                                {
-                                self?.alertMessage(message:(favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
-                                }else
-                                {
-                                 self?.alertMessage(message:(favouriteResponse.message?.ar ?? "").localized, completionHandler: nil)
-                                    
-                                }
+                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            if(lang == "en")
-                            {
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                            }else
-                            {
-                                self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                            }
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -130,7 +105,7 @@ extension VCFavrouit{
                 DispatchQueue.main.async {
                     self?.favouriteProductTableView.spr_endRefreshing()
                     self?.setupDelegates()
-                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                    self?.alertMessage(message: error.message, completionHandler: nil)
                 }
             }
         }
@@ -152,22 +127,10 @@ extension VCFavrouit{
                                 self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
-                                {
-                                self?.alertMessage(message:(favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
-                                }else
-                                {
-                                    self?.alertMessage(message:(favouriteResponse.message?.ar ?? "").localized, completionHandler: nil)
-                                }
+                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            if(lang == "en")
-                            {
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                            }else
-                            {
-                                self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                            }
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -176,7 +139,7 @@ extension VCFavrouit{
                 DispatchQueue.main.async {
                     self?.favouriteProductTableView.spr_endRefreshing()
                     self?.setupDelegates()
-                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                    self?.alertMessage(message: error.message, completionHandler: nil)
                 }
             }
         }
@@ -225,23 +188,10 @@ extension VCFavrouit: PotocolCellFavourite{
                         }
                         AppSettings.sharedSettings.user = favouriteResponse.data!
                     }else{
-                        if(lang == "en")
-                        {
-                        self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
-                        }else
-                        {
-                             self?.alertMessage(message: (favouriteResponse.message?.ar ?? "").localized, completionHandler: nil)
-                        }
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    if(lang == "en")
-                    {
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
-                    }else
-                    {
-                      self?.alertMessage(message: response?.message?.ar ?? "", completionHandler: nil)
-                    }
-                    
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })

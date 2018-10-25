@@ -16,7 +16,6 @@ import FlagKit
 class VCRegister: BaseController{
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
@@ -349,14 +348,14 @@ class VCRegister: BaseController{
                 self?.finishLoading()
                 if let Response = response{
                     if(Response.success ?? false == true){
-                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: Response.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: "Error",completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",completionHandler: nil)
                  }
               }
           })

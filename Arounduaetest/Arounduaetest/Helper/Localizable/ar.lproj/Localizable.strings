@@ -349,3 +349,14 @@
 "Share on"  = "مشاركه فى";
 "Location" = "موقعك";
 
+
+"Internet Not Available" = "الإنترنت غير متوفر";
+"Please Try Again" = "حاول مرة اخرى";
+"Couldn't parse data" = "لا يمكن تحليل البيانات";
+"Please Try Again." = "حاول مرة اخرى.";
+"Server Not Available" = "الخادم غير متوفر";
+"Server Not Availabe, Please Try Later." = "الخادم غير متوفر ، يرجى المحاولة لاحقًا.";
+"Network Time Out, Please Try Again." = "وقت انتهاء الشبكة ، يرجى إعادة المحاولة.";
+"Unable To Login" = "غير قادر على تسجيل الدخول";
+"Try Again!" = "حاول مرة أخري!";
+"Sorry there is no data available" = "عذرا لا توجد بيانات متاحة";

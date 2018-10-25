@@ -21,7 +21,7 @@ class DataCollectionViewCell: UICollectionViewCell {
     func setupCell(_ divison:Divisions){
         
         if lang == "en"{
-        lblProducts.text = divison.title?.en
+             lblProducts.text = divison.title?.en
         }else{
              lblProducts.text = divison.title?.ar
         }

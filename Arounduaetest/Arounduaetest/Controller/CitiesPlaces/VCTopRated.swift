@@ -49,21 +49,11 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
                             self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                             self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                         }else{
-                            if(lang == "en")
-                            {
-                            self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
-                            }else
-                            {
-                                self?.alertMessage(message:(placeResponse.message?.ar ?? "").localized, completionHandler: nil)
-                            }
+                            self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        if(lang == "en")
-                        {
-                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                        }else{
-                            self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                        }}
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    }
                     self?.setupDelegates()
                 }
             })
@@ -71,7 +61,7 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
             DispatchQueue.main.async{
                 self?.finishLoading()
                 self?.setupDelegates()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -97,22 +87,10 @@ extension VCTopRated{
                                 self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
-                                {
-                                self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
-                                }else
-                                {
-                                   self?.alertMessage(message:(placeResponse.message?.ar ?? "").localized, completionHandler: nil)
-                                }
+                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            if(lang == "en")
-                            {
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                            }
-                            else{
-                                 self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                            }
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             
                         }
                         self?.setupDelegates()
@@ -144,24 +122,10 @@ extension VCTopRated{
                                 self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
-                                {
-                                self?.alertMessage(message:(placeResponse.message?.en ?? "").localized, completionHandler: nil)
-                                }else
-                                {
-                                    self?.alertMessage(message:(placeResponse.message?.ar ?? "").localized, completionHandler: nil)
-                                    
-                                }
+                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            if(lang == "en")
-                            {
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                            }else
-                            {
-                                self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                                
-                            }
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }

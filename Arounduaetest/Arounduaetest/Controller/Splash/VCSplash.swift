@@ -7,14 +7,12 @@
 //
 
 import UIKit
-
+let currency = UserDefaults.standard.string(forKey: "currency")
 class VCSplash: BaseController {
     
     @IBOutlet weak var lblSplashScreen: UILabel!
     
     var isVarified = false
-    let lang = UserDefaults.standard.string(forKey: "i18n_language")
-    let currency = UserDefaults.standard.string(forKey: "currency")
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var User = SharedData.sharedUserInfo
     let defaults = UserDefaults.standard
@@ -52,10 +50,10 @@ class VCSplash: BaseController {
                         self?.User.sliders = (settingResposne.data?.sliders!)!
                         self?.goToNext()
                     }else{
-                        self?.showAlert(response?.message?.en ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
+                        self?.showAlert((lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
                     }
                 }else{
-                    self?.showAlert(response?.message?.en ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
+                    self?.showAlert((lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
                 }
         }){[weak self](error) in
                 self?.finishLoading()
@@ -107,7 +105,7 @@ class VCSplash: BaseController {
                         self?.appDelegate.moveToHome()
                     
                     }else{
-                        self?.alertMessage(message: loginResponse.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.logInFromEmail()
                         })
                     }
@@ -147,18 +145,18 @@ class VCSplash: BaseController {
                 if(socialResponse.success!){
                     self?.userProfileData(check : check, params: param, successResponse : socialResponse)
                 }else{
-                    self?.alertMessage(message: socialResponse.message?.en ?? "", completionHandler: {
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                         self?.checkIsSocialLogin(check: check)
                     })
                 }
             }else{
-                self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                     self?.checkIsSocialLogin(check: check)
                 })
             }
         })
         {[weak self](error) in
-            self?.alertMessage(message: error.message, completionHandler: {
+            self?.alertMessage(message: error.message.localized, completionHandler: {
                 self?.checkIsSocialLogin(check: check)
             })
         }

@@ -21,29 +21,29 @@ class Constants {
     struct NetworkError {
         static let timeOutInterval: TimeInterval = 20
         
-        static let error = "Error"
-        static let internetNotAvailable = "Internet Not Available"
-        static let pleaseTryAgain = "Please Try Again"
+        static let error = "Error".localized
+        static let internetNotAvailable = "Internet Not Available".localized
+        static let pleaseTryAgain = "Please Try Again".localized
         
-        static let parsingError = "Couldn't parse data"
+        static let parsingError = "Couldn't parse data".localized
         static let parsing = 0
         
         static let generic = 4000
-        static let genericError = "Please Try Again."
+        static let genericError = "Please Try Again.".localized
         
         static let serverErrorCode = 5000
-        static let serverNotAvailable = "Server Not Available"
-        static let serverError = "Server Not Availabe, Please Try Later."
+        static let serverNotAvailable = "Server Not Available".localized
+        static let serverError = "Server Not Availabe, Please Try Later.".localized
         
         static let timout = 4001
-        static let timoutError = "Network Time Out, Please Try Again."
+        static let timoutError = "Network Time Out, Please Try Again.".localized
         
         static let login = 4003
-        static let loginMessage = "Unable To Login"
-        static let loginError = "Please Try Again."
+        static let loginMessage = "Unable To Login".localized
+        static let loginError = "Please Try Again.".localized
         
         static let internet = 4004
-        static let internetError = "Internet Not Available"
+        static let internetError = "Internet Not Available".localized
     }
     
     struct NetworkSuccess {

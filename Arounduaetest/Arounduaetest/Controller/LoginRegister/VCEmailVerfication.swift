@@ -9,7 +9,6 @@
 import UIKit
 
 class VCEmailVerfication: BaseController {
-let lang = UserDefaults.standard.string(forKey: "i18n_language")
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     @IBOutlet weak var lblVerficationCodeText: UILabel!
     @IBOutlet weak var txtEnterCode: UITextField!
@@ -77,13 +76,13 @@ let lang = UserDefaults.standard.string(forKey: "i18n_language")
                 self?.finishLoading()
                 if let loginResponse = response{
                     if(loginResponse.success!){
-                        self?.alertMessage(message: loginResponse.message?.en ?? "",  completionHandler:
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler:
                         {self?.verified()})
                     }else{
-                      self?.alertMessage(message: loginResponse.message?.en ?? "",  completionHandler: nil)
+                      self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: "Error".localized,  completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler: nil)
                 }
             }
         }){[weak self](error) in
@@ -112,9 +111,9 @@ let lang = UserDefaults.standard.string(forKey: "i18n_language")
                 self?.finishLoading()
                 if let loginResponse = response{
                     if(loginResponse.success!){
-                        self?.alertMessage(message: loginResponse.message?.en ?? "",  completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler: nil)
                     }else{
-                        self?.alertMessage(message: loginResponse.message?.en ?? "",  completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler: nil)
                     }
                 }else{
                   self?.alertMessage(message: "Error".localized,  completionHandler: nil)

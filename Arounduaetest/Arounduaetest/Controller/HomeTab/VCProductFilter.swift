@@ -107,25 +107,24 @@ class VCProductFilter: UIViewController {
                     else{
                         if(lang == "en")
                         {
-                        self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                            self?.getFeatureWithCharacteristics()
                         })
                             
-                        }else
-                        {
-                            self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: {
+                        }else{
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                                 self?.getFeatureWithCharacteristics()})
                         }
                     }
                 }else{
                     if(lang == "en"){
-                      self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: {
+                      self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                       self?.getFeatureWithCharacteristics()
                       })
                         
                     }else
                     {
-                        self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.getFeatureWithCharacteristics()
                         })
                     }
@@ -136,7 +135,7 @@ class VCProductFilter: UIViewController {
             DispatchQueue.main.async {
                 self?.dispatchGroup.leave()
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -156,12 +155,12 @@ class VCProductFilter: UIViewController {
                     else{
                         if(lang == "en")
                         {
-                        self?.alertMessage(message: (filterResponse.message?.en ?? "").localized, completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.getFeatureWithCharacteristics()
                         })
                         }else
                         {
-                            self?.alertMessage(message: (filterResponse.message?.ar ?? "").localized, completionHandler: {
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                                 self?.getFeatureWithCharacteristics()
                             })
                         }
@@ -222,19 +221,19 @@ class VCProductFilter: UIViewController {
                     else{
                         if(lang == "en")
                         {
-                      self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
+                      self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }else{
-                             self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: nil)
+                             self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         
                     }
                 }else{
                     if(lang == "en")
                     {
-                   self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }else
                     {
-                         self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                         self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     
                 }
@@ -243,7 +242,7 @@ class VCProductFilter: UIViewController {
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
