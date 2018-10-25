@@ -150,8 +150,17 @@ class VCCart: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool){
-        self.title = "Cart"
+        self.title = "Cart".localized
+        if(lang == "en")
+        {
         self.addBackButton()
+        }else
+        {
+            self.showArabicBackButton()
+            
+        }
+        self.btnCheckout.setTitle("Continue to Checkout".localized, for: .normal)
+        self.lblTotalBill.text = "Total Bill".localized
         PayPalMobile.preconnect(withEnvironment: environment)
     }
 

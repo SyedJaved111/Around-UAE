@@ -13,6 +13,7 @@ import CoreLocation
 
 class VCDesertSafari: UIViewController {
 
+    @IBOutlet weak var btnsubmit: UIButtonMain!
     @IBOutlet weak var mapkitlocation: MKMapView!
     @IBOutlet weak var lbllocation: UILabel!
     @IBOutlet weak var btntiwitter: UIButtonMain!
@@ -49,8 +50,14 @@ class VCDesertSafari: UIViewController {
                 if let responsedetail = response{
                     self?.setupPlaceDetail(responsedetail.data!)
                 }else{
+                    if(lang == "en")
+                    {
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                }
+                    }else
+                    {
+                         self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                    }
+            }
             }
         })
         {[weak self](error) in
@@ -62,9 +69,17 @@ class VCDesertSafari: UIViewController {
     }
     
     private func setupPlaceDetail(_ place:Places){
+        if(lang == "en")
+        {
+       lblDesrtsfari.text = place.title?.en ?? ""
       lblDesription.text = place.description?.en ?? ""
+        }else{
+            
+            lblDesrtsfari.text = place.title?.ar ?? ""
+            lblDesription.text = place.description?.ar ?? ""
+        }
       strcomos.rating = place.averageRating ?? 0.0
-      lblDesrtsfari.text = place.title?.en ?? ""
+      
       imgBaner.sd_setShowActivityIndicatorView(true)
       imgBaner.sd_setIndicatorStyle(.gray)
       imgBaner.sd_setImage(with: URL(string: place.images?.first?.path ?? ""))
@@ -99,7 +114,13 @@ class VCDesertSafari: UIViewController {
                         }
                     }
                 }else{
+                    if(lang == "en")
+                    {
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                    }else
+                    {
+                        self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                    }
                 }
             }
         })
@@ -113,8 +134,17 @@ class VCDesertSafari: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool){
-        self.title = "Desert Safari"
+        self.title = "Desert Safari".localized
+        if(lang == "en")
+        {
         self.addBackButton()
+        }else
+        {
+            self.showArabicBackButton()
+        }
+     self.lblShareon.text = "Share on".localized
+        self.btnsubmit.setTitle("Submit Feedback".localized, for: .normal)
+        self.lbllocation.text = "Location".localized
     }
 
     @IBAction func makePlaceFavourite(_ sender: Any){

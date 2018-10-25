@@ -154,7 +154,13 @@ extension VCHome: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell") as! HomeTableViewCell
         let obj = groupWithDivisionList[indexPath.row]
+        if(lang == "en")
+        {
         cell.lblCategoryName.text = obj.title?.en
+        }else
+        {
+          cell.lblCategoryName.text = obj.title?.ar
+        }
         cell.delegate = self
         return cell
     }

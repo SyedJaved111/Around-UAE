@@ -29,7 +29,11 @@ class HomeTableViewCell: UITableViewCell {
         CollecView.tag = row
         CollecView.reloadData()
     }
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.btnViewAll.setTitle("View All".localized, for: .normal)
+       
+    }
     @IBAction func viewAll(_ sender:UIButton){
         delegate?.tapOnViewAll(cell: self)
     }

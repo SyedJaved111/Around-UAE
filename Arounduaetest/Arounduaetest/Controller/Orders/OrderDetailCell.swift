@@ -15,6 +15,8 @@ protocol OrderDetailPrortocol {
 
 class OrderDetailCell: UITableViewCell {
 
+    @IBOutlet weak var lblorderstorname: UILabel!
+    @IBOutlet weak var lblorderstatus: UILabel!
     @IBOutlet weak var lblOrderName: UILabel!
     @IBOutlet weak var lblOrderList: UILabel!
     @IBOutlet weak var storeName: UILabel!
@@ -38,7 +40,13 @@ class OrderDetailCell: UITableViewCell {
         boxesImage.image = nil
         shadowImage.image = nil
     }
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.lblorderstatus.text = "Status".localized
+        self.lblorderstorname.text = "Store Name".localized
+        self.cellBtn.setTitle("Received".localized, for: .normal)
+        self.lblOrderList.text = "Quantity:".localized
+    }
     func setupData(order:SomeOrderDetails){
         if (order.status ?? "") == "shipped"{
            cellBtn.isEnabled = true

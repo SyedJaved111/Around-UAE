@@ -11,6 +11,8 @@ import SDWebImage
 
 class PendingTabCell: UITableViewCell {
 
+    @IBOutlet weak var lblpstatus: UILabel!
+    @IBOutlet weak var lblpDate: UILabel!
     @IBOutlet weak var orderlblTxt: UILabel!
     @IBOutlet weak var lblChargestxt: UILabel!
     @IBOutlet weak var lblDatetxt: UILabel!
@@ -34,6 +36,11 @@ class PendingTabCell: UITableViewCell {
         shadowImage.image = nil
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.lblpDate.text = "Date".localized
+        self.lblpstatus.text = "Status".localized
+    }
     func setupCellData(order:OrderData){
         orderlblTxt.text = order.payerId
         lblChargestxt.text = "$\(order.charges ?? 0)"
@@ -42,7 +49,13 @@ class PendingTabCell: UITableViewCell {
         
         for obj in (order.orderDetails?.first?.combinationDetail) ?? []{
             str += " "
+            if(lang == "en")
+            {
             str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+            }else
+            {
+                 str += (obj.feature?.title?.ar ?? "")+": "+(obj.characteristic?.title?.ar ?? "")
+            }
         }
         
         lblcombinatonDetail.text = str
@@ -84,7 +97,12 @@ class PendingTabCell: UITableViewCell {
         
         for obj in (order.combinationDetail) ?? []{
             str += " "
+            if(lang == "en"){
             str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+            }else
+            {
+                 str += (obj.feature?.title?.ar ?? "")+": "+(obj.characteristic?.title?.ar ?? "")
+            }
         }
 
         lblcombinatonDetail.text = str

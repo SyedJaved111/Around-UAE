@@ -42,8 +42,15 @@ class CartCell: UITableViewCell {
         imgProduct.sd_setIndicatorStyle(.gray)
         imgProduct.sd_setImage(with: URL(string: product.product?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
         lblProductPrice.text = "$\(product.price?.usd ?? 0)"
+        if(lang == "en")
+        {
         lblusername.text = product.product?.productName?.en?.capitalized
         lblProductname.text = product.product?.productName?.en?.capitalized
+        }else
+        {
+            lblusername.text = product.product?.productName?.ar?.capitalized
+            lblProductname.text = product.product?.productName?.ar?.capitalized
+        }
         viewStepper.value = product.quantity ?? 0.0
         previousValue = product.quantity ?? 0.0
     }
