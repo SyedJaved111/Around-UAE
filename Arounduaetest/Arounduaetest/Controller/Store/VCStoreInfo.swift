@@ -19,6 +19,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     @IBOutlet var lblWords: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
     @IBOutlet weak var storeImage: UIImageView!
+    @IBOutlet weak var submitFeedbackBtn: UIButton!
     var storeid = ""
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
@@ -27,6 +28,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
 
     override func viewDidLoad(){
         super.viewDidLoad()
+        submitFeedbackBtn.setTitle("Submit Feedback".localized, for: .normal)
         if AppSettings.sharedSettings.accountType == "seller"{
             btnSubmitFeedBack.isHidden = true
         }

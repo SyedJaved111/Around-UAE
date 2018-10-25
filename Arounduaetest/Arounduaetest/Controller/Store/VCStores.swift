@@ -35,7 +35,12 @@ class VCStores: BaseController{
         self.title = "Stores".localized
 
         self.setNavigationBar()
-        self.addBackButton()
+        if(lang == "ar"){
+            showArabicBackButton()
+        }else{
+            self.addBackButton()
+        }
+
     }
     
     fileprivate func setupDelegates(){
@@ -57,10 +62,10 @@ class VCStores: BaseController{
                             self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                             self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
                         }else{
-                            self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "" , completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }
@@ -91,10 +96,10 @@ extension VCStores{
                                 self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                                self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? ""  , completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -125,10 +130,10 @@ extension VCStores{
                                 self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                                self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message:  (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "" , completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }

@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Arounduaetest/Controller/Profile/VCEditGender.swift"
-            timestampString = "562155984.635818"
+            timestampString = "562162459.329313"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -57,13 +57,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Arounduaetest/Controller/Store/VCProductDetail.swift"
-            timestampString = "561980267.600029"
+            filePath = "Arounduaetest/Helper/Network/ServerAPI.swift"
+            timestampString = "562162459.329385"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
-            landmarkName = "collectionView(_:didSelectItemAt:)"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "parseServerResponse(_:from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Arounduaetest/Helper/Network/ProductManager.swift"
+            timestampString = "562162614.660264"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "productDetail(_:successCallback:failureCallback:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Arounduaetest/Helper/Network/ServerAPI.swift"
+            timestampString = "562162894.9402699"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "parseServerResponse(_:from:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

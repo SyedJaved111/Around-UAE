@@ -63,10 +63,10 @@ class VCProductDetail: UIViewController {
                         self?.setupProductDetsil(storeResponse.data!)
                         self?.CollectionView.reloadData()
                     }else{
-                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "" , completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -90,7 +90,7 @@ class VCProductDetail: UIViewController {
                     self.alertMessage(message: "Could not find combination!!", completionHandler: nil)
                     return
                 }else if obj.features! == features && obj.characteristics! == characteristics{
-                    prodcutPrice.text = "$\(obj.price?.usd ?? 0)"
+                    prodcutPrice.text = (lang == "en") ? "$\(obj.price?.usd ?? 0)" : "$\(obj.price?.aed ?? 0)"
                     combination = obj
                     dictionary = dic
                     break
@@ -111,16 +111,16 @@ class VCProductDetail: UIViewController {
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
-                        self?.alertMessage(message:(storeResponse.message?.en ?? "").localized, completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: (storeResponse.message?.en ?? "").localized, completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                         self?.navigationController?.popViewController(animated: true)
                     })
                 }
@@ -138,8 +138,8 @@ class VCProductDetail: UIViewController {
         productImage.sd_setShowActivityIndicatorView(true)
         productImage.sd_setIndicatorStyle(.gray)
         productImage.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
-        prodcutPrice.text = "$\(product.price?.usd ?? 0)"
-        productname.text = productdetail.productName?.en ?? ""
+        prodcutPrice.text = (lang == "en") ? "$\(product.price?.usd ?? 0)" : "$\(product.price?.aed ?? 0)"
+        productname.text = (lang == "en") ? productdetail.productName?.en ?? "" : productdetail.productName?.ar ?? ""
         ratingView.rating = 0.0
         if AppSettings.sharedSettings.user.favouritePlaces?.contains((productDetail?._id!)!) ?? false{
             self.favouritImage.image = #imageLiteral(resourceName: "Favourite-red")
@@ -148,12 +148,16 @@ class VCProductDetail: UIViewController {
             self.favouritImage.image = #imageLiteral(resourceName: "Favourite")
             self.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
         }
-        productDescription.text = productdetail.description?.en ?? ""
+        productDescription.text = (lang == "en") ? productdetail.description?.en ?? "" : productdetail.description?.ar ?? ""
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Product Detail"
-        self.addBackButton()
+        self.title = "Product Detail".localized
+        if(lang == "ar"){
+            showArabicBackButton()
+        }else{
+            self.addBackButton()
+        }
         if AppSettings.sharedSettings.accountType == "seller"{
             self.reviewBtn.backgroundColor = #colorLiteral(red: 0.06274509804, green: 0.04705882353, blue: 0.03137254902, alpha: 1)
             self.reviewBtn.isUserInteractionEnabled = false
@@ -166,7 +170,7 @@ class VCProductDetail: UIViewController {
     @IBAction func addtocartclick(_ sender: Any){
         
         if features.count == 0 || characteristics.count == 0{
-            self.alertMessage(message: "Please Select Some Combination or Feature...", completionHandler: nil)
+            self.alertMessage(message: "Please Select Some Combination or Feature...".localized, completionHandler: nil)
             return
         }
         
@@ -174,12 +178,12 @@ class VCProductDetail: UIViewController {
         
         guard let comb = combination,
             let avaliablecount = comb.avalaible,avaliablecount > Int(Productcounter.value) else{
-                self.alertMessage(message: "Product is not avaliable in your desired quantity", completionHandler: nil)
+                self.alertMessage(message: "Product is not avaliable in your desired quantity".localized, completionHandler: nil)
                 return
         }
         
         if Productcounter.value == 0.0{
-            self.alertMessage(message: "Please Select Your Quantity", completionHandler: nil)
+            self.alertMessage(message: "Please Select Your Quantity".localized, completionHandler: nil)
             return
         }
         
@@ -206,10 +210,10 @@ class VCProductDetail: UIViewController {
                             self?.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
                         }
                     }else{
-                        self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -245,7 +249,7 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         var resuable :UICollectionReusableView? = nil
         if kind == UICollectionElementKindSectionHeader{
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "ProductDetailView", for: indexPath) as! ProductDetailView
-            view.lblHeader.text = productDetail?.priceables?[indexPath.section].feature?.title?.en
+            view.lblHeader.text =  (lang == "en") ? productDetail?.priceables?[indexPath.section].feature?.title?.en : productDetail?.priceables?[indexPath.section].feature?.title?.ar
             resuable = view
             return resuable!
         }

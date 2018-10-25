@@ -35,12 +35,13 @@ class CellStore: UICollectionViewCell {
     }
     
     func setupProductCell(product:Products){
-        lblProductName.text = product.productName?.en
+        lblProductName.text = (lang == "en") ? product.productName?.en : product.productName?.ar
         ratingView.rating = Double(product.averageRating ?? 0)
+        addtocartBtn.setTitle( "Add to Cart".localized, for: .normal) 
 
         imgProducts.sd_setShowActivityIndicatorView(true)
         imgProducts.sd_setIndicatorStyle(.gray)
-        productPrice.text = "$\(product.price?.usd ?? 0)"
+        productPrice.text = (lang == "en") ? "$\(product.price?.usd ?? 0)" : "$\(product.price?.aed ?? 0)"
         imgProducts.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
         if AppSettings.sharedSettings.accountType == "seller"{
            UIButtonFavourite.isHidden = true
