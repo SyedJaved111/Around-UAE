@@ -23,6 +23,16 @@ class VCProfile: BaseController {
     @IBOutlet weak var txtPhoneno: UILabel!
     @IBOutlet weak var scrollSubView: UIView!
     @IBOutlet weak var cnicImage: UIImageView!
+    
+    @IBOutlet weak var namelbl: UILabel!
+    @IBOutlet weak var emaillbl: UILabel!
+    @IBOutlet weak var cniclbl: UILabel!
+    @IBOutlet weak var genderlbl: UILabel!
+    @IBOutlet weak var citylbl: UILabel!
+    @IBOutlet weak var addresslbl: UILabel!
+    @IBOutlet weak var phonenolbl: UILabel!
+    
+    
     var isUpdateProfile = false
     var imagePicker = UIImagePickerController()
     var cameraPicker = UIImagePickerController()
@@ -37,8 +47,21 @@ class VCProfile: BaseController {
 
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
-        self.addBackButton()
-        self.title = "Profile"
+        if lang == "en"{
+            self.addBackButton()
+        }else{
+            showArabicBackButton()
+        }
+        
+        namelbl.text = "Name:".localized
+        emaillbl.text = "Email:".localized
+        cniclbl.text = "CNIC:".localized
+        genderlbl.text = "Gender:".localized
+        citylbl.text = "City:".localized
+        addresslbl.text = "Address:".localized
+        phonenolbl.text = "Phone no:".localized
+
+        self.title = "Profile".localized
         self.setupUserInfo(AppSettings.sharedSettings.user)
     }
     
@@ -58,10 +81,10 @@ class VCProfile: BaseController {
                         self?.setupUserInfo(profileResponse.data!)
                         self?.scrollSubView.isHidden = false
                     }else{
-                        self?.alertMessage(message: profileResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                   self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -91,12 +114,12 @@ class VCProfile: BaseController {
                         self?.imgProfilePicture.sd_setShowActivityIndicatorView(true)
                         self?.imgProfilePicture.sd_setIndicatorStyle(.gray)
                         self?.imgProfilePicture.sd_setImage(with: URL(string: uploadResponse.data!.image ?? ""))
-                        self?.alertMessage(message: uploadResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? uploadResponse.message?.en ?? "" : uploadResponse.message?.ar ?? "", completionHandler: nil)
                     }else{
-                        self?.alertMessage(message: uploadResponse.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? uploadResponse.message?.en ?? "" : uploadResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         },
@@ -125,13 +148,15 @@ class VCProfile: BaseController {
                             self?.imgProfilePicture.sd_setShowActivityIndicatorView(true)
                             self?.imgProfilePicture.sd_setIndicatorStyle(.gray)
                             self?.imgProfilePicture.sd_setImage(with: URL(string: profileResponse.data!.image ?? ""))
-                            self?.alertMessage(message: profileResponse.message?.en ?? "", completionHandler: nil)
+                            
+                            
+                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
                             self?.setupUserInfo(profileResponse.data!)
                         }else{
-                            self?.alertMessage(message: profileResponse.message?.en ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })
@@ -157,19 +182,17 @@ class VCProfile: BaseController {
         var valueTuple = ("","","")
         switch sender.tag {
             case 1:
-            valueTuple = ("Name","Edit Name","Please Enter your name")
+            valueTuple = ("Name","Edit Name".localized,"Please Enter your name".localized)
             case 2:
-            valueTuple = ("Email","Edit Email","Please Enter your email")
-            case 3:
-            valueTuple = ("CNIC","Edit CNIC","Please Enter your cnic")
-            case 4:
-            valueTuple = ("1","","")
+            valueTuple = ("Email","Edit Email".localized,"Please Enter your Email".localized)
             case 5:
-            valueTuple = ("City","Edit City","Please Enter your city")
+            valueTuple = ("1","","")
             case 6:
-            valueTuple = ("2","","")
+            valueTuple = ("City","Edit City".localized,"Please Enter your city".localized)
             case 7:
-            valueTuple = ("PhoneNo","Edit PhoneNo","Please Enter your phone no")
+            valueTuple = ("2","","")
+            case 8:
+            valueTuple = ("PhoneNo","Edit Phone no".localized,"Please Enter your Phone no".localized)
         default:
             break
         }
@@ -279,12 +302,12 @@ class VCProfile: BaseController {
                             AppSettings.sharedSettings.user = profileResponse.data!
                             self?.dismiss(animated: true , completion: nil)
                         }else{
-                            self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: {
                                 self?.dismiss(animated: true , completion: nil)
                             })
                         }
                     }else{
-                        self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true , completion: nil)
                         })
                     }

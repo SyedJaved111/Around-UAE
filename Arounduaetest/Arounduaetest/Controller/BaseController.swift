@@ -43,7 +43,7 @@ extension UIViewController{
     
     func alertMessage(message:String,completionHandler:(()->())?) {
         let alert = UIAlertController(title:"", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+        let action = UIAlertAction(title: "Ok".localized, style: .default) { (action:UIAlertAction) in
             completionHandler?()
         }
         alert.addAction(action)

@@ -70,7 +70,6 @@ class VCLogin: BaseController {
             self.txtPassword.withImage(direction: .Left, image: passwordimg!, colorSeparator: bgColor, colorBorder: bgColor)
             
         }
-        
     }
     
     private func setupLocalization(){
@@ -85,20 +84,16 @@ class VCLogin: BaseController {
         self.lblContinueWithGmail.text = "Login with gmail".localized
         self.lblDontHaveAnAccount.text = "Don't have an account?".localized
         
-        if (lang == "ar")
-        {
+        if (lang == "ar"){
             self.showArabicBackButton()
             self.txtPassword.textAlignment = .right
             self.txtEmail.textAlignment = .right
-            
         }
-        else if(lang == "en")
-        {
+        else if(lang == "en"){
             self.addBackButton()
             self.txtPassword.textAlignment = .left
             self.txtEmail.textAlignment = .left
         }
-        
     }
     
     

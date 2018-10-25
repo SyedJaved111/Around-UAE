@@ -41,7 +41,16 @@ class VCOrderDetail: BaseController {
     private func setupData(){
          lblOrderNumber.text = orderData?.payerId
          lblAmount.text = "$\(orderData?.charges ?? 0.0)"
-         lblDate.text = orderData?.createdAt
+        let dateFormatter = DateFormatter()
+        let tempLocale = dateFormatter.locale
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        let date = dateFormatter.date(from: orderData?.createdAt! ?? "")!
+        dateFormatter.dateFormat = "d MMM yyyy"
+        dateFormatter.locale = tempLocale
+        let dateString = dateFormatter.string(from: date)
+        
+         lblDate.text = dateString
          lblTotal.text = "\(orderData?.orderDetails?.count ?? 0)"
          lblStatus.text = orderData?.status
     }

@@ -20,14 +20,14 @@ class CellStores: UICollectionViewCell {
     }
     
     func setupStoreCell(_ store: Stores){
-        lblStore.text = store.storeName?.en ?? ""
+        lblStore.text = (lang == "en") ? store.storeName?.en ?? "" : store.storeName?.ar ?? ""
         imgStores.sd_setShowActivityIndicatorView(true)
         imgStores.sd_setIndicatorStyle(.gray)
         imgStores.sd_setImage(with: URL(string: store.image ?? ""))
     }
     
     func setupSubDivisonCell(_ divisionData: GroupDivisonData){
-        lblStore.text = divisionData.title?.en ?? ""
+        lblStore.text = (lang == "en") ? divisionData.title?.en ?? "" : divisionData.title?.ar ?? ""
         imgStores.sd_setShowActivityIndicatorView(true)
         imgStores.sd_setIndicatorStyle(.gray)
         imgStores.sd_setImage(with: URL(string: divisionData.image ?? ""))

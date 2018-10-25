@@ -68,10 +68,10 @@ class VCSubDivisions: BaseController {
                         if subDivisonResponse.success!{
                             self?.subDivisonlist = subDivisonResponse.data ?? []
                         }else{
-                            self?.alertMessage(message:(subDivisonResponse.message?.en ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message:(lang == "en") ? subDivisonResponse.message?.en ?? "" : subDivisonResponse.message?.ar ?? "", completionHandler: nil)
                        }
                     }else{
-                        self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }

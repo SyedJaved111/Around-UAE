@@ -54,8 +54,7 @@ class VCRegister: BaseController{
         
         if(lang == "en"){
             self.txtAttachNIC.titleLabel?.textAlignment = .left
-        } else if(lang == "ar")
-        {
+        } else if(lang == "ar"){
             self.txtAttachNIC.titleLabel?.textAlignment = .right
         }
         
@@ -92,8 +91,8 @@ class VCRegister: BaseController{
         button.addTarget(self, action: #selector(self.addBtn), for: .touchUpInside)
         txtPhoneNumber.leftView = button
         txtPhoneNumber.leftViewMode = .always
-    }else if(lang == "ar")
-        {
+            
+    }else if(lang == "ar"){
             let button = UIButton()
             button.setImage(image, for: .normal)
             button.frame = CGRect(x: CGFloat(5), y:15 , width: CGFloat(25), height: CGFloat(25))

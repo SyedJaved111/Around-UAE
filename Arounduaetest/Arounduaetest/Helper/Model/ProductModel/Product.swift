@@ -64,8 +64,8 @@ struct ProductName : Decodable {
 }
 
 struct Title : Decodable {
-    let en : String?
-    let ar : String?
+    var en : String?
+    var ar : String?
 }
 
 struct FavouriteProductData : Decodable {

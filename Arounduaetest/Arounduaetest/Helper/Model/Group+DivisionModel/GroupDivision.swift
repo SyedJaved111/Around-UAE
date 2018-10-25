@@ -14,7 +14,7 @@ struct Brands : Decodable {
 }
 
 struct Groups : Decodable {
-    let title : Title?
+    var title : Title?
     var divisions : [Divisions]?
     let image : String?
     let isActive : Bool?

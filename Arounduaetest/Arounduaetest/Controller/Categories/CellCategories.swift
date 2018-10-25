@@ -20,7 +20,7 @@ class CellCategories: UICollectionViewCell {
     }
     
     func setupCell(_ group:Groups, groupImage:UIImage?){
-        lblCategory.text = group.title?.en
+        lblCategory.text =  (lang == "en") ? group.title?.en : group.title?.ar
         if let Image = groupImage {
             imgCategory.image = Image
         }else{

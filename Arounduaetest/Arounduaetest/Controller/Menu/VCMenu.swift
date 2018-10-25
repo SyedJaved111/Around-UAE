@@ -13,6 +13,7 @@ import GoogleSignIn
 
 class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHeaderDelegate {
     
+     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     func didTapButton(in section: Int) {
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProfile") as! VCProfile
@@ -55,15 +56,29 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        if AppSettings.sharedSettings.accountType == "seller"{
-            lblMenuNameseller += shareduserinfo.pages.map({$0.title?.en ?? ""})
-            Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
-            profileTableView.reloadData()
-
-        }else{
-            lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.en ?? ""})
-            Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
+        if(lang == "en"){
+            if AppSettings.sharedSettings.accountType == "seller"{
+                lblMenuNameseller += shareduserinfo.pages.map({$0.title?.en ?? ""})
+                Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
+                profileTableView.reloadData()
+                
+            }else{
+                lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.en ?? ""})
+                Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
+            }
         }
+        else if(lang == "ar"){
+            if AppSettings.sharedSettings.accountType == "seller"{
+                lblMenuNameseller += shareduserinfo.pages.map({$0.title?.ar ?? ""})
+                Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
+                profileTableView.reloadData()
+                
+            }else{
+                lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.ar ?? ""})
+                Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
+            }
+        }
+        
         
         lblMenuNameseller.append("Logout".localized)
         Menuimgseller.append("Logout")
@@ -135,9 +150,9 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
             case 3:
                 moveToSelectLanguage()
             case 4:
-                moveTopage(txt: "Terms and Conditions")
+                moveTopage(txt: "Terms and Conditions".localized)
             case 5:
-                moveTopage(txt: "Privacy Policy")
+                moveTopage(txt: "Privacy Policy".localized)
             case 6:
                 self.logOut()
             default:
@@ -159,9 +174,9 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
             case 5:
                 moveToSelectLanguage()
             case 6:
-                moveTopage(txt: "Terms and Conditions")
+                moveTopage(txt: "Terms and Conditions".localized)
             case 7:
-                moveTopage(txt: "Privacy Policy")
+                moveTopage(txt: "Privacy Policy".localized)
             case 8:
                 self.logOut()
             default:

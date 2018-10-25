@@ -1,10 +1,10 @@
-/* 
-  Localizable.strings
-  AroundUAE
-
-  Created by Apple on 13/09/2018.
-  Copyright © 2018 Apple. All rights reserved.
-*/
+/*
+ Localizable.strings
+ AroundUAE
+ 
+ Created by Apple on 13/09/2018.
+ Copyright © 2018 Apple. All rights reserved.
+ */
 
 "Around UAE" = "Around UAE";
 //splash
@@ -19,20 +19,25 @@
 
 //login screen
 "Login" = "Login";
-"Email" = "Email";
+"Username" = "Username";
 "Password" = "Password";
 "Forgot your password?" = "Forgot your password?";
 "OR" = "OR";
-"Continue with Facebook" = "Continue with Facebook";
-"Continue with Gmail" = "Continue with Gmail";
+"Login with facebook" = "Login with facebook";
+"Login with gmail" = "Login with gmail";
 "Don't have an account?" = "Don't have an account?";
 "Register now" = "Register now";
-
+"Alert" = "Alert";
+"Please Enter Email!" = "Please Enter Email!";
+"Please Enter Valid Email!" = "Please Enter Valid Email!";
+"Please Enter Password" = "Please Enter Password";
 //"Forgot Password"
 "Forgot Password" = "Forgot Password";
 "Forgot your password? Enter your email below " = "Forgot your password? Enter your email below ";
-"Enter Email" = "Enter Email";
+"Enter Code" = "Enter Code";
 "Submit" = "Submit";
+"Resend" = "Resend";
+"Please Enter email" = "Please Enter email";
 
 //"Change Password"
 "Change Password" = "Change Password";
@@ -42,6 +47,11 @@
 "Confirm Password" = "Confirm Password";
 "Cancel" = "Cancel";
 "Update" = "Update";
+
+"Please Enter Old Password" = "Please Enter Old Password";
+"Please Enter New Password" = "Please Enter New Password";
+"Please Enter Confirm Password" = "Please Enter Confirm Password" ;
+"password must contain 6 characters" = "password must contain 6 characters";
 
 
 //Register
@@ -55,12 +65,25 @@
 "Male" = "Male";
 "Female" = "Female";
 "Already have an account?" = "Already have an account?";
+"Confirm Password" = "Confirm Password";
+"Password" = "Password";
+"Email" = "Email";
+"Login now" = "Login now" ;
+
+"Please Enter FirstName" = "Please Enter FirstName";
+"Please Enter LastName" = "Please Enter LastName";
+"Please Enter Phone Number" =  "Please Enter Phone Number";
+"Please Enter Password" = "Please Enter Password";
+"Please Enter Confirm Password" = "Please Enter Confirm Password";
+"Please Enter Address" = "Please Enter Address";
+"Please Select Nic Image" = "Please Select Nic Image" ;
 
 //"Email Verfication"
 "Email Verfication" = "Email Verfication";
 "A verfication code is send to your email, please check your email and enter the verfication code below" = "A verfication code is send to your email, please check your email and enter the verfication code below";
 "Enter Code" = "Enter Code";
 "Resend" = "Resend";
+"Please Enter Code" = "Please Enter Code";
 
 //"Contact Us"
 "Contact Us" = "Contact Us";
@@ -70,8 +93,187 @@
 "Your Comment" = "Your Comment";
 "Comment" = "Comment";
 
+//"TabHomes"
+"Around UAE" = "Around UAE";
+"View More" = "View More";
+"know more detals about various shope, location & tourist spots around UAE " = "know more detals about various shope, location & tourist spots around UAE";
+"GENRAL SERVICES" = "GENRAL SERVICES";
+"Empty List" = "Empty List";
+
+"Sorry there no data is available refresh it or try it later " = "Sorry there no data is available refresh it or try it later ";
+//"VCMENU"
+
+"My Orders"  = "My Orders";
+"Change Settings" =  "Change Settings" ;
+"About Us" = "About Us";
+"Terms & Conditions" =   "Terms & Conditions";
+"Privacy Policy" = "Privacy Policy";
+"Logout" =   "Logout" ;
+"Error" = "Error";
+//"ProductList"
+"Products" = "Products";
 
 
+//"Profile"
+"Name" = "Name";
+"Email" = "Email";
+"Password" = "Password";
+"CNIC" = "CNIC";
+"Gender"  = "Gender";
+"City" = "City";
+"Address" = "Address";
+"Phone no" = "Phone no";
+//"VCPopupprofile"
+
+"Cancel" ="Cancel" ;
+"Submit" ="Submit" ;
+"Edit Name" = "Edit Name";
+"Please Enter your name" = "Please Enter your name" ;
+"Edit Email" = "Edit Email";
+"Please Enter your Email" = "Please Enter your Email";
+"Edit Gender" = "Edit Gender";
+"Please Enter your Gender" = "Please Enter your Gender";
+"Edit Phone no" = "Edit Phone no";
+"Edit CNIC" = "Edit CNIC";
+"Please Enter your CNIC " = "Please Enter your CNIC ";
+"Edit Gender" = "Edit Gender";
+"Please Select your Gender" = "Please Select your Gender";
+"CANCEL" = "CANCEL";
+"UPDATE" = "UPDATE";
+"Edit City" = "Edit City";
+"Please Enter your city" = "Please Enter your city";
+"Male" = "Male";
+"Female" = "Female";
+"Please Enter your Phone no" = "Please Enter your Phone no";
+"Please Enter Name" = "Please Enter Name";
+"Please Enter Email" = "Please Enter Email";
+"Please Enter Valid Email" = "Please Enter Valid Email";
+"Please Enter Password" = "Please Enter Password";
+"Please Enter Password Below 6 Characters" = "Please Enter Password Below 6 Characters";
+"Please Enter CNIC" = "Please Enter CNIC";
+"Please Enter Gender" = "Please Enter Gender";
+"Please Enter City" = "Please Enter City";
+"Please Enter Address" = "Please Enter Address";
+"Please Enter Phone No" = "Please Enter Phone No";
+
+//"Stores"
+"Stores" = "Stores";
+"Sorry there no data available" = "Sorry there no data available";
+"Empty List" = "Empty List";
+//"Resturant"
+"Resturants" = "Resturants";
+
+//"ProductDetail"
+"Product Detail" = "Product Detail";
+//"VCSToreTab"
+"Sorry there no data is available refresh it or try it later " = "Sorry there no data is available refresh it or try it later ";
+//"StoreInfo"
+"Store Info" =  "Store Info";
+//"Store Product"
+"Store Products" = "Store Products";
+
+"Ok" = "Ok";
+
+//VCTerms conditiond
+"Terms and Conditions" = "Terms and Conditions";
+
+//PrivacyPoilcy
+"Privacy Policy" = "Privacy Policy";
+
+//About Us
+"About Us" = "About Us";
+"Follow Us" = "Follow Us";
+
+//ChangeSetting
+"Change Language" = "Change Language";
+"English" = "English";
+"Arabic" = "Arabic";
+"Change Currency" = "Change Currency";
+"USD" = "USD";
+"AED" = "AED";
+"Change Setting" = "Change Setting";
+
+//"VCPopupprofile"
+
+"Cancel" ="Cancel" ;
+"Submit" ="Submit" ;
+"Edit Name" = "Edit Name";
+"Please Enter your name" = "Please Enter your name" ;
+"Edit Email" = "Edit Email";
+"Please Enter your Email" = "Please Enter your Email";
+"Edit Gender" = "Edit Gender";
+"Please Enter your Gender" = "Please Enter your Gender";
+"Edit Phone no" = "Edit Phone no";
+"Edit CNIC" = "Edit CNIC";
+"Please Enter your CNIC " = "Please Enter your CNIC ";
+"Edit Gender" = "Edit Gender";
+"Please Select your Gender" = "Please Select your Gender";
+"CANCEL" = "CANCEL";
+"UPDATE" = "UPDATE";
+"Edit City" = "Edit city";
+"Please Enter your city" = "Please Enter your city";
+"Male" = "Male";
+"Female" = "Female";
+"Please Enter your Phone no" = "Please Enter your Phone no";
+"Please Enter Name" = "Please Enter Name";
+"Please Enter Email" = "Please Enter Email";
+"Please Enter Valid Email" = "Please Enter Valid Email";
+"Please Enter Password" = "Please Enter Password";
+"Please Enter Password Below 6 Characters" = "Please Enter Password Below 6 Characters";
+"Please Enter CNIC" = "Please Enter CNIC";
+"Please Enter Gender" = "Please Enter Gender";
+"Please Enter City" = "Please Enter City";
+"Please Enter Address" = "Please Enter Address";
+"Please Enter Phone No" = "Please Enter Phone No";
 
 
+//"ProductList"
+"Products" = "Products";
 
+//"Profile"
+"Name" = "Name";
+"Email" = "Email";
+"Password" = "Password";
+"CNIC" = "CNIC";
+"Gender"  = "Gender";
+"City" = "City";
+"Address" = "Address";
+"Phone no" = "Phone no";
+"Profile" = "Profile";
+
+//VCGender
+"Male" = "Male";
+"Female" = "Female";
+
+//VCProfile
+"Name:" = "Name:";
+"Email:" = "Email:";
+"CNIC:" = "CNIC:";
+"Gender:" = "Gender:";
+"City:" = "City:";
+"Address:" = "Address:";
+"Phone no:" = "Phone no:";
+
+
+//"Stores"
+"Stores" = "Stores";
+"Sorry there no data available" = "Sorry there no data available";
+"Empty List" = "Empty List";
+//"Resturant"
+"Resturants" = "Resturants";
+
+//"ProductDetail"
+"Product Detail" = "Product Detail";
+//"VCSToreTab"
+"Sorry there no data is available refresh it or try it later " = "Sorry there no data is available refresh it or try it later ";
+//"StoreInfo"
+"Store Info" =  "Store Info";
+//"Store Product"
+"Store Products" = "Store Products";
+
+"Camera not Available" = "Camera not Available";
+"Profile Picture" = "Profile Picture";
+"Camera" = "Camera";
+"Library" = "Library";
+"Stores" = "Stores";
+"Resturants" = "Resturants";

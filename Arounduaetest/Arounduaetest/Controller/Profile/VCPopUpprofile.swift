@@ -14,30 +14,54 @@ class VCPopUpprofile: UIViewController {
     @IBOutlet weak var TxtFiledName: UITextField!
     @IBOutlet weak var titlelbl: UILabel!
     
+    @IBOutlet weak var submitBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
+    
     var titlefield = ""
     var placeholdertxt = ""
     var headertxt = ""
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        
         self.TxtFiledName.setPadding(left: 15, right: 0)
         titlelbl.text = titlefield
         headinglbl.text = headertxt
         
         switch placeholdertxt {
             case "Name":
-               TxtFiledName.text = AppSettings.sharedSettings.user.fullName
+                TxtFiledName.text = AppSettings.sharedSettings.user.fullName
             case "Email":
-               TxtFiledName.text = AppSettings.sharedSettings.user.email
+                TxtFiledName.text = AppSettings.sharedSettings.user.email
             case "Gender":
-               TxtFiledName.text = AppSettings.sharedSettings.user.gender
+                TxtFiledName.text = AppSettings.sharedSettings.user.gender
             case "Address":
                 TxtFiledName.text = AppSettings.sharedSettings.user.address
             case "PhoneNo":
-               TxtFiledName.text = AppSettings.sharedSettings.user.phone
+                TxtFiledName.text = AppSettings.sharedSettings.user.phone
             default:
                 break
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if lang == "en"{
+            TxtFiledName.textAlignment = .left
+            TxtFiledName.textAlignment = .left
+            TxtFiledName.textAlignment = .left
+            TxtFiledName.textAlignment = .left
+            TxtFiledName.textAlignment = .left
+        }else{
+            TxtFiledName.textAlignment = .right
+            TxtFiledName.textAlignment = .right
+            TxtFiledName.textAlignment = .right
+            TxtFiledName.textAlignment = .right
+            TxtFiledName.textAlignment = .right
+        }
+        
+         submitBtn.setTitle("Submit".localized, for: .normal)
+         cancelBtn.setTitle("Cancel".localized, for: .normal)
     }
 
     @IBAction func cancelClick(_ sender: Any) {
@@ -55,19 +79,19 @@ class VCPopUpprofile: UIViewController {
             case "Name":
                 
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Name", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Name".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.fullName = value
             case "Email":
                 
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Email", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Email".localized, completionHandler: nil)
                     return
                 }
                 
                 if !value.isValidEmail{
-                    let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Valid Email", okAction: {
+                    let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid Email".localized, okAction: {
                     })
                     self.present(alertView, animated: true, completion: nil)
                     return
@@ -76,7 +100,7 @@ class VCPopUpprofile: UIViewController {
                 AppSettings.sharedSettings.user.email = value
             case "Password":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Password", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Password".localized, completionHandler: nil)
                     return
                 }
                 
@@ -88,30 +112,30 @@ class VCPopUpprofile: UIViewController {
                 }
             case "CNIC":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter CNIC", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter CNIC".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.nic = value
             case "Gender":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Gender", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Gender".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.gender = value
             case "City":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter City", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter City".localized, completionHandler: nil)
                     return
                 }
             case "Address":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Address", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Address".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.address = value
             case "PhoneNo":
                 guard let value = TxtFiledName.text,value.count > 0 else{
-                    self.alertMessage(message: "Please Enter Phone No", completionHandler: nil)
+                    self.alertMessage(message: "Please Enter Phone No".localized, completionHandler: nil)
                     return
                 }
                 AppSettings.sharedSettings.user.phone = value
@@ -141,12 +165,12 @@ class VCPopUpprofile: UIViewController {
                             NotificationCenter.default.post(name: Notification.Name("ProfileUpdated"), object: nil)
                             self?.dismiss(animated: true , completion: nil)
                         }else{
-                            self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: {
                                 self?.dismiss(animated: true , completion: nil)
                             })
                         }
                     }else{
-                        self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true , completion: nil)
                         })
                     }

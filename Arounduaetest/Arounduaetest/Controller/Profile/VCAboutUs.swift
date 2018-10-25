@@ -14,20 +14,37 @@ class VCAboutUs: UIViewController {
     @IBOutlet var UIButtonFaceBook: UIButton!
     @IBOutlet var UIButtonIn: UIButton!
     @IBOutlet var lblAboutUs: UILabel!
+    @IBOutlet var aboutustitle: UILabel!
+    @IBOutlet var followus: UILabel!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     let shareduserinfo = SharedData.sharedUserInfo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let attributedString = NSMutableAttributedString(string: shareduserinfo.setting.aboutShortDescription?.en ?? "")
-        lblAboutUs.attributedText = attributedString
+   
         UIButtonIn.makeRound()
         UIButtonFaceBook.makeRound()
         UIButtonTwitter.makeRound()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "About Us"
+        if lang == "en"{
+            let attributedString = NSMutableAttributedString(string: shareduserinfo.setting.aboutShortDescription?.en ?? "")
+            lblAboutUs.attributedText = attributedString
+        }else{
+            let attributedString = NSMutableAttributedString(string: shareduserinfo.setting.aboutShortDescription?.ar ?? "")
+            lblAboutUs.attributedText = attributedString
+        }
+        
+        aboutustitle.text = "Around UAE".localized
+        followus.text = "Follow Us".localized
+        self.title = "About Us".localized
+        
         self.setNavigationBar()
-        self.addBackButton()
+        if lang == "ar"{
+            self.showArabicBackButton()
+        }else{
+            self.addBackButton()
+        }
     }
 }

@@ -18,6 +18,7 @@ class VCContactUs: UIViewController{
     @IBOutlet weak var lblEmail: UILabel!
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var lblYourComment: UILabel!
+    @IBOutlet weak var titleheaderLbl: UILabel!
     @IBOutlet weak var txtComment: UITextView!
     @IBOutlet weak var btnSubmit: UIButtonMain!
     @IBOutlet weak var dropdown: UIButton!
@@ -26,8 +27,18 @@ class VCContactUs: UIViewController{
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if lang == "en"{
+            self.addBackButton()
+            self.txtName.textAlignment = .left
+            self.txtEmail.textAlignment = .left
+            self.txtComment.textAlignment = .left
+        }else{
+            self.showArabicBackButton()
+            self.txtName.textAlignment = .right
+            self.txtEmail.textAlignment = .right
+            self.txtComment.textAlignment = .right
+        }
         txtAppFeedback.delegate = self
-        txtAppFeedback.text = "Comment..."
         txtAppFeedback.textColor = UIColor.lightGray
         menudropDown.anchorView = dropdown
         menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -40,7 +51,8 @@ class VCContactUs: UIViewController{
 
     override func viewWillAppear(_ animated: Bool){
         self.setNavigationBar()
-        self.addBackButton()
+
+        titleheaderLbl.text = "What can we Help you with?".localized
         self.title = "Contact Us".localized
         self.appFeedBack.text = "App Feedback".localized
         self.txtAppFeedback.text = "   Comments...".localized
@@ -56,28 +68,28 @@ class VCContactUs: UIViewController{
     private func isCheck()->Bool{
         
         guard let Name = txtName.text, Name.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Your Name", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter your name".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let email = txtEmail.text, email.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Email!", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Email!".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if !email.isValidEmail{
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Valid Email!", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid Email!".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let comment = txtAppFeedback.text, comment != "Comment..." else{
-            self.alertMessage(message: "Please Enter Your Comment!", completionHandler: nil)
+            self.alertMessage(message: "Please Enter Your Comment!".localized, completionHandler: nil)
             return false
         }
         
@@ -101,19 +113,40 @@ class VCContactUs: UIViewController{
         {[weak self](response) in
             self?.finishLoading()
             if let contactResponse = response{
-                if contactResponse.success!{
-                   self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: {
-                     self?.navigationController?.popViewController(animated: true)
-                   })
+                if lang == "en"{
+                    if contactResponse.success!{
+                        
+                        self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
+                    }else{
+                        self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
+                    }
                 }else{
-                    self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: {
-                     self?.navigationController?.popViewController(animated: true)
+                    if contactResponse.success!{
+                        
+                        self?.alertMessage(message: contactResponse.message?.ar ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
+                    }else{
+                        self?.alertMessage(message: contactResponse.message?.ar ?? "", completionHandler: {
+                            self?.navigationController?.popViewController(animated: true)
+                        })
+                    }
+                }
+                
+            }else{
+                 if lang == "en"{
+                    self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
+                      self?.navigationController?.popViewController(animated: true)
+                    })
+                 }else{
+                    self?.alertMessage(message: response?.message?.ar ?? "", completionHandler: {
+                        self?.navigationController?.popViewController(animated: true)
                     })
                 }
-            }else{
-                self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
-                  self?.navigationController?.popViewController(animated: true)
-                })
             }
         })
         {[weak self](error) in

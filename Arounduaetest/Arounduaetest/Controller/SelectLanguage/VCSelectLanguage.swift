@@ -27,6 +27,7 @@ class VCSelectLanguage: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar()
+    
         self.title = "Language".localized
         self.lblSelectLanguage.text = "Select Language".localized
         self.lblSelctlanguageContinue.text = "Select language to continue with".localized

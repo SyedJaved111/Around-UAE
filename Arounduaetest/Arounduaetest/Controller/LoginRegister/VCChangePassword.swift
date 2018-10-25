@@ -61,49 +61,49 @@ class VCChangePassword: BaseController {
     private func isCheck()->Bool{
         
         guard let oldPassword = txtOldPassword.text, oldPassword.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Old Password", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Old Password".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if oldPassword.count < 6 {
-            let alertView = AlertView.prepare(title: "Alert", message: "password must contain 6 characters", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "password must contain 6 characters".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let newPassword = txtNewPassword.text, newPassword.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter New Password", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter New Password".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
          }
         
         if newPassword.count < 6 {
-            let alertView = AlertView.prepare(title: "Alert", message: "password must contain 6 characters", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "password must contain 6 characters".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let confirmPassword = txtConfirmPassword.text, confirmPassword.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Confirm Password", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Confirm Password".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if confirmPassword.count < 6 {
-            let alertView = AlertView.prepare(title: "Alert", message: "password must contain 6 characters", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "password must contain 6 characters".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let confirmpassword = txtConfirmPassword.text, confirmpassword.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert", message: "Please Enter Confirm Password", okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Confirm Password".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false

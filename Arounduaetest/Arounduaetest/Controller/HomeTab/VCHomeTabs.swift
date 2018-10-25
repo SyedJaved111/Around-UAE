@@ -22,7 +22,7 @@ class VCHomeTabs: TTabBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNavigationBar()
-        self.title = "Around UAE"
+        self.title = "Around UAE".localized
         if AppSettings.sharedSettings.user.accountType == "seller"{
             viewControllers?.remove(at: 1)
         }

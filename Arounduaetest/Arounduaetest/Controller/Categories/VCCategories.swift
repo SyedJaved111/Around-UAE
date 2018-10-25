@@ -40,10 +40,7 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
         fetchGroupsData(isRefresh: false)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
+   
     fileprivate func setupDelegates(){
         self.groupCollectionView.emptyDataSetSource = self
         self.groupCollectionView.emptyDataSetDelegate = self
@@ -110,10 +107,12 @@ extension VCCategories{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellCategories", for: indexPath) as! CellCategories
-        let obj = grouplist[indexPath.row]
+        var obj = grouplist[indexPath.row]
         if obj.title?.en == "Stores"{
+            obj.title?.ar = "Stores".localized
             cell.setupCell(obj, groupImage: #imageLiteral(resourceName: "3"))
         }else if obj.title?.en == "Resturants" {
+            obj.title?.ar = "Resturants".localized
             cell.setupCell(obj, groupImage: #imageLiteral(resourceName: "4"))
         }else{
             cell.setupCell(obj, groupImage: nil)
@@ -127,7 +126,7 @@ extension VCCategories{
         }else if indexPath.row == 1{
             self.moveToResturants()
         }else{
-            self.moveToSubDivisons(grouplist[indexPath.row]._id ?? "", groupname: grouplist[indexPath.row].title?.en ?? "")
+            self.moveToSubDivisons(grouplist[indexPath.row]._id ?? "", groupname: (lang == "en") ? grouplist[indexPath.row].title?.en ?? "" : grouplist[indexPath.row].title?.ar ?? "")
         }
     }
     

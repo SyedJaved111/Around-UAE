@@ -32,7 +32,8 @@ class VCStores: BaseController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Stores"
+        self.title = "Stores".localized
+
         self.setNavigationBar()
         self.addBackButton()
     }
