@@ -49,6 +49,12 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         
     }
     
+    func connect() {
+        let namespaceSocket = self.manager.socket(forNamespace: "/around-uae/socket.io")
+        //socket.addHandlers(namespaceSocket)
+        namespaceSocket.connect()
+    }
+    
     @objc func removeAll() {
         
         self.removeNotificationAll()
@@ -148,28 +154,27 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
        // let userToken = UserDefaults.standard.value(forKey: "userAuthToken") as? String
         
         let usertoken = [
-            "token":  userToken
+            "token=":  userToken
         ]
         
         let specs: SocketIOClientConfiguration = [
             .forceWebsockets(true),
             .forcePolling(false),
-            .path("/around-uae/socket.io"),
+//     .path("/socket.io"),≥
             .connectParams(usertoken),
             .log(true)]
         
+       // socket.joinNamespace()
         
         
-        
-        self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae")! , config: specs)
+        self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/socket.io")! , config: specs)
         
         self.socket = manager.defaultSocket
-        
+        socket.joinNamespace()
         self.manager.defaultSocket.on("connected") {data, ack in
             print(data)
         }
         
-
         self.socket.on("connected") { (data, ack) in
             if let arr = data as? [[String: Any]] {
                 if let txt = arr[0]["text"] as? String {

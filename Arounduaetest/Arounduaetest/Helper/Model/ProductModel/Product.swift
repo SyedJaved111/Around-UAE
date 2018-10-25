@@ -2,16 +2,18 @@
 import Foundation
 
 struct Product : Decodable {
-	let _id : String?
-	let productName : ProductName?
-	let description : Description?
-	let about : About?
-    let hasCombinations:Bool?
-	let reviews : [String]?
-	let combinations : [Combinations]?
-	let priceables : [Priceables]?
-	let images : [Images]?
-	let price : Price?
+    let _id : String?
+    let productName : ProductName?
+    let description : Description?
+    let about : About?
+    let reviews : [String]?
+    let hasCombinations : Bool?
+    let price : ProdyctPrice?
+    let available : Int?
+    let combinations : [Combinations]?
+    let images : [ProductImage]?
+    let priceables : [Priceables]?
+    let isFavourite : Bool?
 }
 
 struct About : Decodable {
@@ -31,7 +33,7 @@ struct Combinations : Decodable {
     let price : Price?
     let avalaible : Int?
     let _id : String?
-    let images : [String]?
+    let images : [ProductImage]?
 }
 
 struct Description : Decodable {
@@ -44,11 +46,21 @@ struct Feature : Decodable {
     let title : Title?
 }
 
+struct ProductImage : Codable {
+    let path : String?
+    let isDefault : Bool?
+    let _id : String?
+}
 struct Images : Decodable {
     let path : String?
 }
 
 struct Price : Decodable {
+    let usd : Int?
+    let aed : Double?
+}
+
+struct ProdyctPrice : Decodable {
     let usd : Int?
     let aed : Double?
 }

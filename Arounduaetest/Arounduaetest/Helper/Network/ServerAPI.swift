@@ -95,6 +95,16 @@ enum ServerAPI {
     }
 }
 
+//typeMismatch(
+//    Swift.String,
+//    Swift.DecodingError.Context(codingPath:
+//        [CodingKeys<Product>(stringValue: "data", intValue: nil),
+//        CodingKeys(stringValue: "combinations", intValue: nil),
+//        _JSONKey(stringValue: "Index 0", intValue: 0),
+//        CodingKeys(stringValue: "images", intValue: nil),
+//        _JSONKey(stringValue: "Index 0", intValue: 0)],
+//        debugDescription: "Expected to decode String but found a dictionary instead.", underlyingError: nil))
+
 extension ServerAPI: TargetType,AccessTokenAuthorizable {
 
     var headers: [String : String]? {

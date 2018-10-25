@@ -73,7 +73,7 @@ class PendingTabCell: UITableViewCell {
         
         confirmImage.sd_setShowActivityIndicatorView(true)
         confirmImage.sd_setIndicatorStyle(.gray)
-        confirmImage.sd_setImage(with: URL(string: order.orderDetails?.first?.images?.first ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+        confirmImage.sd_setImage(with: URL(string: order.orderDetails?.first?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
     }
     
     func setupSellerCellData(order:SellerOrder){

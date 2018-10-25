@@ -41,7 +41,7 @@ struct SomeOrderDetails : Decodable {
     let product : OrderProduct?
     let store : String?
     let combinationDetail : [CombinationDetail]?
-    let images : [String]?
+    let images : [Images]?
     let createdAt : String?
     let updatedAt : String?
     let image : String?
