@@ -30,10 +30,16 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
-        self.title = "Notifications"
-       
+        self.title = "Notifications".localized
+       if(lang == "en")
+       {
        addBackButton()
-//        let deleteBtn = UIButton(type: .system)
+        }else
+       {
+        
+       self.showArabicBackButton()
+       }
+        //       let deleteBtn = UIButton(type: .system)
 //        deleteBtn.setImage(#imageLiteral(resourceName: "Delete").withRenderingMode(.alwaysOriginal), for: .normal)
 //        deleteBtn.frame = CGRect(x: 0, y:0, width: 30, height: 30)
 //        deleteBtn.addTarget(self, action: #selector(removeAll), for: .touchUpInside)

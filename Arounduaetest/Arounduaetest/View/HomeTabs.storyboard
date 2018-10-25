@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1948,7 +1947,7 @@
                                                         <real key="value" value="17"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="view:V2D-gr-bCP:value"/>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="8FB7500E-E20B-4992-8FAA-E0ADAF1F233C"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="B3DC80AD-9DA8-46D8-859A-3C0DD1BE7DDA"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T7-rc-cm6">
@@ -2273,7 +2272,7 @@
                                                                     <real key="value" value="0.0"/>
                                                                 </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="view:V2D-gr-bCP:value"/>
-                                                                <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="8FB7500E-E20B-4992-8FAA-E0ADAF1F233C"/>
+                                                                <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="B3DC80AD-9DA8-46D8-859A-3C0DD1BE7DDA"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                     </subviews>
@@ -3488,6 +3487,7 @@
                         <outlet property="btnfacebook" destination="Nuq-xF-AeJ" id="5MW-gP-SrN"/>
                         <outlet property="btnlikeimg" destination="JEN-3i-9FH" id="r1b-fm-4kR"/>
                         <outlet property="btnlinkedin" destination="Gmu-8t-M0Y" id="bAS-Gi-gwu"/>
+                        <outlet property="btnsubmit" destination="aEz-oh-Syn" id="tNf-v8-e0R"/>
                         <outlet property="btntiwitter" destination="cob-eC-Tga" id="Wjs-aQ-Kvo"/>
                         <outlet property="favouriteImage" destination="G6z-wp-6n7" id="2ra-SR-2x2"/>
                         <outlet property="imgBaner" destination="tNH-lo-7hT" id="VIe-B0-9E6"/>
@@ -3661,6 +3661,8 @@
                                             <outlet property="lblDatetxt" destination="bJF-lS-nws" id="1IN-cc-bro"/>
                                             <outlet property="lblStatusTxt" destination="ZcI-xn-gcK" id="qod-3J-Vcf"/>
                                             <outlet property="lblcombinatonDetail" destination="Bkd-XI-wGv" id="uCI-C5-7EH"/>
+                                            <outlet property="lblpDate" destination="tat-DN-bEd" id="jLi-Iz-v1l"/>
+                                            <outlet property="lblpstatus" destination="JuX-3O-d2e" id="206-Bk-ZqQ"/>
                                             <outlet property="orderlblTxt" destination="APO-S8-t1F" id="IJc-aS-uad"/>
                                             <outlet property="shadowImage" destination="ywa-dP-mtX" id="WFq-zN-AcN"/>
                                         </connections>
@@ -3846,6 +3848,8 @@
                                             <outlet property="lblDatetxt" destination="EBa-HR-g1T" id="yM0-hI-IRX"/>
                                             <outlet property="lblStatusTxt" destination="3T2-FS-Vcx" id="iBm-TZ-F41"/>
                                             <outlet property="lblcombinatonDetail" destination="19O-AT-rwE" id="Oeb-E9-MR3"/>
+                                            <outlet property="lblpDate" destination="QQQ-2h-csn" id="Xhc-iY-Qau"/>
+                                            <outlet property="lblpstatus" destination="MWl-Jn-I6J" id="5w3-gR-sit"/>
                                             <outlet property="orderlblTxt" destination="s1C-7Q-Jf0" id="KyX-8e-jC0"/>
                                             <outlet property="shadowImage" destination="Ink-nh-ZI1" id="5Gm-Hb-a7Z"/>
                                         </connections>
@@ -3875,7 +3879,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="whn-Gd-K5A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3026.4000000000001" y="-1335.3823088455774"/>
+            <point key="canvasLocation" x="-3026.4000000000001" y="-1336.2818590704649"/>
         </scene>
         <!--Dilverd Products-->
         <scene sceneID="zUG-kH-sFQ">
@@ -3913,7 +3917,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qym-Hk-brB">
-                                                    <rect key="frame" x="90" y="16" width="44" height="14"/>
+                                                    <rect key="frame" x="90" y="16" width="40.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="Raleway-SemiBold" family="Raleway" pointSize="12"/>
                                                     <color key="textColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -4035,6 +4039,8 @@
                                             <outlet property="lblDatetxt" destination="KaJ-ml-4Gd" id="AyV-c4-wJb"/>
                                             <outlet property="lblStatusTxt" destination="VGw-2e-Ji8" id="AC6-7p-gzv"/>
                                             <outlet property="lblcombinatonDetail" destination="a0O-Nt-IP9" id="4ra-ZC-5fF"/>
+                                            <outlet property="lblpDate" destination="7nk-5W-Syp" id="ObN-kZ-mS5"/>
+                                            <outlet property="lblpstatus" destination="MSs-Cl-P6c" id="jmV-ay-IZQ"/>
                                             <outlet property="orderlblTxt" destination="qym-Hk-brB" id="CyF-Wo-s8O"/>
                                             <outlet property="shadowImage" destination="DBH-7X-XDb" id="myR-rL-4tM"/>
                                         </connections>
@@ -4064,7 +4070,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k0C-ea-N6d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2412" y="-1335.3823088455774"/>
+            <point key="canvasLocation" x="-2412" y="-1336.2818590704649"/>
         </scene>
         <!--Order Detail-->
         <scene sceneID="6N9-41-Xj8">
@@ -4283,6 +4289,8 @@
                                             <outlet property="lblOrderList" destination="VDf-ez-QgQ" id="yDA-86-ewn"/>
                                             <outlet property="lblOrderName" destination="frq-er-eFs" id="wfl-Hu-N1Q"/>
                                             <outlet property="lblStatus" destination="qDl-gy-5ds" id="z2r-Bl-MFm"/>
+                                            <outlet property="lblorderstatus" destination="AqZ-tg-VPP" id="EoU-Ni-1Oi"/>
+                                            <outlet property="lblorderstorname" destination="1md-V4-Zx5" id="Nu6-UC-UEe"/>
                                             <outlet property="orderImage" destination="Vlx-i8-kX6" id="Wtd-9y-f04"/>
                                             <outlet property="shadowImage" destination="KRD-CY-eKp" id="MX8-3j-qxR"/>
                                             <outlet property="storeName" destination="WnF-ah-qdm" id="dy3-JH-sGW"/>
@@ -4347,6 +4355,11 @@
                         <outlet property="lblOrderNumber" destination="WHc-6T-RV9" id="M8Y-rf-fJh"/>
                         <outlet property="lblStatus" destination="fZn-by-15g" id="bwL-m5-6ZE"/>
                         <outlet property="lblTotal" destination="SYm-6n-Z8l" id="5Vm-um-tmA"/>
+                        <outlet property="lblorder" destination="M5e-Tq-2Ha" id="ccS-8Q-ilt"/>
+                        <outlet property="lblorderTotalamount" destination="mIh-n5-XCi" id="qQS-Cv-0Iw"/>
+                        <outlet property="lblorderdate" destination="tmf-pS-nRB" id="9zt-6s-fE3"/>
+                        <outlet property="lblorderstatus" destination="z11-Gf-BNa" id="bFi-AN-1KB"/>
+                        <outlet property="lbltotalamount" destination="QVY-no-sRG" id="EeK-TW-19Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dxt-Nw-gPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6371,17 +6384,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1e-Xt-DTE">
-                                                    <rect key="frame" x="16" y="8" width="311" height="124"/>
+                                                    <rect key="frame" x="16" y="8" width="310" height="124"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ar-UV-aQ4">
-                                                            <rect key="frame" x="8" y="8" width="295" height="67"/>
+                                                            <rect key="frame" x="8" y="8" width="294" height="67"/>
                                                             <string key="text">down vote accepted Set autolayout constraints specifying a fixed space and pin them from your UIView top to the UITextView top and from</string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 seconds ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wjc-jg-CNb">
-                                                            <rect key="frame" x="8" y="83" width="295" height="13.5"/>
+                                                            <rect key="frame" x="8" y="83" width="294" height="13.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -6424,17 +6437,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EIa-s2-JfE">
-                                                    <rect key="frame" x="48" y="8" width="311" height="186"/>
+                                                    <rect key="frame" x="49" y="8" width="310" height="186"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7BZ-to-YUp">
-                                                            <rect key="frame" x="8" y="8" width="295" height="84"/>
+                                                            <rect key="frame" x="8" y="8" width="294" height="84"/>
                                                             <string key="text">down vote accepted Set autolayout constraints specifying a fixed space and pin them from your UIView top to the UITextView top and from your UIView bottom to the UITextView bottom</string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 seconds ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5p-Gz-0ul">
-                                                            <rect key="frame" x="8" y="100" width="295" height="13.5"/>
+                                                            <rect key="frame" x="8" y="100" width="294" height="13.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -8002,7 +8015,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="8FB7500E-E20B-4992-8FAA-E0ADAF1F233C" width="200" height="200">
+        <image name="Attach" width="200" height="200"/>
+        <image name="B3DC80AD-9DA8-46D8-859A-3C0DD1BE7DDA" width="200" height="200">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
 ExQZHh8jJCsuMTtDR0tPUlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdz
@@ -10801,7 +10815,6 @@ lwACe58AAo0LAAKNDQACjRIAAo0gAAKNJAACjSsAAo0wAAKNPQACjUAAAo1NAAKNUgACjVoAAo1dAAKN
 YgACjWoAAo1tAAKNfwACjYIAAo2HAAAAAAAABAEAAAAAAAAAWQAAAAAAAAAAAAAAAAACjYk
 </mutableData>
         </image>
-        <image name="Attach" width="200" height="200"/>
         <image name="Banner-Image" width="1080" height="524"/>
         <image name="Cancel" width="200" height="200"/>
         <image name="Category" width="400" height="300"/>

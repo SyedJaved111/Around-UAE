@@ -10,6 +10,11 @@ import UIKit
 
 class VCOrderDetail: BaseController {
 
+    @IBOutlet weak var lbltotalamount: UILabel!
+    @IBOutlet weak var lblorder: UILabel!
+    @IBOutlet weak var lblorderstatus: UILabel!
+    @IBOutlet weak var lblorderTotalamount: UILabel!
+    @IBOutlet weak var lblorderdate: UILabel!
     @IBOutlet weak var lblOrderNumber: UILabel!
     @IBOutlet weak var lblAmount: UILabel!
     @IBOutlet weak var lblDate: UILabel!
@@ -34,8 +39,22 @@ class VCOrderDetail: BaseController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if(lang == "en")
+        {
         self.addBackButton()
-        self.title = "Order Detail"
+        
+        }else
+        {
+            self.showArabicBackButton()
+        }
+        self.lblorderdate.text = "Date".localized
+        self.lblStatus.text = "Status".localized
+        //self.lblTotal.text = "Total Products".localized
+        self.title = "Order Detail".localized
+        self.lblorderstatus.text = "Status".localized
+        self.lblorderTotalamount.text = "Total Products".localized
+        self.lblorder.text = "Order".localized
+        self.lbltotalamount.text = "Total Amount:".localized
     }
     
     private func setupData(){

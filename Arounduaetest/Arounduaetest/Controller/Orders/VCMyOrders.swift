@@ -33,8 +33,14 @@ class VCMyOrders: ButtonBarPagerTabStripViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        if(lang == "en")
+        {
         self.addBackButton()
-        self.title = "My Orders"
+        }else
+        {
+          self.showArabicBackButton()
+        }
+        self.title = "My Orders".localized
     }
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
       let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCPendingProducts") as! VCPendingProducts

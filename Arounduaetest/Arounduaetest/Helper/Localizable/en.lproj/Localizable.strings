@@ -101,6 +101,7 @@
 "Empty List" = "Empty List";
 
 "Sorry there no data is available refresh it or try it later " = "Sorry there no data is available refresh it or try it later ";
+"View All" = "View All";
 //"VCMENU"
 
 "My Orders"  = "My Orders";
@@ -309,3 +310,36 @@
 
 
 
+//VCFilterProduct
+"Filters" = "Filters";
+"Price Range" = "Price Range";
+"Enter Keyword..." = "Enter Keyword...";
+//VCMyOrders
+"My Orders" =  "My Orders";
+"Completed" =  "Completed";
+"Confirmed" = "Confirmed";
+"Shipped"  = "Shipped";
+//VCOderDetail
+"Order Detail"  = "Order Detail";
+"Date" = "Date";
+"Total Products" = "Total Products";
+"Status" = "Status";
+"Store Name" = "Store Name";
+"Received" = "Received";
+"Order" = "Order";
+"Total Amount:" = "Total Amount:";
+"Quantity:" = "Quantity:";
+//vcCart
+"Cart" = "Cart";
+"Continue to Checkout" = "Continue to Checkout";
+"Total Bill" = "Total Bill";
+//vcFVPalces
+"Places" = "Places";
+"Products" = "Products";
+//vcNotification
+"Notifications" = "Notifications";
+//vcCityDetail
+"Desert Safari"  = "Desert Safari";
+"Submit Feedback" = "Submit Feedback";
+"Share on"  = "Share on";
+"Location" = "Location";

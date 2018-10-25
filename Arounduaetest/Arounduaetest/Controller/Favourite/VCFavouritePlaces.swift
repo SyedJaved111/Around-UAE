@@ -31,7 +31,7 @@ class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.title = "Places"
+        self.title = "Places".localized
     }
     
     fileprivate func setupDelegates(){
@@ -54,10 +54,23 @@ class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
                             self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
                         }
                         else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                               self?.alertMessage(message:(FavouritePlacesData.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                     }else{
+                        if(lang == "en")
+                        {
                         self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                        }else
+                        {
+                             self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            
+                        }
                     }
                     self?.setupDelegates()
                 }
@@ -72,7 +85,7 @@ class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo.init(title: "Places")
+        return IndicatorInfo.init(title: "Places".localized)
     }
 }
 
@@ -93,10 +106,22 @@ extension VCFavouritePlaces{
                                 self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
                                 self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
+                                }else
+                                {
+                                     self?.alertMessage(message:(FavouritePlacesData.message?.ar ?? "").localized, completionHandler: nil)
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                 self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                         self?.setupDelegates()
                     }
@@ -127,10 +152,22 @@ extension VCFavouritePlaces{
                                 self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
                                 self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
+                                }else
+                                {
+                                    self?.alertMessage(message:(FavouritePlacesData.message?.ar ?? "").localized, completionHandler: nil)
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                         self?.setupDelegates()
                     }
@@ -189,10 +226,22 @@ extension VCFavouritePlaces: PotocolCellFavourite{
                         }
                         AppSettings.sharedSettings.user = favouriteResponse.data!
                     }else{
+                        if(lang == "en")
+                        {
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
+                        }else
+                        {
+                            self?.alertMessage(message: (favouriteResponse.message?.ar ?? "").localized, completionHandler: nil)
+                        }
                     }
                 }else{
+                    if(lang == "en")
+                    {
                     self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
+                    }else
+                    {
+                     self?.alertMessage(message: response?.message?.ar ?? "", completionHandler: nil)
+                    }
                 }
             }
         })

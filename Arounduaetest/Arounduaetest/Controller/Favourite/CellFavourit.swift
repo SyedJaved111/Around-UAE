@@ -33,7 +33,13 @@ class CellFavourit: UITableViewCell {
     }
     
     func setupCellData(_ product: Products){
+        if(lang == "en")
+        {
         lblFavouritProduct.text = product.productName?.en
+        }else
+        {
+            lblFavouritProduct.text = product.productName?.ar
+        }
         imgFavourit.sd_setShowActivityIndicatorView(true)
         imgFavourit.sd_setIndicatorStyle(.gray)
         imgFavourit.sd_setImage(with: URL(string: product.images?.first?.path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))

@@ -68,10 +68,22 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                             if orderResponse.success!{
                                 self?.ConfirmedOrderSellerList = orderResponse.data ?? []
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
+                                }else{
+                                    
+                                     self?.alertMessage(message:(orderResponse.message?.ar ?? "").localized, completionHandler: nil)
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                                 self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                         self?.setupDelegates()
                     }
@@ -102,10 +114,22 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                                 self?.ConfirmedOrderList = orderResponse.data ?? []
                                 self?.orderData = orderResponse.data?.first
                             }else{
+                                if(lang == "en")
+                                {
                                 self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
+                                }else
+                                {
+                                    self?.alertMessage(message:(orderResponse.message?.ar ?? "").localized, completionHandler: nil)
+                                }
                             }
                         }else{
+                            if(lang == "en")
+                            {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
+                            }else
+                            {
+                               self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }
                         }
                         self?.setupDelegates()
                     }
@@ -125,7 +149,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo.init(title: "Shipped")
+        return IndicatorInfo.init(title: "Shipped".localized)
     }
 }
 

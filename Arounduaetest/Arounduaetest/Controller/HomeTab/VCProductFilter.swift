@@ -63,7 +63,28 @@ class VCProductFilter: UIViewController {
             self.finishLoading()
         }
     }
-    
+    override func viewWillAppear(_ animated: Bool){
+        self.title = "Search".localized
+        self.setNavigationBar()
+        if(lang == "en")
+        {
+            self.addBackButton()
+        }else
+        {
+            self.showArabicBackButton()
+        }
+        
+        self.lblFilter.text = "Filters".localized
+        self.lblPriceRanger.text = "Price Range".localized
+        self.txtfiledEnterKeyword.placeholder = "Enter Keyword...".localized
+        if(lang == "en")
+        {
+          self.txtfiledEnterKeyword.textAlignment = .left
+        }else
+        {
+              self.txtfiledEnterKeyword.textAlignment = .right
+        }
+    }
     private func setViewHeight(){
         filterTableConstraint.constant = filterTableView.contentSize.height + 10
         self.filterTableView.setNeedsDisplay()
@@ -129,7 +150,7 @@ class VCProductFilter: UIViewController {
                 if let filterResponse = response{
                     if filterResponse.success!{
                         self?.filterdata = filterResponse.data
-                        self?.filterdata?.groups?.insert(Groups(title: Title(en: "Select Group", ar: nil), divisions: nil, image: nil, isActive: nil, isFeatured: nil, _id: nil), at: 0)
+                        self?.filterdata?.groups?.insert(Groups(title: Title(en: "Select Group", ar: "اختر مجموعة"), divisions: nil, image: nil, isActive: nil, isFeatured: nil, _id: nil), at: 0)
                         self?.filterTableView.reloadData()
                     }
                     else{
@@ -243,18 +264,7 @@ class VCProductFilter: UIViewController {
         searchProducts()
     }
    
-    override func viewWillAppear(_ animated: Bool){
-        self.title = "Search".localized
-        self.setNavigationBar()
-        if(lang == "en")
-        {
-            self.addBackButton()
-        }else
-        {
-            self.showArabicBackButton()
-        }
-        
-    }
+    
     
     @IBAction func groupSelection(_ sender: UIButton){
     

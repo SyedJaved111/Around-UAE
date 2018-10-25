@@ -98,7 +98,7 @@
 "Empty List" = "قائمة فارغة";
 
 "Sorry there no data is available refresh it or try it later " = "عذرًا ، لا توجد بيانات متوفرة لتحديثها أو تجربتها لاحقًا";
-
+"View All" = "عرض الكل";
 //"VCMENU"
 
 "My Orders"  = "طلباتي";
@@ -305,3 +305,47 @@
 "NearBy" = "مجاوز";
 "Toprated" =  "أعلى التقييمات";
 "Cities"  = "مدن";
+
+"Please Enter Your Comment!" = "من فضلك أدخل تعليقك";
+"Hows was your experience with instinct Store?" = "هل كانت تجربتك مع متجر غريزة؟";
+"Write Comments..." = "اكتب التعليقات ...";
+"Submit Feedback" = "إرسال ملاحظات";
+"Comment..." = "اكتب التعليقات ...";
+"Add to Cart" = "أضف إلى السلة";
+"Please Select Some Combination or Feature..." = "الرجاء تحديد بعض الدمج أو الميزة ...";
+"Product is not avaliable in your desired quantity" = "المنتج غير متوفر في الكمية المطلوبة";
+"Please Select Your Quantity" = "يرجى اختيار الكمية الخاصة بك";
+//VCFilterProduct
+"Filters" = "مرشحات";
+"Price Range" = "نطاق السعر";
+"Enter Keyword..." = "أدخل الكلمة المفتاحية...";
+//VCMyOrders
+"My Orders" =  "طلباتي";
+"Completed" =  "منجز";
+"Confirmed" = "تم تأكيد";
+"Shipped"  = "شحنها";
+//VCOderDetail
+"Order Detail"  = "تفاصيل الأمر";
+"Date" = "تاريخ";
+"Total Products" = "مجموع المنتجات";
+"Status" = "الحالة";
+"Store Name" = "اسم المتجر";
+"Received" = "تم الاستلام";
+"Order" = "طلب";
+"Total Amount:" = "المبلغ الإجمالي:";
+"Quantity:" = "كمية:";
+//vcCart
+"Cart" = "عربة التسوق";
+"Continue to Checkout" = "الاستمرار في الخروج";
+"Total Bill" = "إجمالي الفاتورة";
+//vcFVPalces
+"Places" = "أماكن";
+"Products" = "منتجات";
+//vcNotification
+"Notifications" = "إخطارات";
+//vcCityDetail
+"Desert Safari"  = "رحلات السفاري الصحراوية";
+"Submit Feedback" = "إرسال ملاحظات";
+"Share on"  = "مشاركه فى";
+"Location" = "موقعك";
+

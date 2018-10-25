@@ -26,7 +26,13 @@ class CellFavouritePlaces: UITableViewCell {
     }
     
     func setupCellData(_ place: Places){
+        if(lang == "en")
+        {
         lblFavouritProduct.text = place.title?.en
+        }else
+        {
+             lblFavouritProduct.text = place.title?.ar
+        }
         ratingView.rating = Double(place.averageRating ?? 0)
         imgFavourit.sd_setShowActivityIndicatorView(true)
         imgFavourit.sd_setIndicatorStyle(.gray)
