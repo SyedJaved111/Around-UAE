@@ -67,6 +67,13 @@ class VCRegister: BaseController{
         super.viewWillAppear(true)
         self.setNavigationBar()
        // self.addBackButton()
+         self.txtFirstName.attributedPlaceholder = NSAttributedString(string: "First Name", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+         self.txtLastName.attributedPlaceholder = NSAttributedString(string: "Last Name", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+         self.txtEmail.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+         self.txtPhoneNumber.attributedPlaceholder = NSAttributedString(string: "Phone No", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+         self.txtPasspord.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+         self.txtConfirmPassword.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+         self.txtAddress.attributedPlaceholder = NSAttributedString(string: "Address", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
         self.setupLocalization()
     }
     

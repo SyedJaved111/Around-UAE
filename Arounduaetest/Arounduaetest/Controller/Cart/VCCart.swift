@@ -65,6 +65,7 @@ class VCCart: UIViewController {
                             self?.btnCheckout.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
+                           
                             if lang == "en"{
                                 self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                                 self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
@@ -95,7 +96,7 @@ class VCCart: UIViewController {
     
     private func deleteCartProduct(_ product:ProductUAE,row:Int){
         startLoading("")
-        CartManager().deleteCartProducts(((product.product?._id!)!,product.combination!),
+        CartManager().deleteCartProducts(((product.product?._id!)!,product.combination ?? ""),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
@@ -105,6 +106,7 @@ class VCCart: UIViewController {
                          self?.cartProductList.remove(at: row)
                          self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                          self?.myTbleView.reloadData()
+                         self?.setViewHeight()
                     }else{
                         self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
@@ -124,7 +126,7 @@ class VCCart: UIViewController {
     private func updateCartQuantity(_ product:ProductUAE,cell:CartCell){
         let indxpath = myTbleView.indexPath(for: cell)
         startLoading("")
-        CartManager().UpdateCartQuantity(("\(cell.viewStepper.value)",(product.product?._id!)!,product.combination!),successCallback:
+        CartManager().UpdateCartQuantity(("\(cell.viewStepper.value)",(product.product?._id!)!,product.combination ?? ""),successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
@@ -170,7 +172,18 @@ class VCCart: UIViewController {
     }
 
     private func setViewHeight(){
-        tableheightconstraint.constant = myTbleView.contentSize.height + 50
+        var tableViewHeight:CGFloat = 0;
+        for i in 0..<self.myTbleView.numberOfRows(inSection: 0){
+           tableViewHeight = tableViewHeight + tableView(self.myTbleView, heightForRowAt: IndexPath(row: i, section: 0))
+        }
+        tableheightconstraint.constant = tableViewHeight
+        if tableheightconstraint.constant == 0{
+            self.btnCheckout.isEnabled = false
+            self.btnCheckout.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        }else{
+            self.btnCheckout.isEnabled = true
+            self.btnCheckout.backgroundColor = #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)
+        }
         self.myTbleView.setNeedsDisplay()
     }
 
@@ -199,7 +212,7 @@ class VCCart: UIViewController {
 extension VCCart: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 126
+        return 100
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

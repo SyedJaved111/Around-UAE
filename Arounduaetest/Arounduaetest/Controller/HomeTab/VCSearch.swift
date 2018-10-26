@@ -44,22 +44,17 @@ class VCSearch: UIViewController {
                             self?.setViewHeight()
                         }
                         else{
-                            if(lang == "en")
-                            {
-                            self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
+                            if(lang == "en"){
+                                self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
                             }else{
-                                
                                 self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: nil)
                             }
                         }
                     }else{
-                        if(lang == "en")
-                        {
+                        if(lang == "en"){
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                            
                         }else{
-                            
-                             self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
                         }
                     }
                 }

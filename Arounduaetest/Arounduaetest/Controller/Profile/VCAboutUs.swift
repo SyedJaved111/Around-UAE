@@ -47,4 +47,21 @@ class VCAboutUs: UIViewController {
             self.addBackButton()
         }
     }
+    
+    
+    @IBAction func openTwiiter(_ sender: UIButton) {
+        guard let url = URL(string: shareduserinfo.setting.twitter ?? "") else { return }
+        UIApplication.shared.open(url)
+    }
+    
+    @IBAction func openFacebook(_ sender: UIButton) {
+        guard let url = URL(string: shareduserinfo.setting.facebook ?? "") else { return }
+        UIApplication.shared.open(url)
+    }
+    
+    @IBAction func openLinkdin(_ sender: UIButton) {
+        guard let url = URL(string: shareduserinfo.setting.linkedin ?? "") else { return }
+        UIApplication.shared.open(url)
+    }
+    
 }

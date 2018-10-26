@@ -21,7 +21,7 @@ class VCSelectLanguage: UIViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         if isFromMenu{
-            addBackButton()
+            //addBackButton()
         }
     }
     

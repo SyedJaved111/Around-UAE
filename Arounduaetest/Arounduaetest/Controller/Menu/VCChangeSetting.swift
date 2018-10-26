@@ -7,37 +7,45 @@
 //
 
 import UIKit
+import DLRadioButton
 
 class VCChangeSetting: UIViewController {
     
-     @IBOutlet weak var changelanguagelbl: UILabel!
-     @IBOutlet weak var englishlbl: UILabel!
-     @IBOutlet weak var arabiclbl: UILabel!
+    @IBOutlet weak var changecurrencylbl: UILabel!
+    @IBOutlet weak var usdlbl: UILabel!
+    @IBOutlet weak var aedlbl: UILabel!
     
-     @IBOutlet weak var changecurrencylbl: UILabel!
-     @IBOutlet weak var usdlbl: UILabel!
-     @IBOutlet weak var aedlbl: UILabel!
-
+    @IBOutlet weak var usdBtn: DLRadioButton!
+    @IBOutlet weak var ardBtn: DLRadioButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(true)
         self.title = "Change Setting".localized
-        
-        changelanguagelbl.text = "Change Language".localized
-        englishlbl.text = "English".localized
-        arabiclbl.text = "Arabic".localized
         
         changecurrencylbl.text = "Change Currency".localized
         usdlbl.text = "USD".localized
         aedlbl.text = "AED".localized
         
         if lang == "ar"{
-            showArabicBackButton()
+             showArabicBackButton()
+             ardBtn.isSelected = true
         }else{
-            addBackButton()
+             addBackButton()
+             usdBtn.isSelected = true
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        if ardBtn.isSelected{
+            UserDefaults.standard.set("aed", forKey: "currency")
+        }else{
+            UserDefaults.standard.set("usd", forKey: "currency")
         }
     }
 }

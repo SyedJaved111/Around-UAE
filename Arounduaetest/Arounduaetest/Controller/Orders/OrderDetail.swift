@@ -48,8 +48,6 @@ class VCOrderDetail: BaseController {
             self.showArabicBackButton()
         }
         self.lblorderdate.text = "Date".localized
-        self.lblStatus.text = "Status".localized
-        //self.lblTotal.text = "Total Products".localized
         self.title = "Order Detail".localized
         self.lblorderstatus.text = "Status".localized
         self.lblorderTotalamount.text = "Total Products".localized
@@ -71,7 +69,7 @@ class VCOrderDetail: BaseController {
         
          lblDate.text = dateString
          lblTotal.text = "\(orderData?.orderDetails?.count ?? 0)"
-         lblStatus.text = orderData?.status
+         lblStatus.text = orderData?.status?.capitalized
     }
 }
 

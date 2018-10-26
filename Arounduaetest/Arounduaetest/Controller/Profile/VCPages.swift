@@ -18,11 +18,21 @@ class VCPages: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if lang == "en"{
-            let attributedString = NSMutableAttributedString(string: shareduserinfo.setting.aboutShortDescription?.en ?? "")
-            lblAboutUs.attributedText = attributedString
+            if titletxt == "Terms and Conditions".localized{
+                let attributedString = NSMutableAttributedString(string: shareduserinfo.pages[0].detail?.en ?? "")
+                lblAboutUs.attributedText = attributedString
+            }else{
+                let attributedString = NSMutableAttributedString(string: shareduserinfo.pages[1].detail?.en ?? "")
+                lblAboutUs.attributedText = attributedString
+            }
         }else{
-            let attributedString = NSMutableAttributedString(string: shareduserinfo.setting.aboutShortDescription?.ar ?? "")
-            lblAboutUs.attributedText = attributedString
+            if titletxt == "Terms and Conditions".localized{
+                let attributedString = NSMutableAttributedString(string: shareduserinfo.pages[0].detail?.ar ?? "")
+                lblAboutUs.attributedText = attributedString
+            }else{
+                let attributedString = NSMutableAttributedString(string: shareduserinfo.pages[1].detail?.ar ?? "")
+                lblAboutUs.attributedText = attributedString
+            }
         }
         
         titlepage.text = titletxt

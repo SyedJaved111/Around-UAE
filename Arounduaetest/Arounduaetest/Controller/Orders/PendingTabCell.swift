@@ -132,7 +132,7 @@ class PendingTabCell: UITableViewCell {
         
         confirmImage.sd_setShowActivityIndicatorView(true)
         confirmImage.sd_setIndicatorStyle(.gray)
-        confirmImage.sd_setImage(with: URL(string: order.images?.first ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+        confirmImage.sd_setImage(with: URL(string: order.images?.first?.path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
     }
 }
 

@@ -14,7 +14,6 @@ import DZNEmptyDataSet
 
 class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
    
-    let locationManager = CLLocationManager()
 
     @IBOutlet weak var NearbyCollectionview: UICollectionView!{
         didSet{
@@ -31,19 +30,23 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
     private var long:Double?
     private var lat:Double?
     
+    lazy var locationManager: CLLocationManager = {
+        var _locationManager = CLLocationManager()
+        _locationManager.delegate = self
+        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        _locationManager.activityType = .automotiveNavigation
+        _locationManager.distanceFilter = 10.0
+        
+        return _locationManager
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NearbyCollectionview.adjustDesign(width: ((view.frame.size.width+20)/2.5))
         initialUI()
         fetchCitiesPlacesData()
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
     }
+
     
     fileprivate func setupDelegates(){
         self.NearbyCollectionview.emptyDataSetSource = self
@@ -81,7 +84,11 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Stores"
+        self.title = "Stores".localized
+        locationManager.requestWhenInUseAuthorization()
+        print("did load")
+        print(locationManager)
+        locationManager.startUpdatingLocation()
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -89,7 +96,7 @@ class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
         lat = locValue.latitude
         long = locValue.longitude
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
         print("Error \(error)")
     }

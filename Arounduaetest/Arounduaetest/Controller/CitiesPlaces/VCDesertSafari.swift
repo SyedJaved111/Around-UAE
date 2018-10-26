@@ -29,6 +29,7 @@ class VCDesertSafari: UIViewController {
     
     var placeid = ""
     var locationManager: CLLocationManager = CLLocationManager()
+    let shareduserinfo = SharedData.sharedUserInfo
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +74,7 @@ class VCDesertSafari: UIViewController {
             lblDesription.text = place.description?.ar ?? ""
         }
       strcomos.rating = place.averageRating ?? 0.0
-      
+
       imgBaner.sd_setShowActivityIndicatorView(true)
       imgBaner.sd_setIndicatorStyle(.gray)
       imgBaner.sd_setImage(with: URL(string: place.images?.first?.path ?? ""))
@@ -82,11 +83,14 @@ class VCDesertSafari: UIViewController {
             self.btnlikeimg.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
             self.favouriteImage.image = #imageLiteral(resourceName: "Favourite")
-            self.btnlikeimg.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
+            self.btnlikeimg.backgroundColor = #colorLiteral(red: 0.6, green: 0.537254902, blue: 0.4901960784, alpha: 1)
         }
-      let location = CLLocation(latitude: place.location![1], longitude: place.location![0])
-      let region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1000, 1000)
-      mapkitlocation.setRegion(region, animated: true)
+        
+        let location = CLLocation(latitude: place.location![0], longitude: place.location![1])
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        self.mapkitlocation.setRegion(region, animated: true)
+        
     }
     
     private func setFavourite(_ placeid: String){
@@ -106,6 +110,7 @@ class VCDesertSafari: UIViewController {
                             self?.favouriteImage.image = #imageLiteral(resourceName: "Favourite")
                             self?.btnlikeimg.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
                         }
+                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
@@ -159,15 +164,18 @@ class VCDesertSafari: UIViewController {
     }
     
     @IBAction func btnLinkedinClick(_ sender: Any){
-        
+        guard let url = URL(string: shareduserinfo.setting.linkedin ?? "") else { return }
+        UIApplication.shared.open(url)
     }
     
     @IBAction func tbnFacebookClick(_ sender: Any){
-        
+        guard let url = URL(string: shareduserinfo.setting.facebook ?? "") else { return }
+        UIApplication.shared.open(url)
     }
     
     @IBAction func btnTwitterClick(_ sender: Any){
-        
+        guard let url = URL(string: shareduserinfo.setting.twitter ?? "") else { return }
+        UIApplication.shared.open(url)
     }
 }
 

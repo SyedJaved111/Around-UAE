@@ -38,6 +38,9 @@ class VCLogin: BaseController {
     
     override func viewWillAppear(_ animated: Bool){
         self.setNavigationBar()
+        self.txtPassword.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+        self.txtEmail.attributedPlaceholder = NSAttributedString(string: "Username",
+        attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.3999774754, green: 0.400015533, blue: 0.3999456167, alpha: 1)])
         self.setupLocalization()
     }
     

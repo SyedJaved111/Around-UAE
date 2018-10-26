@@ -95,16 +95,6 @@ enum ServerAPI {
     }
 }
 
-//typeMismatch(
-//    Swift.String,
-//    Swift.DecodingError.Context(codingPath:
-//        [CodingKeys<Product>(stringValue: "data", intValue: nil),
-//        CodingKeys(stringValue: "combinations", intValue: nil),
-//        _JSONKey(stringValue: "Index 0", intValue: 0),
-//        CodingKeys(stringValue: "images", intValue: nil),
-//        _JSONKey(stringValue: "Index 0", intValue: 0)],
-//        debugDescription: "Expected to decode String but found a dictionary instead.", underlyingError: nil))
-
 extension ServerAPI: TargetType,AccessTokenAuthorizable {
 
     var headers: [String : String]? {
@@ -400,13 +390,17 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             
             case .DeleteProductCart(let params):
                 parameters[DeleteProductCartKey.product.rawValue] = params.product
-                parameters[DeleteProductCartKey.combination.rawValue] = params.combination
+                if params.combination != ""{
+                   parameters[DeleteProductCartKey.combination.rawValue] = params.combination
+                }
                 return parameters
             
             case .CartQuantityUpdate(let params):
                 parameters[CartQuantityUpdateKey.product.rawValue] = params.product
                 parameters[CartQuantityUpdateKey.quantity.rawValue] = params.quantity
-                parameters[CartQuantityUpdateKey.combination.rawValue] = params.combination
+                 if params.combination != ""{
+                    parameters[CartQuantityUpdateKey.combination.rawValue] = params.combination
+                }
                 return parameters
             
             case .ShowConfirmedShippedCompletedOrders(let storeid,let status):

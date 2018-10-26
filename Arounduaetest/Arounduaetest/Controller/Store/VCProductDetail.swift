@@ -85,6 +85,19 @@ class VCProductDetail: UIViewController {
         dic["quantity"] = "\(Int(Productcounter.value))"
         
         if productDetail?.hasCombinations ?? false{
+            
+            
+            if features.count == 0 || characteristics.count == 0{
+                self.alertMessage(message: "Please Select Some Combination or Feature...".localized, completionHandler: nil)
+                return
+            }
+            
+            guard let comb = combination,
+                let avaliablecount = comb.avalaible,avaliablecount > Int(Productcounter.value) else{
+                    self.alertMessage(message: "Product is not avaliable in your desired quantity".localized, completionHandler: nil)
+                    return
+            }
+            
             if let combinations = productDetail?.combinations{
                 for obj in combinations{
                     if obj.features! != features || obj.characteristics! != characteristics {
@@ -151,7 +164,7 @@ class VCProductDetail: UIViewController {
             self.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
             self.favouritImage.image = #imageLiteral(resourceName: "Favourite")
-            self.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
+            self.favouriteBtn.backgroundColor = #colorLiteral(red: 0.6, green: 0.537254902, blue: 0.4901960784, alpha: 1)
         }
         productDescription.text = (lang == "en") ? productdetail.description?.en ?? "" : productdetail.description?.ar ?? ""
     }
@@ -174,18 +187,8 @@ class VCProductDetail: UIViewController {
     
     @IBAction func addtocartclick(_ sender: Any){
         
-        if features.count == 0 || characteristics.count == 0{
-            self.alertMessage(message: "Please Select Some Combination or Feature...".localized, completionHandler: nil)
-            return
-        }
-        
         checKCombination()
         
-        guard let comb = combination,
-            let avaliablecount = comb.avalaible,avaliablecount > Int(Productcounter.value) else{
-                self.alertMessage(message: "Product is not avaliable in your desired quantity".localized, completionHandler: nil)
-                return
-        }
         
         if Productcounter.value == 0.0{
             self.alertMessage(message: "Please Select Your Quantity".localized, completionHandler: nil)
@@ -210,10 +213,12 @@ class VCProductDetail: UIViewController {
                         if AppSettings.sharedSettings.user.favouritePlaces?.contains((self?.productDetail?._id!)!) ?? false{
                             self?.favouritImage.image = #imageLiteral(resourceName: "Favourite-red")
                             self?.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                            
                         }else{
                             self?.favouritImage.image = #imageLiteral(resourceName: "Favourite")
                             self?.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
                         }
+                        self?.alertMessage(message: (lang == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
                     }else{
                         self?.alertMessage(message: (lang == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
                     }

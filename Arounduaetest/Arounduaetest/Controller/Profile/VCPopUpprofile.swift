@@ -39,6 +39,7 @@ class VCPopUpprofile: UIViewController {
                 TxtFiledName.text = AppSettings.sharedSettings.user.address
             case "PhoneNo":
                 TxtFiledName.text = AppSettings.sharedSettings.user.phone
+                TxtFiledName.keyboardType = .phonePad
             default:
                 break
         }

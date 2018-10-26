@@ -21,7 +21,13 @@ extension UIImageView{
 extension UIButton{
     func makeRound(){
         layer.cornerRadius = frame.size.width / 2
-        layer.borderWidth = 1.0
+        //layer.borderWidth = 1.0
+        layer.masksToBounds = false
+        layer.borderColor = UIColor.white.cgColor
+        clipsToBounds = true
+    }
+    func somemakeRound(){
+        layer.cornerRadius = frame.size.width / 2
         layer.masksToBounds = false
         layer.borderColor = UIColor.white.cgColor
         clipsToBounds = true

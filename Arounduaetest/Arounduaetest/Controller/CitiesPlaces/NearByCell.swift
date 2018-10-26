@@ -41,8 +41,7 @@ class NearByCell: UICollectionViewCell {
         if(lang == "en")
         {
         title.text = places.title?.en ?? ""
-        }else
-        {
+        }else{
              title.text = places.title?.ar ?? ""
         }
         placeTitle.sd_setShowActivityIndicatorView(true)
@@ -54,7 +53,7 @@ class NearByCell: UICollectionViewCell {
             self.btnFavourit.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
             self.favroutieImage.image = #imageLiteral(resourceName: "Favourite")
-            self.btnFavourit.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
+            self.btnFavourit.backgroundColor = #colorLiteral(red: 0.05490196078, green: 0.09803921569, blue: 0.1490196078, alpha: 1)
         }
     }
 }

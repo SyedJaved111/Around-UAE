@@ -57,7 +57,7 @@ struct SellerOrder : Decodable {
     let product : Product?
     let store : String?
     let combinationDetail : [CombinationDetail]?
-    let images : [String]?
+    let images : [Images]?
     let createdAt : String?
     let updatedAt : String?
     let image : String?

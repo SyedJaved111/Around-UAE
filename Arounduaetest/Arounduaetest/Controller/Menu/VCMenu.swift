@@ -25,7 +25,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
     var Menuimgbuyer = [
         "Orders",
         "Settings",
-        "ChangePassword",
+        "password-1",
         "Contact",
         "AboutUs",
         "Globe"]
@@ -79,7 +79,6 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
             }
         }
         
-        
         lblMenuNameseller.append("Logout".localized)
         Menuimgseller.append("Logout")
         lblMenuNamebuyer.append("Logout".localized)
@@ -90,6 +89,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.setNavigationBar()
+        profileTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

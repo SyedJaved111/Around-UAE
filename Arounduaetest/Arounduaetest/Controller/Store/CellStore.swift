@@ -18,6 +18,7 @@ protocol storeCellDelegate{
 class CellStore: UICollectionViewCell {
     
     @IBOutlet var UIButtonFavourite: UIButton!
+    @IBOutlet var favouriteImage: UIImageView!
     @IBOutlet var addtocartBtn: UIButton!
     @IBOutlet var imgProducts: UIImageView!
     @IBOutlet var lblProductName: UILabel!
@@ -29,9 +30,9 @@ class CellStore: UICollectionViewCell {
         imgProducts.image = nil
         lblProductName.text = nil
         productPrice.text = nil
-        UIButtonFavourite.makeRound()
+        UIButtonFavourite.somemakeRound()
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderColor = #colorLiteral(red: 0.8745098039, green: 0.8784313725, blue: 0.8823529412, alpha: 1)
     }
     
     func setupProductCell(product:Products){
@@ -47,11 +48,13 @@ class CellStore: UICollectionViewCell {
            UIButtonFavourite.isHidden = true
            addtocartBtn.isHidden = true
         }
-        
+       
         if AppSettings.sharedSettings.user.favouritePlaces?.contains((product._id!)) ?? false{
-            self.UIButtonFavourite.setImage(#imageLiteral(resourceName: "Favourite"), for:.normal)
+            self.favouriteImage.image = #imageLiteral(resourceName: "Favourite-red")
+            self.UIButtonFavourite.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
-            self.UIButtonFavourite.setImage(#imageLiteral(resourceName: "Favourite-red"), for:.normal)
+            self.favouriteImage.image = #imageLiteral(resourceName: "Favourite")
+            self.UIButtonFavourite.backgroundColor = #colorLiteral(red: 0.137254902, green: 0.1176470588, blue: 0.0862745098, alpha: 1)
         }
     }
     

@@ -19,7 +19,6 @@ class VCContactUs: UIViewController{
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var lblYourComment: UILabel!
     @IBOutlet weak var titleheaderLbl: UILabel!
-    @IBOutlet weak var txtComment: UITextView!
     @IBOutlet weak var btnSubmit: UIButtonMain!
     @IBOutlet weak var dropdown: UIButton!
     let menudropDown = DropDown()
@@ -31,12 +30,10 @@ class VCContactUs: UIViewController{
             self.addBackButton()
             self.txtName.textAlignment = .left
             self.txtEmail.textAlignment = .left
-            self.txtComment.textAlignment = .left
         }else{
             self.showArabicBackButton()
             self.txtName.textAlignment = .right
             self.txtEmail.textAlignment = .right
-            self.txtComment.textAlignment = .right
         }
         txtAppFeedback.delegate = self
         txtAppFeedback.textColor = UIColor.lightGray
@@ -61,7 +58,6 @@ class VCContactUs: UIViewController{
         self.lblEmail.text = "Email".localized
         self.txtEmail.placeholder = "Email".localized
         self.lblYourComment.text = "Your Comment".localized
-        self.txtComment.text = "Comment".localized
         self.btnSubmit.setTitle("Submit".localized, for: .normal)
     }
     
@@ -102,7 +98,7 @@ class VCContactUs: UIViewController{
     
     @IBAction func btnSubmitClick(_ sender: Any){
         if isCheck(){
-            contactUs(name: txtName.text!, email: txtEmail.text!, comment: txtComment.text!)
+            contactUs(name: txtName.text!, email: txtEmail.text!, comment: txtAppFeedback.text)
         }
     }
     

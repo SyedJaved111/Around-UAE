@@ -45,7 +45,6 @@ class OrderDetailCell: UITableViewCell {
         self.lblorderstatus.text = "Status".localized
         self.lblorderstorname.text = "Store Name".localized
         self.cellBtn.setTitle("Received".localized, for: .normal)
-        self.lblOrderList.text = "Quantity:".localized
     }
     func setupData(order:SomeOrderDetails){
         if (order.status ?? "") == "shipped"{
@@ -55,7 +54,7 @@ class OrderDetailCell: UITableViewCell {
             cellBtn.isEnabled = false
             cellBtn.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         }
-        str = "Quantity: \(0)"
+        str = "Quantity: \(order.quantity ?? 0)"
         
         for obj in (order.combinationDetail) ?? []{
             str += " "
@@ -74,11 +73,11 @@ class OrderDetailCell: UITableViewCell {
             shadowImage.image = nil
         }
         
-        lblOrderName.text = order._id 
+        lblOrderName.text = (lang == "en") ? order.product?.productName?.en : order.product?.productName?.ar
         lblOrderList.text = str
-        storeName.text = (lang == "en") ? order.product?.productName?.en ?? "" : order.product?.productName?.ar ?? ""
+        storeName.text = (lang == "en") ? order.product?.store?.storeName?.en ?? "" : order.product?.store?.storeName?.ar ?? ""
         lblStatus.text = order.status
-        lblCharges.text = (currency == "aed") ? "$\(order.price?.aed ?? 0)" : "$\(order.price?.usd ?? 0)"
+        lblCharges.text = "$\(order.price?.usd ?? 0)"
         orderImage.sd_setShowActivityIndicatorView(true)
         orderImage.sd_setIndicatorStyle(.gray)
         orderImage.sd_setImage(with: URL(string: (order.image ?? "")), placeholderImage: #imageLiteral(resourceName: "Category"))

@@ -466,7 +466,7 @@ extension UITextField{
     func txtfildborder(){
         self.layer.borderWidth = 0.5
         self.layer.cornerRadius = 3
-        self.layer.borderColor = #colorLiteral(red: 0.7025088241, green: 0.7148430643, blue: 0.7723167519, alpha: 1)
+        self.layer.borderColor = #colorLiteral(red: 0.8745098039, green: 0.8784313725, blue: 0.8823529412, alpha: 1)
         self.clipsToBounds = true
     }
 }
