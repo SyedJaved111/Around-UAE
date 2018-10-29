@@ -9,6 +9,12 @@
 import UIKit
 import DZNEmptyDataSet
 
+enum OrderType:String {
+    case manageproduct
+    case myorder
+    case manageaboutpage
+}
+
 class VCOrderStore: BaseController{
     
     @IBOutlet var collectionViewStores: UICollectionView!{
@@ -23,6 +29,7 @@ class VCOrderStore: BaseController{
     var totalPages = 0
     var currentPage = 0
     var isEmptyViewShown = false
+    var ordertype:OrderType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,6 +172,21 @@ extension VCOrderStore: UICollectionViewDataSource,UICollectionViewDelegate{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+//
+//        switch Order! {
+//            case OrderType.manageproduct:
+//                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+//                let vc = storyboard.instantiateViewController(withIdentifier: "ManageProductVC") as! ManageProductVC
+//                vc.storeid = storeid
+//                self.navigationController?.pushViewController(vc, animated: true)
+//
+////            case OrderType.myorder:
+////
+////            case OrderType.manageaboutpage:
+//
+//            default:break
+//        }
+//
         if let id = storelist[indexPath.row]._id{
             moveToOrderVC(id)
         }

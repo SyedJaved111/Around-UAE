@@ -107,6 +107,7 @@ extension VCOrderDetail:UITableViewDelegate,UITableViewDataSource,OrderDetailPro
                     if completedResponse.success!{
                         
                         self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                            NotificationCenter.default.post(name: Notification.Name("OrderShipped"), object: nil)
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{

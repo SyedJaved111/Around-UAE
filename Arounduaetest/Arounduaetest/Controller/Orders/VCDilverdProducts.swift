@@ -36,9 +36,19 @@ class VCDilverdProducts: BaseController,IndicatorInfoProvider {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(VCDilverdProducts.methodOfReceivedNotification(notification:)), name: Notification.Name("OrderShipped"), object: nil)
+
         fetchConfirmListData(isRefresh: false)
     }
     
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        fetchConfirmListData(isRefresh: false)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("OrderShipped"), object: nil)
+    }
+   
     fileprivate func setupDelegates(){
         self.confirmedTableView.emptyDataSetSource = self
         self.confirmedTableView.emptyDataSetDelegate = self

@@ -99,7 +99,7 @@ class SellerOrderDetail: UIViewController {
         let alert = UIAlertController(title:"Alert", message: "Do you want to ship the order??", preferredStyle: .alert)
         let actionyes = UIAlertAction(title: "Yes", style: .default) { (action:UIAlertAction) in
             self.startLoading("")
-            OrderManager().ShipOrderDetail(self.sellerOrder.product?._id ?? "", storeid: self.storeid,
+            OrderManager().ShipOrderDetail(self.sellerOrder._id ?? "", storeid: self.storeid,
             successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
@@ -107,6 +107,7 @@ class SellerOrderDetail: UIViewController {
                         if let shippedResponse = response{
                             if shippedResponse.success!{
                                 self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                    NotificationCenter.default.post(name: Notification.Name("OrderShipped"), object: nil)
                                     self?.navigationController?.popViewController(animated: true)
                                 })
                             }else{

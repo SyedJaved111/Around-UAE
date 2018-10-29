@@ -39,13 +39,17 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
        "Language".localized]
     
     var Menuimgseller = [
+        "Cart",
         "Orders",
+        "Settings",
         "Contact",
         "AboutUs",
         "Globe"]
     
     var lblMenuNameseller = [
+        "Manage Products".localized,
         "My Orders".localized,
+        "Manage About Page".localized,
         "Contact Us".localized,
         "About Us".localized,
         "Language".localized]
@@ -131,6 +135,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
         
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
@@ -142,18 +147,22 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
             let index = indexPath.row
             switch index {
             case 0:
-                moveToOrderStores()
+                moveToManagePoduct()
             case 1:
-                moveToContactUs()
+                moveToOrderStores()
             case 2:
-                moveToAboutUS()
+                moveToManageAboutPage()
             case 3:
-                moveToSelectLanguage()
+                moveToContactUs()
             case 4:
-                moveTopage(txt: "Terms and Conditions".localized)
+                moveToAboutUS()
             case 5:
-                moveTopage(txt: "Privacy Policy".localized)
+               moveToSelectLanguage()
             case 6:
+               moveTopage(txt: "Terms and Conditions".localized)
+            case 7:
+               moveTopage(txt: "Privacy Policy".localized)
+            case 8:
                 self.logOut()
             default:
                 return
@@ -183,6 +192,18 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
                 return
             }
         }
+    }
+    
+    private func moveToManageAboutPage(){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderStore") as! VCOrderStore
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func moveToManagePoduct(){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderStore") as! VCOrderStore
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func moveToChangePassword(){

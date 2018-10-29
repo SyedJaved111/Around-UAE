@@ -30,13 +30,22 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),for: UIControlEvents.valueChanged)
         refreshControl.tintColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
-        
         return refreshControl
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(VCDilverdProducts.methodOfReceivedNotification(notification:)), name: Notification.Name("OrderShipped"), object: nil)
+        
         fetchConfirmListData(isRefresh: false)
+    }
+    
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        fetchConfirmListData(isRefresh: false)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("OrderShipped"), object: nil)
     }
     
     fileprivate func setupDelegates(){

@@ -67,9 +67,7 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
     }
-    
 
-    
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
         
         if isRefresh == false{
