@@ -31,7 +31,7 @@ enum APIURL: String{
     case updateProfileURL          = "auth/update-profile"
     case uploadImageURL            = "auth/upload-image"
     case removeImageURL            = "auth/remove-image"
-    case aboutPageURL              = "manage/about-page"
+    case aboutPageURL              = "auth/manage/about-page"
     case userStoresURL             = "auth/user/stores"
 
     case productDetailURL          = "product/detail"

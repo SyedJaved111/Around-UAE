@@ -55,9 +55,6 @@ typealias updateProfileParams = (
 typealias AboutPageParams = (
     description_en:String,
     description_ar:String,
-    location:String,
-    latitude:String,
-    longitude:String,
     image:UIImage,
     id:String
 )

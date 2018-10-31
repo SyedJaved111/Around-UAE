@@ -42,7 +42,18 @@ class ManageProductVC: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Products".localized
+        self.setNavigationBar()
         fetchProductInfo(storeid, isRefresh: false)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if lang == "en"{
+            addBackButton()
+        }else{
+            showArabicBackButton()
+        }
     }
     
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
@@ -54,7 +65,11 @@ class ManageProductVC: BaseController {
         StoreManager().getStoreDetail(storeId,successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
-                    self?.finishLoading()
+                    if isRefresh == false {
+                        self?.finishLoading()
+                    }else {
+                        self?.refreshControl.endRefreshing()
+                    }
                     if let productResponse = response{
                         if productResponse.success!{
                             self?.productarray = productResponse.data?.products ?? []
@@ -69,7 +84,11 @@ class ManageProductVC: BaseController {
             })
         {[weak self](error) in
             DispatchQueue.main.async {
-                self?.finishLoading()
+                if isRefresh == false {
+                    self?.finishLoading()
+                }else {
+                    self?.refreshControl.endRefreshing()
+                }
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
@@ -83,8 +102,8 @@ extension ManageProductVC: UICollectionViewDelegate,UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellNearBy", for: indexPath) as! CellNearBy
-        cell.setupNearbyData(product: productarray[indexPath.row])
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ManageProductCell", for: indexPath) as! ManageProductCell
+        cell.setupCellData(product:productarray[indexPath.row])
         return cell
     }
     

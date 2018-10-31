@@ -73,9 +73,6 @@ enum updateProfileKey:String{
 enum AboutPageKey:String{
     case DESCRIPTION_EN = "description[en]"
     case DESCRIPTION_AR = "description[ar]"
-    case LOCATION = "location"
-    case LATITUDE = "latitude"
-    case LONGITUDE = "longitude"
     case IMAGE = "image"
     case ID = "id"
 }

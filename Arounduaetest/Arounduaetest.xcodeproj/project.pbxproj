@@ -110,6 +110,9 @@
 		18E1C66C216B36EE00446FAE /* VCForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C667216B36EE00446FAE /* VCForgotPassword.swift */; };
 		18E1C680216B3BA200446FAE /* VCSelectLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C67F216B3BA200446FAE /* VCSelectLanguage.swift */; };
 		18E1C682216B912A00446FAE /* VCFilteredProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C681216B912A00446FAE /* VCFilteredProductList.swift */; };
+		18E77B8F2189C334004E21F0 /* ManageAboutPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B8E2189C334004E21F0 /* ManageAboutPageVC.swift */; };
+		18E77B982189D438004E21F0 /* ManageAboutpageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B912189D430004E21F0 /* ManageAboutpageData.swift */; };
+		18E77B9D2189D438004E21F0 /* CanReviewUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B962189D437004E21F0 /* CanReviewUsers.swift */; };
 		1F089D8D2160D46900505CDC /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F089D8C2160D46900505CDC /* TextFieldExtension.swift */; };
 		1F5561DD216143E1007B1A8E /* VCAboutUs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5561DC216143E1007B1A8E /* VCAboutUs.swift */; };
 		1F5561DF21614702007B1A8E /* VCPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5561DE21614702007B1A8E /* VCPages.swift */; };
@@ -309,6 +312,9 @@
 		18E1C678216B386D00446FAE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18E1C67F216B3BA200446FAE /* VCSelectLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCSelectLanguage.swift; sourceTree = "<group>"; };
 		18E1C681216B912A00446FAE /* VCFilteredProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCFilteredProductList.swift; sourceTree = "<group>"; };
+		18E77B8E2189C334004E21F0 /* ManageAboutPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAboutPageVC.swift; sourceTree = "<group>"; };
+		18E77B912189D430004E21F0 /* ManageAboutpageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAboutpageData.swift; sourceTree = "<group>"; };
+		18E77B962189D437004E21F0 /* CanReviewUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanReviewUsers.swift; sourceTree = "<group>"; };
 		1F089D8C2160D46900505CDC /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		1F5561DC216143E1007B1A8E /* VCAboutUs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCAboutUs.swift; sourceTree = "<group>"; };
 		1F5561DE21614702007B1A8E /* VCPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPages.swift; sourceTree = "<group>"; };
@@ -434,6 +440,7 @@
 				187BB9622161EBFB0070D155 /* Message.swift */,
 				187BB9712161EBFB0070D155 /* Errors.swift */,
 				1FB6937F216FD5FE003D5C34 /* SomeMessage.swift */,
+				18E77B902189D41E004E21F0 /* ManageAboutPage */,
 				189B00A82177203700BA7BB4 /* OrderModel */,
 				18D0568F21676B59007510BF /* Notification */,
 				187BB9632161EBFB0070D155 /* Group+DivisionModel */,
@@ -623,6 +630,15 @@
 			path = ChatController;
 			sourceTree = "<group>";
 		};
+		18E77B902189D41E004E21F0 /* ManageAboutPage */ = {
+			isa = PBXGroup;
+			children = (
+				18E77B962189D437004E21F0 /* CanReviewUsers.swift */,
+				18E77B912189D430004E21F0 /* ManageAboutpageData.swift */,
+			);
+			path = ManageAboutPage;
+			sourceTree = "<group>";
+		};
 		1F5A3F34215F8AA800B0CBC6 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -763,6 +779,7 @@
 				18B557F9217DFF6E0077F939 /* VCChangeSetting.swift */,
 				18DFF4572186E5D200B18F1B /* ManageProductVC.swift */,
 				18DFF4592186E60700B18F1B /* ManageProductCell.swift */,
+				18E77B8E2189C334004E21F0 /* ManageAboutPageVC.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -1216,6 +1233,7 @@
 				1F5A4004215F8AA900B0CBC6 /* VCStores.swift in Sources */,
 				1F5A4016215F8AA900B0CBC6 /* UICustomTextView.swift in Sources */,
 				18D056A821677F2F007510BF /* DateExtensions.swift in Sources */,
+				18E77B8F2189C334004E21F0 /* ManageAboutPageVC.swift in Sources */,
 				18BB210E21650E8E005727F2 /* VCTopratedProductList.swift in Sources */,
 				1F089D8D2160D46900505CDC /* TextFieldExtension.swift in Sources */,
 				187BBA6D2162372F0070D155 /* VCFavouritePlaces.swift in Sources */,
@@ -1311,6 +1329,7 @@
 				18DFF45A2186E60700B18F1B /* ManageProductCell.swift in Sources */,
 				18D0567A216748D4007510BF /* NotificationVC.swift in Sources */,
 				18D0568E21676898007510BF /* NotificationCountModel .swift in Sources */,
+				18E77B9D2189D438004E21F0 /* CanReviewUsers.swift in Sources */,
 				18B150362164E4B800FF87A4 /* DefaultAlamofireManager.swift in Sources */,
 				1F5A401C215F8AA900B0CBC6 /* UIViewHelper.swift in Sources */,
 				18BA966E2163483F0009AE52 /* VCDilverdProducts.swift in Sources */,
@@ -1323,6 +1342,7 @@
 				1F5A3FFF215F8AA900B0CBC6 /* CellStore.swift in Sources */,
 				1F5A4007215F8AA900B0CBC6 /* AroundUAE.xcdatamodeld in Sources */,
 				1F5A3FDE215F8AA900B0CBC6 /* BaseController.swift in Sources */,
+				18E77B982189D438004E21F0 /* ManageAboutpageData.swift in Sources */,
 				18D056982167776C007510BF /* MoreData.swift in Sources */,
 				187BB98B2161EBFB0070D155 /* CartManager.swift in Sources */,
 				1F5A3FE3215F8AA900B0CBC6 /* VCCities.swift in Sources */,

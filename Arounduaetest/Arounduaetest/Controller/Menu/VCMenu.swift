@@ -197,12 +197,14 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
     private func moveToManageAboutPage(){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderStore") as! VCOrderStore
+        vc.ordertype = OrderType.manageaboutpage
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func moveToManagePoduct(){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderStore") as! VCOrderStore
+        vc.ordertype = OrderType.manageproduct
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -253,6 +255,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
     func moveToOrderStores(){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderStore") as! VCOrderStore
+        vc.ordertype = OrderType.myorder
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

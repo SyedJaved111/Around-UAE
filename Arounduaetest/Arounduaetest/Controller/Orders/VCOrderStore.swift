@@ -39,9 +39,13 @@ class VCOrderStore: BaseController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Stores"
+        self.title = "Stores".localized
         self.setNavigationBar()
-        self.addBackButton()
+        if lang == "en"{
+            addBackButton()
+        }else{
+            showArabicBackButton()
+        }
     }
     
     fileprivate func setupDelegates(){
@@ -172,23 +176,25 @@ extension VCOrderStore: UICollectionViewDataSource,UICollectionViewDelegate{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-//
-//        switch Order! {
-//            case OrderType.manageproduct:
-//                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-//                let vc = storyboard.instantiateViewController(withIdentifier: "ManageProductVC") as! ManageProductVC
-//                vc.storeid = storeid
-//                self.navigationController?.pushViewController(vc, animated: true)
-//
-////            case OrderType.myorder:
-////
-////            case OrderType.manageaboutpage:
-//
-//            default:break
-//        }
-//
-        if let id = storelist[indexPath.row]._id{
-            moveToOrderVC(id)
+
+        switch ordertype! {
+            case OrderType.manageproduct:
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "ManageProductVC") as! ManageProductVC
+                vc.storeid = storelist[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
+
+            case OrderType.myorder:
+                if let id = storelist[indexPath.row]._id{
+                    moveToOrderVC(id)
+                }
+            
+            case OrderType.manageaboutpage:
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "ManageAboutPageVC") as! ManageAboutPageVC
+                vc.storeObject = storelist[indexPath.row]
+                self.navigationController?.pushViewController(vc, animated: true)
+
         }
     }
     

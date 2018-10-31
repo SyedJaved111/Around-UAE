@@ -114,7 +114,7 @@ class VCHomeTabs: TTabBarViewController {
             .connectParams(usertoken),
             .log(true)]
         
-        self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/")! , config: specs)
+        self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/socket.io")! , config: specs)
         
         self.socket = manager.defaultSocket
         

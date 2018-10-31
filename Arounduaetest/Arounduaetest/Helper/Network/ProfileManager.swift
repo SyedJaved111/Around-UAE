@@ -98,11 +98,11 @@ class ProfileManager{
     }
     
     //MARK: - AboutPage
-    func aboutPage(_ params:AboutPageParams,successCallback : @escaping (Response<User>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+    func aboutPage(_ params:AboutPageParams,successCallback : @escaping (Response<ManageAboutpageData>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .AboutPage(params),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<User>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<ManageAboutpageData>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)

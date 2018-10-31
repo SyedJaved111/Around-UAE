@@ -6,6 +6,7 @@ class VCMyOrders: ButtonBarPagerTabStripViewController {
     
     @IBOutlet var collectionViewPager: ButtonBarView!
     var storeid = ""
+    
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .red
         settings.style.buttonBarItemBackgroundColor = .white
@@ -29,19 +30,18 @@ class VCMyOrders: ButtonBarPagerTabStripViewController {
         collectionViewPager.layer.borderWidth = 1
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
         super.viewDidLoad()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if(lang == "en")
-        {
-        self.addBackButton()
-        }else
-        {
+        if(lang == "en"){
+          self.addBackButton()
+        }else{
           self.showArabicBackButton()
         }
+        self.setNavigationBar()
         self.title = "My Orders".localized
     }
+    
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
       let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCPendingProducts") as! VCPendingProducts
       let child_3 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCShippedProducts") as! VCShippedProducts

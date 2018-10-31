@@ -55,11 +55,11 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         
     }
     
-    func connect() {
-        let namespaceSocket = self.manager.socket(forNamespace: "/around-uae/socket.io")
-        //socket.addHandlers(namespaceSocket)
-        namespaceSocket.connect()
-    }
+//    func connect() {
+//        let namespaceSocket = self.manager.socket(forNamespace: "/around-uae/socket.io")
+//        //socket.addHandlers(namespaceSocket)
+//        namespaceSocket.connect()
+//    }
     
     @objc func removeAll() {
         
@@ -160,13 +160,13 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
        // let userToken = UserDefaults.standard.value(forKey: "userAuthToken") as? String
         
         let usertoken = [
-            "token=":  userToken
+            "token":  userToken
         ]
         
         let specs: SocketIOClientConfiguration = [
             .forceWebsockets(true),
             .forcePolling(false),
-//     .path("/socket.io"),≥
+            .path("/around-uae/socket.io"),
             .connectParams(usertoken),
             .log(true)]
         
@@ -176,7 +176,6 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/socket.io")! , config: specs)
         
         self.socket = manager.defaultSocket
-        socket.joinNamespace()
         self.manager.defaultSocket.on("connected") {data, ack in
             print(data)
         }

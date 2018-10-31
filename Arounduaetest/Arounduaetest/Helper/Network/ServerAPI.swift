@@ -488,7 +488,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.gender).data(using: .utf8)!), name: updateProfileKey.GENDER.rawValue))
             
             if let profileImageData = UIImageJPEGRepresentation(parameters.nic, 0.8){
-             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+            multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
                  name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
               }
             
@@ -505,14 +505,11 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         case .AboutPage(let parameters):
             let profileImageData = UIImageJPEGRepresentation(parameters.image, 1.0)!
             var multipartFormDataArray = [MultipartFormData]()
-        multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.description_en).data(using: .utf8)!), name: AboutPageKey.DESCRIPTION_EN.rawValue))
-        multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.description_ar).data(using: .utf8)!), name: AboutPageKey.DESCRIPTION_AR.rawValue))
-        multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.location).data(using: .utf8)!), name: AboutPageKey.LOCATION.rawValue))
-        multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.latitude).data(using: .utf8)!), name: AboutPageKey.LATITUDE.rawValue))
-        multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.longitude).data(using: .utf8)!), name: AboutPageKey.LONGITUDE.rawValue))
-        multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.id).data(using: .utf8)!), name: AboutPageKey.ID.rawValue))
-        multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-            name: "image", fileName: "nicimage.png", mimeType: "image/jpeg"))
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.description_en).data(using: .utf8)!), name: AboutPageKey.DESCRIPTION_EN.rawValue))
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.description_ar).data(using: .utf8)!), name: AboutPageKey.DESCRIPTION_AR.rawValue))
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.id).data(using: .utf8)!), name: AboutPageKey.ID.rawValue))
+            multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+            name: "image", fileName: "store.png", mimeType: "image/jpeg"))
             
             return multipartFormDataArray
             
