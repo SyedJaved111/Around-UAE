@@ -361,3 +361,8 @@
 "Unable To Login" = "غير قادر على تسجيل الدخول";
 "Try Again!" = "حاول مرة أخري!";
 "Sorry there is no data available" = "عذرا لا توجد بيانات متاحة";
+"Please Enter Description For English" = "يرجى إدخال الوصف بالإنجليزية";
+"Please Enter Description For Arabic" = "يرجى إدخال الوصف للغة العربية";
+"Manage Store About" = "إدارة مخزن حول";
+"Description(English)" = "وصف (الإنجليزية)";
+"Description(Arabic)" = "وصف (العربية)";

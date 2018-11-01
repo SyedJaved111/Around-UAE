@@ -209,7 +209,7 @@ class VCProductFilter: UIViewController {
         }
         
         startLoading("")
-        ProductManager().SearchProduct(("",min,max,[String](),txt),
+        ProductManager().SearchProduct(((lang == "en") ? "en" : "ar",min,max,[String](),txt),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {

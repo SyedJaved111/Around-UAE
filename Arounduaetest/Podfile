@@ -32,7 +32,8 @@ target 'Arounduaetest' do
   pod 'ObjectMapper'
   pod 'RangeSeekSlider'
   pod 'SwiftRangeSlider'
-pod 'Socket.IO-Client-Swift'
+  pod 'Socket.IO-Client-Swift'
+  pod 'UITextView+Placeholder'
   pod 'DropDown'
   pod "MIBadgeButton-Swift", :git => 'https://github.com/mustafaibrahim989/MIBadgeButton-Swift.git', :branch => 'master'
   pod "MIBadgeButton"

@@ -43,7 +43,8 @@ class CellNearBy: UICollectionViewCell {
         uiviewcomosenearby.rating = Double(product.averageRating ?? 0)
         imgproductneaby.sd_addActivityIndicator()
         imgproductneaby.sd_setIndicatorStyle(.gray)
-        lblpricenearby.text = "$\(product.price?.usd ?? 0)"
+        lblpricenearby.text = (currency == "aed") ?
+            "AED\(product.price?.aed ?? 0.0)" : "$\(product.price?.usd ?? 0)"
         imgproductneaby.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
         
         if AppSettings.sharedSettings.accountType == "seller"{

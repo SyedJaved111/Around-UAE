@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import UITextView_Placeholder
 
 class ManageAboutPageVC: UIViewController {
 
@@ -29,9 +30,16 @@ class ManageAboutPageVC: UIViewController {
         setNavigationBar()
         if lang == "en"{
             addBackButton()
+            lblEnglishTextField.textAlignment = .left
+            lblArabicTextField.textAlignment = .left
         }else{
             showArabicBackButton()
+            lblEnglishTextField.textAlignment = .right
+            lblArabicTextField.textAlignment = .right
         }
+        
+        lblEnglishTextField.placeholder = "Description(English)"
+        lblArabicTextField.placeholder = "Description(Arabic)"
     }
     
     private func setupData(){
@@ -52,14 +60,14 @@ class ManageAboutPageVC: UIViewController {
     private func isCheck()->Bool{
         
         guard let englishdescription = lblEnglishTextField.text, englishdescription.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Description For English!".localized, okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Description For English".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let arabicdescription = lblArabicTextField.text, arabicdescription.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Description For Arabic!".localized, okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Description For Arabic".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false

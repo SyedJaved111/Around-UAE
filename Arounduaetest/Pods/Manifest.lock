@@ -21,18 +21,18 @@ PODS:
   - GooglePlaces (2.7.0):
     - GoogleMaps/Base (= 2.7.0)
   - GoogleSignIn (4.1.2):
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
     - GTMOAuth2 (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/DebugUtils (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GoogleToolboxForMac/Defines (2.1.4)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4):
     - GoogleToolboxForMac/DebugUtils (= 2.1.4)
     - GoogleToolboxForMac/Defines (= 2.1.4)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.4)
   - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
   - GTMSessionFetcher (1.1.15):
@@ -77,6 +77,7 @@ PODS:
   - SwiftRangeSlider (2.0.0)
   - SwiftyJSON (4.1.0)
   - Toast-Swift (3.0.1)
+  - UITextView+Placeholder (1.2.1)
   - XLPagerTabStrip (8.0.1)
 
 DEPENDENCIES:
@@ -107,45 +108,8 @@ DEPENDENCIES:
   - SwiftRangeSlider
   - SwiftyJSON
   - Toast-Swift
+  - UITextView+Placeholder
   - XLPagerTabStrip
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Alamofire
-    - Bolts
-    - CardIO
-    - Cosmos
-    - CountryPickerSwift
-    - DLRadioButton
-    - DropDown
-    - DZNEmptyDataSet
-    - FBSDKCoreKit
-    - FBSDKLoginKit
-    - FlagKit
-    - GoogleMaps
-    - GooglePlaces
-    - GoogleSignIn
-    - GoogleToolboxForMac
-    - GTMOAuth2
-    - GTMSessionFetcher
-    - ImageSlideshow
-    - IQKeyboardManagerSwift
-    - KMPlaceholderTextView
-    - MBProgressHUD
-    - MIBadgeButton
-    - Moya
-    - NVActivityIndicatorView
-    - ObjectMapper
-    - PayPal-iOS-SDK
-    - RangeSeekSlider
-    - Result
-    - SDWebImage
-    - Socket.IO-Client-Swift
-    - Starscream
-    - SwiftRangeSlider
-    - SwiftyJSON
-    - Toast-Swift
-    - XLPagerTabStrip
 
 EXTERNAL SOURCES:
   MIBadgeButton-Swift:
@@ -193,8 +157,9 @@ SPEC CHECKSUMS:
   SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
+  UITextView+Placeholder: 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 21d151c2a7c23dbb9c081d824275beb40869ed1f
+PODFILE CHECKSUM: 4c01fc8df414eae4ae46f8aa91b452e05d44cf08
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.4.0

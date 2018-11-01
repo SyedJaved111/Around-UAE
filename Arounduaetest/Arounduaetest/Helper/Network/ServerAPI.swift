@@ -108,8 +108,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
     var authorizationType: AuthorizationType {
         switch self {
           case .UserLogin,.ForgotPassword,.RegisterUser,
-             .EmailVerification,.ResendVerification,
-             .ResetPassword,.CitiesPlaces,.SearchProduct,.SocialLogin,.SearchFilter:
+             .ResetPassword,.CitiesPlaces,.SearchProduct,
+             .SocialLogin,.SearchFilter:
             return .none
           default:
             return .basic
