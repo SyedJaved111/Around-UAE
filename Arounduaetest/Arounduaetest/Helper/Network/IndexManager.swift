@@ -64,13 +64,13 @@ class IndexManager{
         })
     }
     
-    //MARK: - ContactUs
-    func getSearchFilterData(successCallback : @escaping (Response<FilterData>?) -> Void,
+    //MARK: - FilterSeachData
+    func getSearchFilterData(_ params: SearchFilterParams,successCallback : @escaping (Response<FilterSeachData>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
-        NetworkManager.request(target: .SearchFilter,
+        NetworkManager.request(target: .SearchFilter(params),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<FilterData>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<FilterSeachData>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)

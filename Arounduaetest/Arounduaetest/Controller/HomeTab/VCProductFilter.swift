@@ -15,7 +15,6 @@ class VCProductFilter: UIViewController {
     
     @IBOutlet weak var btnSearchclick: UIButtonMain!
     @IBOutlet weak var ViewRanger: RangeSlider!
-    @IBOutlet weak var lblPriceRanger: UILabel!
     @IBOutlet weak var lblFilter: UILabel!
     @IBOutlet weak var txtfiledEnterKeyword: UITextField!
     @IBOutlet weak var filterTableView: UITableView!
@@ -25,18 +24,28 @@ class VCProductFilter: UIViewController {
     @IBOutlet weak var selectGroupBtn: UIButton!
     @IBOutlet weak var selectDivisionBtn: UIButton!
     @IBOutlet weak var selectSectionBtn: UIButton!
+    @IBOutlet weak var selectManufacturesBtn: UIButton!
     
     @IBOutlet weak var selectGroupArrow: UIImageView!
     @IBOutlet weak var selectDivisionArrow: UIImageView!
     @IBOutlet weak var selectSectionArrow: UIImageView!
+    @IBOutlet weak var selectManufacturesArrow: UIImageView!
     
     @IBOutlet weak var selectGrouplbl: UILabel!
     @IBOutlet weak var selectDivisionlbl: UILabel!
     @IBOutlet weak var selectSectionlbl: UILabel!
+    @IBOutlet weak var selectManufactureslbl: UILabel!
+    
+    @IBOutlet weak var selectGroupHeader: UILabel!
+    @IBOutlet weak var selectDivisionHeader: UILabel!
+    @IBOutlet weak var selectSectionHeader: UILabel!
+    @IBOutlet weak var selectManufacturesHeader: UILabel!
+    
     @IBOutlet weak var searchBtnHeight: NSLayoutConstraint!
     
-    var featuresArray = [FeatureCharacterData]()
-    var filterdata:FilterData?
+    var featuresArray = [Features]()
+    var filterdata = [GroupDivisonData]()
+    var filtersearchdata:FilterSeachData?
     var filterArray = [Int]()
     var max = 0.0
     var min = 0.0
@@ -46,13 +55,14 @@ class VCProductFilter: UIViewController {
     var isDivisonShown = false
     var isSectionShown = false
     let dispatchGroup = DispatchGroup()
+    var selectedDivision: Divisions?
+    var selectedSection:Sections?
     
     
     override func viewDidLoad(){
         super.viewDidLoad()
         self.txtfiledEnterKeyword.setPadding(left: 10, right: 0)
         self.txtfiledEnterKeyword.txtfildborder()
-        getFeatureWithCharacteristics()
         getFilterSearcData()
         dispatchGroup.notify(queue: .main) {
             self.selectGroupBtn.isHidden = false
@@ -63,123 +73,123 @@ class VCProductFilter: UIViewController {
             self.finishLoading()
         }
     }
+    
     override func viewWillAppear(_ animated: Bool){
         self.title = "Search".localized
         self.setNavigationBar()
-        if(lang == "en")
-        {
+        if(lang == "en"){
             self.addBackButton()
-        }else
-        {
+        }else{
             self.showArabicBackButton()
         }
         
         self.lblFilter.text = "Filters".localized
-        self.lblPriceRanger.text = "Price Range".localized
         self.txtfiledEnterKeyword.placeholder = "Enter Keyword...".localized
-        if(lang == "en")
-        {
-          self.txtfiledEnterKeyword.textAlignment = .left
-        }else
-        {
-              self.txtfiledEnterKeyword.textAlignment = .right
+        if(lang == "en"){
+            self.txtfiledEnterKeyword.textAlignment = .left
+        }else{
+            self.txtfiledEnterKeyword.textAlignment = .right
         }
     }
+    
     private func setViewHeight(){
-        filterTableConstraint.constant = filterTableView.contentSize.height + 10
+    
+        var tableViewHeight:CGFloat = 0;
+        for i in 0..<self.filterTableView.numberOfRows(inSection: 0){
+            tableViewHeight = tableViewHeight + tableView(self.filterTableView, heightForRowAt: IndexPath(row: i, section: 0))
+        }
+        filterTableConstraint.constant = tableViewHeight
+        searchBtnHeight.constant = tableViewHeight + 280
         self.filterTableView.setNeedsDisplay()
     }
     
-    private func getFeatureWithCharacteristics(){
+    private func getFeaturesCharacters(divisionArray:[String], sectionArray:[String]){
         startLoading("")
-        dispatchGroup.enter()
-        ProductManager().getFeaturesCharacters(
-        successCallback:
-        {[weak self](response) in
+        ProductManager().getFeaturesCharacters((divisionArray,sectionArray),
+           successCallback: {[weak self](response) in
             DispatchQueue.main.async {
-                self?.dispatchGroup.leave()
-                if let productsResponse = response{
-                    if productsResponse.success!{
-                        self?.featuresArray = productsResponse.data ?? []
+                self?.finishLoading()
+                if let filterResponse = response{
+                    if filterResponse.success!{
+                        self?.featuresArray = filterResponse.data?.features ?? []
                         self?.filterTableView.reloadData()
                         self?.setViewHeight()
                     }
                     else{
-                        if(lang == "en")
-                        {
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                           self?.getFeatureWithCharacteristics()
-                        })
-                            
-                        }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                                self?.getFeatureWithCharacteristics()})
-                        }
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    if(lang == "en"){
-                      self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                      self?.getFeatureWithCharacteristics()
-                      })
-                        
-                    }else
-                    {
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                            self?.getFeatureWithCharacteristics()
-                        })
-                    }
+                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
-        })
+         }){[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
+    }
+    
+    private func getFilterSearchData(groupId:String, divisionId:String){
+        startLoading("")
+        IndexManager().getSearchFilterData((groupId,divisionId),
+          successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let filterResponse = response{
+                        if filterResponse.success!{
+                            self?.filtersearchdata = filterResponse.data!
+                            self?.searchBtnHeight.constant = 280
+                            self?.view.setNeedsDisplay()
+                            self?.selectSectionlbl.text = "Select Section"
+                            self?.selectSectionBtn.isHidden = false
+                            self?.selectSectionlbl.isHidden = false
+                            self?.selectSectionArrow.isHidden = false
+                            self?.selectSectionHeader.isHidden = false
+                            
+                            self?.selectManufactureslbl.text = "Select Manufactures"
+                            self?.selectManufacturesArrow.isHidden = false
+                            self?.selectManufacturesBtn.isHidden = false
+                            self?.selectManufactureslbl.isHidden = false
+                            self?.selectManufacturesHeader.isHidden = false
+                            self?.filterTableView.reloadData()
+                        }
+                        else{
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        }
+                    }else{
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    }
+                }
+            })
         {[weak self](error) in
             DispatchQueue.main.async {
-                self?.dispatchGroup.leave()
                 self?.finishLoading()
-                self?.alertMessage(message: error.message, completionHandler: nil)
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
     }
     
     private func getFilterSearcData(){
         dispatchGroup.enter()
-        IndexManager().getSearchFilterData(successCallback:
-        {[weak self](response) in
-            DispatchQueue.main.async {
-                self?.dispatchGroup.leave()
-                if let filterResponse = response{
-                    if filterResponse.success!{
-                        self?.filterdata = filterResponse.data
-                        self?.filterdata?.groups?.insert(Groups(title: Title(en: "Select Group", ar: "اختر مجموعة"), divisions: nil, image: nil, isActive: nil, isFeatured: nil, _id: nil), at: 0)
-                        self?.filterTableView.reloadData()
-                    }
-                    else{
-                        if(lang == "en")
-                        {
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                            self?.getFeatureWithCharacteristics()
-                        })
-                        }else
-                        {
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                                self?.getFeatureWithCharacteristics()
-                            })
+        GDSManager().getGroupsWithDivisons(successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.dispatchGroup.leave()
+                    if let filterResponse = response{
+                        if filterResponse.success!{
+                            self?.filterdata = filterResponse.data ?? []
+                            self?.filterTableView.reloadData()
                         }
-                    }
-                }else{
-                    if(lang == "en")
-                    {
-                    self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: {
-                        self?.getFeatureWithCharacteristics()
-                    })
+                        else{
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        }
                     }else{
-                        self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: {
-                            self?.getFeatureWithCharacteristics()
-                        })
-                        
+                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
-            }
-        })
+            })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.dispatchGroup.leave()
@@ -209,36 +219,33 @@ class VCProductFilter: UIViewController {
         }
         
         startLoading("")
-        ProductManager().SearchProduct(((lang == "en") ? "en" : "ar",min,max,[String](),txt),
+        ProductManager().SearchProduct(("",min,max,[String](),txt),
         successCallback:
-        {[weak self](response) in
-            DispatchQueue.main.async {
-                self?.finishLoading()
-                if let productsResponse = response{
-                    if productsResponse.success!{
-                        self?.moveToFilteredProducts(products: productsResponse.data?.products ?? [])
-                    }
-                    else{
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let productsResponse = response{
+                        if productsResponse.success!{
+                            self?.moveToFilteredProducts(products: productsResponse.data?.products ?? [])
+                        }
+                        else{
+                            if(lang == "en")
+                            {
+                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            }else{
+                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            }
+                        }
+                    }else{
                         if(lang == "en")
                         {
-                      self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }else{
-                             self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
-                        
                     }
-                }else{
-                    if(lang == "en")
-                    {
-                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
-                    }else
-                    {
-                         self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
-                    }
-                    
                 }
-            }
-        })
+            })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
@@ -262,46 +269,65 @@ class VCProductFilter: UIViewController {
     @IBAction func btnSearch(_ sender: UIButton){
         searchProducts()
     }
-   
-    
     
     @IBAction func groupSelection(_ sender: UIButton){
-    
+        
         let menudropDown = DropDown()
         menudropDown.anchorView = sender
-        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        if(lang == "en")
-        {
-        let groupsarray = (filterdata?.groups?.map({$0.title?.en ?? ""})) ?? []
+        menudropDown.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if(lang == "en"){
+            var groupsarray = (filterdata.map({$0.title?.en ?? ""}))
+            groupsarray.insert("Select Group", at: 0)
             menudropDown.dataSource = groupsarray
         }else{
-             let groupsarray = (filterdata?.groups?.map({$0.title?.ar ?? ""})) ?? []
-                menudropDown.dataSource = groupsarray
+            var groupsarray = (filterdata.map({$0.title?.ar ?? ""}))
+            groupsarray.insert("اختر مجموعة", at: 0)
+             menudropDown.dataSource = groupsarray
         }
         
         menudropDown.selectionAction = {(index: Int, item: String) in
-            self.groupIndex = index
+            self.groupIndex = index - 1
             self.selectGrouplbl.text = item
             
             if item == "Select Group"{
                 self.searchBtnHeight.constant = 25
                 self.view.setNeedsDisplay()
+                
                 self.selectSectionBtn.isHidden = true
                 self.selectSectionlbl.isHidden = true
                 self.selectSectionArrow.isHidden = true
+                self.selectSectionArrow.isHidden = true
+                
+                self.selectManufacturesArrow.isHidden = true
+                self.selectManufacturesBtn.isHidden = true
+                self.selectManufactureslbl.isHidden = true
+                self.selectManufacturesHeader.isHidden = true
                 
                 self.selectDivisionBtn.isHidden = true
                 self.selectDivisionlbl.isHidden = true
                 self.selectDivisionArrow.isHidden = true
+                self.selectDivisionHeader.isHidden = true
                 
             }else{
-                self.searchBtnHeight.constant = 78
+                self.searchBtnHeight.constant = 100
                 self.view.setNeedsDisplay()
                 self.selectDivisionlbl.text = "Select Divison"
+                
                 self.selectDivisionBtn.isHidden = false
                 self.selectDivisionlbl.isHidden = false
                 self.selectDivisionArrow.isHidden = false
+                self.selectDivisionHeader.isHidden = false
+                
+                self.selectSectionBtn.isHidden = true
+                self.selectSectionlbl.isHidden = true
+                self.selectSectionArrow.isHidden = true
+                self.selectSectionHeader.isHidden = true
+                
+                self.selectManufacturesArrow.isHidden = true
+                self.selectManufacturesBtn.isHidden = true
+                self.selectManufactureslbl.isHidden = true
+                self.selectManufacturesHeader.isHidden = true
             }
         }
         menudropDown.show()
@@ -310,76 +336,99 @@ class VCProductFilter: UIViewController {
     @IBAction func divisionSelection(_ sender: UIButton){
         let menudropDown = DropDown()
         menudropDown.anchorView = sender
-        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        if(lang == "en")
-        {
-        var divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
-        divisionsarray.insert("Select Division", at: 0)
-        menudropDown.dataSource = divisionsarray
-        }else{
-            var divisionsarray = (filterdata?.groups?[groupIndex].divisions?.map({$0.title?.ar ?? ""})) ?? []
+        menudropDown.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if(lang == "en"){
+            var divisionsarray = (filterdata[groupIndex].divisions?.map({$0.title?.en ?? ""})) ?? []
             divisionsarray.insert("Select Division", at: 0)
-             menudropDown.dataSource = divisionsarray
+            menudropDown.dataSource = divisionsarray
+        }else{
+            var divisionsarray = (filterdata[groupIndex].divisions?.map({$0.title?.ar ?? ""})) ?? []
+            divisionsarray.insert("Select Division", at: 0)
+            menudropDown.dataSource = divisionsarray
         }
-       
+        
         menudropDown.selectionAction = {(index: Int, item: String) in
-            self.divisionIndex = index
+            self.divisionIndex = index - 1
             self.selectDivisionlbl.text = item
             
             if item == "Select Division"{
-                self.searchBtnHeight.constant = 78
+                self.searchBtnHeight.constant = 100
                 self.view.setNeedsDisplay()
+                
                 self.selectSectionBtn.isHidden = true
                 self.selectSectionlbl.isHidden = true
                 self.selectSectionArrow.isHidden = true
+                self.selectSectionHeader.isHidden = true
+                
+                self.selectManufacturesArrow.isHidden = true
+                self.selectManufacturesBtn.isHidden = true
+                self.selectManufactureslbl.isHidden = true
+                self.selectManufacturesHeader.isHidden = true
             }else{
-                self.searchBtnHeight.constant = 136
-                self.view.setNeedsDisplay()
-                self.selectSectionlbl.text = "Select Section"
-                self.selectSectionBtn.isHidden = false
-                self.selectSectionlbl.isHidden = false
-                self.selectSectionArrow.isHidden = false
+                self.selectedDivision = self.filterdata[self.groupIndex].divisions?[self.divisionIndex]
+                self.getFilterSearchData(groupId: self.filterdata[self.groupIndex]._id ?? "", divisionId: self.filterdata[self.groupIndex].divisions?[self.divisionIndex]._id ?? "")
             }
         }
         menudropDown.show()
     }
     
     @IBAction func sectionSelection(_ sender: UIButton){
-        searchBtnHeight.constant = 136
         self.view.setNeedsDisplay()
         let menudropDown = DropDown()
         menudropDown.anchorView = sender
-        menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
-        guard let _ = filterdata?.groups?[safe:groupIndex]?.divisions?[safe:divisionIndex]?.sections else {
-            return
-        }
-        if(lang == "en")
-        {
-        var sectionsarray = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.en ?? ""})) ?? []
-        sectionsarray.insert("Select Selection", at: 0)
-        menudropDown.dataSource = sectionsarray
-        }else
-        {
-            var sectionsarray = (filterdata?.groups?[groupIndex].divisions?[divisionIndex].sections?.map({$0.title?.ar ?? ""})) ?? []
-            sectionsarray.insert("Select Selection", at: 0)
+        if(lang == "en"){
+            var sectionsarray = filtersearchdata?.division?.sections?.map({$0.title?.en ?? ""}) ?? []
+            sectionsarray.insert("Select Section", at: 0)
             menudropDown.dataSource = sectionsarray
-            
+        }else{
+            var sectionsarray = filtersearchdata?.division?.sections?.map({$0.title?.ar ?? ""}) ?? []
+            sectionsarray.insert("Select Section", at: 0)
+            menudropDown.dataSource = sectionsarray
         }
         menudropDown.selectionAction = {(index: Int, item: String) in
-            
             if item == "Select Section"{
-                if(lang == "en"){
+                self.featuresArray.removeAll()
+                self.filterTableView.reloadData()
+                self.setViewHeight()
                 self.selectSectionlbl.text = "Select Section".localized
-                }
-                else
-                {
-                     self.selectSectionlbl.text = "Select Section".localized
-                }
             }else{
+                
+                self.selectedSection = self.filtersearchdata?.division?.sections?[index - 1]
                 self.selectSectionlbl.text = item
+            }
+        }
+        menudropDown.show()
+    }
+    
+    @IBAction func sectionManufactures(_ sender: UIButton){
+        self.view.setNeedsDisplay()
+        let menudropDown = DropDown()
+        menudropDown.anchorView = sender
+        menudropDown.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        menudropDown.selectionBackgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        if(lang == "en"){
+            var manufacturesarray = filtersearchdata?.division?.manufacturers?.map({$0.title?.en ?? ""}) ?? []
+            manufacturesarray.insert("Select Manufactures", at: 0)
+            menudropDown.dataSource = manufacturesarray
+        }else{
+            var manufacturesarray = filtersearchdata?.division?.manufacturers?.map({$0.title?.ar ?? ""}) ?? []
+            manufacturesarray.insert("Select Manufactures", at: 0)
+            menudropDown.dataSource = manufacturesarray
+        }
+        menudropDown.selectionAction = {(index: Int, item: String) in
+            if item == "Select Manufactures"{
+                self.featuresArray.removeAll()
+                self.filterTableView.reloadData()
+                self.setViewHeight()
+                self.selectManufactureslbl.text = "Select Manufactures".localized
+            }else{
+                self.selectManufactureslbl.text = item
+                self.getFeaturesCharacters(divisionArray: [self.selectedDivision?._id ?? ""], sectionArray: [self.selectedSection?._id ?? ""])
             }
         }
         menudropDown.show()
@@ -406,14 +455,13 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "featureCell", for: indexPath) as! featureCell
         cell.delegate = self
         cell.menudropDown.anchorView = cell.backgroundBtn
-        cell.menudropDown.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        cell.menudropDown.selectionBackgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        if(lang == "en")
-        {
-        cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
-        var array = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
-        array.insert("Select", at: 0)
-        cell.menudropDown.dataSource = array
+        cell.menudropDown.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        cell.menudropDown.selectionBackgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if(lang == "en"){
+            cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
+            var array = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
+            array.insert("Select", at: 0)
+            cell.menudropDown.dataSource = array
         }else
         {
             cell.featureName.text = featuresArray[indexPath.row].title?.ar ?? ""
@@ -422,12 +470,12 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
             cell.menudropDown.dataSource = array
         }
         cell.menudropDown.selectionAction = {(index: Int, item: String) in
-        cell.featureName.text = item}
+            cell.featureName.text = item}
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        return 69
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -466,7 +514,8 @@ extension UITextField{
     func txtfildborder(){
         self.layer.borderWidth = 0.5
         self.layer.cornerRadius = 3
-        self.layer.borderColor = #colorLiteral(red: 0.8745098039, green: 0.8784313725, blue: 0.8823529412, alpha: 1)
+        self.layer.borderColor =  #colorLiteral(red: 0.8745098039, green: 0.8784313725, blue: 0.8823529412, alpha: 1)
         self.clipsToBounds = true
     }
 }
+

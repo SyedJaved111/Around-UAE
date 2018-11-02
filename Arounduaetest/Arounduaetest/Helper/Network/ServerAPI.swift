@@ -1,3 +1,5 @@
+
+
 //
 //  NetworkManager.swift
 //  BOOSTane
@@ -42,7 +44,7 @@ enum ServerAPI {
     case DeleteProductImage(DeleteProductImageParams)
     case SetDefaultProductImage(DeleteProductImageParams)
     case GetStoreSGDS
-    case GetFeaturesCharacters
+    case GetFeaturesCharacters(FeaturesAndCharacteristicsParams)
     case MakeProductFavourite(productId:String)
     case GetFavouriteProducts(pageNo:String)
     case ProductReview(ProductReviewParams)
@@ -52,7 +54,7 @@ enum ServerAPI {
     case GetSiteSettings
     case GetSliders
     case ContactUs(ContactUSParams)
-    case SearchFilter
+    case SearchFilter(SearchFilterParams)
     
     //Cart API's
     case GetCartProducts
@@ -83,7 +85,7 @@ enum ServerAPI {
     
     //Social API's
     case SocialLogin(SocialParams)
-
+    
     //Parser API's
     static func parseServerResponse<T>(_ type: T.Type, from data: Data)-> T? where T : Decodable{
         do {
@@ -96,370 +98,379 @@ enum ServerAPI {
 }
 
 extension ServerAPI: TargetType,AccessTokenAuthorizable {
-
+    
     var headers: [String : String]? {
         return ["Accept": "application/json"]
     }
-
+    
     var baseURL: URL {
         return URL(string: APIURL.mainURL.rawValue)!
     }
     
     var authorizationType: AuthorizationType {
         switch self {
-          case .UserLogin,.ForgotPassword,.RegisterUser,
-             .ResetPassword,.CitiesPlaces,.SearchProduct,
-             .SocialLogin,.SearchFilter:
+        case .UserLogin,.ForgotPassword,.RegisterUser,
+             .EmailVerification,.ResendVerification,
+             .ResetPassword,.CitiesPlaces,.SearchProduct,.SocialLogin,.SearchFilter:
             return .none
-          default:
+        default:
             return .basic
         }
     }
-
+    
     var path: String {
         switch self {
-            case .UserLogin:
-                return APIURL.loginURL.rawValue
-            case .ForgotPassword:
-                return APIURL.forgotpasswordURL.rawValue
-            case .RegisterUser:
-                return APIURL.registrationURL.rawValue
-            case .EmailVerification:
-                return APIURL.emailverificationURL.rawValue
-            case .ResendVerification:
-                return APIURL.resendverificationURL.rawValue
-            case .ResetPassword:
-                return APIURL.resetPasswordURL.rawValue
-            case .SocialLogin:
-                return APIURL.socialLoginURL.rawValue
-            case .GetStores:
-                return APIURL.getStoreURL.rawValue
-            case .StoreDetail:
-                return APIURL.storeDetailURL.rawValue
-            case .GetResturants:
-                return APIURL.getResturantsURL.rawValue
-            case .GetUserProfile:
-                return APIURL.getUserProfileURL.rawValue
-            case .ChangePassword:
-                return APIURL.changePasswordURL.rawValue
-            case .UpdateProfile:
-                return APIURL.updateProfileURL.rawValue
-            case .UploadImage:
-                return APIURL.uploadImageURL.rawValue
-            case .RemoveImage:
-                return APIURL.removeImageURL.rawValue
-            case .AboutPage:
-                return APIURL.aboutPageURL.rawValue
-            case .UserStores:
-                return APIURL.userStoresURL.rawValue
-            case .ProductDetail:
-                return APIURL.productDetailURL.rawValue
-            case .StoreProducts:
-                return APIURL.storeProductsURL.rawValue
-            case .EditProduct:
-                return APIURL.editProductURL.rawValue
-            case .DeleteProduct:
-                return APIURL.deleteProductURL.rawValue
-            case .DeleteProductImage:
-                return APIURL.deleteProductImageURL.rawValue
-            case .SetDefaultProductImage:
-                return APIURL.setDefaultProductImageURL.rawValue
-            case .GetStoreSGDS:
-                return APIURL.getStoreSGDS.rawValue
-            case .GetFeaturesCharacters:
-                return APIURL.getFeaturesCharacters.rawValue
-            case .GetSiteSettings:
-                return APIURL.getSiteSettingsURL.rawValue
-            case .GetSliders:
-                return APIURL.getSlidersURL.rawValue
-            case .ContactUs:
-                return APIURL.contactUsURL.rawValue
-            case .GetCartProducts:
-                return APIURL.getCartProductsURL.rawValue
-            case .GetCities:
-                return APIURL.getCitiesURL.rawValue
-            case .CitiesPlaces:
-                return APIURL.citiesPlacesURL.rawValue
-            case .PlaceDetail:
-                return APIURL.cityPlaceDetailURL.rawValue
-            case .SubmitPlaceReview:
-                return APIURL.submitPlaceReviewURL.rawValue
-            case .PlaceReviewsListing:
-                return APIURL.placeReviewListingURL.rawValue
-            case .MakePlaceFavourite:
-                return APIURL.makePlaceFavouriteURL.rawValue
-            case .FavouritePlacesList:
-                return APIURL.favouritePlaceListURL.rawValue
-            case.GetGroups:
-                return APIURL.getGroupsURL.rawValue
-            case.GetGroupWithDivision,.GetGroupsDivision:
-                return APIURL.getGroupWithDivisionURL.rawValue
-            case .MakeProductFavourite:
-                return APIURL.makeProductFavouriteURL.rawValue
-            case .GetFavouriteProducts:
-                return APIURL.getFavouriteProductsURL.rawValue
-            case .ProductReview:
-                return APIURL.productReviewURL.rawValue
-            case .StoreReview:
-                return APIURL.storeReviewURL.rawValue
-            case .AddProdcutsCart:
-                return APIURL.addToCartURL.rawValue
-            case .DeleteProductCart:
-                return APIURL.deleteCarProductURL.rawValue
-            case .CartQuantityUpdate:
-                return APIURL.cartQuantityUpdateURL.rawValue
-            case .Payment:
-                return APIURL.paymentURL.rawValue
-            case .SearchProduct:
-                return APIURL.searchProductURL.rawValue
-            case .SearchFilter:
-                return APIURL.filterURL.rawValue
-            case .ShowConfirmedShippedCompletedOrders:
-                return APIURL.showConfirmedShippedCompletedOrdersURL.rawValue
-            case .ShipOrderProduct:
-                return APIURL.shipOrderProductURL.rawValue
-            case .OrderDetail:
-                return APIURL.OrderDetailURL.rawValue
-            case .MakeProductComplete:
-                return APIURL.MakeProductCompleteURL.rawValue
+        case .UserLogin:
+            return APIURL.loginURL.rawValue
+        case .ForgotPassword:
+            return APIURL.forgotpasswordURL.rawValue
+        case .RegisterUser:
+            return APIURL.registrationURL.rawValue
+        case .EmailVerification:
+            return APIURL.emailverificationURL.rawValue
+        case .ResendVerification:
+            return APIURL.resendverificationURL.rawValue
+        case .ResetPassword:
+            return APIURL.resetPasswordURL.rawValue
+        case .SocialLogin:
+            return APIURL.socialLoginURL.rawValue
+        case .GetStores:
+            return APIURL.getStoreURL.rawValue
+        case .StoreDetail:
+            return APIURL.storeDetailURL.rawValue
+        case .GetResturants:
+            return APIURL.getResturantsURL.rawValue
+        case .GetUserProfile:
+            return APIURL.getUserProfileURL.rawValue
+        case .ChangePassword:
+            return APIURL.changePasswordURL.rawValue
+        case .UpdateProfile:
+            return APIURL.updateProfileURL.rawValue
+        case .UploadImage:
+            return APIURL.uploadImageURL.rawValue
+        case .RemoveImage:
+            return APIURL.removeImageURL.rawValue
+        case .AboutPage:
+            return APIURL.aboutPageURL.rawValue
+        case .UserStores:
+            return APIURL.userStoresURL.rawValue
+        case .ProductDetail:
+            return APIURL.productDetailURL.rawValue
+        case .StoreProducts:
+            return APIURL.storeProductsURL.rawValue
+        case .EditProduct:
+            return APIURL.editProductURL.rawValue
+        case .DeleteProduct:
+            return APIURL.deleteProductURL.rawValue
+        case .DeleteProductImage:
+            return APIURL.deleteProductImageURL.rawValue
+        case .SetDefaultProductImage:
+            return APIURL.setDefaultProductImageURL.rawValue
+        case .GetStoreSGDS:
+            return APIURL.getStoreSGDS.rawValue
+        case .GetFeaturesCharacters:
+            return APIURL.getFeaturesCharacters.rawValue
+        case .GetSiteSettings:
+            return APIURL.getSiteSettingsURL.rawValue
+        case .GetSliders:
+            return APIURL.getSlidersURL.rawValue
+        case .ContactUs:
+            return APIURL.contactUsURL.rawValue
+        case .GetCartProducts:
+            return APIURL.getCartProductsURL.rawValue
+        case .GetCities:
+            return APIURL.getCitiesURL.rawValue
+        case .CitiesPlaces:
+            return APIURL.citiesPlacesURL.rawValue
+        case .PlaceDetail:
+            return APIURL.cityPlaceDetailURL.rawValue
+        case .SubmitPlaceReview:
+            return APIURL.submitPlaceReviewURL.rawValue
+        case .PlaceReviewsListing:
+            return APIURL.placeReviewListingURL.rawValue
+        case .MakePlaceFavourite:
+            return APIURL.makePlaceFavouriteURL.rawValue
+        case .FavouritePlacesList:
+            return APIURL.favouritePlaceListURL.rawValue
+        case.GetGroups:
+            return APIURL.getGroupsURL.rawValue
+        case.GetGroupWithDivision,.GetGroupsDivision:
+            return APIURL.getGroupWithDivisionURL.rawValue
+        case .MakeProductFavourite:
+            return APIURL.makeProductFavouriteURL.rawValue
+        case .GetFavouriteProducts:
+            return APIURL.getFavouriteProductsURL.rawValue
+        case .ProductReview:
+            return APIURL.productReviewURL.rawValue
+        case .StoreReview:
+            return APIURL.storeReviewURL.rawValue
+        case .AddProdcutsCart:
+            return APIURL.addToCartURL.rawValue
+        case .DeleteProductCart:
+            return APIURL.deleteCarProductURL.rawValue
+        case .CartQuantityUpdate:
+            return APIURL.cartQuantityUpdateURL.rawValue
+        case .Payment:
+            return APIURL.paymentURL.rawValue
+        case .SearchProduct:
+            return APIURL.searchProductURL.rawValue
+        case .SearchFilter:
+            return APIURL.filterURL.rawValue
+        case .ShowConfirmedShippedCompletedOrders:
+            return APIURL.showConfirmedShippedCompletedOrdersURL.rawValue
+        case .ShipOrderProduct:
+            return APIURL.shipOrderProductURL.rawValue
+        case .OrderDetail:
+            return APIURL.OrderDetailURL.rawValue
+        case .MakeProductComplete:
+            return APIURL.MakeProductCompleteURL.rawValue
         }
     }
-
+    
     var method: Moya.Method {
-      switch self {
-          case .UserLogin,.ForgotPassword,.RegisterUser,
-               .EmailVerification,.ResendVerification,
-               .ResetPassword,.GetStores,.StoreDetail,.GetResturants,
-               .ChangePassword,.UpdateProfile,.UploadImage,
-               .AboutPage,.UserStores,.ProductDetail,.StoreProducts,
-               .EditProduct,.DeleteProduct,.DeleteProductImage,.ContactUs,
-               .SetDefaultProductImage,.GetCities,.CitiesPlaces,.PlaceDetail,
-               .SubmitPlaceReview,.PlaceReviewsListing,.MakePlaceFavourite,
-               .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
-               .GetFavouriteProducts,.ProductReview,.StoreReview,
-               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
-               .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
-               .ShipOrderProduct,.OrderDetail,.MakeProductComplete:
-                return .post
-          case .GetUserProfile,.RemoveImage,
-               .GetStoreSGDS,.GetFeaturesCharacters,.GetSiteSettings,
-               .GetSliders,.GetCartProducts,
-               .GetGroups,.GetGroupWithDivision,.SearchFilter:
-                return .get
-         }
+        switch self {
+        case .UserLogin,.ForgotPassword,.RegisterUser,
+             .EmailVerification,.ResendVerification,
+             .ResetPassword,.GetStores,.StoreDetail,.GetResturants,
+             .ChangePassword,.UpdateProfile,.UploadImage,
+             .AboutPage,.UserStores,.ProductDetail,.StoreProducts,
+             .EditProduct,.DeleteProduct,.DeleteProductImage,.ContactUs,
+             .SetDefaultProductImage,.GetCities,.CitiesPlaces,.PlaceDetail,
+             .SubmitPlaceReview,.PlaceReviewsListing,.MakePlaceFavourite,
+             .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
+             .GetFavouriteProducts,.ProductReview,.StoreReview,
+             .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
+             .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
+             .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters:
+            return .post
+        case .GetUserProfile,.RemoveImage,
+             .GetStoreSGDS,.GetSiteSettings,
+             .GetSliders,.GetCartProducts,
+             .GetGroups,.GetGroupWithDivision:
+            return .get
+        }
     }
     
     var parameters: [String: Any]? {
         var parameters = [String: Any]()
         switch self {
             
-            case .UserLogin(let params):
-                parameters[LoginKey.USER_EMAIL.rawValue] = params.useremail
-                parameters[LoginKey.USER_PASSWORD.rawValue] = params.userpassword
-                return parameters
+        case .UserLogin(let params):
+            parameters[LoginKey.USER_EMAIL.rawValue] = params.useremail
+            parameters[LoginKey.USER_PASSWORD.rawValue] = params.userpassword
+            return parameters
             
-            case .ForgotPassword(let email):
-                parameters[ForgotpasswordKey.USER_EMAIL.rawValue] = email
-                return parameters
+        case .ForgotPassword(let email):
+            parameters[ForgotpasswordKey.USER_EMAIL.rawValue] = email
+            return parameters
             
-            case .EmailVerification(let params):
-                parameters[EmailverificationKey.EMAIL.rawValue] = params.email
-                parameters[EmailverificationKey.VERIFICATION_CODE.rawValue] = params.verificationCode
-                return parameters
+        case .EmailVerification(let params):
+            parameters[EmailverificationKey.EMAIL.rawValue] = params.email
+            parameters[EmailverificationKey.VERIFICATION_CODE.rawValue] = params.verificationCode
+            return parameters
             
-            case .ResendVerification(let email):
-                parameters[resendverificationKey.EMAIL.rawValue] = email
-                return parameters
+        case .ResendVerification(let email):
+            parameters[resendverificationKey.EMAIL.rawValue] = email
+            return parameters
             
-            case .ResetPassword(let params):
-                parameters[resetpasswordKey.EMAIL.rawValue] = params.email
-                parameters[resetpasswordKey.VERIFICATION_CODE.rawValue] = params.verificationCode
-                parameters[resetpasswordKey.PASSWORD.rawValue] = params.password
-                parameters[resetpasswordKey.PASSWORD_CONFIRMATION.rawValue] = params.passwordConfirmation
-                return parameters
+        case .ResetPassword(let params):
+            parameters[resetpasswordKey.EMAIL.rawValue] = params.email
+            parameters[resetpasswordKey.VERIFICATION_CODE.rawValue] = params.verificationCode
+            parameters[resetpasswordKey.PASSWORD.rawValue] = params.password
+            parameters[resetpasswordKey.PASSWORD_CONFIRMATION.rawValue] = params.passwordConfirmation
+            return parameters
             
-            case .GetStores(let pageno),.GetResturants(let pageno),.GetCities(let pageno),
-                 .UserStores(let pageno),.FavouritePlacesList(let pageno),.GetFavouriteProducts(let pageno):
-                parameters[pageKey.PAGE.rawValue] = pageno
-                return parameters
+        case .GetStores(let pageno),.GetResturants(let pageno),.GetCities(let pageno),
+             .UserStores(let pageno),.FavouritePlacesList(let pageno),.GetFavouriteProducts(let pageno):
+            parameters[pageKey.PAGE.rawValue] = pageno
+            return parameters
             
-            case .StoreDetail(let storeid):
-                parameters[storeDetilKey.STORE_ID.rawValue] = storeid
-                return parameters
+        case .StoreDetail(let storeid):
+            parameters[storeDetilKey.STORE_ID.rawValue] = storeid
+            return parameters
             
-            case .ChangePassword(let params):
-                parameters[changePasswordKey.OLD_PASSWORD.rawValue] = params.oldPassword
-                parameters[changePasswordKey.PASSWORD.rawValue] = params.password
-                parameters[changePasswordKey.CONFIRMATION_PASSWORD.rawValue] = params.passwordConfirmation
-                return parameters
+        case .ChangePassword(let params):
+            parameters[changePasswordKey.OLD_PASSWORD.rawValue] = params.oldPassword
+            parameters[changePasswordKey.PASSWORD.rawValue] = params.password
+            parameters[changePasswordKey.CONFIRMATION_PASSWORD.rawValue] = params.passwordConfirmation
+            return parameters
             
-            case .ProductDetail(let productid):
-                parameters[ProductDetailKey.PRODUCT_ID.rawValue] = productid
-                return parameters
+        case .ProductDetail(let productid):
+            parameters[ProductDetailKey.PRODUCT_ID.rawValue] = productid
+            return parameters
             
-            case .StoreProducts(let pageno, let storeid):
-                parameters[StoreProductKey.STORE_ID.rawValue] = storeid
-                parameters[StoreProductKey.PAGENO.rawValue] = pageno
-                return parameters
+        case .StoreProducts(let pageno, let storeid):
+            parameters[StoreProductKey.STORE_ID.rawValue] = storeid
+            parameters[StoreProductKey.PAGENO.rawValue] = pageno
+            return parameters
             
-            case .EditProduct(let productid),.DeleteProduct(let productid):
-                parameters[EditProductKey.PRODUCT_ID.rawValue] = productid
-                return parameters
+        case .EditProduct(let productid),.DeleteProduct(let productid):
+            parameters[EditProductKey.PRODUCT_ID.rawValue] = productid
+            return parameters
             
-            case .DeleteProductImage(let params),.SetDefaultProductImage(let params):
-                parameters[DeleteProductImageKey.PRODUCT_ID.rawValue] = params.productid
-                parameters[DeleteProductImageKey.IMAGE_ID.rawValue] = params.imageId
-                return parameters
+        case .DeleteProductImage(let params),.SetDefaultProductImage(let params):
+            parameters[DeleteProductImageKey.PRODUCT_ID.rawValue] = params.productid
+            parameters[DeleteProductImageKey.IMAGE_ID.rawValue] = params.imageId
+            return parameters
             
-            case .ContactUs(let params):
-                parameters[ContactUsKey.NAME.rawValue] = params.name
-                parameters[ContactUsKey.EMAIL.rawValue] = params.email
-                parameters[ContactUsKey.SUBJECT.rawValue] = params.subject
-                parameters[ContactUsKey.MESSAGE.rawValue] = params.message
-                return parameters
+        case .ContactUs(let params):
+            parameters[ContactUsKey.NAME.rawValue] = params.name
+            parameters[ContactUsKey.EMAIL.rawValue] = params.email
+            parameters[ContactUsKey.SUBJECT.rawValue] = params.subject
+            parameters[ContactUsKey.MESSAGE.rawValue] = params.message
+            return parameters
             
-            case .GetGroupsDivision(let groupId):
-                parameters[GroupKey.GROUP_ID.rawValue] = groupId
-                return parameters
+        case .GetGroupsDivision(let groupId):
+            parameters[GroupKey.GROUP_ID.rawValue] = groupId
+            return parameters
             
-            case .MakeProductFavourite(let productId):
-                parameters[ProductKey.PRODUCT_ID.rawValue] = productId
-                return parameters
+        case .MakeProductFavourite(let productId):
+            parameters[ProductKey.PRODUCT_ID.rawValue] = productId
+            return parameters
             
-            case .CitiesPlaces(let params):
-                parameters[CitiesPlacesKey.CITY_ID.rawValue] = params.cityid
-                parameters[CitiesPlacesKey.PAGE.rawValue] = params.page
-                if params.latitude != "" && params.longitude != ""{
-                    parameters[CitiesPlacesKey.LATITUDE.rawValue] = params.latitude
-                    parameters[CitiesPlacesKey.LONGITUDE.rawValue] = params.longitude
-                }
-                return parameters
+        case .CitiesPlaces(let params):
+            parameters[CitiesPlacesKey.CITY_ID.rawValue] = params.cityid
+            parameters[CitiesPlacesKey.PAGE.rawValue] = params.page
+            if params.latitude != "" && params.longitude != ""{
+                parameters[CitiesPlacesKey.LATITUDE.rawValue] = params.latitude
+                parameters[CitiesPlacesKey.LONGITUDE.rawValue] = params.longitude
+            }
+            return parameters
             
-            case .MakePlaceFavourite(let placeid),.PlaceDetail(let placeid):
-                parameters[PlaceKey.PLACE_ID.rawValue] = placeid
-                return parameters
+        case .MakePlaceFavourite(let placeid),.PlaceDetail(let placeid):
+            parameters[PlaceKey.PLACE_ID.rawValue] = placeid
+            return parameters
             
-            case .SubmitPlaceReview(let params):
-                parameters[SubmitPlaceReviewKey.PLACE.rawValue] = params.place
-                parameters[SubmitPlaceReviewKey.RATING.rawValue] = params.rating
-                parameters[SubmitPlaceReviewKey.COMMENT.rawValue] = params.comment
-                return parameters
+        case .SubmitPlaceReview(let params):
+            parameters[SubmitPlaceReviewKey.PLACE.rawValue] = params.place
+            parameters[SubmitPlaceReviewKey.RATING.rawValue] = params.rating
+            parameters[SubmitPlaceReviewKey.COMMENT.rawValue] = params.comment
+            return parameters
             
-            case .ProductReview(let params):
-                parameters[ProductReviewKey.PRODUCT_ID.rawValue] = params.productid
-                parameters[ProductReviewKey.RATING.rawValue] = params.rating
-                parameters[ProductReviewKey.COMMENT.rawValue] = params.comment
-                return parameters
+        case .ProductReview(let params):
+            parameters[ProductReviewKey.PRODUCT_ID.rawValue] = params.productid
+            parameters[ProductReviewKey.RATING.rawValue] = params.rating
+            parameters[ProductReviewKey.COMMENT.rawValue] = params.comment
+            return parameters
             
-            case .StoreReview(let params):
-                parameters[StoreReviewKey.STORE.rawValue] = params.store
-                parameters[StoreReviewKey.RATING.rawValue] = params.rating
-                parameters[StoreReviewKey.COMMENT.rawValue] = params.comment
-                return parameters
+        case .StoreReview(let params):
+            parameters[StoreReviewKey.STORE.rawValue] = params.store
+            parameters[StoreReviewKey.RATING.rawValue] = params.rating
+            parameters[StoreReviewKey.COMMENT.rawValue] = params.comment
+            return parameters
             
-            case .AddProdcutsCart(let params):
-                return params
+        case .AddProdcutsCart(let params):
+            return params
             
-            case .Payment(let payerid):
-                parameters[PaymentKey.payerId.rawValue] = payerid
-                return parameters
+        case .Payment(let payerid):
+            parameters[PaymentKey.payerId.rawValue] = payerid
+            return parameters
             
-            case .SearchProduct(let params):
-                parameters[SearchKey.locale.rawValue] = "en"
-                if params.maxPrice != -1 {
-                    parameters[SearchKey.maxPrice.rawValue] = params.maxPrice
-                }
-                if params.minPrice != -1 {
-                    parameters[SearchKey.minPrice.rawValue] = params.minPrice
-                }
-                if params.location.count != 0{
-                    parameters[SearchKey.location.rawValue] = params.location
-                }
-                if params.key != ""{
-                    parameters[SearchKey.key.rawValue] = params.key
-                }
-                return parameters
+        case .SearchProduct(let params):
+            parameters[SearchKey.locale.rawValue] = "en"
+            if params.maxPrice != -1 {
+                parameters[SearchKey.maxPrice.rawValue] = params.maxPrice
+            }
+            if params.minPrice != -1 {
+                parameters[SearchKey.minPrice.rawValue] = params.minPrice
+            }
+            if params.location.count != 0{
+                parameters[SearchKey.location.rawValue] = params.location
+            }
+            if params.key != ""{
+                parameters[SearchKey.key.rawValue] = params.key
+            }
+            return parameters
             
-            case .SocialLogin(let params):
-                parameters[SocialKey.id.rawValue] = params.id
-                parameters[SocialKey.accessToken.rawValue] = params.accessToken
-                parameters[SocialKey.email.rawValue] = params.email
-                parameters[SocialKey.authMethod.rawValue] = params.authMethod
-                parameters[SocialKey.fullName.rawValue] = params.fullName
-                return parameters
+        case .SocialLogin(let params):
+            parameters[SocialKey.id.rawValue] = params.id
+            parameters[SocialKey.accessToken.rawValue] = params.accessToken
+            parameters[SocialKey.email.rawValue] = params.email
+            parameters[SocialKey.authMethod.rawValue] = params.authMethod
+            parameters[SocialKey.fullName.rawValue] = params.fullName
+            return parameters
             
-            case .DeleteProductCart(let params):
-                parameters[DeleteProductCartKey.product.rawValue] = params.product
-                if params.combination != ""{
-                   parameters[DeleteProductCartKey.combination.rawValue] = params.combination
-                }
-                return parameters
+        case .DeleteProductCart(let params):
+            parameters[DeleteProductCartKey.product.rawValue] = params.product
+            if params.combination != ""{
+                parameters[DeleteProductCartKey.combination.rawValue] = params.combination
+            }
+            return parameters
             
-            case .CartQuantityUpdate(let params):
-                parameters[CartQuantityUpdateKey.product.rawValue] = params.product
-                parameters[CartQuantityUpdateKey.quantity.rawValue] = params.quantity
-                 if params.combination != ""{
-                    parameters[CartQuantityUpdateKey.combination.rawValue] = params.combination
-                }
-                return parameters
+        case .CartQuantityUpdate(let params):
+            parameters[CartQuantityUpdateKey.product.rawValue] = params.product
+            parameters[CartQuantityUpdateKey.quantity.rawValue] = params.quantity
+            if params.combination != ""{
+                parameters[CartQuantityUpdateKey.combination.rawValue] = params.combination
+            }
+            return parameters
             
-            case .ShowConfirmedShippedCompletedOrders(let storeid,let status):
-                if storeid != ""{
-                    parameters["store"] = storeid
-                }
-                parameters["status"] = status
-                return parameters
+        case .ShowConfirmedShippedCompletedOrders(let storeid,let status):
+            if storeid != ""{
+                parameters["store"] = storeid
+            }
+            parameters["status"] = status
+            return parameters
             
-            case .ShipOrderProduct(let orderDetail,let store):
-                parameters["orderDetailId"] = orderDetail
-                parameters["store"] = store
-                return parameters
+        case .ShipOrderProduct(let orderDetail,let store):
+            parameters["orderDetailId"] = orderDetail
+            parameters["store"] = store
+            return parameters
             
-            case .OrderDetail(let orderid):
-                parameters["order"] = orderid
-                return parameters
+        case .OrderDetail(let orderid):
+            parameters["order"] = orderid
+            return parameters
             
-            case .MakeProductComplete(let orderDetailid):
-                parameters["orderDetailId"] = orderDetailid
-                return parameters
+        case .MakeProductComplete(let orderDetailid):
+            parameters["orderDetailId"] = orderDetailid
+            return parameters
             
-            default:
-                return nil
-          }
+        case .SearchFilter(let params):
+            parameters["groupId"] = params.groupid
+            parameters["divisionId"] = params.divisionid
+            return parameters
+            
+        case .GetFeaturesCharacters(let params):
+            parameters["divisions"] = params.divisions
+            parameters["sections"] = params.sections
+            return parameters
+            
+        default:
+            return nil
+        }
     }
-
+    
     var parameterEncoding: ParameterEncoding {
         return JSONEncoding.default
     }
-
+    
     var sampleData: Data {
         return Data()
     }
-
+    
     var task: Task {
         switch self {
-          case .UserLogin,.ForgotPassword,.EmailVerification,
-               .ResendVerification,.ResetPassword,.GetStores,
-               .StoreDetail,.GetResturants,.ChangePassword,
-               .UserStores,.ProductDetail,.StoreProducts,.EditProduct,
-               .DeleteProduct,.DeleteProductImage,.SetDefaultProductImage,
-               .ContactUs,.GetCities,.CitiesPlaces,.PlaceDetail,.SubmitPlaceReview,
-               .PlaceReviewsListing,.MakePlaceFavourite,
-               .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
-               .GetFavouriteProducts,.ProductReview,.StoreReview,
-               .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
-               .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
-               .ShipOrderProduct,.OrderDetail,.MakeProductComplete:
+        case .UserLogin,.ForgotPassword,.EmailVerification,
+             .ResendVerification,.ResetPassword,.GetStores,
+             .StoreDetail,.GetResturants,.ChangePassword,
+             .UserStores,.ProductDetail,.StoreProducts,.EditProduct,
+             .DeleteProduct,.DeleteProductImage,.SetDefaultProductImage,
+             .ContactUs,.GetCities,.CitiesPlaces,.PlaceDetail,.SubmitPlaceReview,
+             .PlaceReviewsListing,.MakePlaceFavourite,
+             .FavouritePlacesList,.GetGroupsDivision,.MakeProductFavourite,
+             .GetFavouriteProducts,.ProductReview,.StoreReview,
+             .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
+             .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
+             .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
-          case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:
+        case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:
             return .uploadMultipart(multipartBody ?? [])
             
-          case .GetUserProfile,.RemoveImage,
-               .GetFeaturesCharacters,.GetStoreSGDS,.GetSiteSettings,
-               .GetSliders,.GetCartProducts,.GetGroups,.GetGroupWithDivision,.SearchFilter :
+        case .GetUserProfile,.RemoveImage,.GetStoreSGDS,.GetSiteSettings,
+             .GetSliders,.GetCartProducts,.GetGroups,.GetGroupWithDivision:
             return .requestPlain
-       }
+        }
     }
     
     var multipartBody: [MultipartFormData]? {
@@ -475,10 +486,10 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.useraddress).data(using: .utf8)!), name: RegisterUserKey.USER_ADDRESS.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.usergender).data(using: .utf8)!), name: RegisterUserKey.USER_GENDER.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-                name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
-
+                                                            name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
+            
             return multipartFormDataArray
-
+            
         case .UpdateProfile(let parameters):
             var multipartFormDataArray = [MultipartFormData]()
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.fullName).data(using: .utf8)!), name: updateProfileKey.FULLNAME.rawValue))
@@ -488,9 +499,9 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.gender).data(using: .utf8)!), name: updateProfileKey.GENDER.rawValue))
             
             if let profileImageData = UIImageJPEGRepresentation(parameters.nic, 0.8){
-            multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-                 name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
-              }
+                multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+                                                                name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
+            }
             
             return multipartFormDataArray
             
@@ -498,7 +509,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             let profileImageData = UIImageJPEGRepresentation(image, 1.0)!
             var multipartFormDataArray = [MultipartFormData]()
             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-            name: "image", fileName: "nicimage.png", mimeType: "image/jpeg"))
+                                                            name: "image", fileName: "nicimage.png", mimeType: "image/jpeg"))
             
             return multipartFormDataArray
             
@@ -509,7 +520,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.description_ar).data(using: .utf8)!), name: AboutPageKey.DESCRIPTION_AR.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.id).data(using: .utf8)!), name: AboutPageKey.ID.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-            name: "image", fileName: "store.png", mimeType: "image/jpeg"))
+                                                            name: "image", fileName: "store.png", mimeType: "image/jpeg"))
             
             return multipartFormDataArray
             
@@ -518,4 +529,3 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         }
     }
 }
-

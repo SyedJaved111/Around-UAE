@@ -43,7 +43,7 @@ enum APIURL: String{
     case deleteProductImageURL     = "auth/products/delete/image"
     case setDefaultProductImageURL = "auth/products/default/image"
     case getStoreSGDS              = "auth/products/get/data"
-    case getFeaturesCharacters     = "auth/products/get/features/charateristics"
+    case getFeaturesCharacters     = "features-and-characteristics"
     
     case getSiteSettingsURL        = "settings"
     case getSlidersURL             = "sliders"

@@ -110,6 +110,10 @@ struct FeatureCharacterData : Decodable {
     let _id : String?
 }
 
+struct featureandcharacterticsData : Decodable {
+    let features : [Features]?
+}
+
 struct CombinatonTotal:Decodable{
     let usd : Int?
     let aed : Double?

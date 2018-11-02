@@ -19,3 +19,24 @@ struct Features: Decodable {
     let isActive : String?
     let _id : String?
 }
+
+struct FilterSeachData: Decodable {
+    let division : FilterSearchDivision?
+}
+
+struct FilterSearchDivision : Decodable {
+    let title : Title?
+    let sections : [Sections]?
+    let manufacturers : [Manufacturers]?
+    let image : String?
+    let isActive : Bool?
+    let _id : String?
+}
+
+struct Manufacturers : Decodable {
+    let title : Title?
+    let image : String?
+    let isActive : Bool?
+    let _id : String?
+}
+

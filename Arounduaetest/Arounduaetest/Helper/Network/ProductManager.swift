@@ -137,12 +137,12 @@ class ProductManager{
     }
     
     //MARK: - GetFeaturesCharacters
-    func getFeaturesCharacters(successCallback : @escaping (Response<[FeatureCharacterData]>?) -> Void,
+    func getFeaturesCharacters(_ params: FeaturesAndCharacteristicsParams,successCallback : @escaping (Response<featureandcharacterticsData>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
-        NetworkManager.request(target: .GetFeaturesCharacters,
+        NetworkManager.request(target: .GetFeaturesCharacters(params),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<[FeatureCharacterData]>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<featureandcharacterticsData>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)

@@ -135,3 +135,12 @@ typealias SearchParams = (
     key:String
 )
 
+typealias SearchFilterParams = (
+    groupid:String,
+    divisionid:String
+)
+
+typealias FeaturesAndCharacteristicsParams = (
+    divisions: [String],
+    sections: [String]
+)
