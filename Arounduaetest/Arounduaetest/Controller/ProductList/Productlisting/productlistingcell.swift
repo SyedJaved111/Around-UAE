@@ -8,6 +8,7 @@
 
 import UIKit
 import Cosmos
+
 class productlistingcell: UICollectionViewCell {
     
     @IBOutlet weak var lblPrice: UILabel!
@@ -17,20 +18,22 @@ class productlistingcell: UICollectionViewCell {
     @IBOutlet weak var lblproductname: UILabel!
     @IBOutlet weak var btnFavrouit: UIButton!
     @IBOutlet weak var imgproduct: UIImageView!
-    //    @IBOutlet var UIButtonFavourite: UIButton!
-//    @IBOutlet var lblProductName: UILabel!
-//    @IBOutlet var imgProduct: UIImageView!
+//  @IBOutlet var UIButtonFavourite: UIButton!
+//  @IBOutlet var lblProductName: UILabel!
+//  @IBOutlet var imgProduct: UIImageView!
     
     override func awakeFromNib() {
         btnFavrouit.makeRound()
         btnFavrouit.layer.borderColor = UIColor.lightGray.cgColor
-//        self.layer.borderWidth = 1
-//        self.layer.borderColor = UIColor.lightGray.cgColor
+//      self.layer.borderWidth = 1
+//      self.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    @IBAction func btnFavrouitclick(_ sender: Any) {
+    @IBAction func btnFavrouitclick(_ sender: Any){
+        
     }
     
-    @IBAction func btnAddtoCartClick(_ sender: Any) {
+    @IBAction func btnAddtoCartClick(_ sender: Any){
+        
     }
 }

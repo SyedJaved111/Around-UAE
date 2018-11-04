@@ -61,7 +61,7 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
             startLoading("")
         }
         
-        ProductManager().SearchProduct(("",0,0,["31.5204","74.3587"],searchTxt),
+        ProductManager().SearchProduct(("",0,0,["31.5204","74.3587"],searchTxt,[""]),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {

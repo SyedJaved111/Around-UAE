@@ -182,11 +182,8 @@ extension VCFavrouit: PotocolCellFavourite{
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
-                        if AppSettings.sharedSettings.user.favouritePlaces?.contains(product._id ?? "") ?? false{
-                            self?.favouriteProductList.remove(at: indexpath?.row ?? 0)
-                            self?.favouriteProductTableView.reloadData()
-                        }
-                        AppSettings.sharedSettings.user = favouriteResponse.data!
+                        self?.favouriteProductList.remove(at: indexpath?.row ?? 0)
+                        self?.favouriteProductTableView.reloadData()
                     }else{
                         self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }

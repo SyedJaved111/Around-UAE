@@ -14,12 +14,54 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
    
     @IBOutlet var collectionViewManageProducts: UICollectionView!
     var productsArray = [Products]()
+    var storeidProducts = ""
     
     override func viewDidLoad(){
         super.viewDidLoad()
         collectionViewManageProducts.adjustDesign(width: ((view.frame.size.width+25)/2.3))
         collectionViewManageProducts.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        fetchProductInfo(storeidProducts, isRefresh: false)
+    }
+    
+    fileprivate func setupDelegates(){
+        self.collectionViewManageProducts.emptyDataSetSource = self
+        self.collectionViewManageProducts.emptyDataSetDelegate = self
+        self.collectionViewManageProducts.reloadData()
+    }
+    
+    private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
         
+        if isRefresh == false{
+            startLoading("")
+        }
+        
+        StoreManager().getStoreDetail(storeId,successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let productResponse = response{
+                        if productResponse.success!{
+                        self?.productsArray = productResponse.data?.products ?? []
+                        }else{
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
+                        }
+                    }else{
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                    self?.setupDelegates()
+                }
+            })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.setupDelegates()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
@@ -79,5 +121,9 @@ extension VCStoreProducts: UICollectionViewDelegate,UICollectionViewDataSource {
             vc.product = productsArray[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        fetchProductInfo(storeidProducts, isRefresh: false)
     }
 }

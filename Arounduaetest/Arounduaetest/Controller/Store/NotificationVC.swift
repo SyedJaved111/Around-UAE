@@ -31,13 +31,10 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         self.title = "Notifications".localized
-       if(lang == "en")
-       {
-       addBackButton()
-        }else
-       {
-        
-       self.showArabicBackButton()
+       if(lang == "en"){
+         addBackButton()
+        }else{
+         self.showArabicBackButton()
        }
         //       let deleteBtn = UIButton(type: .system)
 //        deleteBtn.setImage(#imageLiteral(resourceName: "Delete").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -52,7 +49,6 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
        self.startLoading("")
         notificationsTableView.isHidden = true
         setsocketIOS()
-        
     }
     
 //    func connect() {
@@ -68,15 +64,11 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         self.notificationsTableView.reloadData()
     }
     
-
     @objc func back(_ sender:Any) {
         //self.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
-        
-       
     }
   
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notificationArray.count
     }

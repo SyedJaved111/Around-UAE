@@ -219,12 +219,8 @@ extension VCFavouritePlaces: PotocolCellFavourite{
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
-                    
-                 if AppSettings.sharedSettings.user.favouritePlaces?.contains(place._id ?? "") ?? false{
-                            self?.favouritePlacesList.remove(at: indexpath?.row ?? 0)
-                            self?.favouritePlacesTableView.reloadData()
-                        }
-                        AppSettings.sharedSettings.user = favouriteResponse.data!
+                        self?.favouritePlacesList.remove(at: indexpath?.row ?? 0)
+                        self?.favouritePlacesTableView.reloadData()
                     }else{
                         if(lang == "en")
                         {

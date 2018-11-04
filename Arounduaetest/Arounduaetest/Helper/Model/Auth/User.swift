@@ -6,7 +6,7 @@ struct User : Decodable {
 	let accountType : String?
 	let stores : [String]?
 	let favouritePlaces : [String]?
-	//let favouriteProducts : [Any]?
+	let favouriteProducts : [String]?
 	var gender : String?
 	let image : String?
 	let isCartProcessing : Bool?
@@ -22,7 +22,7 @@ struct User : Decodable {
 	let updatedAt : String?
 	let addresses : [Addresses]?
 	let authorization : String?
-    static let object = User(userType: nil, accountType: nil, stores: nil, favouritePlaces: nil, gender: nil, image: nil, isCartProcessing: nil, nic: nil, isActive: nil, isEmailVerified: nil, _id: nil, fullName: nil, email: nil, phone: nil, address: nil, createdAt: nil, updatedAt: nil, addresses: nil, authorization: nil)
+    static let object = User(userType: nil, accountType: nil, stores: nil, favouritePlaces: nil, favouriteProducts: nil , gender: nil, image: nil, isCartProcessing: nil, nic: nil, isActive: nil, isEmailVerified: nil, _id: nil, fullName: nil, email: nil, phone: nil, address: nil, createdAt: nil, updatedAt: nil, addresses: nil, authorization: nil)
 
 }
 

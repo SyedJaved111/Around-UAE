@@ -61,12 +61,12 @@ class CartManager{
     }
     
     //MARK: - Payment In Cart
-    func Payment(_ payerid:String ,successCallback : @escaping (Response<[CartPaymentModel]>?) -> Void,
+    func Payment(_ payerid:String ,successCallback : @escaping (Response<CartPaymentModel>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .Payment(payerId: payerid),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<[CartPaymentModel]>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<CartPaymentModel>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)

@@ -74,13 +74,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Arounduaetest/Helper/Network/ServerAPI.swift"
-            timestampString = "561316611.3379689"
+            timestampString = "563033231.2814471"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "ServerAPI"
-            landmarkType = "13">
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "parseServerResponse(_:from:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

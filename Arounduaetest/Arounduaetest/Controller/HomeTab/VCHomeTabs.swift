@@ -11,10 +11,12 @@ import XLPagerTabStrip
 import SocketIO
 import SwiftyJSON
 import MIBadgeButton_Swift
+var cartCount = ""
 
 class VCHomeTabs: TTabBarViewController {
     
     var Notificationbtn: MIBadgeButton?
+    var Cartbtn: MIBadgeButton?
     var Count = ""
     var manager:SocketManager!
     var socket:SocketIOClient!
@@ -32,6 +34,31 @@ class VCHomeTabs: TTabBarViewController {
         super.viewWillAppear(true)
         self.rightBarButton()
         setsocketIOS()
+        getCartProducts()
+    }
+    
+    private func getCartProducts(){
+        CartManager().getCartProducts(
+            successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    if let cartProductData = response{
+                        if cartProductData.success!{
+                            cartCount = String(Int((cartProductData.data ?? []).map({$0.quantity ?? 0.0}).reduce(0, +)))
+                            self?.rightBarButton()
+                        }else{
+                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        }
+                    }else{
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                }
+            })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
     }
 
     @objc func btnCardClick (_ sender: Any){
@@ -48,17 +75,27 @@ class VCHomeTabs: TTabBarViewController {
     }
     
     func rightBarButton() {
-        var btnCard:UIBarButtonItem?
         if AppSettings.sharedSettings.user.accountType == "buyer"{
-            let btn1 = UIButton(type: .custom)
-            btn1.setImage(UIImage(named: "Cart"), for: .normal)
-            btn1.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-            btn1.addTarget(self, action: #selector(btnCardClick(_:)), for: .touchUpInside)
-            btnCard = UIBarButtonItem(customView: btn1)
+            Cartbtn = MIBadgeButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+            Cartbtn?.badgeBackgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            Cartbtn!.setImage(UIImage(named: "Cart"), for: .normal)
+            if(cartCount == ""){
+                Cartbtn?.badgeString = nil
+            }
+            else if (cartCount == "0"){
+                Cartbtn?.badgeString = nil
+            }
+            else{
+                Cartbtn?.badgeString = cartCount
+            }
+            
+            Cartbtn?.addTarget(self, action:#selector(btnCardClick(_:)), for: UIControlEvents.touchUpInside)
         }
 
         Notificationbtn = MIBadgeButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        Notificationbtn?.badgeBackgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         Notificationbtn!.setImage(#imageLiteral(resourceName: "Notification-red"), for: .normal)
+    
         if(Count == ""){
             Notificationbtn?.badgeString = nil
         }
@@ -69,6 +106,7 @@ class VCHomeTabs: TTabBarViewController {
             Notificationbtn?.badgeString = Count
         }
         
+       
         Notificationbtn?.addTarget(self, action:#selector(VCHomeTabs.notification_message), for: UIControlEvents.touchUpInside)
         let notificationItem = UIBarButtonItem(customView: Notificationbtn!)
         Notificationbtn!.badgeEdgeInsets = UIEdgeInsetsMake(4, 0, 0, 0)
@@ -82,8 +120,10 @@ class VCHomeTabs: TTabBarViewController {
         btn2.addTarget(self, action: #selector(btnSearchClick(_:)), for: .touchUpInside)
         let btnSearch = UIBarButtonItem(customView: btn2)
         
-        if let btn = btnCard {
-            self.navigationItem.setRightBarButtonItems([btnSearch,btn,notificationItem], animated: true)
+        if let btn = Cartbtn {
+            let cartItem = UIBarButtonItem(customView:btn)
+            Cartbtn!.badgeEdgeInsets = UIEdgeInsetsMake(4, 0, 0, 0)
+        self.navigationItem.setRightBarButtonItems([btnSearch,cartItem,notificationItem], animated: true)
         }else{
             self.navigationItem.setRightBarButtonItems([btnSearch,notificationItem], animated: true)
         }

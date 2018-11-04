@@ -97,6 +97,7 @@ struct Products: Decodable {
     let avalaible: Int?
     let reserved: Int?
     let sold: Int?
+    let isFavourite: Bool?
     let onlineSaleable: Bool?
 }
 

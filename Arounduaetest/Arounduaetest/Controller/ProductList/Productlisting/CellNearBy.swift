@@ -52,7 +52,7 @@ class CellNearBy: UICollectionViewCell {
             btnaddtocartnearby.isHidden = true
         }
         
-        if AppSettings.sharedSettings.user.favouritePlaces?.contains((product._id!)) ?? false{
+        if product.isFavourite ?? false{
             self.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite-red")
             self.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{

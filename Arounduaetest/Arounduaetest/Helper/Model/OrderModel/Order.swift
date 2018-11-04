@@ -109,7 +109,7 @@ struct CartPaymentModel : Decodable {
     let product : String?
     let store : String?
     let combinationDetail : [CombinationDetail]?
-    let images : [String]?
+    let images : [Images]?
     let createdAt : String?
     let updatedAt : String?
     let __v : Int?

@@ -35,6 +35,17 @@ class CellStore: UICollectionViewCell {
         self.layer.borderColor = #colorLiteral(red: 0.8745098039, green: 0.8784313725, blue: 0.8823529412, alpha: 1)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.setsubViewDesign()
+    }
+    
+    func setsubViewDesign(){
+        self.UIButtonFavourite.layer.cornerRadius = 15
+        self.UIButtonFavourite.layer.borderWidth = 0.5
+        self.UIButtonFavourite.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
     func setupProductCell(product:Products){
         lblProductName.text = (lang == "en") ? product.productName?.en : product.productName?.ar
         ratingView.rating = Double(product.averageRating ?? 0)
@@ -49,7 +60,7 @@ class CellStore: UICollectionViewCell {
            addtocartBtn.isHidden = true
         }
        
-        if AppSettings.sharedSettings.user.favouritePlaces?.contains((product._id!)) ?? false{
+        if AppSettings.sharedSettings.user.favouriteProducts?.contains((product._id!)) ?? false{
             self.favouriteImage.image = #imageLiteral(resourceName: "Favourite-red")
             self.UIButtonFavourite.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{

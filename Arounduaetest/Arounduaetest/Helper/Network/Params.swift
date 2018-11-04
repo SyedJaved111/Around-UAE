@@ -132,7 +132,8 @@ typealias SearchParams = (
     minPrice:Double,
     maxPrice:Double,
     location:[String],
-    key:String
+    key:String,
+    manufacturers:[String]
 )
 
 typealias SearchFilterParams = (

@@ -92,7 +92,8 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
                                 vcStoreInfo.storeImage.sd_setImage(with: URL(string: productResponse.data?.image ?? ""))
                             }
                             if let vcStoreProducts = self?.child_2 as? VCStoreProducts{
-                                vcStoreProducts.productsArray = productResponse.data?.products ?? []
+                               // vcStoreProducts.productsArray = productResponse.data?.products ?? []
+                                vcStoreProducts.storeidProducts = self?.storeid ?? ""
                             }
                         }else{
                             self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)

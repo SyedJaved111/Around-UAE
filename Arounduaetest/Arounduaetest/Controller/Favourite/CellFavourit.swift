@@ -33,11 +33,9 @@ class CellFavourit: UITableViewCell {
     }
     
     func setupCellData(_ product: Products){
-        if(lang == "en")
-        {
+        if(lang == "en"){
         lblFavouritProduct.text = product.productName?.en
-        }else
-        {
+        }else{
             lblFavouritProduct.text = product.productName?.ar
         }
         imgFavourit.sd_setShowActivityIndicatorView(true)

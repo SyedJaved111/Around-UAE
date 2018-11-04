@@ -52,7 +52,7 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
             startLoading("")
         }
         
-        ProductManager().SearchProduct(("",0,0,[String](),""),
+        ProductManager().SearchProduct(("",0,0,[String](),"",[""]),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {

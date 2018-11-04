@@ -159,7 +159,10 @@ class VCProductDetail: UIViewController {
         prodcutPrice.text = (lang == "en") ? "$\(product.price?.usd ?? 0)" : "$\(product.price?.aed ?? 0)"
         productname.text = (lang == "en") ? productdetail.productName?.en ?? "" : productdetail.productName?.ar ?? ""
         ratingView.rating = 0.0
-        if AppSettings.sharedSettings.user.favouritePlaces?.contains((productDetail?._id!)!) ?? false{
+        self.favouriteBtn.layer.cornerRadius = 15
+        self.favouriteBtn.layer.borderWidth = 0.5
+        self.favouriteBtn.layer.borderColor = UIColor.lightGray.cgColor
+        if AppSettings.sharedSettings.user.favouriteProducts?.contains(productDetail?._id ?? "") ?? false{
             self.favouritImage.image = #imageLiteral(resourceName: "Favourite-red")
             self.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
@@ -210,7 +213,7 @@ class VCProductDetail: UIViewController {
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
                         AppSettings.sharedSettings.user = favouriteResponse.data!
-                        if AppSettings.sharedSettings.user.favouritePlaces?.contains((self?.productDetail?._id!)!) ?? false{
+                        if AppSettings.sharedSettings.user.favouriteProducts?.contains((self?.productDetail?._id!)!) ?? false{
                             self?.favouritImage.image = #imageLiteral(resourceName: "Favourite-red")
                             self?.favouriteBtn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                             

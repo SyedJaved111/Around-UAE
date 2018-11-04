@@ -380,6 +380,9 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             if params.key != ""{
                 parameters[SearchKey.key.rawValue] = params.key
             }
+            if params.manufacturers != [""]{
+                 parameters["manufacturers[0]"] = params.manufacturers
+            }
             return parameters
             
         case .SocialLogin(let params):

@@ -57,7 +57,7 @@ class VCProductFilter: UIViewController {
     let dispatchGroup = DispatchGroup()
     var selectedDivision: Divisions?
     var selectedSection:Sections?
-    
+    var selectedManufactorId:String?
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -69,7 +69,7 @@ class VCProductFilter: UIViewController {
             self.selectGroupArrow.isHidden = false
             self.selectGrouplbl.isHidden = false
             self.btnSearchclick.isHidden = false
-            self.setViewHeight()
+            //self.setViewHeight()
             self.finishLoading()
         }
     }
@@ -83,7 +83,7 @@ class VCProductFilter: UIViewController {
             self.showArabicBackButton()
         }
         
-        self.lblFilter.text = "Filters".localized
+        self.lblFilter.text = "Price Range".localized
         self.txtfiledEnterKeyword.placeholder = "Enter Keyword...".localized
         if(lang == "en"){
             self.txtfiledEnterKeyword.textAlignment = .left
@@ -100,6 +100,16 @@ class VCProductFilter: UIViewController {
         }
         filterTableConstraint.constant = tableViewHeight
         searchBtnHeight.constant = tableViewHeight + 280
+        self.filterTableView.setNeedsDisplay()
+    }
+    
+    private func divisionsetViewHeight(){
+        
+        var tableViewHeight:CGFloat = 0;
+        for i in 0..<self.filterTableView.numberOfRows(inSection: 0){
+            tableViewHeight = tableViewHeight + tableView(self.filterTableView, heightForRowAt: IndexPath(row: i, section: 0))
+        }
+        filterTableConstraint.constant = tableViewHeight
         self.filterTableView.setNeedsDisplay()
     }
     
@@ -141,6 +151,11 @@ class VCProductFilter: UIViewController {
                         if filterResponse.success!{
                             self?.filtersearchdata = filterResponse.data!
                             self?.searchBtnHeight.constant = 280
+                            
+                            self?.featuresArray.removeAll()
+                            self?.filterTableView.reloadData()
+                            self?.divisionsetViewHeight()
+                            self?.scrollView.updateContentView()
                             self?.view.setNeedsDisplay()
                             self?.selectSectionlbl.text = "Select Section"
                             self?.selectSectionBtn.isHidden = false
@@ -154,6 +169,7 @@ class VCProductFilter: UIViewController {
                             self?.selectManufactureslbl.isHidden = false
                             self?.selectManufacturesHeader.isHidden = false
                             self?.filterTableView.reloadData()
+                            
                         }
                         else{
                             self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
@@ -181,6 +197,7 @@ class VCProductFilter: UIViewController {
                         if filterResponse.success!{
                             self?.filterdata = filterResponse.data ?? []
                             self?.filterTableView.reloadData()
+                            self?.scrollView.updateContentView()
                         }
                         else{
                             self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
@@ -217,9 +234,9 @@ class VCProductFilter: UIViewController {
         if ViewRanger.minimumValue == 0.0{
             min = -1
         }
-        
+    
         startLoading("")
-        ProductManager().SearchProduct(("",min,max,[String](),txt),
+        ProductManager().SearchProduct(("",min,max,[String](),txt,[selectedManufactorId ?? ""]),
         successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
@@ -294,10 +311,16 @@ class VCProductFilter: UIViewController {
                 self.searchBtnHeight.constant = 25
                 self.view.setNeedsDisplay()
                 
+                self.featuresArray.removeAll()
+                self.filterTableView.reloadData()
+                self.divisionsetViewHeight()
+                
+                self.scrollView.updateContentView()
+                
                 self.selectSectionBtn.isHidden = true
                 self.selectSectionlbl.isHidden = true
                 self.selectSectionArrow.isHidden = true
-                self.selectSectionArrow.isHidden = true
+                self.selectSectionHeader.isHidden = true
                 
                 self.selectManufacturesArrow.isHidden = true
                 self.selectManufacturesBtn.isHidden = true
@@ -310,6 +333,13 @@ class VCProductFilter: UIViewController {
                 self.selectDivisionHeader.isHidden = true
                 
             }else{
+                
+                self.featuresArray.removeAll()
+                self.filterTableView.reloadData()
+                self.divisionsetViewHeight()
+                
+                self.scrollView.updateContentView()
+                
                 self.searchBtnHeight.constant = 100
                 self.view.setNeedsDisplay()
                 self.selectDivisionlbl.text = "Select Divison"
@@ -355,7 +385,10 @@ class VCProductFilter: UIViewController {
             if item == "Select Division"{
                 self.searchBtnHeight.constant = 100
                 self.view.setNeedsDisplay()
-                
+                self.featuresArray.removeAll()
+                self.filterTableView.reloadData()
+                self.divisionsetViewHeight()
+                self.scrollView.updateContentView()
                 self.selectSectionBtn.isHidden = true
                 self.selectSectionlbl.isHidden = true
                 self.selectSectionArrow.isHidden = true
@@ -399,6 +432,7 @@ class VCProductFilter: UIViewController {
                 
                 self.selectedSection = self.filtersearchdata?.division?.sections?[index - 1]
                 self.selectSectionlbl.text = item
+                self.getFeaturesCharacters(divisionArray: [self.selectedDivision?._id ?? ""], sectionArray: [self.selectedSection?._id ?? ""])
             }
         }
         menudropDown.show()
@@ -428,7 +462,8 @@ class VCProductFilter: UIViewController {
                 self.selectManufactureslbl.text = "Select Manufactures".localized
             }else{
                 self.selectManufactureslbl.text = item
-                self.getFeaturesCharacters(divisionArray: [self.selectedDivision?._id ?? ""], sectionArray: [self.selectedSection?._id ?? ""])
+                self.selectedManufactorId =
+                    self.filtersearchdata?.division?.manufacturers?[index - 1]._id
             }
         }
         menudropDown.show()
@@ -457,16 +492,17 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
         cell.menudropDown.anchorView = cell.backgroundBtn
         cell.menudropDown.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cell.menudropDown.selectionBackgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        cell.featureName.text = "Select".localized
         if(lang == "en"){
-            cell.featureName.text = featuresArray[indexPath.row].title?.en ?? ""
+            cell.featureheader.text = featuresArray[indexPath.row].title?.en ?? ""
             var array = (featuresArray[indexPath.row].characteristics?.map({$0.title?.en ?? ""})) ?? []
-            array.insert("Select", at: 0)
+            array.insert("Select".localized, at: 0)
             cell.menudropDown.dataSource = array
         }else
         {
-            cell.featureName.text = featuresArray[indexPath.row].title?.ar ?? ""
+            cell.featureheader.text = featuresArray[indexPath.row].title?.ar ?? ""
             var array = (featuresArray[indexPath.row].characteristics?.map({$0.title?.ar ?? ""})) ?? []
-            array.insert("Select", at: 0)
+            array.insert("Select".localized, at: 0)
             cell.menudropDown.dataSource = array
         }
         cell.menudropDown.selectionAction = {(index: Int, item: String) in
@@ -475,7 +511,7 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 69
+        return 95
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -502,6 +538,7 @@ class featureCell:UITableViewCell{
     @IBOutlet weak var backgroundBtn: UIButton!
     @IBOutlet weak var cellbackground: UIButtonMain!
     @IBOutlet weak var featureName: UILabel!
+    @IBOutlet weak var featureheader: UILabel!
     var menudropDown = DropDown()
     var delegate:featureCellProtocol?
     
@@ -519,3 +556,8 @@ extension UITextField{
     }
 }
 
+extension UIScrollView {
+    func updateContentView() {
+        contentSize.height = subviews.sorted(by: { $0.frame.maxY < $1.frame.maxY }).last?.frame.maxY ?? contentSize.height
+    }
+}

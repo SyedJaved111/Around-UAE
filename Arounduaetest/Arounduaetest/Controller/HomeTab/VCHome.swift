@@ -44,7 +44,6 @@ class VCHome: BaseController{
         setupLocalization()
     }
     
-    
     private func setupLocalization(){
         btnViewMore.setTitle("View More".localized, for: .normal)
         lblKnow.text = "know more details about various shops ,location & tourist spots around UAE".localized
