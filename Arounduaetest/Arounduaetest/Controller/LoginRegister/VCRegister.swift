@@ -9,8 +9,9 @@
 import UIKit
 import DLRadioButton
 import Photos
-import CountryPicker
+import NKVPhonePicker
 import GooglePlaces
+import CountryPicker
 import FlagKit
 
 class VCRegister: BaseController{
@@ -20,7 +21,9 @@ class VCRegister: BaseController{
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPhoneNumber: UITextField!
+    
+    @IBOutlet weak var txtPhoneNumber: NKVPhonePickerTextField!
+    
     @IBOutlet weak var txtPasspord: UITextField!
     @IBOutlet weak var txtConfirmPassword: UITextField!
     @IBOutlet weak var txtAddress: UITextField!
@@ -57,16 +60,18 @@ class VCRegister: BaseController{
             self.txtAttachNIC.titleLabel?.textAlignment = .right
         }
         
-        setupTxtPhone()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
-        self.countryPickerMainView.addGestureRecognizer(tap)
+        txtPhoneNumber.phonePickerDelegate = self
+        txtPhoneNumber.favoriteCountriesLocaleIdentifiers = ["AE"]
+        txtPhoneNumber.enablePlusPrefix = false
+        
+        let country = Country.country(for: NKVSource(countryCode: "AE"))
+        txtPhoneNumber.country = country
         txtAddress.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(true)
         self.setNavigationBar()
-       // self.addBackButton()
          self.txtFirstName.attributedPlaceholder = NSAttributedString(string: "First Name", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
          self.txtLastName.attributedPlaceholder = NSAttributedString(string: "Last Name", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
          self.txtEmail.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
@@ -77,71 +82,24 @@ class VCRegister: BaseController{
         self.setupLocalization()
     }
     
-    private func setupTxtPhone(){
-        self.txtPhoneNumber.delegate = self
-        if let countryCode = (Locale.current as NSLocale).object(forKey: .countryCode) as? String {
-            self.txtPhoneNumber.text = UITextField.getCountryPhonceCode(countryCode)
-            self.countryPicker.setCountry(countryCode)
-            image = Flag(countryCode: countryCode)!.originalImage
-            self.countryPicker.countryPickerDelegate = self
-            self.txtPhoneNumber.keyboardType = .numberPad
-            addButton()
-        }
-    }
-    
     fileprivate func addButton(){
         if(lang == "en"){
-        let button = UIButton()
-        button.setImage(image!, for: .normal)
-        button.frame = CGRect(x: 15, y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-        button.addTarget(self, action: #selector(self.addBtn), for: .touchUpInside)
-        txtPhoneNumber.leftView = button
-        txtPhoneNumber.leftViewMode = .always
-            
-    }else if(lang == "ar"){
-            let button = UIButton()
-            button.setImage(image, for: .normal)
-            button.frame = CGRect(x: CGFloat(5), y:15 , width: CGFloat(25), height: CGFloat(25))
-            button.addTarget(self, action: #selector(self.addBtn), for: .touchUpInside)
-            txtPhoneNumber.rightView = button
-            txtPhoneNumber.rightViewMode = .always
+            self.txtPhoneNumber.textAlignment = .left
+        }else if(lang == "ar"){
+            self.txtPhoneNumber.textAlignment = .right
         }
     }
-    
-    @objc func addBtn(_ sender: Any) {
-        self.view.addSubview(self.countryPickerMainView)
-        self.view.center = self.countryPickerMainView.center
-        self.subScrollView.isHidden = true
-    }
-    
-    @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
-        self.countryPickerMainView.removeFromSuperview()
-        self.subScrollView.isHidden = false
-    }
-    
     
     private func setupLocalization(){
         self.title = "Register".localized
         
-        self.txtFirstName.setPadding(left: 10, right: 0)
-        
-        
-        self.txtLastName.setPadding(left: 10, right: 0)
-        
-        
-        self.txtEmail.setPadding(left: 10, right: 0)
-        
-        
-        self.txtPhoneNumber.setPadding(left: 10, right: 0)
-        
-        
-        self.txtPasspord.setPadding(left: 10, right: 0)
-        
-        
-        self.txtConfirmPassword.setPadding(left: 10, right: 0)
-        
-        
-        self.txtAddress.setPadding(left: 10, right: 0)
+//        self.txtFirstName.setPadding(left: 10, right: 0)
+//        self.txtLastName.setPadding(left: 10, right: 0)
+//        self.txtEmail.setPadding(left: 10, right: 0)
+//        self.txtPhoneNumber.setPadding(left: 10, right: 0)
+//        self.txtPasspord.setPadding(left: 10, right: 0)
+//        self.txtConfirmPassword.setPadding(left: 10, right: 0)
+//        self.txtAddress.setPadding(left: 10, right: 0)
         
         
         self.lblGenderText.text = "Gender".localized
@@ -169,7 +127,6 @@ class VCRegister: BaseController{
             self.txtLastName.textAlignment = .right
             self.txtPhoneNumber.textAlignment = .right
             self.txtFirstName.textAlignment = .right
-            
             self.txtConfirmPassword.textAlignment = .right
             self.txtPasspord.textAlignment = .right
             self.txtEmail.textAlignment = .right
@@ -181,7 +138,6 @@ class VCRegister: BaseController{
             self.txtLastName.textAlignment = .left
             self.txtPhoneNumber.textAlignment = .left
             self.txtFirstName.textAlignment = .left
-            
             self.txtConfirmPassword.textAlignment = .left
             self.txtPasspord.textAlignment = .left
             self.txtEmail.textAlignment = .left
@@ -388,37 +344,7 @@ extension VCRegister: UIImagePickerControllerDelegate, UINavigationControllerDel
     }
 }
 
-extension VCRegister: CountryPickerDelegate{
-    func countryPhoneCodePicker(_ picker: CountryPicker,
-                                didSelectCountryWithName name: String,
-                                countryCode: String,
-                                phoneCode: String,
-                                flag: UIImage) {
-        self.txtPhoneNumber.text = phoneCode
-        let flag = Flag(countryCode: countryCode)!
-        self.image = flag.originalImage
-        self.code = phoneCode
-        self.addButton()
-    }
-}
-
 extension VCRegister: UITextFieldDelegate{
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == self.txtPhoneNumber {
-            let char = string.cString(using: String.Encoding.utf8)
-            let isBackSpace = strcmp(char, "\\b")
-            
-            if isBackSpace == -92 {
-                
-                if self.txtPhoneNumber.text == code{
-                    self.txtPhoneNumber.text = code
-                    return false
-                }
-            }
-        }
-        return true
-    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == self.txtAddress {

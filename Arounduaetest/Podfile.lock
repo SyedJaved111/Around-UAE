@@ -56,6 +56,7 @@ PODS:
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
+  - NKVPhonePicker (2.0.1)
   - NVActivityIndicatorView (4.2.1):
     - NVActivityIndicatorView/Presenter (= 4.2.1)
   - NVActivityIndicatorView/Presenter (4.2.1)
@@ -99,6 +100,7 @@ DEPENDENCIES:
   - MIBadgeButton
   - MIBadgeButton-Swift (from `https://github.com/mustafaibrahim989/MIBadgeButton-Swift.git`, branch `master`)
   - Moya
+  - NKVPhonePicker
   - NVActivityIndicatorView
   - ObjectMapper
   - PayPal-iOS-SDK
@@ -146,6 +148,7 @@ SPEC CHECKSUMS:
   MIBadgeButton: 7c34f180a194d152bb3817c05443eab3a01433cd
   MIBadgeButton-Swift: 9e57309b00b168d75ca8fecb45bc75124a8ffddf
   Moya: a725035953bc1c0eb1be505ab903984501d82440
+  NKVPhonePicker: 736e64165a7d873380608178d7ccd988b88268ed
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   PayPal-iOS-SDK: 10654cd111e911a9807bddb96fae81aacb8e9915
@@ -160,6 +163,6 @@ SPEC CHECKSUMS:
   UITextView+Placeholder: 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 4c01fc8df414eae4ae46f8aa91b452e05d44cf08
+PODFILE CHECKSUM: fe3141c3738703e173de59c4e9827afddbe3d6dd
 
 COCOAPODS: 1.4.0

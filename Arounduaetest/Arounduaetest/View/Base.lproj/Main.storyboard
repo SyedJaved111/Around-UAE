@@ -125,7 +125,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select language to continue with" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kb0-Rt-y20">
-                                                <rect key="frame" x="6" y="28" width="243.5" height="25"/>
+                                                <rect key="frame" x="10.5" y="28" width="234" height="25"/>
                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -305,7 +305,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V58-31-Zbr">
-                                                <rect key="frame" x="103.5" y="355" width="168" height="31"/>
+                                                <rect key="frame" x="104.5" y="355" width="166" height="31"/>
                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="16"/>
                                                 <state key="normal" title="Forgot your password?">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -315,20 +315,20 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCF-a3-cYd">
-                                                <rect key="frame" x="176.5" y="396" width="22.5" height="19"/>
+                                                <rect key="frame" x="176" y="396" width="23.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="16"/>
                                                 <color key="textColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9SN-q6-0nH" userLabel="line1">
-                                                <rect key="frame" x="0.0" y="405" width="171.5" height="1"/>
+                                                <rect key="frame" x="0.0" y="405" width="171" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="r3S-op-LEe"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BCf-1v-pZJ" userLabel="line 2">
-                                                <rect key="frame" x="204" y="405" width="171" height="1"/>
+                                                <rect key="frame" x="204.5" y="405" width="170.5" height="1"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="qJC-eJ-Xvq"/>
@@ -348,7 +348,7 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with facebook" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mO-BW-wVS">
-                                                                <rect key="frame" x="55" y="13.5" width="232" height="18"/>
+                                                                <rect key="frame" x="55" y="14" width="232" height="17.5"/>
                                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -396,7 +396,7 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with gmail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9RL-Do-mwq">
-                                                                <rect key="frame" x="55" y="13.5" width="232" height="18"/>
+                                                                <rect key="frame" x="55" y="14" width="232" height="17.5"/>
                                                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -439,16 +439,16 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cNf-XB-Yfw">
-                                                <rect key="frame" x="59" y="570" width="257.5" height="30"/>
+                                                <rect key="frame" x="60.5" y="570" width="254" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kuy-h3-mVQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="161.5" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="160" height="30"/>
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brg-Z1-b68">
-                                                        <rect key="frame" x="166.5" y="0.0" width="91" height="30"/>
+                                                        <rect key="frame" x="165" y="0.0" width="89" height="30"/>
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <state key="normal" title="Register now">
                                                             <color key="titleColor" red="0.85098039219999999" green="0.20784313730000001" blue="0.19215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -539,13 +539,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot your password? Enter your email below " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PG7-yP-noo">
-                                <rect key="frame" x="25" y="41" width="325" height="18"/>
+                                <rect key="frame" x="25" y="41" width="325" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CUj-r8-ViR">
-                                <rect key="frame" x="25" y="73.5" width="325" height="40"/>
+                                <rect key="frame" x="25" y="73" width="325" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="v4Y-VB-Z1Q"/>
                                 </constraints>
@@ -554,7 +554,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="exf-lA-UIN">
-                                <rect key="frame" x="25" y="128.5" width="325" height="40"/>
+                                <rect key="frame" x="25" y="128" width="325" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EhE-L1-JDh" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="157.5" height="40"/>
@@ -651,13 +651,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A verfication code is send to your email, please check your email and enter the verfication code below" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Rt-05-Rn7">
-                                <rect key="frame" x="35" y="41" width="305" height="53"/>
+                                <rect key="frame" x="35" y="41" width="305" height="52.5"/>
                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zj9-ia-lND">
-                                <rect key="frame" x="35" y="104" width="305" height="40"/>
+                                <rect key="frame" x="35" y="103.5" width="305" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vap-KI-ucy"/>
                                 </constraints>
@@ -666,7 +666,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vW0-tg-vMB">
-                                <rect key="frame" x="35" y="154" width="305" height="40"/>
+                                <rect key="frame" x="35" y="153.5" width="305" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etN-GF-zkP" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="147.5" height="40"/>
@@ -765,13 +765,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your new password and then confirm it to change your account password" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIr-tC-AG1">
-                                <rect key="frame" x="40" y="41" width="295" height="53"/>
+                                <rect key="frame" x="40" y="41" width="295" height="35"/>
                                 <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rZm-wd-cyc">
-                                <rect key="frame" x="40" y="104" width="295" height="140"/>
+                                <rect key="frame" x="40" y="86" width="295" height="140"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kTv-yc-jCP">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="40"/>
@@ -797,7 +797,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uVt-eX-Kek">
-                                <rect key="frame" x="40" y="254" width="295" height="40"/>
+                                <rect key="frame" x="40" y="236" width="295" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnD-DU-QK0" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="142.5" height="40"/>
@@ -929,7 +929,7 @@
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone no" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QoV-hV-bJ1">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone no" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QoV-hV-bJ1" customClass="NKVPhonePickerTextField" customModule="Around_UAE">
                                                         <rect key="frame" x="0.0" y="150" width="295" height="40"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
@@ -1140,12 +1140,12 @@
                         <outlet property="subScrollView" destination="Kf7-wT-h28" id="M9a-H9-boa"/>
                         <outlet property="txtAddress" destination="cMe-dm-TvH" id="grp-xF-LcB"/>
                         <outlet property="txtAttachNIC" destination="6uu-2T-zof" id="o1b-fC-0rq"/>
-                        <outlet property="txtConfirmPassword" destination="p1S-bz-vqh" id="g5e-TH-8hQ"/>
+                        <outlet property="txtConfirmPassword" destination="p1S-bz-vqh" id="RxE-a2-J9y"/>
                         <outlet property="txtEmail" destination="fbX-WR-Aj5" id="faP-78-ka0"/>
                         <outlet property="txtFirstName" destination="n0G-Fl-07G" id="anl-Kh-gdw"/>
                         <outlet property="txtLastName" destination="tu4-ns-gi4" id="QF7-k6-RAd"/>
                         <outlet property="txtPasspord" destination="nKG-RR-9ea" id="TW8-dv-Vfh"/>
-                        <outlet property="txtPhoneNumber" destination="QoV-hV-bJ1" id="uxP-y3-Uc7"/>
+                        <outlet property="txtPhoneNumber" destination="QoV-hV-bJ1" id="le0-eP-Bt1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rBx-CJ-eaG" userLabel="First Responder" sceneMemberID="firstResponder"/>

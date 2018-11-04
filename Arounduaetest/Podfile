@@ -35,6 +35,7 @@ target 'Arounduaetest' do
   pod 'Socket.IO-Client-Swift'
   pod 'UITextView+Placeholder'
   pod 'DropDown'
+  pod 'NKVPhonePicker'
   pod "MIBadgeButton-Swift", :git => 'https://github.com/mustafaibrahim989/MIBadgeButton-Swift.git', :branch => 'master'
   pod "MIBadgeButton"
 
