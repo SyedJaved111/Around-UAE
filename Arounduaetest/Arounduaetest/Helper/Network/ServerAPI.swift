@@ -61,7 +61,7 @@ enum ServerAPI {
     case AddProdcutsCart(dict:[String:Any])
     case DeleteProductCart(DeleteProductCartParams)
     case CartQuantityUpdate(CartQuantityUpdateParams)
-    case Payment(payerId:String)
+    case Payment(payerId:String ,billingAddressId: String,shippingAddressId: String)
     
     //Cities & Places
     case GetCities(pageNo:String)
@@ -82,6 +82,7 @@ enum ServerAPI {
     case ShipOrderProduct(orderDetailid:String,storeid:String)
     case OrderDetail(orderid:String)
     case MakeProductComplete(orderDetailid:String)
+    case UpdateBillingShipping(BillingShippingAddressParams)
     
     //Social API's
     case SocialLogin(SocialParams)
@@ -224,6 +225,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             return APIURL.OrderDetailURL.rawValue
         case .MakeProductComplete:
             return APIURL.MakeProductCompleteURL.rawValue
+        case .UpdateBillingShipping:
+            return APIURL.UpdateBillingShippingURL.rawValue
         }
     }
     
@@ -241,7 +244,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
              .GetFavouriteProducts,.ProductReview,.StoreReview,
              .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
              .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
-             .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters:
+             .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters,
+             .UpdateBillingShipping:
             return .post
         case .GetUserProfile,.RemoveImage,
              .GetStoreSGDS,.GetSiteSettings,
@@ -362,7 +366,9 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         case .AddProdcutsCart(let params):
             return params
             
-        case .Payment(let payerid):
+        case .Payment(let payerid , let billingid, let shippingid):
+            parameters["shippingAddressId"] = shippingid
+            parameters["billingAddressId"] = billingid
             parameters[PaymentKey.payerId.rawValue] = payerid
             return parameters
             
@@ -438,6 +444,24 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             parameters["sections"] = params.sections
             return parameters
             
+        case .UpdateBillingShipping(let params):
+            parameters[UpdateBillingShippingKey.fullName.rawValue] = params.fullname
+            parameters[UpdateBillingShippingKey.email.rawValue] = params.email
+            parameters[UpdateBillingShippingKey.phone.rawValue] = params.phone
+            parameters[UpdateBillingShippingKey.address1.rawValue] = params.addressone
+            
+            if params.addressthree != ""{
+                 parameters[UpdateBillingShippingKey.address3.rawValue] = params.addressthree
+            }
+
+            if params.addresstwo != ""{
+                 parameters[UpdateBillingShippingKey.address2.rawValue] = params.addresstwo
+            }
+            
+            parameters[UpdateBillingShippingKey.addressType.rawValue] = params.addresstype
+            
+            return parameters
+            
         default:
             return nil
         }
@@ -464,7 +488,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
              .GetFavouriteProducts,.ProductReview,.StoreReview,
              .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
              .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
-             .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters:
+             .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters
+            ,.UpdateBillingShipping:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
         case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:

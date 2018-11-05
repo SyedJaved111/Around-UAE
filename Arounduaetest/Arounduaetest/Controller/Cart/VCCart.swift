@@ -26,6 +26,7 @@ class VCCart: UIViewController {
     var payPalConfig = PayPalConfiguration()
     var cartProductList = [ProductUAE]()
     var total = 0
+    let paypalname = Notification.Name("paypal")
     
     @IBOutlet weak var cartscrollview: UIScrollView!
     @IBOutlet weak var myTbleView: UITableView!{
@@ -39,6 +40,11 @@ class VCCart: UIViewController {
         super.viewDidLoad()
         self.configPayPal()
         getCartProducts()
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: paypalname, object: nil)
+    }
+    
+    @objc func onDidReceiveData(_ notification:Notification) {
+        paypal()
     }
     
     func configPayPal(){
@@ -188,8 +194,33 @@ class VCCart: UIViewController {
     }
 
     @IBAction func ContinueClick(_ sender: Any) {
+        
+        if AppSettings.sharedSettings.user.addresses?.count ?? 0 < 2{
+            let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "FormVC") as! FormVC
+            self.navigationController?.pushViewController(vc, animated: true)
+            return
+        }else{
+            let alert = UIAlertController(title:"Alert", message: "Do you want to update billing or shipping address?", preferredStyle: .alert)
+            let actionyes = UIAlertAction(title: "CONTINUE TO CHECKOUT", style: .default) { (action:UIAlertAction) in
+                self.paypal()
+            }
+            
+            let actionno = UIAlertAction(title: "Yes", style: .default) { (action:UIAlertAction) in
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "FormVC") as! FormVC
+                self.navigationController?.pushViewController(vc, animated: true)
+                return
+            }
+            alert.addAction(actionyes)
+            alert.addAction(actionno)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func paypal(){
         var items = [PayPalItem]()
-        for obj in cartProductList{
+        for obj in self.cartProductList{
             let item = PayPalItem(name: obj.product?.productName?.en ?? "", withQuantity: UInt(obj.quantity ?? 0), withPrice: NSDecimalNumber(string: "\(obj.price?.usd ?? 0)"), withCurrency: "USD", withSku: "Hip-0037")
             items.append(item)
         }
@@ -198,8 +229,8 @@ class VCCart: UIViewController {
         payment.items = items
         
         if(payment.processable) {
-            let paymentViewController = PayPalPaymentViewController(payment: payment, configuration: payPalConfig, delegate: self)
-            present(paymentViewController!, animated: true, completion: nil)
+            let paymentViewController = PayPalPaymentViewController(payment: payment, configuration: self.payPalConfig, delegate: self)
+            self.present(paymentViewController!, animated: true, completion: nil)
         }
         else{
             let alertView = AlertView.prepare(title: "Alert".localized, message: "Payment not processalbe: \(payment)".localized, okAction:nil)
@@ -280,7 +311,8 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
     
     private func sendPyamentToServer(_ paymentId:String){
         startLoading("")
-        CartManager().Payment(paymentId,
+        let user = AppSettings.sharedSettings.user
+        CartManager().Payment(paymentId,user.addresses?[0]._id ?? "",user.addresses?[1]._id ?? "",
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {

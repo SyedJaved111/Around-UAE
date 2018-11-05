@@ -18,6 +18,7 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var lblEmpty: UILabel!
     @IBOutlet weak var lblMessage: UILabel!
     @IBOutlet var collectionViewPager: ButtonBarView!
+    let user = SharedData.sharedUserInfo
     
     var storeid = ""
     let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreInfo")
@@ -63,9 +64,20 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         }else{
             self.addBackButton()
         }
+        addChatButton()
         self.title = "Stores".localized
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
+    }
+    
+    func addChatButton(backImage: UIImage = #imageLiteral(resourceName: "Chat-1")) {
+        let chatButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(onChatButtonClciked))
+        navigationItem.rightBarButtonItem  = chatButton
+    }
+    
+    @objc func onChatButtonClciked() {
+       self.user.conversationuserID  = storeid
+       self.performSegue(withIdentifier: "storeChat")
     }
 
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){

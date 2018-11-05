@@ -145,3 +145,13 @@ typealias FeaturesAndCharacteristicsParams = (
     divisions: [String],
     sections: [String]
 )
+
+typealias BillingShippingAddressParams = (
+    fullname:String,
+    email:String,
+    phone:String,
+    addressone:String,
+    addresstwo:String,
+    addressthree:String,
+    addresstype:String
+)

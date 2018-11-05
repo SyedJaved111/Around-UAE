@@ -11,7 +11,7 @@ import SocketIO
 import Starscream
 import NVActivityIndicatorView
 
-class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
+class ConversationViewController: BaseController,NVActivityIndicatorViewable {
 
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     //   var followersArr = [FollowersArray]()
@@ -45,6 +45,7 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
         hitConversation()
         
     }
+    
     @IBOutlet var conversationTableView: UITableView!{
         didSet {
             conversationTableView.delegate = self
@@ -52,10 +53,20 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
             conversationTableView.separatorStyle = .none
         }
     }
+    
+    fileprivate func setupDelegates(){
+        self.conversationTableView.emptyDataSetSource = self
+        self.conversationTableView.emptyDataSetDelegate = self
+        self.conversationTableView.tableFooterView = UIView()
+        self.conversationTableView.reloadData()
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        self.showLoader()
+        hitConversation()
+    }
    
     func hitConversation(){
-        
-        
         
         if let userToken = AppSettings.sharedSettings.authToken {
             
@@ -71,8 +82,7 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
                 .log(true)
             ]
             
-       
-            
+
             self.manager = SocketManager(socketURL: URL(string: "http://216.200.116.25/around-uae/socket.io")! , config: specs)
             
             self.socket = manager.defaultSocket
@@ -88,7 +98,6 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
                         print(txt)
                     }
                 }
-                
             }
             
             self.socket.on("conversationsList") { (data, ack) in
@@ -115,7 +124,7 @@ class ConversationViewController: UIViewController,NVActivityIndicatorViewable {
                 self.conversationTableView.delegate = self
                 self.conversationTableView.dataSource = self
                 
-                self.conversationTableView.reloadData()
+                self.setupDelegates()
                 
                 
                 self.finishLoading()

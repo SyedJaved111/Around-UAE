@@ -23,7 +23,7 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarBackgroundColor = #colorLiteral(red: 0.9607843137, green: 0.003921568627, blue: 0.2039215686, alpha: 1)
         
         settings.style.buttonBarItemFont = UIFont(name: "Raleway-Medium", size: 15)!
-        settings.style.selectedBarHeight = 4
+        settings.style.selectedBarHeight = 2
         settings.style.buttonBarMinimumLineSpacing = 0.6
         settings.style.buttonBarItemTitleColor = .red
         settings.style.selectedBarBackgroundColor = UIColor.red

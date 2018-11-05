@@ -823,11 +823,11 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 let Conversation = ChatModel.init(dictionary: dictionary as NSDictionary)
                 
                 
-                self.dataArray +=  (Conversation?.data?.messages!)!
+                self.dataArray +=  (Conversation?.data?.messages ?? [])
                 
-                self.TotalPage = (Conversation?.data?.pagination?.pages!)!
+                self.TotalPage = (Conversation?.data?.pagination?.pages ?? 0)
                 print(self.TotalPage)
-                self.ObjPage =  (Conversation?.data?.pagination?.page!)!
+                self.ObjPage =  (Conversation?.data?.pagination?.page ?? 0)
                 self.fetchingMore = false
                 
                 
@@ -934,16 +934,17 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     let conversationID = [
                         "conversation":  self.user.conversationID,
                           "page": self.Page
-                        
+
                         ] as [String : Any]
                     self.socket.emit("messagesList", with: [conversationID])
-                
+
                 }
                 else{
                     let userID = [
-                        "person":  self.user.conversationuserID
+                        "store":  self.user.conversationuserID
                         
                         ] as [String : Any]
+                print(userID)
                     self.socket.emit("getConversation", with: [userID])
 
                 }

@@ -61,12 +61,12 @@ class CartManager{
     }
     
     //MARK: - Payment In Cart
-    func Payment(_ payerid:String ,successCallback : @escaping (Response<CartPaymentModel>?) -> Void,
+    func Payment(_ payerid:String, _ billingAddressid:String,_ shippingAddressid:String ,successCallback : @escaping (Response<[CartPaymentModel]>?) -> Void,
         failureCallback : @escaping (NetworkError) -> Void){
-        NetworkManager.request(target: .Payment(payerId: payerid),
+        NetworkManager.request(target: .Payment(payerId: payerid,billingAddressId: billingAddressid,shippingAddressId: shippingAddressid),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<CartPaymentModel>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<[CartPaymentModel]>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)
@@ -85,6 +85,24 @@ class CartManager{
         success:
         {(response) in
             if let parsedResponse = ServerAPI.parseServerResponse(Response<UpdateCartQuantity>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
+    
+    //MARK: - UpdateBillingShipping
+    func UpdateBillingShipping(_ params:BillingShippingAddressParams ,successCallback : @escaping (Response<User>?) -> Void,
+        failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .UpdateBillingShipping(params),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<User>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)

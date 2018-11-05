@@ -10,10 +10,6 @@ import UIKit
 
 class VCResturants: BaseController{
     
-    @IBOutlet weak var viewEmptyList: UIView!
-    @IBOutlet weak var lblEmpty: UILabel!
-    @IBOutlet weak var lblMessage: UILabel!
-    
     @IBOutlet var collectionViewStores: UICollectionView!{
         didSet{
             self.collectionViewStores.delegate = self
@@ -33,11 +29,19 @@ class VCResturants: BaseController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Resturants"
-        lblEmpty.text = "Empty List".localized
-        lblMessage.text = "Sorry there no data available".localized
+        self.title = "Resturants".localized
         self.setNavigationBar()
         self.addBackButton()
+    }
+    
+    fileprivate func setupDelegates(){
+        self.collectionViewStores.emptyDataSetSource = self
+        self.collectionViewStores.emptyDataSetDelegate = self
+        self.collectionViewStores.reloadData()
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+       fetchResturantsData()
     }
     
     private func fetchResturantsData(){
@@ -49,31 +53,24 @@ class VCResturants: BaseController{
                     self?.finishLoading()
                     if let resturantsResponse = response{
                         if(resturantsResponse.data?.restaurants ?? []).count == 0{
-                            self?.viewEmptyList.isHidden = false
+                            
                         }else{
                             self?.resturantslist = resturantsResponse.data?.restaurants ?? []
                             self?.currentPage = resturantsResponse.data?.pagination?.page ?? 1
                             self?.totalPages = resturantsResponse.data?.pagination?.pages ?? 0
-                            self?.collectionViewStores.reloadData()
                         }
                     }else{
-                        self?.viewEmptyList.isHidden = false
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
             })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                self?.viewEmptyList.isHidden = false
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }
-    }
-    
-    @IBAction func tryAgain(_ sender: UIButton) {
-        self.viewEmptyList.isHidden = true
-        fetchResturantsData()
     }
 }
 
@@ -82,7 +79,7 @@ extension VCResturants{
     func initialUI(){
         
         collectionViewStores.spr_setTextHeader { [weak self] in
-            self?.viewEmptyList.isHidden = true
+
             self?.currentPage = 0
             StoreManager().getResturants( "\((self?.currentPage ?? 0) + 1)",successCallback:
                 {[weak self](response) in
@@ -90,16 +87,16 @@ extension VCResturants{
                         self?.collectionViewStores.spr_endRefreshing()
                         if let storeResponse = response{
                             if(storeResponse.data?.restaurants ?? []).count == 0{
-                                self?.viewEmptyList.isHidden = false
+                            
                             }else{
                                 self?.resturantslist = storeResponse.data?.restaurants ?? []
                                 self?.currentPage = storeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = storeResponse.data?.pagination?.pages ?? 0
-                                self?.collectionViewStores.reloadData()
                             }
                         }else{
                             self?.alertMessage(message: "Error".localized, completionHandler: nil)
                         }
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in
@@ -125,10 +122,11 @@ extension VCResturants{
                             }
                             self?.currentPage = resturantsResponse.data?.pagination?.page ?? 1
                             self?.totalPages = resturantsResponse.data?.pagination?.pages ?? 0
-                            self?.collectionViewStores.reloadData()
                         }else{
                             self?.alertMessage(message: "Error".localized, completionHandler: nil)
                         }
+                        
+                        self?.setupDelegates()
                     }
                 })
             {[weak self](error) in

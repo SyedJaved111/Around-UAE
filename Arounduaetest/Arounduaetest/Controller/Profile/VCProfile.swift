@@ -300,6 +300,7 @@ class VCProfile: BaseController {
                     if let profileResponse = response{
                         if profileResponse.success!{
                             AppSettings.sharedSettings.user = profileResponse.data!
+                            self?.setupUserInfo(profileResponse.data!)
                             self?.dismiss(animated: true , completion: nil)
                         }else{
                             self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: {

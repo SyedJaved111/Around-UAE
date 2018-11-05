@@ -151,6 +151,11 @@
 			<key>orderHint</key>
 			<integer>20</integer>
 		</dict>
+		<key>NKVPhonePicker.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>34</integer>
+		</dict>
 		<key>NVActivityIndicatorView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -231,7 +236,7 @@
 		<key>UITextView+Placeholder.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>35</integer>
+			<integer>36</integer>
 		</dict>
 		<key>XLPagerTabStrip-XLPagerTabStrip.xcscheme</key>
 		<dict>

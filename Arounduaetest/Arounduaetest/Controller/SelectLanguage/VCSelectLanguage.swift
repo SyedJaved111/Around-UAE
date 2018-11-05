@@ -21,7 +21,11 @@ class VCSelectLanguage: UIViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         if isFromMenu{
-            //addBackButton()
+            if lang == "en"{
+               addBackButton()
+            }else{
+               showArabicBackButton()
+            }
         }
     }
     
@@ -30,7 +34,7 @@ class VCSelectLanguage: UIViewController {
     
         self.title = "Language".localized
         self.lblSelectLanguage.text = "Select Language".localized
-        self.lblSelctlanguageContinue.text = "Select language to continue with".localized
+        self.lblSelctlanguageContinue.text = "Select Language to continue with".localized
         self.btnEnglish.setTitle("English".localized, for: .normal)
         self.btnArabic.setTitle("عربى".localized, for: .normal)
     }

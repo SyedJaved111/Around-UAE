@@ -52,7 +52,7 @@ class VCContactUs: UIViewController{
         titleheaderLbl.text = "What can we Help you with?".localized
         self.title = "Contact Us".localized
         self.appFeedBack.text = "App Feedback".localized
-        self.txtAppFeedback.text = "   Comments...".localized
+        self.txtAppFeedback.text = "   Comment...".localized
         self.lblName.text = "Name".localized
         self.txtName.placeholder = "Name".localized
         self.lblEmail.text = "Email".localized

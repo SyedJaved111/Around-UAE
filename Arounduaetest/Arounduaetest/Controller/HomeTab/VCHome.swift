@@ -83,13 +83,7 @@ class VCHome: BaseController{
                             }
                         }else{
                             self?.bannerView.isHidden = true
-                            if(lang == "en")
-                            {
                             self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
-                            }else
-                            {
-                            self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
-                            }
                         }
                     }else{
                        
@@ -143,11 +137,9 @@ extension VCHome: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell") as! HomeTableViewCell
         let obj = groupWithDivisionList[indexPath.row]
-        if(lang == "en")
-        {
-        cell.lblCategoryName.text = obj.title?.en
-        }else
-        {
+        if(lang == "en"){
+          cell.lblCategoryName.text = obj.title?.en
+        }else{
           cell.lblCategoryName.text = obj.title?.ar
         }
         cell.delegate = self

@@ -13,7 +13,7 @@ import SDWebImage
 import ObjectMapper
 import MIBadgeButton_Swift
 
-class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
     
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
@@ -36,36 +36,32 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         }else{
          self.showArabicBackButton()
        }
-        //       let deleteBtn = UIButton(type: .system)
-//        deleteBtn.setImage(#imageLiteral(resourceName: "Delete").withRenderingMode(.alwaysOriginal), for: .normal)
-//        deleteBtn.frame = CGRect(x: 0, y:0, width: 30, height: 30)
-//        deleteBtn.addTarget(self, action: #selector(removeAll), for: .touchUpInside)
-//
-//        navigationItem.rightBarButtonItems  = [UIBarButtonItem(customView: deleteBtn)]
-        
-        
-        //self.setNavigationBar()
-        //self.addMenu()
+
        self.startLoading("")
         notificationsTableView.isHidden = true
         setsocketIOS()
     }
     
-//    func connect() {
-//        let namespaceSocket = self.manager.socket(forNamespace: "/around-uae/socket.io")
-//        //socket.addHandlers(namespaceSocket)
-//        namespaceSocket.connect()
-//    }
+    fileprivate func setupDelegates(){
+        self.notificationsTableView.emptyDataSetSource = self
+        self.notificationsTableView.emptyDataSetDelegate = self
+        self.notificationsTableView.tableFooterView = UIView()
+        self.notificationsTableView.reloadData()
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
+        self.startLoading("")
+        notificationsTableView.isHidden = true
+        setsocketIOS()
+    }
     
     @objc func removeAll() {
-        
         self.removeNotificationAll()
         self.notificationArray.removeAll()
         self.notificationsTableView.reloadData()
     }
     
     @objc func back(_ sender:Any) {
-        //self.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
   
@@ -105,8 +101,6 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
         let date = dateFormatter.date(from: time!)
         
         
-        
-        
         let outputFormatter =  DateFormatter()
         //outputFormatter.dateFormat = "yyyy-MM-dd"
         outputFormatter.dateFormat = "hh:mm a"
@@ -124,9 +118,7 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
   @objc func myButtonMethod(_ sender : UIButton!) {
     
        print(sender.tag)
-    
     self.removeNotification(i: sender.tag)
-    
     
     }
     
@@ -136,18 +128,11 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
-        
     }
     
     func setsocketIOS(){
         
-        
-        
         guard let userToken = AppSettings.sharedSettings.authToken else {return}
-        
-        
-        
         
        // let userToken = UserDefaults.standard.value(forKey: "userAuthToken") as? String
         
@@ -202,7 +187,7 @@ class NotificationVC: UIViewController,UITableViewDataSource,UITableViewDelegate
             self.notificationsTableView.delegate = self
             self.notificationsTableView.dataSource = self
             
-            self.notificationsTableView.reloadData()
+            self.setupDelegates()
             
         }
         

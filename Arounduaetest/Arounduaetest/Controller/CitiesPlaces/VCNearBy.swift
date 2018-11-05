@@ -14,7 +14,6 @@ import DZNEmptyDataSet
 
 class VCNearBy: BaseController,IndicatorInfoProvider,CLLocationManagerDelegate {
    
-
     @IBOutlet weak var NearbyCollectionview: UICollectionView!{
         didSet{
             self.NearbyCollectionview.delegate = self

@@ -183,4 +183,13 @@ enum SearchKey:String{
     case key = "keyword"
 }
 
+enum UpdateBillingShippingKey:String{
+    case fullName = "fullName"
+    case email = "email"
+    case phone = "phone"
+    case address1 = "address1"
+    case address2 = "address2"
+    case address3 = "address3"
+    case addressType = "addressType"
+}
 

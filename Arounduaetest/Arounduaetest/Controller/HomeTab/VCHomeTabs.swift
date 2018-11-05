@@ -34,7 +34,9 @@ class VCHomeTabs: TTabBarViewController {
         super.viewWillAppear(true)
         self.rightBarButton()
         setsocketIOS()
-        getCartProducts()
+        if AppSettings.sharedSettings.user.accountType == "buyer"{
+            getCartProducts()
+        }
     }
     
     private func getCartProducts(){
@@ -116,7 +118,7 @@ class VCHomeTabs: TTabBarViewController {
         
         let btn2 = UIButton(type: .custom)
         btn2.setImage(UIImage(named: "Search"), for: .normal)
-        btn2.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        btn2.frame = CGRect(x: 10, y: 0, width: 20, height: 20)
         btn2.addTarget(self, action: #selector(btnSearchClick(_:)), for: .touchUpInside)
         let btnSearch = UIBarButtonItem(customView: btn2)
         

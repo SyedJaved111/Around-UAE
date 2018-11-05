@@ -21,7 +21,7 @@ class VCSplash: BaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if(currency == nil){
-            UserDefaults.standard.set("aed", forKey: "currency")
+            UserDefaults.standard.set("usd", forKey: "currency")
         }
     }
     
@@ -64,6 +64,7 @@ class VCSplash: BaseController {
     
     private func goToNext(){
         if lang == nil{
+           UserDefaults.standard.set("en", forKey: "i18n_language")
            self.appDelegate.moveToSelectlanguage()
         }else{
             if let autologin = AppSettings.sharedSettings.isAutoLogin, autologin == true {
