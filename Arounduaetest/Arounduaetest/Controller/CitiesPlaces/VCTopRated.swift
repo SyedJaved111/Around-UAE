@@ -18,7 +18,7 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
             self.TopratedCollectionView.alwaysBounceVertical = true
         }
     }
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var placeArray = [Places]()
     var totalPages = 0
     var currentPage = 0
@@ -49,10 +49,10 @@ class VCTopRated: BaseController,IndicatorInfoProvider {
                             self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                             self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                         }else{
-                            self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }
@@ -87,10 +87,10 @@ extension VCTopRated{
                                 self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             
                         }
                         self?.setupDelegates()
@@ -122,10 +122,10 @@ extension VCTopRated{
                                 self?.currentPage = placeResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = placeResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -150,6 +150,7 @@ extension VCTopRated: UICollectionViewDataSource,UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopratedCell", for: indexPath) as! TopratedCell
         cell.setupPlaceCell(placeArray[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
@@ -160,7 +161,7 @@ extension VCTopRated: UICollectionViewDataSource,UICollectionViewDelegate{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Toprated".localized)
+        return IndicatorInfo(title: "Top Rated".localized)
     }
     
     private func moveToPlaceDetail(_ placeid:String){
@@ -172,6 +173,47 @@ extension VCTopRated: UICollectionViewDataSource,UICollectionViewDelegate{
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
         fetchCitiesPlacesData()
+    }
+}
+
+
+extension VCTopRated:topratedCellDelegate{
+ 
+    func favouriteTapped(cell: TopratedCell){
+        let indxpath = TopratedCollectionView.indexPath(for: cell)
+        
+        if let path = indxpath, let productid = placeArray[path.row]._id{
+            addProductToFavourite(place_id: productid,toprated: cell)
+        }
+    }
+    
+    private func addProductToFavourite(place_id:String,toprated:TopratedCell){
+        startLoading("")
+        CitiesPlacesManager().makePlaceFavourite(place_id,
+           successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    if let favouriteResponse = response{
+                        AppSettings.sharedSettings.user = favouriteResponse.data!
+                        if AppSettings.sharedSettings.user.favouritePlaces?.contains((place_id)) ?? false{
+                            toprated.favroutieImage.image = #imageLiteral(resourceName: "Favourite-red")
+                            toprated.btnToprated.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                        }else{
+                            toprated.favroutieImage.image = #imageLiteral(resourceName: "Favourite")
+                            toprated.btnToprated.backgroundColor = #colorLiteral(red: 0.05490196078, green: 0.09803921569, blue: 0.1490196078, alpha: 1)
+                        }
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
+                    }else{
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                    self?.finishLoading()
+                }
+        }){[weak self](error) in
+            DispatchQueue.main.async{
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
 }
 

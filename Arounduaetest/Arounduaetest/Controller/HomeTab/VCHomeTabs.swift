@@ -20,6 +20,7 @@ class VCHomeTabs: TTabBarViewController {
     var Count = ""
     var manager:SocketManager!
     var socket:SocketIOClient!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +50,7 @@ class VCHomeTabs: TTabBarViewController {
                             cartCount = String(Int((cartProductData.data ?? []).map({$0.quantity ?? 0.0}).reduce(0, +)))
                             self?.rightBarButton()
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)

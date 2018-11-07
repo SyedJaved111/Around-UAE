@@ -17,7 +17,7 @@ class CellFavouritePlaces: UITableViewCell {
     @IBOutlet weak var imgFavourit: UIImageView!
     @IBOutlet weak var ratingView: CosmosView!
      var delegate : PotocolCellFavourite?
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     override func awakeFromNib() {
         super.awakeFromNib()
         lblFavouritProduct.text = nil

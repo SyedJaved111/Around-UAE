@@ -51,7 +51,7 @@
 "Please Enter Old Password" = "الرجاء إدخال كلمة المرور القديمة";
 "Please Enter New Password" = "يرجى إدخال كلمة مرور جديدة";
 "Please Enter Confirm Password" = "الرجاء إدخال تأكيد كلمة المرور" ;
-
+"know more details about various shops, location & tourist spots around UAE" = "كلمة المرور يجب أن تحتوي على 6 أحرف";
 "password must contain 6 characters" = "كلمة المرور يجب أن تحتوي على 6 أحرف";
 //Register
 "Register" = "تسجيل";
@@ -69,9 +69,9 @@
 "Email" = "البريد الإلكتروني";
 "Login now" = "تسجيل الدخول الآن" ;
 
-"Please Enter FirstName" = "يرجى إدخال الاسم الأول";
-"Please Enter LastName" = "يرجى إدخال اسم العائلة";
-"Please Enter Phone Number" =  "يرجى إدخال رقم الهاتف";
+"Please Enter First Name" = "يرجى إدخال الاسم الأول";
+"Please Enter Last Name" = "يرجى إدخال اسم العا ئلة";
+"Please Enter Phone Number" =  "يرجى إدخال رقم الها تف";
 "Please Enter Password" = "من فضلك أدخل كلمة المرور";
 "Please Enter Confirm Password" = "الرجاء إدخال تأكيد كلمة المرور";
 "Please Enter Address" = "يرجى إدخال العنوان";

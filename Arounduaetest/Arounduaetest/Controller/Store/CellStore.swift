@@ -25,6 +25,7 @@ class CellStore: UICollectionViewCell {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
     var delegate: storeCellDelegate?
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func awakeFromNib(){
         imgProducts.image = nil

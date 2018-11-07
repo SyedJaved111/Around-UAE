@@ -9,6 +9,7 @@ public class ProductUAE {
 	public var total : Total?
 	public var product : SomeProduct?
 	public var combination : String?
+    public var image: String?
 
 
     public class func modelsFromDictionaryArray(array:NSArray) -> [ProductUAE]{
@@ -26,6 +27,7 @@ public class ProductUAE {
 		if (dictionary["total"] != nil) { total = Total(dictionary: dictionary["total"] as! NSDictionary) }
 		if (dictionary["product"] != nil) { product = SomeProduct(dictionary: dictionary["product"] as! NSDictionary) }
 		combination = dictionary["combination"] as? String
+        image = dictionary["image"] as? String
 	}
 
 	public func dictionaryRepresentation() -> NSDictionary {
@@ -38,6 +40,7 @@ public class ProductUAE {
 		dictionary.setValue(self.total?.dictionaryRepresentation(), forKey: "total")
 		dictionary.setValue(self.product?.dictionaryRepresentation(), forKey: "product")
 		dictionary.setValue(self.combination, forKey: "combination")
+        dictionary.setValue(self.image, forKey: "image")
 
 		return dictionary
 	}

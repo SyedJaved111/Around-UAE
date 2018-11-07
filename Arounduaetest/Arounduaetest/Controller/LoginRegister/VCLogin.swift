@@ -18,6 +18,7 @@ class VCLogin: BaseController {
     var User = SharedData.sharedUserInfo
     let defaults = UserDefaults.standard
     var ishownBackBtn = true
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     @IBOutlet weak var txtEmail: UITextFieldCustom!
     @IBOutlet weak var txtPassword: UITextField!
@@ -80,12 +81,12 @@ class VCLogin: BaseController {
         self.lblDontHaveAnAccount.text = "Don't have an account?".localized
         
         if (lang == "ar"){
-            self.showArabicBackButton()
+            //self.showArabicBackButton()
             self.txtPassword.textAlignment = .right
             self.txtEmail.textAlignment = .right
         }
         else if(lang == "en"){
-            self.addBackButton()
+            //self.addBackButton()
             self.txtPassword.textAlignment = .left
             self.txtEmail.textAlignment = .left
         }
@@ -189,10 +190,10 @@ class VCLogin: BaseController {
                                 self?.moveToVCEmail()
                             }
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             },failureCallback:
@@ -230,10 +231,10 @@ extension VCLogin: GIDSignInUIDelegate, GIDSignInDelegate{
                         self?.userProfileData(check: type, params: param, successResponse: socialResponse)
                     }
                     else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         }){[weak self](error) in

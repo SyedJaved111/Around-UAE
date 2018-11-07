@@ -24,6 +24,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
     var ConfirmedOrderSellerList = [SellerOrder]()
     var orderData:OrderData?
     var storeid = ""
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -78,7 +79,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                             if orderResponse.success!{
                                 self?.ConfirmedOrderSellerList = orderResponse.data ?? []
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
                                 }else{
@@ -87,7 +88,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else
@@ -124,7 +125,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                                 self?.ConfirmedOrderList = orderResponse.data ?? []
                                 self?.orderData = orderResponse.data?.first
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
                                 }else
@@ -133,7 +134,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else

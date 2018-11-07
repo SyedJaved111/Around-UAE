@@ -10,22 +10,15 @@ import UIKit
 
 class NotificationDataCell: UITableViewCell {
     
-    
     @IBOutlet var notificationImage: UIImageView!
     @IBOutlet var notificationTitle: UILabel!
     @IBOutlet var notificationDescription: UILabel!
     @IBOutlet var timeLbl: UILabel!
     @IBOutlet var delteNotificationBtn: UIButton!
+    @IBOutlet var notificationView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

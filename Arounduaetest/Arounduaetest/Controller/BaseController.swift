@@ -53,10 +53,6 @@ extension UIViewController{
 
 extension BaseController: DZNEmptyDataSetSource,DZNEmptyDataSetDelegate {
     
-    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        return #imageLiteral(resourceName: "Store_img")
-    }
-    
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "Sorry there is no data available".localized
         let attribs = [

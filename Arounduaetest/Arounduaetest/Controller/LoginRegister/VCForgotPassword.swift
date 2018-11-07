@@ -16,6 +16,7 @@ class VCForgotPassword: BaseController{
     @IBOutlet weak var btnSubmit: UIButtonMain!
     @IBOutlet weak var btnResend: UIButtonMain!
     
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -26,15 +27,13 @@ class VCForgotPassword: BaseController{
         self.title = "Forgot Password".localized
     }
     
-    func Forgotlocalaiz()
-    {
+    func Forgotlocalaiz(){
         
         self.lblForgotPassword.text = "Forgot your password? Enter your email below ".localized
-        
         self.txtEnterEmail.setPadding(left: 10, right: 0)
-        self.txtEnterEmail.placeholder  = "Enter Code".localized
+        self.txtEnterEmail.placeholder  = "Please Enter Email".localized
         self.btnSubmit.setTitle("Submit".localized, for: .normal)
-        self.btnResend.setTitle("Resend".localized, for: .normal)
+        self.btnResend.setTitle("Cancel".localized, for: .normal)
         if(lang == "ar"){
             self.showArabicBackButton()
             self.txtEnterEmail.textAlignment = .right
@@ -43,7 +42,6 @@ class VCForgotPassword: BaseController{
             self.txtEnterEmail.textAlignment = .left
         }
     }
-    
     
     private func isCheck()->Bool{
         guard let email = txtEnterEmail.text, email.count > 0 else {
@@ -68,6 +66,10 @@ class VCForgotPassword: BaseController{
         }
     }
     
+    @IBAction func btnCancelClick(_ sender: Any){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     private func forgotPassword(useremail: String){
         startLoading("")
         AuthManager().forgotPassword(useremail,
@@ -77,16 +79,16 @@ class VCForgotPassword: BaseController{
                 if let forgetesponse = response{
                     if(forgetesponse.success ?? false == true){
                         self?.finishLoading()
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.moveToChangePassword()
                         })
                     }else{
                         self?.finishLoading()
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.finishLoading()
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",  completionHandler: nil)
                 }
             }
         }){[weak self](error) in

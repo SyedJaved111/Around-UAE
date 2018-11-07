@@ -15,7 +15,7 @@ protocol Cartprotocol{
 }
 
 class CartCell: UITableViewCell {
-
+let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var imgProduct: UIImageView!
     @IBOutlet weak var viewStepper: GMStepperCart!{
         didSet{
@@ -40,7 +40,7 @@ class CartCell: UITableViewCell {
     func setupCartCell(_ product:ProductUAE){
         imgProduct.sd_setShowActivityIndicatorView(true)
         imgProduct.sd_setIndicatorStyle(.gray)
-        imgProduct.sd_setImage(with: URL(string: product.product?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+        imgProduct.sd_setImage(with: URL(string: product.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
         lblProductPrice.text = "$\(product.price?.usd ?? 0)"
         if(lang == "en"){
            lblusername.text = product.product?.productName?.en?.capitalized

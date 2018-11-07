@@ -22,6 +22,7 @@ class PendingTabCell: UITableViewCell {
     @IBOutlet weak var boxesImage: UIImageView!
     @IBOutlet weak var shadowImage: UIImageView!
     @IBOutlet weak var eyeBtn: UIButton!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var str = ""
     var x = " "
     

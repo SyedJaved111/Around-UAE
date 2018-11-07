@@ -12,11 +12,11 @@ import Moya
 class OrderManager{
     
     //MARK: - OrderDetail
-    func orderDetail(_ orderid:String, successCallback : @escaping (Response<Store>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+    func orderDetail(_ orderid:String, successCallback : @escaping (Response<OrderData>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .OrderDetail(orderid: orderid),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<Store>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<OrderData>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)

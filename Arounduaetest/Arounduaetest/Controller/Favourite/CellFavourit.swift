@@ -16,7 +16,9 @@ import SDWebImage
 }
 
 class CellFavourit: UITableViewCell {
-
+    
+let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    
     @IBOutlet weak var BtnHeart: UIButton!
     @IBOutlet weak var lblFavouritProduct: UILabel!
     @IBOutlet weak var lblFavouritProductprice: UILabel!

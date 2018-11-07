@@ -7,19 +7,23 @@
 //
 
 import UIKit
+import SDWebImage
 let currency = UserDefaults.standard.string(forKey: "currency")
 class VCSplash: BaseController {
     
     @IBOutlet weak var lblSplashScreen: UILabel!
+    @IBOutlet weak var imageview: UIImageView!
     
     var isVarified = false
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var User = SharedData.sharedUserInfo
     let defaults = UserDefaults.standard
     var fcmToken = "0"
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //imageview.sd_setImage(with: URL(string: "http://216.200.116.25/around-uae/site/test_image"), placeholderImage: #imageLiteral(resourceName: "Category"))
         if(currency == nil){
             UserDefaults.standard.set("usd", forKey: "currency")
         }
@@ -50,10 +54,10 @@ class VCSplash: BaseController {
                         self?.User.sliders = (settingResposne.data?.sliders!)!
                         self?.goToNext()
                     }else{
-                        self?.showAlert((lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
+                        self?.showAlert((self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
                     }
                 }else{
-                    self?.showAlert((lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
+                    self?.showAlert((self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", tryAgainClouser: {_ in self?.loadSettingData()})
                 }
         }){[weak self](error) in
                 self?.finishLoading()
@@ -106,7 +110,7 @@ class VCSplash: BaseController {
                         self?.appDelegate.moveToHome()
                     
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.logInFromEmail()
                         })
                     }
@@ -146,12 +150,12 @@ class VCSplash: BaseController {
                 if(socialResponse.success!){
                     self?.userProfileData(check : check, params: param, successResponse : socialResponse)
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                         self?.checkIsSocialLogin(check: check)
                     })
                 }
             }else{
-                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                     self?.checkIsSocialLogin(check: check)
                 })
             }

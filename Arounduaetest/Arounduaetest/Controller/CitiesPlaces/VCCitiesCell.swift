@@ -13,7 +13,7 @@ class VCCitiesCell: UICollectionViewCell {
     
     @IBOutlet weak var lblGenralName: UILabel!
     @IBOutlet weak var imgGenral: UIImageView!
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     override func awakeFromNib() {
         lblGenralName.text = nil
         imgGenral.image = nil

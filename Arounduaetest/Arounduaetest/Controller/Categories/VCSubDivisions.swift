@@ -22,6 +22,7 @@ class VCSubDivisions: BaseController {
     var subDivisonlist = [GroupDivisonData]()
     var groupId = ""
     var groupName = ""
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -68,10 +69,10 @@ class VCSubDivisions: BaseController {
                         if subDivisonResponse.success!{
                             self?.subDivisonlist = subDivisonResponse.data ?? []
                         }else{
-                            self?.alertMessage(message:(lang == "en") ? subDivisonResponse.message?.en ?? "" : subDivisonResponse.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message:(self?.lang ?? "" == "en") ? subDivisonResponse.message?.en ?? "" : subDivisonResponse.message?.ar ?? "", completionHandler: nil)
                        }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }

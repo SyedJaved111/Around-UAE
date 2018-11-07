@@ -1574,7 +1574,7 @@
 				INFOPLIST_FILE = Arounduaetest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mytechnology.AroundUAE;
+				PRODUCT_BUNDLE_IDENTIFIER = mytech.arounduae.com;
 				PRODUCT_NAME = "Around UAE";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Arounduaetest/Arounduaetest-Bridging-Header.h";
@@ -1596,7 +1596,7 @@
 				INFOPLIST_FILE = Arounduaetest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mytechnology.AroundUAE;
+				PRODUCT_BUNDLE_IDENTIFIER = mytech.arounduae.com;
 				PRODUCT_NAME = "Around UAE";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Arounduaetest/Arounduaetest-Bridging-Header.h";

@@ -14,6 +14,7 @@ class VCChangeSetting: UIViewController {
     @IBOutlet weak var changecurrencylbl: UILabel!
     @IBOutlet weak var usdlbl: UILabel!
     @IBOutlet weak var aedlbl: UILabel!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     @IBOutlet weak var usdBtn: DLRadioButton!
     @IBOutlet weak var ardBtn: DLRadioButton!
@@ -24,7 +25,7 @@ class VCChangeSetting: UIViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(true)
-        self.title = "Change Setting".localized
+        self.title = "Change Settings".localized
         
         changecurrencylbl.text = "Change Currency".localized
         usdlbl.text = "USD".localized

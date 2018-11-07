@@ -7,11 +7,11 @@
 //
 
 import UIKit
-let lang = UserDefaults.standard.string(forKey: "i18n_language")
 class VCPages: UIViewController {
 
     @IBOutlet var lblAboutUs: UILabel!
     @IBOutlet var titlepage: UILabel!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     let shareduserinfo = SharedData.sharedUserInfo
     var titletxt = ""
     

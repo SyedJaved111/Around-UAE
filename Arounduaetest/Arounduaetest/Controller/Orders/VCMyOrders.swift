@@ -1,13 +1,19 @@
 
 import Foundation
 import XLPagerTabStrip
+import SocketIO
 
 class VCMyOrders: ButtonBarPagerTabStripViewController {
     
     @IBOutlet var collectionViewPager: ButtonBarView!
     var storeid = ""
+    var notificationid = ""
+    var manager:SocketManager!
+    var socket:SocketIOClient!
     
-    override func viewDidLoad() {
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    
+    override func viewDidLoad(){
         settings.style.buttonBarBackgroundColor = .red
         settings.style.buttonBarItemBackgroundColor = .white
         settings.style.selectedBarBackgroundColor = #colorLiteral(red: 0.9607843137, green: 0.003921568627, blue: 0.2039215686, alpha: 1)
@@ -17,7 +23,8 @@ class VCMyOrders: ButtonBarPagerTabStripViewController {
      
         settings.style.buttonBarItemTitleColor = .red
         settings.style.selectedBarBackgroundColor = UIColor.red
-        settings.style.buttonBarBackgroundColor = #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1);        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
+        settings.style.buttonBarBackgroundColor = #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1);
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         
@@ -30,6 +37,21 @@ class VCMyOrders: ButtonBarPagerTabStripViewController {
         collectionViewPager.layer.borderWidth = 1
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
         super.viewDidLoad()
+        guard let userToken = AppSettings.sharedSettings.authToken else {return}
+        
+        let usertoken = [
+            "token":  userToken
+        ]
+        
+        let specs: SocketIOClientConfiguration = [
+            .forceWebsockets(true),
+            .forcePolling(false),
+            .path("/around-uae/socket.io"),
+            .connectParams(usertoken),
+            .log(true)]
+        self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/socket.io")! , config: specs)
+        self.socket = manager.defaultSocket
+        seenArray()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +63,21 @@ class VCMyOrders: ButtonBarPagerTabStripViewController {
         self.setNavigationBar()
         self.title = "My Orders".localized
     }
+    
+    func seenArray(){
+        var SeenArr = [String]()
+        SeenArr.append(notificationid)
+        let json2 = [
+            "notifications": SeenArr
+        ]
+        
+        if(SeenArr.isEmpty){
+            
+        }else{
+            self.socket.emit("notificationsSeen", with: [json2])
+        }
+    }
+    
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
       let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCPendingProducts") as! VCPendingProducts

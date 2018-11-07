@@ -15,7 +15,8 @@ import Foundation
 import ObjectMapper
 
 struct NotificationExtras : Mappable {
-	var carId : String?
+	var conversation : String?
+    var order : String?
 
 	init?(map: Map) {
 
@@ -23,7 +24,8 @@ struct NotificationExtras : Mappable {
 
 	mutating func mapping(map: Map) {
 
-		carId <- map["carId"]
+		conversation <- map["conversation"]
+        conversation <- map["order"]
 	}
 
 }

@@ -13,7 +13,7 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
 
     @IBOutlet var collectionViewPager: ButtonBarView!
     var cityId = ""
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCNearBy")
     let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCTopRated")
     

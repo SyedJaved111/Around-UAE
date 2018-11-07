@@ -14,7 +14,7 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
             collectionViewProductnearby.addSubview(refreshControl)
         }
     }
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     fileprivate func setupDelegates(){
         self.collectionViewProductnearby.emptyDataSetSource = self
         self.collectionViewProductnearby.emptyDataSetDelegate = self
@@ -67,7 +67,7 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
                         self?.collectionViewProductnearby.reloadData()
                     }
                     else{
-                        if(lang == "en")
+                        if(self?.lang ?? "" == "en")
                         {
                         self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
                         }
@@ -77,7 +77,7 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
                         }
                     }
                 }else{
-                    if(lang == "en")
+                    if(self?.lang ?? "" == "en")
                     {
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                     }else

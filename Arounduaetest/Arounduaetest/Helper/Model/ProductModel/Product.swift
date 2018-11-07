@@ -6,7 +6,7 @@ struct Product : Decodable {
     let productName : ProductName?
     let description : Description?
     let about : About?
-    let reviews : [String]?
+    let reviews : [Reviews]?
     let hasCombinations : Bool?
     let price : ProdyctPrice?
     let available : Int?
@@ -14,6 +14,15 @@ struct Product : Decodable {
     let images : [ProductImage]?
     let priceables : [Priceables]?
     let isFavourite : Bool?
+    let canReviewUsers: [CanReviewUsers]?
+}
+
+struct Reviews : Decodable {
+    let _id : String?
+    let rating : Double?
+    let comment : String?
+    let user : User?
+    let createdAt : String?
 }
 
 struct About : Decodable {

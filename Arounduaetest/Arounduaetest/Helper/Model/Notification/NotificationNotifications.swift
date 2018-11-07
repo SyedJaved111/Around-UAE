@@ -22,11 +22,9 @@ struct NotificationNotifications : Mappable {
 	var seen : Bool?
 	var read : Bool?
 	var sender : NotificationSender?
-	var receiver : String?
 	var extras : NotificationExtras?
 	var createdAt : String?
-	var updatedAt : String?
-	var parkingEnd : NotificationParkingEnd?
+    var store: StoreNotificaton?
 
 	init?(map: Map) {
 
@@ -41,11 +39,27 @@ struct NotificationNotifications : Mappable {
 		seen <- map["seen"]
 		read <- map["read"]
 		sender <- map["sender"]
-		receiver <- map["receiver"]
 		extras <- map["extras"]
 		createdAt <- map["createdAt"]
-		updatedAt <- map["updatedAt"]
-		parkingEnd <- map["parkingEnd"]
+		store <- map["store"]
 	}
 
 }
+
+
+struct StoreNotificaton: Mappable{
+    var _id : String?
+    var createdAt : String?
+    var image : String?
+    
+    init?(map: Map) {
+        
+    }
+    
+    mutating func mapping(map: Map) {
+        _id <- map["_id"]
+        image <- map["image"]
+        createdAt <- map["createdAt"]
+    }
+}
+

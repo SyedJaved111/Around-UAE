@@ -31,7 +31,7 @@ class FormVC: UIViewController {
 
     let dispatchGroup = DispatchGroup()
     let paypalname = Notification.Name("paypal")
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Address".localized
@@ -172,12 +172,12 @@ class FormVC: UIViewController {
                 DispatchQueue.main.async {
                     if let formrespnse = response{
                         if formrespnse.success!{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })
@@ -200,10 +200,10 @@ class FormVC: UIViewController {
                             NotificationCenter.default.post(name: Notification.Name("paypal"), object: nil)
                             self?.navigationController?.popViewController(animated: true)
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })

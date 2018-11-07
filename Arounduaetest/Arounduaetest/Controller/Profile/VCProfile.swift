@@ -31,7 +31,7 @@ class VCProfile: BaseController {
     @IBOutlet weak var citylbl: UILabel!
     @IBOutlet weak var addresslbl: UILabel!
     @IBOutlet weak var phonenolbl: UILabel!
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     var isUpdateProfile = false
     var imagePicker = UIImagePickerController()
@@ -41,7 +41,6 @@ class VCProfile: BaseController {
         super.viewDidLoad()
         imgProfilePicture.makeRound()
         getUserProfile()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("ProfileUpdated"), object: nil)
     }
 
@@ -81,10 +80,10 @@ class VCProfile: BaseController {
                         self?.setupUserInfo(profileResponse.data!)
                         self?.scrollSubView.isHidden = false
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                   self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -114,12 +113,12 @@ class VCProfile: BaseController {
                         self?.imgProfilePicture.sd_setShowActivityIndicatorView(true)
                         self?.imgProfilePicture.sd_setIndicatorStyle(.gray)
                         self?.imgProfilePicture.sd_setImage(with: URL(string: uploadResponse.data!.image ?? ""))
-                        self?.alertMessage(message: (lang == "en") ? uploadResponse.message?.en ?? "" : uploadResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? uploadResponse.message?.en ?? "" : uploadResponse.message?.ar ?? "", completionHandler: nil)
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? uploadResponse.message?.en ?? "" : uploadResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? uploadResponse.message?.en ?? "" : uploadResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         },
@@ -150,13 +149,13 @@ class VCProfile: BaseController {
                             self?.imgProfilePicture.sd_setImage(with: URL(string: profileResponse.data!.image ?? ""))
                             
                             
-                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
                             self?.setupUserInfo(profileResponse.data!)
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })
@@ -303,12 +302,12 @@ class VCProfile: BaseController {
                             self?.setupUserInfo(profileResponse.data!)
                             self?.dismiss(animated: true , completion: nil)
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: {
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: {
                                 self?.dismiss(animated: true , completion: nil)
                             })
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true , completion: nil)
                         })
                     }

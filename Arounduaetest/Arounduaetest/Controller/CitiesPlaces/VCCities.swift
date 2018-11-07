@@ -9,7 +9,7 @@
 import UIKit
 
 class VCCities: BaseController{
-
+let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             self.collectionView.delegate = self
@@ -37,8 +37,6 @@ class VCCities: BaseController{
         }else{
             self.showArabicBackButton()
         }
-        
-        
     }
     
     fileprivate func setupDelegates(){
@@ -59,7 +57,7 @@ class VCCities: BaseController{
                             self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                             self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
                             }else
@@ -69,7 +67,7 @@ class VCCities: BaseController{
                             
                         }
                      }else{
-                        if(lang == "en")
+                        if(self?.lang ?? "" == "en")
                         {
                         self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }else
@@ -107,7 +105,7 @@ extension VCCities{
                                 self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
                                 }else
@@ -116,7 +114,7 @@ extension VCCities{
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else
@@ -153,7 +151,7 @@ extension VCCities{
                                 self?.currentPage = citiesResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = citiesResponse.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(citiesResponse.message?.en ?? "").localized, completionHandler: nil)
                                 }else
@@ -162,7 +160,7 @@ extension VCCities{
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else

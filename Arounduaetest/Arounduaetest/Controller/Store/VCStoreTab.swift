@@ -19,10 +19,11 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var lblMessage: UILabel!
     @IBOutlet var collectionViewPager: ButtonBarView!
     let user = SharedData.sharedUserInfo
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     var storeid = ""
-    let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreInfo")
-    let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreProducts")
+    var child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreInfo")
+    var child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreProducts")
 
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo.init(title: "Store Info".localized)
@@ -52,7 +53,7 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         collectionViewPager.layer.borderWidth = 1
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
         super.viewDidLoad()
-        fetchProductInfo(storeid, isRefresh: false)
+        //fetchProductInfo(storeid, isRefresh: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,55 +81,16 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
        self.performSegue(withIdentifier: "storeChat")
     }
 
-    private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
-        
-        if isRefresh == false{
-            startLoading("")
-        }
-        
-        StoreManager().getStoreDetail(storeId,successCallback:
-            {[weak self](response) in
-                DispatchQueue.main.async {
-                    self?.finishLoading()
-                    if let productResponse = response{
-                        if productResponse.success!{
-                            
-                            if let vcStoreInfo = self?.child_1 as? VCStoreInfo{
-                                vcStoreInfo.storeid = productResponse.data?._id ?? ""
-                                vcStoreInfo.lblInstinct.text = (lang == "en") ? productResponse.data?.storeName?.en ?? "" :
-                                    productResponse.data?.storeName?.ar ?? ""
-                                vcStoreInfo.lblAdress.text = productResponse.data?.location ?? ""
-                                vcStoreInfo.lblWords.text = (lang == "en") ? productResponse.data?.description?.en ?? "" : productResponse.data?.description?.ar ?? ""
-                                vcStoreInfo.storeImage.sd_addActivityIndicator()
-                                vcStoreInfo.storeImage.sd_setIndicatorStyle(.gray)
-                                vcStoreInfo.storeImage.sd_setImage(with: URL(string: productResponse.data?.image ?? ""))
-                            }
-                            if let vcStoreProducts = self?.child_2 as? VCStoreProducts{
-                               // vcStoreProducts.productsArray = productResponse.data?.products ?? []
-                                vcStoreProducts.storeidProducts = self?.storeid ?? ""
-                            }
-                        }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
-                        }
-                    }else{
-                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
-                    }
-                }
-            })
-        {[weak self](error) in
-            DispatchQueue.main.async {
-                self?.finishLoading()
-                self?.alertMessage(message: error.message.localized, completionHandler: nil)
-            }
-        }
-    }
-    
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-        return [child_1, child_2]
+        let objinfo = child_1 as! VCStoreInfo
+        objinfo.storeid = storeid
+        let objproducts = child_2 as! VCStoreProducts
+        objproducts.storeidProducts = storeid
+        return [objinfo, objproducts]
     }
 
     @IBAction func tryAgain(_ sender: UIButton){
         self.viewEmptyList.isHidden = true
-        fetchProductInfo(storeid, isRefresh: false)
+        //fetchProductInfo(storeid, isRefresh: false)
     }
 }

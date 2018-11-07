@@ -20,6 +20,7 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
         }
     }
     
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var ConfirmedOrderList = [OrderData]()
     var ConfirmedOrderSellerList = [SellerOrder]()
     var orderData:OrderData?
@@ -77,7 +78,7 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
                             if orderResponse.success!{
                                 self?.ConfirmedOrderSellerList = orderResponse.data ?? []
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
                                 }else
@@ -86,7 +87,7 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else{
@@ -122,7 +123,7 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
                                 self?.ConfirmedOrderList = orderResponse.data ?? []
                                 self?.orderData = orderResponse.data?.first
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
                                 }else
@@ -131,7 +132,7 @@ class VCPendingProducts: BaseController,IndicatorInfoProvider {
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else

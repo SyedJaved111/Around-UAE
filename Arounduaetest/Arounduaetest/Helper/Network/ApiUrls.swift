@@ -22,7 +22,7 @@ enum APIURL: String{
     case googleURL                 = "user/social-login?google_id="
     
     case getStoreURL               = "stores"
-    case storeDetailURL            = "store/detail"
+    case storeDetailURL            = "auth/store/detail"
     case getResturantsURL          = "restaurants"
     case storeReviewURL            = "auth/store/review"
     
@@ -34,7 +34,7 @@ enum APIURL: String{
     case aboutPageURL              = "auth/manage/about-page"
     case userStoresURL             = "auth/user/stores"
 
-    case productDetailURL          = "product/detail"
+    case productDetailURL          = "auth/product/detail"
     case storeProductsURL          = "auth/products"
  
     case editProductURL            = "auth/products/edit"

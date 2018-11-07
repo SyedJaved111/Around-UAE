@@ -12,7 +12,7 @@ class DataCollectionViewCell: UICollectionViewCell {
    
     @IBOutlet weak var imgProducts: UIImageView!
     @IBOutlet weak var lblProducts: UILabel!
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     override func awakeFromNib() {
         imgProducts.image = nil
         lblProducts.text = ""

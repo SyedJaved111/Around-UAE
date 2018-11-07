@@ -16,6 +16,7 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
         }
     }
     
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -75,7 +76,7 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
                         self?.productarray = productsResponse.data?.products ?? []
                     }
                     else{
-                        if(lang == "en")
+                        if(self?.lang ?? "" == "en")
                         {
                         self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
                         }else
@@ -84,7 +85,7 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
                         }
                     }
                 }else{
-                    if(lang == "en")
+                    if(self?.lang ?? "" == "en")
                     {
                     self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                     }else{

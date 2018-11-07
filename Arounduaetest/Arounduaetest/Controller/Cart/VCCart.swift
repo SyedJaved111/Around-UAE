@@ -14,7 +14,7 @@ class VCCart: UIViewController {
     @IBOutlet weak var lblTotalPrice: UILabel!
     @IBOutlet weak var lblTotalBill: UILabel!
     @IBOutlet weak var tableheightconstraint: NSLayoutConstraint!
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var environment:String = PayPalEnvironmentSandbox {
         willSet(newEnvironment) {
             if (newEnvironment != environment){
@@ -72,7 +72,7 @@ class VCCart: UIViewController {
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
                            
-                            if lang == "en"{
+                            if self?.lang ?? "" == "en"{
                                 self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                                 self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
                             }else{
@@ -85,7 +85,7 @@ class VCCart: UIViewController {
                             self?.setViewHeight()
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.alertMessage(message: "Error".localized, completionHandler: nil)
@@ -114,10 +114,10 @@ class VCCart: UIViewController {
                          self?.myTbleView.reloadData()
                          self?.setViewHeight()
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -147,10 +147,10 @@ class VCCart: UIViewController {
                             self?.total = price
                             self?.lblTotalPrice.text = "$\(price)"
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })
@@ -164,13 +164,10 @@ class VCCart: UIViewController {
     
     override func viewWillAppear(_ animated: Bool){
         self.title = "Cart".localized
-        if(lang == "en")
-        {
-        self.addBackButton()
-        }else
-        {
+        if(lang == "en"){
+            self.addBackButton()
+        }else{
             self.showArabicBackButton()
-            
         }
         self.btnCheckout.setTitle("Continue to Checkout".localized, for: .normal)
         self.lblTotalBill.text = "Total Bill".localized
@@ -319,16 +316,16 @@ extension VCCart: PayPalPaymentDelegate, PayPalProfileSharingDelegate{
                 self?.finishLoading()
                 if let paymentData = response{
                     if paymentData.success!{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })

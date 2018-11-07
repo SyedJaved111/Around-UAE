@@ -13,6 +13,7 @@ class CellStores: UICollectionViewCell {
     
     @IBOutlet var imgStores: UIImageView!
     @IBOutlet var lblStore: UILabel!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func awakeFromNib() {
         imgStores.image = nil

@@ -29,11 +29,13 @@ class VCRegister: BaseController{
     @IBOutlet weak var txtAddress: UITextField!
     @IBOutlet weak var countryPicker: CountryPicker!
     @IBOutlet weak var countryPickerMainView: UIView!
+    @IBOutlet weak var nicImageText: UILabel!
     @IBOutlet weak var txtAttachNIC: UIButton!{
         didSet{
            txtAttachNIC.titleLabel?.textAlignment = NSTextAlignment.center
         }
     }
+    
     @IBOutlet weak var lblGenderText: UILabel!
     @IBOutlet weak var radioMale: DLRadioButton!
     @IBOutlet weak var radioFemale: DLRadioButton!
@@ -41,6 +43,7 @@ class VCRegister: BaseController{
     @IBOutlet weak var lblAlreadyHaveAnAccount: UILabel!
     @IBOutlet weak var btnLoginNow: UIButton!
     @IBOutlet weak var subScrollView: UIView!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     var imagePicker = UIImagePickerController()
     var cameraPicker = UIImagePickerController()
@@ -52,7 +55,7 @@ class VCRegister: BaseController{
     override func viewDidLoad(){
         super.viewDidLoad()
         radioMale.isSelected = true
-        self.txtAttachNIC.titleLabel?.text = "Attach NIC Copy"
+        nicImageText.text = "Attach NIC Copy"
         
         if(lang == "en"){
             self.txtAttachNIC.titleLabel?.textAlignment = .left
@@ -114,7 +117,7 @@ class VCRegister: BaseController{
         self.txtLastName.placeholder = "Last Name".localized
         self.txtPhoneNumber.placeholder = "Phone no".localized
         self.txtFirstName.placeholder = "First Name".localized
-        self.txtAttachNIC.setTitle("Attach NIC Copy".localized, for: .normal)
+        //self.nicImageText.text = "Attach NIC Copy".localized
         self.txtConfirmPassword.placeholder = "Confirm Password".localized
         self.txtPasspord.placeholder = "Password".localized
         self.txtEmail.placeholder = "Email".localized
@@ -145,8 +148,6 @@ class VCRegister: BaseController{
         }
     }
     
-    
-    
     @IBAction func attachNic(_ sender: UIButton) {
         picNicImage()
     }
@@ -160,7 +161,10 @@ class VCRegister: BaseController{
             self.openGallery()
         }
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) {
-            UIAlertAction in self.cancel()
+            UIAlertAction in
+            self.cancel()
+            self.imgNic = nil
+            self.nicImageText.text = "Attach NIC Copy".localized
         }
         alert.addAction(cameraAction)
         alert.addAction(libraryAction)
@@ -197,17 +201,18 @@ class VCRegister: BaseController{
         self.imagePicker.dismiss(animated: true, completion: nil)
     }
     
+
     private func isCheck()->Bool{
         
         guard let firstName = txtFirstName.text, firstName.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter FirstName".localized, okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter First Name".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         guard let lastName = txtLastName.text, lastName.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter LastName".localized, okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Last Name".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
@@ -228,14 +233,14 @@ class VCRegister: BaseController{
         }
         
         guard let phoneNumber = txtPhoneNumber.text, phoneNumber.count > 0  else {
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter PhoneNumber".localized, okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Phone Number".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
         }
         
         if !phoneNumber.isPhoneNumber{
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid PhoneNumber".localized, okAction: {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Please Enter Valid Phone Number".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
@@ -311,14 +316,14 @@ class VCRegister: BaseController{
                 self?.finishLoading()
                 if let Response = response{
                     if(Response.success ?? false == true){
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",completionHandler: nil)
                  }
               }
           })
@@ -335,7 +340,9 @@ extension VCRegister: UIImagePickerControllerDelegate, UINavigationControllerDel
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         self.imgNic = info[UIImagePickerControllerOriginalImage] as? UIImage
-        self.txtAttachNIC.titleLabel?.text = fileName
+        let diceRoll = Int(arc4random_uniform(678) + 1)
+        let a = String(diceRoll)
+        self.nicImageText.text = "Pic_" + a + ".jpg"
         dismiss(animated: true, completion: nil)
     }
     

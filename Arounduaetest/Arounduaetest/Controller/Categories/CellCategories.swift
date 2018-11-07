@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 class CellCategories: UICollectionViewCell {
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet var imgCategory: UIImageView!
     @IBOutlet var lblCategory: UILabel!
     

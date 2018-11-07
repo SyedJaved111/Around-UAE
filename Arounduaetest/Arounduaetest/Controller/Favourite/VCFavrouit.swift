@@ -19,7 +19,7 @@ class VCFavrouit: BaseController,IndicatorInfoProvider{
             self.favouriteProductTableView.dataSource = self
         }
     }
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var favouriteProductList = [Products]()
     var totalPages = 0
     var currentPage = 0
@@ -55,10 +55,10 @@ class VCFavrouit: BaseController,IndicatorInfoProvider{
                         self?.currentPage = FavouriteProductData.data?.pagination?.page ?? 1
                         self?.totalPages = FavouriteProductData.data?.pagination?.pages ?? 0
                     }else{
-                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
                 self?.setupDelegates()
             }
@@ -93,10 +93,10 @@ extension VCFavrouit{
                                 self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -127,10 +127,10 @@ extension VCFavrouit{
                                 self?.currentPage = favouriteResponse.data?.pagination?.page ?? 1
                                 self?.totalPages = favouriteResponse.data?.pagination?.pages ?? 0
                             }else{
-                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }
@@ -149,7 +149,7 @@ extension VCFavrouit{
 extension VCFavrouit: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 118
+        return 99
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -185,10 +185,10 @@ extension VCFavrouit: PotocolCellFavourite{
                         self?.favouriteProductList.remove(at: indexpath?.row ?? 0)
                         self?.favouriteProductTableView.reloadData()
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })

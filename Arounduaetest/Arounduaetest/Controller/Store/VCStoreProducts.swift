@@ -15,6 +15,7 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
     @IBOutlet var collectionViewManageProducts: UICollectionView!
     var productsArray = [Products]()
     var storeidProducts = ""
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -47,7 +48,7 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
                         if productResponse.success!{
                         self?.productsArray = productResponse.data?.products ?? []
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
                         }
                     }else{
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)
@@ -70,8 +71,9 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
     
     func favouriteTapped(cell: CellStore){
         let indxpath = collectionViewManageProducts.indexPath(for: cell)
+        
         if let path = indxpath, let productid = productsArray[path.row]._id{
-            addProductToFavourite(product_id: productid)
+            addProductToFavourite(product_id: productid,cellstore: cell)
         }
     }
     
@@ -79,19 +81,30 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
         
     }
     
-    private func addProductToFavourite(product_id:String){
+    private func addProductToFavourite(product_id:String,cellstore:CellStore){
+        startLoading("")
         ProductManager().makeProductFavourite(product_id,
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
                 if let favouriteResponse = response{
-                    self?.alertMessage(message: (lang == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
+                    AppSettings.sharedSettings.user = favouriteResponse.data!
+                    if AppSettings.sharedSettings.user.favouriteProducts?.contains((product_id)) ?? false{
+                        cellstore.favouriteImage.image = #imageLiteral(resourceName: "Favourite-red")
+                        cellstore.UIButtonFavourite.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                    }else{
+                        cellstore.favouriteImage.image = #imageLiteral(resourceName: "Favourite")
+                        cellstore.UIButtonFavourite.backgroundColor = #colorLiteral(red: 0.137254902, green: 0.1176470588, blue: 0.0862745098, alpha: 1)
+                    }
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
                 }else{
                     self?.alertMessage(message: "Error".localized, completionHandler: nil)
                 }
+                self?.finishLoading()
             }
         }){[weak self](error) in
             DispatchQueue.main.async{
+                self?.finishLoading()
                 self?.alertMessage(message: error.message.localized, completionHandler: nil)
             }
         }

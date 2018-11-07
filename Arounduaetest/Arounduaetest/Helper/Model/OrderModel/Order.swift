@@ -85,7 +85,7 @@ struct OrderStore : Decodable {
     let storeName : StoreName?
     let shippingDays : Int?
     let image : String?
-    let averageRating : Int?
+    let averageRating : Double?
 }
 
 struct CombinationDetail : Decodable {

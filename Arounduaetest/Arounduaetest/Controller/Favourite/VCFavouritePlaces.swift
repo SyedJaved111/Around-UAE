@@ -22,7 +22,7 @@ class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
     var favouritePlacesList = [Places]()
     var totalPages = 0
     var currentPage = 0
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     override func viewDidLoad() {
         super.viewDidLoad()
         initialUI()
@@ -54,7 +54,7 @@ class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
                             self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
                         }
                         else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
                             }else
@@ -63,7 +63,7 @@ class VCFavouritePlaces: BaseController,IndicatorInfoProvider{
                             }
                         }
                     }else{
-                        if(lang == "en")
+                        if(self?.lang ?? "" == "en")
                         {
                         self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                         }else
@@ -106,7 +106,7 @@ extension VCFavouritePlaces{
                                 self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
                                 self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
                                 }else
@@ -115,7 +115,7 @@ extension VCFavouritePlaces{
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else
@@ -152,7 +152,7 @@ extension VCFavouritePlaces{
                                 self?.currentPage = FavouritePlacesData.data?.pagination?.page ?? 1
                                 self?.totalPages = FavouritePlacesData.data?.pagination?.pages ?? 0
                             }else{
-                                if(lang == "en")
+                                if(self?.lang ?? "" == "en")
                                 {
                                 self?.alertMessage(message:(FavouritePlacesData.message?.en ?? "").localized, completionHandler: nil)
                                 }else
@@ -161,7 +161,7 @@ extension VCFavouritePlaces{
                                 }
                             }
                         }else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
                             }else
@@ -222,7 +222,7 @@ extension VCFavouritePlaces: PotocolCellFavourite{
                         self?.favouritePlacesList.remove(at: indexpath?.row ?? 0)
                         self?.favouritePlacesTableView.reloadData()
                     }else{
-                        if(lang == "en")
+                        if(self?.lang ?? "" == "en")
                         {
                         self?.alertMessage(message: (favouriteResponse.message?.en ?? "").localized, completionHandler: nil)
                         }else
@@ -231,7 +231,7 @@ extension VCFavouritePlaces: PotocolCellFavourite{
                         }
                     }
                 }else{
-                    if(lang == "en")
+                    if(self?.lang ?? "" == "en")
                     {
                     self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
                     }else

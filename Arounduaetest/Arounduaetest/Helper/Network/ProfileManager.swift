@@ -115,11 +115,11 @@ class ProfileManager{
     }
     
     //MARK: - UserStores
-    func UserStores(_ pageNo:String,successCallback : @escaping (Response<User>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+    func UserStores(_ pageNo:String,successCallback : @escaping (Response<Store>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .UserStores(pageNo: pageNo),
         success:
         {(response) in
-            if let parsedResponse = ServerAPI.parseServerResponse(Response<User>.self, from: response){
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<Store>.self, from: response){
                 successCallback(parsedResponse)
             }else{
                 failureCallback(NetworkManager.networkError)
@@ -130,5 +130,4 @@ class ProfileManager{
             failureCallback(error)
         })
     }
-
 }

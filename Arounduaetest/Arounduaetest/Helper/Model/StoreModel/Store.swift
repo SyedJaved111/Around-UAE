@@ -28,6 +28,7 @@ struct StoreName : Decodable {
 struct Stores : Decodable {
     var _id : String?
     let storeName : StoreName?
+    let description: Description?
     let image : String?
     let isActive : Bool?
 }
@@ -36,12 +37,15 @@ struct StoreDetail: Decodable {
     let _id : String?
     let storeName : StoreName?
     let description : Description?
+    let reviews : [Reviews]?
     let products : [Products]?
     let location : String?
     let latitude : Double?
     let longitude : Double?
     let image : String?
     let isActive : Bool?
+    let averageRating: Double?
+    let canReviewUsers: [CanReviewUsers]?
 }
 
 

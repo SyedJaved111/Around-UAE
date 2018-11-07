@@ -42,6 +42,7 @@ class VCProductFilter: UIViewController {
     @IBOutlet weak var selectManufacturesHeader: UILabel!
     
     @IBOutlet weak var searchBtnHeight: NSLayoutConstraint!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     var featuresArray = [Features]()
     var filterdata = [GroupDivisonData]()
@@ -93,7 +94,6 @@ class VCProductFilter: UIViewController {
     }
     
     private func setViewHeight(){
-    
         var tableViewHeight:CGFloat = 0;
         for i in 0..<self.filterTableView.numberOfRows(inSection: 0){
             tableViewHeight = tableViewHeight + tableView(self.filterTableView, heightForRowAt: IndexPath(row: i, section: 0))
@@ -104,7 +104,6 @@ class VCProductFilter: UIViewController {
     }
     
     private func divisionsetViewHeight(){
-        
         var tableViewHeight:CGFloat = 0;
         for i in 0..<self.filterTableView.numberOfRows(inSection: 0){
             tableViewHeight = tableViewHeight + tableView(self.filterTableView, heightForRowAt: IndexPath(row: i, section: 0))
@@ -126,10 +125,10 @@ class VCProductFilter: UIViewController {
                         self?.setViewHeight()
                     }
                     else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
          }){[weak self](error) in
@@ -172,10 +171,10 @@ class VCProductFilter: UIViewController {
                             
                         }
                         else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })
@@ -200,10 +199,10 @@ class VCProductFilter: UIViewController {
                             self?.scrollView.updateContentView()
                         }
                         else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }
             })
@@ -246,19 +245,19 @@ class VCProductFilter: UIViewController {
                             self?.moveToFilteredProducts(products: productsResponse.data?.products ?? [])
                         }
                         else{
-                            if(lang == "en")
+                            if(self?.lang ?? "" == "en")
                             {
-                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }else{
-                                self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                             }
                         }
                     }else{
-                        if(lang == "en")
+                        if(self?.lang ?? "" == "en")
                         {
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }
                 }

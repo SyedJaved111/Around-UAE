@@ -14,6 +14,7 @@ class ManageProductCell: UICollectionViewCell {
     @IBOutlet weak var productimage: UIImageView!
     @IBOutlet weak var productname: UILabel!
     @IBOutlet weak var productPrice: UILabel!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func awakeFromNib() {
         productname.text = nil

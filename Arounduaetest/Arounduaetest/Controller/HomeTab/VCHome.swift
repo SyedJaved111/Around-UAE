@@ -24,6 +24,7 @@ class VCHome: BaseController{
             self.tablView.addSubview(refreshControl)
         }
     }
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -46,7 +47,7 @@ class VCHome: BaseController{
     
     private func setupLocalization(){
         btnViewMore.setTitle("View More".localized, for: .normal)
-        lblKnow.text = "know more details about various shops ,location & tourist spots around UAE".localized
+        lblKnow.text = "know more details about various shops, location & tourist spots around UAE".localized
         lblGenralServices.text = "GENERAL SERVICES".localized
     }
     
@@ -83,11 +84,11 @@ class VCHome: BaseController{
                             }
                         }else{
                             self?.bannerView.isHidden = true
-                            self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }else{
                        
-                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                     self?.setupDelegates()
                 }

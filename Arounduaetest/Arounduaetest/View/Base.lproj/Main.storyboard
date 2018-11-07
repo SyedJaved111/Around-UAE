@@ -63,12 +63,13 @@
                     <navigationItem key="navigationItem" id="jdq-rd-MHr"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="imageview" destination="leG-OY-5gO" id="94E-XL-WjK"/>
                         <outlet property="lblSplashScreen" destination="0pP-r6-sb2" id="18k-1O-Tcs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="769" y="116"/>
+            <point key="canvasLocation" x="850" y="115"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3A0-8K-pQd">
@@ -88,7 +89,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wI8-lr-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="121" y="115"/>
+            <point key="canvasLocation" x="233" y="116"/>
         </scene>
         <!--Select Language-->
         <scene sceneID="84a-hj-C7J">
@@ -218,7 +219,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Avp-t4-2Jp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1410" y="117"/>
+            <point key="canvasLocation" x="1466" y="116"/>
         </scene>
         <!--Login-->
         <scene sceneID="qL7-0N-Y3f">
@@ -521,7 +522,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aaT-oL-vYW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2037.5999999999999" y="116.49175412293854"/>
+            <point key="canvasLocation" x="2079" y="116"/>
         </scene>
         <!--Forgot Password-->
         <scene sceneID="yNi-Gb-gdU">
@@ -544,7 +545,7 @@
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CUj-r8-ViR">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please Enter Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CUj-r8-ViR">
                                 <rect key="frame" x="25" y="73.5" width="325" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="v4Y-VB-Z1Q"/>
@@ -563,7 +564,7 @@
                                             <constraint firstAttribute="height" constant="40" id="kKG-Qb-1dQ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="17"/>
-                                        <state key="normal" title="Resend">
+                                        <state key="normal" title="Cancel">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -578,7 +579,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="btnResendClick:" destination="p31-J0-gEN" eventType="touchUpInside" id="CYX-jd-ym8"/>
+                                            <action selector="btnCancelClick:" destination="lFP-kt-vub" eventType="touchUpInside" id="2gl-7h-IHd"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYg-Un-fV3" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
@@ -633,7 +634,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mBb-x5-YFn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2666" y="116"/>
+            <point key="canvasLocation" x="2690" y="116"/>
         </scene>
         <!--Email Verfication-->
         <scene sceneID="96Z-pQ-NTH">
@@ -747,7 +748,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="66t-nv-dxs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3930" y="117"/>
+            <point key="canvasLocation" x="3914" y="116"/>
         </scene>
         <!--Change Password-->
         <scene sceneID="wJx-Co-M9n">
@@ -877,7 +878,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ASh-Zf-UiA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4564" y="117"/>
+            <point key="canvasLocation" x="4526" y="115"/>
         </scene>
         <!--Register-->
         <scene sceneID="A5a-gi-0Jr">
@@ -901,7 +902,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CnZ-ED-3FP">
-                                                <rect key="frame" x="40" y="30" width="295" height="390"/>
+                                                <rect key="frame" x="40" y="30" width="295" height="340"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n0G-Fl-07G">
                                                         <rect key="frame" x="0.0" y="0.0" width="295" height="40"/>
@@ -913,7 +914,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                                                <integer key="value" value="15"/>
+                                                                <integer key="value" value="100"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
@@ -934,11 +935,6 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                                                <integer key="value" value="13"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nKG-RR-9ea">
                                                         <rect key="frame" x="0.0" y="200" width="295" height="40"/>
@@ -958,38 +954,16 @@
                                                         <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uu-2T-zof" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="350" width="295" height="40"/>
-                                                        <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
-                                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="141" maxY="0.0"/>
-                                                        <state key="normal" title="Attach NIC Copy">
-                                                            <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="1"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="3"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                <color key="value" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="attachNic:" destination="kju-Kl-LIR" eventType="touchUpInside" id="LtG-D6-Oxr"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slJ-vT-xmH">
-                                                <rect key="frame" x="40" y="441" width="60" height="20"/>
+                                                <rect key="frame" x="40" y="439" width="60" height="20"/>
                                                 <fontDescription key="fontDescription" name="Raleway-SemiBold" family="Raleway" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1dP-GE-G2l">
-                                                <rect key="frame" x="110" y="435" width="190" height="32"/>
+                                                <rect key="frame" x="110" y="433" width="190" height="32"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Vn-Bj-aO6" customClass="DLRadioButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="32"/>
@@ -1042,7 +1016,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgM-xY-3hp" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
-                                                <rect key="frame" x="40" y="482" width="295" height="45"/>
+                                                <rect key="frame" x="40" y="480" width="295" height="45"/>
                                                 <color key="backgroundColor" red="0.87450980389999999" green="0.18823529410000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="sid-PD-3gf"/>
@@ -1067,7 +1041,7 @@
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SPu-20-M2x">
-                                                <rect key="frame" x="59.5" y="572" width="256" height="30"/>
+                                                <rect key="frame" x="59.5" y="570" width="256" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSl-UG-FBV">
                                                         <rect key="frame" x="0.0" y="0.0" width="178" height="30"/>
@@ -1088,21 +1062,69 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uu-2T-zof" customClass="UIButtonMain" customModule="Around_UAE" customModuleProvider="target">
+                                                <rect key="frame" x="40" y="378" width="295" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="ywK-Za-btD"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
+                                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="141" maxY="0.0"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="attachNic:" destination="kju-Kl-LIR" eventType="touchUpInside" id="LtG-D6-Oxr"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attach NIC Copy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cff-rO-Kgg">
+                                                <rect key="frame" x="47" y="381" width="288" height="37"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" red="0.41171678900718689" green="0.41179227828979492" blue="0.41171199083328247" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fx-24-9N5">
+                                                <rect key="frame" x="306" y="389" width="20" height="18"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="18" id="Aow-Dk-ACi"/>
+                                                    <constraint firstAttribute="width" constant="20" id="fyz-1e-iIb"/>
+                                                </constraints>
+                                                <state key="normal" image="Attach"/>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="SPu-20-M2x" firstAttribute="top" secondItem="LgM-xY-3hp" secondAttribute="bottom" constant="45" id="1hQ-9w-WvQ"/>
+                                            <constraint firstItem="1dP-GE-G2l" firstAttribute="top" secondItem="cff-rO-Kgg" secondAttribute="bottom" constant="15" id="2Qv-UJ-gHU"/>
                                             <constraint firstItem="1dP-GE-G2l" firstAttribute="leading" secondItem="slJ-vT-xmH" secondAttribute="trailing" constant="10" id="E6B-w4-1T2"/>
+                                            <constraint firstItem="cff-rO-Kgg" firstAttribute="top" secondItem="CnZ-ED-3FP" secondAttribute="bottom" constant="11" id="EwO-L2-EaX"/>
+                                            <constraint firstItem="6fx-24-9N5" firstAttribute="top" secondItem="6uu-2T-zof" secondAttribute="bottom" constant="-29" id="HsQ-Td-fL5"/>
+                                            <constraint firstItem="6uu-2T-zof" firstAttribute="trailing" secondItem="cMe-dm-TvH" secondAttribute="trailing" id="IxR-qC-7YP"/>
                                             <constraint firstItem="SPu-20-M2x" firstAttribute="centerX" secondItem="Kf7-wT-h28" secondAttribute="centerX" id="LLP-Kd-Nkh"/>
                                             <constraint firstItem="CnZ-ED-3FP" firstAttribute="top" secondItem="Kf7-wT-h28" secondAttribute="top" constant="30" id="MxF-xh-fbb"/>
+                                            <constraint firstItem="cff-rO-Kgg" firstAttribute="leading" secondItem="cMe-dm-TvH" secondAttribute="leading" constant="7" id="QwZ-80-JHS"/>
+                                            <constraint firstItem="6Vn-Bj-aO6" firstAttribute="top" secondItem="6uu-2T-zof" secondAttribute="bottom" constant="15" id="SYH-Gk-gIe"/>
                                             <constraint firstItem="slJ-vT-xmH" firstAttribute="leading" secondItem="Kf7-wT-h28" secondAttribute="leading" constant="40" id="U0V-eZ-RAU"/>
                                             <constraint firstItem="CnZ-ED-3FP" firstAttribute="leading" secondItem="Kf7-wT-h28" secondAttribute="leading" constant="40" id="XDy-HN-aHu"/>
                                             <constraint firstAttribute="trailing" secondItem="CnZ-ED-3FP" secondAttribute="trailing" constant="40" id="Y6a-R5-tJF"/>
                                             <constraint firstItem="LgM-xY-3hp" firstAttribute="top" secondItem="1dP-GE-G2l" secondAttribute="bottom" constant="15" id="ZE7-lz-bSJ"/>
                                             <constraint firstItem="LgM-xY-3hp" firstAttribute="leading" secondItem="Kf7-wT-h28" secondAttribute="leading" constant="40" id="Zml-VD-kDT"/>
+                                            <constraint firstItem="cff-rO-Kgg" firstAttribute="trailing" secondItem="cMe-dm-TvH" secondAttribute="trailing" id="h1r-nl-keL"/>
                                             <constraint firstItem="1dP-GE-G2l" firstAttribute="centerY" secondItem="slJ-vT-xmH" secondAttribute="centerY" id="hZG-ar-CQY"/>
-                                            <constraint firstItem="1dP-GE-G2l" firstAttribute="top" secondItem="CnZ-ED-3FP" secondAttribute="bottom" constant="15" id="m6o-0O-2wb"/>
+                                            <constraint firstItem="6fx-24-9N5" firstAttribute="leading" secondItem="cff-rO-Kgg" secondAttribute="trailing" constant="-29" id="tQR-qy-eTJ"/>
+                                            <constraint firstItem="6uu-2T-zof" firstAttribute="top" secondItem="cMe-dm-TvH" secondAttribute="bottom" constant="8" id="x5c-Wb-3AT"/>
                                             <constraint firstAttribute="trailing" secondItem="LgM-xY-3hp" secondAttribute="trailing" constant="40" id="xHg-cX-WGc"/>
+                                            <constraint firstItem="6uu-2T-zof" firstAttribute="leading" secondItem="cMe-dm-TvH" secondAttribute="leading" id="z4p-6k-EQf"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1135,6 +1157,7 @@
                         <outlet property="countryPickerMainView" destination="VLg-zE-AkZ" id="cXc-PM-0d5"/>
                         <outlet property="lblAlreadyHaveAnAccount" destination="SSl-UG-FBV" id="d87-L2-51Z"/>
                         <outlet property="lblGenderText" destination="slJ-vT-xmH" id="GhJ-kR-w8H"/>
+                        <outlet property="nicImageText" destination="cff-rO-Kgg" id="q4t-vq-eMd"/>
                         <outlet property="radioFemale" destination="nab-w6-JjA" id="ZBC-E6-GG7"/>
                         <outlet property="radioMale" destination="6Vn-Bj-aO6" id="Q5g-Aj-Hg9"/>
                         <outlet property="subScrollView" destination="Kf7-wT-h28" id="M9a-H9-boa"/>
@@ -1175,10 +1198,11 @@
                     <viewLayoutGuide key="safeArea" id="0lz-dA-q69"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3303" y="117"/>
+            <point key="canvasLocation" x="3301.5999999999999" y="115.59220389805098"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Attach" width="200" height="200"/>
         <image name="Facebook" width="25" height="25"/>
         <image name="Google" width="200" height="200"/>
         <image name="Logo" width="1024" height="1024"/>

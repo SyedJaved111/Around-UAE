@@ -27,6 +27,7 @@ class SellerOrderDetail: UIViewController {
     
     @IBOutlet weak var boxesImage: UIImageView!
     @IBOutlet weak var shadowImage: UIImageView!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     
     var sellerOrder:SellerOrder!
@@ -106,17 +107,17 @@ class SellerOrderDetail: UIViewController {
                         self?.finishLoading()
                         if let shippedResponse = response{
                             if shippedResponse.success!{
-                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                                     NotificationCenter.default.post(name: Notification.Name("OrderShipped"), object: nil)
                                     self?.navigationController?.popViewController(animated: true)
                                 })
                             }else{
-                                self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                                     self?.navigationController?.popViewController(animated: true)
                                 })
                             }
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
                     }
                 },

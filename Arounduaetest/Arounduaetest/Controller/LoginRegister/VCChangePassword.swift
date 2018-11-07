@@ -18,6 +18,7 @@ class VCChangePassword: BaseController {
     @IBOutlet weak var btnUpdate: UIButtonMain!
     var email: String!
     var code: String!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,16 +127,16 @@ class VCChangePassword: BaseController {
                 self?.finishLoading()
                 if let Response = response{
                     if(Response.success ?? false == true){
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",completionHandler: {
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "",completionHandler: {
                     self?.navigationController?.popViewController(animated: true)})
                 }
             }

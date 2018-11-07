@@ -26,7 +26,7 @@ class VCDesertSafari: UIViewController {
     @IBOutlet weak var imgBaner: UIImageView!
     @IBOutlet weak var btnlikeimg: UIButtonMain!
     @IBOutlet weak var favouriteImage: UIImageView!
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var placeid = ""
     var locationManager: CLLocationManager = CLLocationManager()
     let shareduserinfo = SharedData.sharedUserInfo
@@ -51,7 +51,7 @@ class VCDesertSafari: UIViewController {
                 if let responsedetail = response{
                     self?.setupPlaceDetail(responsedetail.data!)
                 }else{
-                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                   self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
             }
             }
         })
@@ -110,10 +110,10 @@ class VCDesertSafari: UIViewController {
                             self?.favouriteImage.image = #imageLiteral(resourceName: "Favourite")
                             self?.btnlikeimg.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
                         }
-                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                   self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                   self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })

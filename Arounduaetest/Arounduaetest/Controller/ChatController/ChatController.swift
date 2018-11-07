@@ -76,6 +76,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     var TotalPage = 0;
     var ObjPage = 0;
     var fetchingMore = false
+    var notificationid = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,17 +85,27 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         tableView.estimatedRowHeight = 100
          self.setupKeyboardScrolling()
        // self.hideKeyboard()
+        
         self.showData()
-        
-        
-        
-        
         self.txtMessage.leftViewRect(forBounds: CGRect(x: 50, y: 0, width: 0, height: 0))
-          self.getAllmessages()
+        self.getAllmessages()
+        
         
     }
     
-    
+    func seenArray() {
+        var SeenArr = [String]()
+        SeenArr.append(notificationid)
+        let json2 = [
+            "notifications": SeenArr
+        ]
+        print(json2)
+        if(SeenArr.isEmpty){
+            
+        }else{
+            self.socket.emit("notificationsSeen", with: [json2])
+        }
+    }
     
     func getTimeFromTimeStamp(timeStamp : Double) -> String
     {
@@ -929,7 +940,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             self.socket.on(clientEvent: .connect) {data, emitter in
                 // handle connected
            
-            
+            self.seenArray()
                 if(self.user.conversationuserID == ""){
                     let conversationID = [
                         "conversation":  self.user.conversationID,

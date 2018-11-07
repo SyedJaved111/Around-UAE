@@ -12,6 +12,7 @@ class ManageProductVC: BaseController {
    
     var productarray = [Products]()
     var storeid:String!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     @IBOutlet var collectionViewProduct: UICollectionView!{
         didSet{
@@ -74,7 +75,7 @@ class ManageProductVC: BaseController {
                         if productResponse.success!{
                             self?.productarray = productResponse.data?.products ?? []
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
                         }
                         self?.setupDelegates()
                     }else{

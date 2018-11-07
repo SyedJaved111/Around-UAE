@@ -10,6 +10,10 @@ import UIKit
 import Cosmos
 import SDWebImage
 
+protocol topratedCellDelegate{
+    func favouriteTapped(cell: TopratedCell)
+}
+
 class TopratedCell: UICollectionViewCell {
     
     @IBOutlet weak var btnToprated: UIButton!
@@ -17,6 +21,8 @@ class TopratedCell: UICollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var placeTitle: UIImageView!
     @IBOutlet weak var favroutieImage: UIImageView!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    var delegate: topratedCellDelegate?
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -38,18 +44,15 @@ class TopratedCell: UICollectionViewCell {
     
     func setupPlaceCell(_ places:Places){
         cosmosView.rating = Double(places.averageRating!)
-        if(lang == "en")
-        {
+        if(lang == "en"){
             title.text = places.title?.en ?? ""
-        }else
-        {
+        }else{
             title.text = places.title?.ar ?? ""
         }
         
         placeTitle.sd_setShowActivityIndicatorView(true)
         placeTitle.sd_setIndicatorStyle(.gray)
         placeTitle.sd_setImage(with: URL(string: places.images?.first?.path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
-        
         
         if AppSettings.sharedSettings.user.favouritePlaces?.contains((places._id!)) ?? false{
             self.favroutieImage.image = #imageLiteral(resourceName: "Favourite-red")
@@ -59,4 +62,10 @@ class TopratedCell: UICollectionViewCell {
             self.btnToprated.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
         }
     }
+    
+    @IBAction func addToFavourite(_ sender: UIButton){
+        self.delegate?.favouriteTapped(cell: self)
+    }
 }
+
+

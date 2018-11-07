@@ -45,6 +45,7 @@ class VCSelectLanguage: UIViewController {
 
     @IBAction func btnEnglishClick(_ sender: Any){
         UserDefaults.standard.set("en", forKey: "i18n_language")
+        UIView.appearance().semanticContentAttribute = .forceLeftToRight
         if AppSettings.sharedSettings.isAutoLogin ?? false{
            appDelegate.moveToHome()
         }else{
@@ -54,6 +55,7 @@ class VCSelectLanguage: UIViewController {
     
     @IBAction func btnArabicClick(_ sender: Any){
         UserDefaults.standard.set("ar", forKey: "i18n_language")
+        UIView.appearance().semanticContentAttribute = .forceRightToLeft
         moveToLogin()
     }
     

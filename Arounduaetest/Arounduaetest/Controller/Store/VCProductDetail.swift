@@ -11,6 +11,8 @@ import Cosmos
 
 class VCProductDetail: UIViewController {
 
+    @IBOutlet weak var tableviewReeviewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewReviews: UITableView!
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var prodcutPrice: UILabel!
     @IBOutlet weak var productname: UILabel!
@@ -31,6 +33,7 @@ class VCProductDetail: UIViewController {
         }
     }
     
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var product:Products!
     var productDetail:Product?
     var selectedCell = [IndexPath]()
@@ -50,6 +53,15 @@ class VCProductDetail: UIViewController {
         scrollview.contentSize = CGSize(width: UIScreen.main.bounds.width, height: scrollview.contentSize.height)
     }
     
+    private func setViewHeight(){
+        var tableViewHeight:CGFloat = 0;
+        for i in 0..<self.tableViewReviews.numberOfRows(inSection: 0){
+            tableViewHeight = tableViewHeight + tableView(self.tableViewReviews, heightForRowAt: IndexPath(row: i, section: 0))
+        }
+        tableviewReeviewConstraint.constant = tableViewHeight
+        self.tableViewReviews.setNeedsDisplay()
+    }
+    
     private func getProductDetail(){
         startLoading("")
         ProductManager().productDetail(product._id!,
@@ -62,11 +74,13 @@ class VCProductDetail: UIViewController {
                         self?.productDetail = storeResponse.data!
                         self?.setupProductDetsil(storeResponse.data!)
                         self?.CollectionView.reloadData()
+                        self?.tableViewReviews.reloadData()
+                        self?.setViewHeight()
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "" , completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "" , completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -129,16 +143,16 @@ class VCProductDetail: UIViewController {
                 self?.finishLoading()
                 if let storeResponse = response{
                     if storeResponse.success!{
-                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? storeResponse.message?.en ?? "" : storeResponse.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                         self?.navigationController?.popViewController(animated: true)
                     })
                 }
@@ -169,6 +183,15 @@ class VCProductDetail: UIViewController {
             self.favouritImage.image = #imageLiteral(resourceName: "Favourite")
             self.favouriteBtn.backgroundColor = #colorLiteral(red: 0.6, green: 0.537254902, blue: 0.4901960784, alpha: 1)
         }
+        if productdetail.canReviewUsers?.count ?? 0 > 0{
+            self.reviewBtn.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
+            self.reviewBtn.layer.borderColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
+            self.reviewBtn.isUserInteractionEnabled = true
+        }else{
+            self.reviewBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+            self.reviewBtn.layer.borderColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+            self.reviewBtn.isUserInteractionEnabled = false
+        }
         productDescription.text = (lang == "en") ? productdetail.description?.en ?? "" : productdetail.description?.ar ?? ""
     }
     
@@ -180,7 +203,7 @@ class VCProductDetail: UIViewController {
             self.addBackButton()
         }
         if AppSettings.sharedSettings.accountType == "seller"{
-            self.reviewBtn.backgroundColor = #colorLiteral(red: 0.06274509804, green: 0.04705882353, blue: 0.03137254902, alpha: 1)
+            self.reviewBtn.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
             self.reviewBtn.isUserInteractionEnabled = false
         }else{
             self.reviewBtn.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
@@ -221,12 +244,12 @@ class VCProductDetail: UIViewController {
                             self?.favouritImage.image = #imageLiteral(resourceName: "Favourite")
                             self?.favouriteBtn.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
                         }
-                        self?.alertMessage(message: (lang == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -313,3 +336,25 @@ extension VCProductDetail: UICollectionViewDelegate,UICollectionViewDataSource{
         }
     }
 }
+
+extension VCProductDetail: UITableViewDelegate,UITableViewDataSource{
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return productDetail?.reviews?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell =  tableView.dequeueReusableCell(withIdentifier: "reviewcell", for: indexPath) as! ReviewCell
+        cell.setupReviewCell(review: (productDetail?.reviews?[indexPath.row])!)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+}
+

@@ -21,6 +21,7 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
     var socket:SocketIOClient!
     var Notificationbtn: MIBadgeButton?
     var Count = ""
+    let user = SharedData.sharedUserInfo
     
     @IBOutlet var notificationsTableView: UITableView!
     var notificationObj = NotificationMain()
@@ -83,15 +84,10 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
             
         }
        
-        let imageUrl = notificationArray[indexPath.row].sender?.image
-       
-        if let url = URL(string: imageUrl ?? "")
-        {
-            //print(url)
-            //cell.imageView?.af_setImage(withURL: url)
-            //cell.imageView?
-            cell.notificationImage.sd_setImage(with: url, placeholderImage:UIImage(named: "Placeholder-3"))
-            
+        let imageUrl = notificationArray[indexPath.row].store?.image
+        
+        if let url = URL(string: imageUrl ?? ""){
+            cell.notificationImage.sd_setImage(with: url, placeholderImage:#imageLiteral(resourceName: "product"))
         }
         
         let time = notificationArray[indexPath.row].createdAt
@@ -107,7 +103,11 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
         let resultString = outputFormatter.string(from: date!)
        
         cell.timeLbl.text =  resultString
-        
+        if (notificationArray[indexPath.row].seen ?? false){
+            cell.notificationView.isHidden = true
+        }else{
+            cell.notificationView.isHidden = false
+        }
         cell.delteNotificationBtn.tag = indexPath.row
         cell.delteNotificationBtn.addTarget(self, action: #selector(myButtonMethod(_:)), for: .touchUpInside)
         
@@ -123,18 +123,48 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 87
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if AppSettings.sharedSettings.accountType == "buyer"{
+            if notificationArray[indexPath.row].action ?? "" == "ORDER_SHIPPED"{
+                self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderDetail") as! VCOrderDetail
+                vc.orderid = notificationArray[indexPath.row].extras?.conversation ?? ""
+                vc.isfromNotification = true
+                vc.notificationid = notificationArray[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "ChatController") as! ChatController
+                vc.notificationid = notificationArray[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            if notificationArray[indexPath.row].action ?? "" == "ORDER"{
+                self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "VCMyOrders") as! VCMyOrders
+                vc.storeid = notificationArray[indexPath.row].store?._id ?? ""
+                vc.notificationid = notificationArray[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "ChatController") as! ChatController
+                vc.notificationid = notificationArray[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
     
     func setsocketIOS(){
         
         guard let userToken = AppSettings.sharedSettings.authToken else {return}
-        
-       // let userToken = UserDefaults.standard.value(forKey: "userAuthToken") as? String
         
         let usertoken = [
             "token":  userToken
@@ -146,12 +176,8 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
             .path("/around-uae/socket.io"),
             .connectParams(usertoken),
             .log(true)]
-        
-       // socket.joinNamespace()
-        
-        
+    
         self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/socket.io")! , config: specs)
-        
         self.socket = manager.defaultSocket
         self.manager.defaultSocket.on("connected") {data, ack in
             print(data)
@@ -163,7 +189,6 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
                     print(txt)
                 }
             }
-            
         }
         
         self.socket.on("notificationsList") { (data, ack) in
@@ -180,7 +205,7 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
                 
                self.notificationObj = user
                 self.notificationArray = (self.notificationObj?.data?.notifications)!
-                self.seenArray()
+                //self.seenArray()
                 print(self.notificationArray.count)
                 //return
             }

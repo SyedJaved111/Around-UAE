@@ -17,6 +17,7 @@ class VCPopUp: UIViewController {
     @IBOutlet var btnCancel: UIButtonMain!
     @IBOutlet var btnSubmit: UIButtonMain!
     @IBOutlet weak var ratingView: CosmosView!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     var placeid:String?
     var productid:String?
@@ -36,7 +37,13 @@ class VCPopUp: UIViewController {
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         lblSubmitFeedBack.text = "Submit Feedback".localized
-        lblHowsExperience.text = "Hows was your experience with instinct Store?".localized
+        if let _ = placeid{
+            lblHowsExperience.text = "Hows was your experience with instinct Place?".localized
+        }else if let _ = storeid{
+            lblHowsExperience.text = "Hows was your experience with instinct Store?".localized
+        }else if let _ = productid{
+            lblHowsExperience.text = "Hows was your experience with instinct Product?".localized
+        }
         textViewWriteComments.text = "Write Comments...".localized
         btnSubmit.setTitle("Submit".localized, for: .normal)
         btnCancel.setTitle("Cancel".localized, for: .normal)
@@ -77,14 +84,14 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
                              self?.dismiss(animated: true, completion: nil)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })
@@ -105,11 +112,11 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true, completion: nil)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)
@@ -137,11 +144,11 @@ class VCPopUp: UIViewController {
                 self?.finishLoading()
                 if let reviewResponse = response{
                     if reviewResponse.success!{
-                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true, completion: nil)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? reviewResponse.message?.en ?? "" : reviewResponse.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
                     self?.alertMessage(message: response?.message?.en ?? "", completionHandler: nil)

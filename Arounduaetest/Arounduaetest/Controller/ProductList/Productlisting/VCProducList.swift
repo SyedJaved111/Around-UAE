@@ -11,6 +11,7 @@ import XLPagerTabStrip
 
 class VCProducList: ButtonBarPagerTabStripViewController {
     
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .red
         settings.style.buttonBarItemBackgroundColor = .white

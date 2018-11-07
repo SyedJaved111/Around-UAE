@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SocketIO
 
 class VCOrderDetail: BaseController {
 
@@ -23,6 +24,12 @@ class VCOrderDetail: BaseController {
     
     var ConfirmedOrderList = [SomeOrderDetails]()
     var orderData:OrderData?
+    var isfromNotification:Bool?
+    var orderid = ""
+    var notificationid = ""
+    var manager:SocketManager!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    var socket:SocketIOClient!
     
     @IBOutlet var confirmedTableView: UITableView!{
         didSet{
@@ -33,18 +40,60 @@ class VCOrderDetail: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupData()
-        ConfirmedOrderList = orderData?.orderDetails ?? []
-        confirmedTableView.reloadData()
+        if isfromNotification ?? false{
+            orderDetail(orderid: orderid)
+            guard let userToken = AppSettings.sharedSettings.authToken else {return}
+            
+            let usertoken = [
+                "token":  userToken
+            ]
+            
+            let specs: SocketIOClientConfiguration = [
+                .forceWebsockets(true),
+                .forcePolling(false),
+                .path("/around-uae/socket.io"),
+                .connectParams(usertoken),
+                .log(true)]
+            self.manager = SocketManager(socketURL: URL(string:  "http://216.200.116.25/around-uae/socket.io")! , config: specs)
+            self.socket = manager.defaultSocket
+            self.manager.defaultSocket.on("connected") {data, ack in
+                
+            }
+            self.socket.on("connected") { (data, ack) in
+                self.seenArray()
+                if let arr = data as? [[String: Any]] {
+                    if let txt = arr[0]["text"] as? String {
+                        print(txt)
+                    }
+                }
+            }
+        }else{
+            setupData()
+            ConfirmedOrderList = orderData?.orderDetails ?? []
+            confirmedTableView.reloadData()
+        }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        if(lang == "en")
-        {
-        self.addBackButton()
+    func seenArray() {
+        var SeenArr = [String]()
+        SeenArr.append(notificationid)
+        let json2 = [
+            "notifications": SeenArr
+        ]
         
-        }else
-        {
+        if(SeenArr.isEmpty){
+            
+        }else{
+            self.socket.emit("notificationsSeen", with: [json2])
+        }
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if(lang == "en"){
+            self.addBackButton()
+        
+        }else{
             self.showArabicBackButton()
         }
         self.lblorderdate.text = "Date".localized
@@ -58,15 +107,15 @@ class VCOrderDetail: BaseController {
     private func setupData(){
          lblOrderNumber.text = orderData?.payerId
          lblAmount.text = "$\(orderData?.charges ?? 0.0)"
-        let dateFormatter = DateFormatter()
-        let tempLocale = dateFormatter.locale
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        let date = dateFormatter.date(from: orderData?.createdAt! ?? "")!
-        dateFormatter.dateFormat = "d MMM yyyy"
-        dateFormatter.locale = tempLocale
-        let dateString = dateFormatter.string(from: date)
-        
+         let dateFormatter = DateFormatter()
+         let tempLocale = dateFormatter.locale
+         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+         let date = dateFormatter.date(from: orderData?.createdAt! ?? "")!
+         dateFormatter.dateFormat = "d MMM yyyy"
+         dateFormatter.locale = tempLocale
+         let dateString = dateFormatter.string(from: date)
+
          lblDate.text = dateString
          lblTotal.text = "\(orderData?.orderDetails?.count ?? 0)"
          lblStatus.text = orderData?.status?.capitalized
@@ -96,6 +145,36 @@ extension VCOrderDetail:UITableViewDelegate,UITableViewDataSource,OrderDetailPro
         makeProductComplete(orderid: ConfirmedOrderList[(indexpath?.row ?? 0)]._id ?? "")
     }
     
+    private func orderDetail(orderid:String){
+        startLoading("")
+        OrderManager().orderDetail(orderid, successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let completedResponse = response{
+                        if completedResponse.success!{
+                           self?.orderData = completedResponse.data
+                           self?.setupData()
+                           self?.ConfirmedOrderList = self?.orderData?.orderDetails ?? []
+                           self?.confirmedTableView.reloadData()
+                        }else{
+                            self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                self?.navigationController?.popViewController(animated: true)
+                            })
+                        }
+                    }else{
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    }
+                }
+            })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
+    }
+    
     private func makeProductComplete(orderid:String){
         startLoading("")
         OrderManager().MakeProductComplete(orderid,
@@ -106,17 +185,17 @@ extension VCOrderDetail:UITableViewDelegate,UITableViewDataSource,OrderDetailPro
                 if let completedResponse = response{
                     if completedResponse.success!{
                         
-                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             NotificationCenter.default.post(name: Notification.Name("OrderShipped"), object: nil)
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message:(lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message:(self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
             }
         })

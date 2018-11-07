@@ -26,6 +26,7 @@ class OrderDetailCell: UITableViewCell {
     @IBOutlet weak var cellBtn: UIButton!
     @IBOutlet weak var boxesImage: UIImageView!
     @IBOutlet weak var shadowImage: UIImageView!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     var str = ""
     var delegate: OrderDetailPrortocol?

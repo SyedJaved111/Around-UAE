@@ -52,7 +52,7 @@
 "Please Enter New Password" = "Please Enter New Password";
 "Please Enter Confirm Password" = "Please Enter Confirm Password" ;
 "password must contain 6 characters" = "password must contain 6 characters";
-
+"know more details about various shops, location & tourist spots around UAE" = "know more details about various shops, location & tourist spots around UAE";
 
 //Register
 "Register" = "Register";
@@ -70,8 +70,8 @@
 "Email" = "Email";
 "Login now" = "Login now" ;
 
-"Please Enter FirstName" = "Please Enter FirstName";
-"Please Enter LastName" = "Please Enter LastName";
+"Please Enter First Name" = "Please Enter First Name";
+"Please Enter Last Name" = "Please Enter LastName";
 "Please Enter Phone Number" =  "Please Enter Phone Number";
 "Please Enter Password" = "Please Enter Password";
 "Please Enter Confirm Password" = "Please Enter Confirm Password";

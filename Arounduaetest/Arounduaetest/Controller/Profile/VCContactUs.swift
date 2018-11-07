@@ -22,7 +22,7 @@ class VCContactUs: UIViewController{
     @IBOutlet weak var btnSubmit: UIButtonMain!
     @IBOutlet weak var dropdown: UIButton!
     let menudropDown = DropDown()
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +109,7 @@ class VCContactUs: UIViewController{
         {[weak self](response) in
             self?.finishLoading()
             if let contactResponse = response{
-                if lang == "en"{
+                if self?.lang ?? "" == "en"{
                     if contactResponse.success!{
                         
                         self?.alertMessage(message: contactResponse.message?.en ?? "", completionHandler: {
@@ -134,7 +134,7 @@ class VCContactUs: UIViewController{
                 }
                 
             }else{
-                 if lang == "en"{
+                 if self?.lang ?? "" == "en"{
                     self?.alertMessage(message: response?.message?.en ?? "", completionHandler: {
                       self?.navigationController?.popViewController(animated: true)
                     })

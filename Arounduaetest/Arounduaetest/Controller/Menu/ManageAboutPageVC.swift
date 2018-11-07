@@ -18,6 +18,7 @@ class ManageAboutPageVC: UIViewController {
     var imagePicker = UIImagePickerController()
     var cameraPicker = UIImagePickerController()
     var storeObject:Stores!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,8 @@ class ManageAboutPageVC: UIViewController {
         storeImage.sd_setShowActivityIndicatorView(true)
         storeImage.sd_setIndicatorStyle(.gray)
         storeImage.sd_setImage(with: URL(string: storeObject.image ?? ""))
-        
+        lblEnglishTextField.text = storeObject.description?.en ?? ""
+        lblArabicTextField.text = storeObject.description?.ar ?? ""
     }
     
     @IBAction func editStoreImage(_ sender: UIButton) {
@@ -90,16 +92,16 @@ class ManageAboutPageVC: UIViewController {
                 self?.finishLoading()
                 if let aboutResponse = response{
                     if aboutResponse.success!{
-                        self?.alertMessage(message: (lang == "en") ? aboutResponse.message?.en ?? "" : aboutResponse.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? aboutResponse.message?.en ?? "" : aboutResponse.message?.ar ?? "", completionHandler: {
                             self?.navigationController?.popViewController(animated: true)
                         })
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? aboutResponse.message?.en ?? "" : aboutResponse.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? aboutResponse.message?.en ?? "" : aboutResponse.message?.ar ?? "", completionHandler: {
                              self?.navigationController?.popViewController(animated: true)
                         })
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                          self?.navigationController?.popViewController(animated: true)
                     })
                 }

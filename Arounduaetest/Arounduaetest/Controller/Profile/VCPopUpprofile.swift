@@ -20,6 +20,7 @@ class VCPopUpprofile: UIViewController {
     var titlefield = ""
     var placeholdertxt = ""
     var headertxt = ""
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -166,12 +167,12 @@ class VCPopUpprofile: UIViewController {
                             NotificationCenter.default.post(name: Notification.Name("ProfileUpdated"), object: nil)
                             self?.dismiss(animated: true , completion: nil)
                         }else{
-                            self?.alertMessage(message: (lang == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: {
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? profileResponse.message?.en ?? "" : profileResponse.message?.ar ?? "", completionHandler: {
                                 self?.dismiss(animated: true , completion: nil)
                             })
                         }
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
                             self?.dismiss(animated: true , completion: nil)
                         })
                     }

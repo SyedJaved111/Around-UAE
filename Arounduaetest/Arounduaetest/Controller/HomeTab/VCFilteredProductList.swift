@@ -9,6 +9,7 @@ class VCFilteredProductList: UIViewController,UICollectionViewDelegate,UICollect
             collectionViewProductnearby.dataSource = self
         }
     }
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var productarray:[Products]!
     
     override func viewDidLoad() {

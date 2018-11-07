@@ -20,6 +20,7 @@ class CellNearBy: UICollectionViewCell {
     @IBOutlet weak var btnFavrouitnearby: UIButton!
     @IBOutlet weak var btnFavrouitnearbyImage: UIImageView!
     @IBOutlet weak var imgproductneaby: UIImageView!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func awakeFromNib() {
         btnFavrouitnearby.makeRound()
@@ -36,8 +37,7 @@ class CellNearBy: UICollectionViewCell {
     func setupNearbyData(product:Products){
         if(lang == "en"){
         lblproductnamenearby.text = product.productName?.en
-        }else
-        {
+        }else{
             lblproductnamenearby.text = product.productName?.ar
         }
         uiviewcomosenearby.rating = Double(product.averageRating ?? 0)

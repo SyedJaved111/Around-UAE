@@ -24,7 +24,7 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
     var grouplist = [Groups]()
     var storeGroup:Groups!
     var resturantGroup:Groups!
-    
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -77,10 +77,10 @@ class VCCategories: BaseController,UICollectionViewDataSource,UICollectionViewDe
                         self?.grouplist.insert((self?.storeGroup)!, at: 0)
                         self?.grouplist.insert((self?.resturantGroup)!, at:1)
                     }else{
-                        self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                     }
                 }else{
-                    self?.alertMessage(message: (lang == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                 }
                 self?.setupDelegates()
             }
