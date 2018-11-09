@@ -68,10 +68,9 @@ class VCCart: UIViewController {
                     if cartProductData.success!{
                         if(cartProductData.data ?? []).count == 0{
                             self?.btnCheckout.isEnabled = false
-                            self?.btnCheckout.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                            self?.btnCheckout.backgroundColor = UIColor.lightGray
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
-                           
                             if self?.lang ?? "" == "en"{
                                 self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                                 self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
@@ -146,6 +145,7 @@ class VCCart: UIViewController {
                             }
                             self?.total = price
                             self?.lblTotalPrice.text = "$\(price)"
+                            cell.lblProductPrice.text = "$\((self?.cartProductList[indxpath?.row ?? 0].price?.usd ?? 0) * Int((product.quantity ?? 0.0)))"
                         }else{
                             self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
@@ -182,7 +182,7 @@ class VCCart: UIViewController {
         tableheightconstraint.constant = tableViewHeight
         if tableheightconstraint.constant == 0{
             self.btnCheckout.isEnabled = false
-            self.btnCheckout.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.btnCheckout.backgroundColor = UIColor.lightGray
         }else{
             self.btnCheckout.isEnabled = true
             self.btnCheckout.backgroundColor = #colorLiteral(red: 0.8874343038, green: 0.3020061255, blue: 0.4127213061, alpha: 1)

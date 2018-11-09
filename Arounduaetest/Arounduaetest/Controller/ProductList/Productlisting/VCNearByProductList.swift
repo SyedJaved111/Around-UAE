@@ -6,6 +6,11 @@ var searchKeyword = ""
 class VCNearByProductList: BaseController,IndicatorInfoProvider{
     
     var productarray = [Products]()
+    var groupid = ""
+    var divisionid = ""
+    var sectionid = ""
+    var manufactorid = ""
+    var characteristicsid = ""
     
     @IBOutlet var collectionViewProductnearby: UICollectionView!{
         didSet{
@@ -50,7 +55,16 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("SearchCompleted"), object: nil)
     }
     
+    private func setDataEmpty(){
+        groupid = ""
+        divisionid = ""
+        sectionid = ""
+        manufactorid = ""
+        characteristicsid = ""
+    }
+    
     @objc func methodOfReceivedNotification(notification: Notification){
+        setDataEmpty()
         if let data = notification.object as? [Products]{
            productarray = data
            collectionViewProductnearby.reloadData()
@@ -62,7 +76,7 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
             startLoading("")
         }
         
-        ProductManager().SearchProduct(("",0,0,["31.5204","74.3587"],searchTxt,[""]),
+        ProductManager().SearchProduct(("",0,0,["31.5204","74.3587"],searchTxt,[manufactorid],[groupid],[divisionid],[sectionid],[characteristicsid]),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {

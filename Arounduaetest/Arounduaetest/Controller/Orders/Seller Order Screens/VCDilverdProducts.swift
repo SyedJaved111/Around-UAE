@@ -9,7 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 
-class VCShippedProducts: BaseController,IndicatorInfoProvider {
+class VCDilverdProducts: BaseController,IndicatorInfoProvider {
     
     @IBOutlet var confirmedTableView: UITableView!{
         didSet{
@@ -38,7 +38,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(VCDilverdProducts.methodOfReceivedNotification(notification:)), name: Notification.Name("OrderShipped"), object: nil)
-        
+
         fetchConfirmListData(isRefresh: false)
     }
     
@@ -49,7 +49,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name("OrderShipped"), object: nil)
     }
-    
+   
     fileprivate func setupDelegates(){
         self.confirmedTableView.emptyDataSetSource = self
         self.confirmedTableView.emptyDataSetDelegate = self
@@ -65,8 +65,7 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
             startLoading("")
         }
         
-        if AppSettings.sharedSettings.accountType == "seller"{
-            OrderManager().ShowSellerAllCompleted(storeid, status: "shipped",successCallback:
+            OrderManager().ShowSellerAllCompleted(storeid, status: "completed",successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {
                         if isRefresh == false {
@@ -83,7 +82,6 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                                 {
                                 self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
                                 }else{
-                                    
                                      self?.alertMessage(message:(orderResponse.message?.ar ?? "").localized, completionHandler: nil)
                                 }
                             }
@@ -91,57 +89,10 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                             if(self?.lang ?? "" == "en")
                             {
                             self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                            }else
-                            {
-                                 self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                            }
-                        }
-                        self?.setupDelegates()
-                    }
-                })
-            {[weak self](error) in
-                DispatchQueue.main.async {
-                    if isRefresh == false {
-                        self?.finishLoading()
-                    }else {
-                        self?.refreshControl.endRefreshing()
-                    }
-                    self?.setupDelegates()
-                    self?.alertMessage(message: error.message.localized, completionHandler: nil)
-                }
-            }
-        }else{
-            OrderManager().ShowAllCompleted("", status: "shipped",successCallback:
-                {[weak self](response) in
-                    DispatchQueue.main.async {
-                        if isRefresh == false {
-                            self?.finishLoading()
-                        }else {
-                            self?.refreshControl.endRefreshing()
-                        }
-                        
-                        if let orderResponse = response{
-                            if orderResponse.success!{
-                                self?.ConfirmedOrderList = orderResponse.data ?? []
-                                self?.orderData = orderResponse.data?.first
                             }else{
-                                if(self?.lang ?? "" == "en")
-                                {
-                                self?.alertMessage(message:(orderResponse.message?.en ?? "").localized, completionHandler: nil)
-                                }else
-                                {
-                                    self?.alertMessage(message:(orderResponse.message?.ar ?? "").localized, completionHandler: nil)
-                                }
-                            }
-                        }else{
-                            if(self?.lang ?? "" == "en")
-                            {
-                            self?.alertMessage(message: (response?.message?.en ?? "").localized, completionHandler: nil)
-                            }else
-                            {
-                               self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
-                            }
-                        }
+                                
+                                 self?.alertMessage(message: (response?.message?.ar ?? "").localized, completionHandler: nil)
+                            }}
                         self?.setupDelegates()
                     }
                 })
@@ -156,48 +107,35 @@ class VCShippedProducts: BaseController,IndicatorInfoProvider {
                     self?.alertMessage(message: error.message.localized, completionHandler: nil)
                 }
             }
-        }
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo.init(title: "Shipped".localized)
+        return IndicatorInfo.init(title: "Completed".localized)
     }
 }
 
-extension VCShippedProducts: UITableViewDataSource,UITableViewDelegate{
+extension VCDilverdProducts: UITableViewDataSource,UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 94
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if AppSettings.sharedSettings.accountType == "seller"{
-            return ConfirmedOrderSellerList.count
-        }else{
-            return ConfirmedOrderList.count
-        }
+        return ConfirmedOrderSellerList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PendingTabCell")  as! PendingTabCell
         cell.selectionStyle = .none
-        
-        if AppSettings.sharedSettings.accountType == "seller"{
-            cell.setupSellerCellData(order: ConfirmedOrderSellerList[indexPath.row])
-        }else{
-            cell.setupCellData(order: ConfirmedOrderList[indexPath.row])
-        }
+        cell.setupSellerCellData(order: ConfirmedOrderSellerList[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if AppSettings.sharedSettings.accountType == "seller"{
-            moveToSellerOrderDetail(ConfirmedOrderSellerList[indexPath.row])
-        }else{
-            moveToDetail(ConfirmedOrderList[indexPath.row])
-        }
+        moveToSellerOrderDetail(ConfirmedOrderSellerList[indexPath.row])
     }
-    
+
     private func moveToSellerOrderDetail(_ sellerOrder:SellerOrder){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SellerOrderDetail") as! SellerOrderDetail
@@ -215,5 +153,13 @@ extension VCShippedProducts: UITableViewDataSource,UITableViewDelegate{
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
         fetchConfirmListData(isRefresh: false)
+    }
+}
+
+extension VCDilverdProducts: OrderProtocol{
+    
+    func orderEyetapped(cell: PendingTabCell) {
+        let indexpath = confirmedTableView.indexPath(for: cell)!
+        moveToSellerOrderDetail(ConfirmedOrderSellerList[indexpath.row])
     }
 }

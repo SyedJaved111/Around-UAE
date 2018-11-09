@@ -111,7 +111,7 @@ class VCSplash: BaseController {
                     
                     }else{
                         self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                            self?.logInFromEmail()
+                            self?.appDelegate.moveToLogin()
                         })
                     }
                 }else{

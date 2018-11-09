@@ -14,6 +14,11 @@
 		182597242178CD01006CFE75 /* SellerOrderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182597232178CD01006CFE75 /* SellerOrderDetail.swift */; };
 		184EE4A32175EAD300EFD6B5 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184EE4A22175EAD300EFD6B5 /* Filter.swift */; };
 		1859BEEE2167A24B00BB79B9 /* VCSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859BEED2167A24B00BB79B9 /* VCSearch.swift */; };
+		18750BCE21958A1600919182 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18750BCD21958A1600919182 /* CardView.swift */; };
+		18750BD02195AB4100919182 /* PendingBuyerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18750BCF2195AB4100919182 /* PendingBuyerCell.swift */; };
+		18750BD22195B01200919182 /* VCPendingBuyerProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18750BD12195B01200919182 /* VCPendingBuyerProducts.swift */; };
+		18750BD42195B02F00919182 /* VCShippedBuyerProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18750BD32195B02F00919182 /* VCShippedBuyerProducts.swift */; };
+		18750BD62195B04300919182 /* VCDilverdBuyerProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18750BD52195B04300919182 /* VCDilverdBuyerProducts.swift */; };
 		187817742182183D00642708 /* HomeTabs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187817732182183D00642708 /* HomeTabs.storyboard */; };
 		187BB97E2161EBFB0070D155 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BB9622161EBFB0070D155 /* Message.swift */; };
 		187BB97F2161EBFB0070D155 /* GroupDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187BB9642161EBFB0070D155 /* GroupDivision.swift */; };
@@ -211,6 +216,11 @@
 		182597232178CD01006CFE75 /* SellerOrderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerOrderDetail.swift; sourceTree = "<group>"; };
 		184EE4A22175EAD300EFD6B5 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		1859BEED2167A24B00BB79B9 /* VCSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCSearch.swift; sourceTree = "<group>"; };
+		18750BCD21958A1600919182 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		18750BCF2195AB4100919182 /* PendingBuyerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingBuyerCell.swift; sourceTree = "<group>"; };
+		18750BD12195B01200919182 /* VCPendingBuyerProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPendingBuyerProducts.swift; sourceTree = "<group>"; };
+		18750BD32195B02F00919182 /* VCShippedBuyerProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCShippedBuyerProducts.swift; sourceTree = "<group>"; };
+		18750BD52195B04300919182 /* VCDilverdBuyerProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCDilverdBuyerProducts.swift; sourceTree = "<group>"; };
 		187817732182183D00642708 /* HomeTabs.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomeTabs.storyboard; sourceTree = "<group>"; };
 		187BB9622161EBFB0070D155 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		187BB9642161EBFB0070D155 /* GroupDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDivision.swift; sourceTree = "<group>"; };
@@ -435,6 +445,27 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		18750BD72195B06900919182 /* Buyer Order Screens */ = {
+			isa = PBXGroup;
+			children = (
+				18750BCF2195AB4100919182 /* PendingBuyerCell.swift */,
+				18750BD12195B01200919182 /* VCPendingBuyerProducts.swift */,
+				18750BD32195B02F00919182 /* VCShippedBuyerProducts.swift */,
+				18750BD52195B04300919182 /* VCDilverdBuyerProducts.swift */,
+			);
+			path = "Buyer Order Screens";
+			sourceTree = "<group>";
+		};
+		18750BD82195B18E00919182 /* Seller Order Screens */ = {
+			isa = PBXGroup;
+			children = (
+				18BA96632163483F0009AE52 /* VCDilverdProducts.swift */,
+				18BA96652163483F0009AE52 /* VCPendingProducts.swift */,
+				18BA965B2163483E0009AE52 /* VCShippedProducts.swift */,
+			);
+			path = "Seller Order Screens";
+			sourceTree = "<group>";
+		};
 		187BB9612161EBFB0070D155 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,13 +582,12 @@
 				18BA96612163483E0009AE52 /* AllTabCell.swift */,
 				18BA965F2163483E0009AE52 /* PendingTabCell.swift */,
 				18BA96642163483F0009AE52 /* VCMyOrders.swift */,
-				18BA96632163483F0009AE52 /* VCDilverdProducts.swift */,
-				18BA96652163483F0009AE52 /* VCPendingProducts.swift */,
-				18BA965B2163483E0009AE52 /* VCShippedProducts.swift */,
 				1825971D2178A587006CFE75 /* OrderDetail.swift */,
 				1825971F2178B275006CFE75 /* OrderDetailCell.swift */,
 				182597212178C5D1006CFE75 /* VCOrderStore.swift */,
 				182597232178CD01006CFE75 /* SellerOrderDetail.swift */,
+				18750BD82195B18E00919182 /* Seller Order Screens */,
+				18750BD72195B06900919182 /* Buyer Order Screens */,
 			);
 			path = Orders;
 			sourceTree = "<group>";
@@ -715,6 +745,7 @@
 				187BBA682162372F0070D155 /* VCFavouritePlaces.swift */,
 				187BBA642162372E0070D155 /* VCFavouriteTab.swift */,
 				187BBA652162372E0070D155 /* VCFavrouit.swift */,
+				18750BCD21958A1600919182 /* CardView.swift */,
 			);
 			path = Favourite;
 			sourceTree = "<group>";
@@ -1274,11 +1305,13 @@
 				18BA9674216399A90009AE52 /* VCEditGender.swift in Sources */,
 				187BB9902161EBFB0070D155 /* StoreManager.swift in Sources */,
 				188191B52164F65300FEA31D /* GMSteper.swift in Sources */,
+				18750BD22195B01200919182 /* VCPendingBuyerProducts.swift in Sources */,
 				187BBA6A2162372F0070D155 /* VCFavrouit.swift in Sources */,
 				1F5A3FDF215F8AA900B0CBC6 /* CellCategories.swift in Sources */,
 				1F5A3FF6215F8AA900B0CBC6 /* CellT.swift in Sources */,
 				1F5A3FE6215F8AA900B0CBC6 /* VCPlaces.swift in Sources */,
 				187BBA5F2161ECF70070D155 /* Keys.swift in Sources */,
+				18750BCE21958A1600919182 /* CardView.swift in Sources */,
 				1F5A4033215F8AA900B0CBC6 /* SharedData.swift in Sources */,
 				1F5A4018215F8AA900B0CBC6 /* UIViewCustom.swift in Sources */,
 				18E1C680216B3BA200446FAE /* VCSelectLanguage.swift in Sources */,
@@ -1329,6 +1362,7 @@
 				1F5A403A215F8AA900B0CBC6 /* TextAutoFooter.swift in Sources */,
 				187BB9802161EBFB0070D155 /* Store.swift in Sources */,
 				18B557F6217DDEDE0077F939 /* Customheader.swift in Sources */,
+				18750BD02195AB4100919182 /* PendingBuyerCell.swift in Sources */,
 				18C59AED216F7194003DB1B3 /* Json4Swift_Base.swift in Sources */,
 				18D056A1216777A8007510BF /* ChatController.swift in Sources */,
 				1F5561DF21614702007B1A8E /* VCPages.swift in Sources */,
@@ -1338,6 +1372,7 @@
 				18D0567A216748D4007510BF /* NotificationVC.swift in Sources */,
 				18D0568E21676898007510BF /* NotificationCountModel .swift in Sources */,
 				18E77B9D2189D438004E21F0 /* CanReviewUsers.swift in Sources */,
+				18750BD62195B04300919182 /* VCDilverdBuyerProducts.swift in Sources */,
 				18B150362164E4B800FF87A4 /* DefaultAlamofireManager.swift in Sources */,
 				1F5A401C215F8AA900B0CBC6 /* UIViewHelper.swift in Sources */,
 				18BA966E2163483F0009AE52 /* VCDilverdProducts.swift in Sources */,
@@ -1362,6 +1397,7 @@
 				18D056A621677843007510BF /* ConversationTableViewCell.swift in Sources */,
 				1F5A3FE1215F8AA900B0CBC6 /* NearByCell.swift in Sources */,
 				187BB98A2161EBFB0070D155 /* CitiesPlacesManager.swift in Sources */,
+				18750BD42195B02F00919182 /* VCShippedBuyerProducts.swift in Sources */,
 				187BB9832161EBFB0070D155 /* Product.swift in Sources */,
 				1859BEEE2167A24B00BB79B9 /* VCSearch.swift in Sources */,
 				187BBA6321622C0D0070D155 /* VCPopUpprofile.swift in Sources */,

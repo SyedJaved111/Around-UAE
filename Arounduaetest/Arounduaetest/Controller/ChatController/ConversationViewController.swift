@@ -293,12 +293,18 @@ extension ConversationViewController : UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
            let conversationData = conversationArray[indexPath.row]
-        //
-              self.user.conversationID  = (conversationData._id)!
+        
+        self.user.conversationID  = (conversationData._id)!
+        
+        if AppSettings.sharedSettings.accountType == "seller"{
+            self.user.conversationIDImage = conversationData.user?.image ?? ""
+            self.user.username = conversationData.user?.fullName ?? ""
+        }else{
+            self.user.conversationIDImage = conversationData.store?.image ?? ""
+            self.user.username = (lang == "en") ? conversationData.store?.storeName?.en ?? "" : conversationData.store?.storeName?.ar ?? ""
+        }
         self.user.conversationTableId = indexPath.row
            performSegue(withIdentifier: "goTochat", sender: nil)
-        
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

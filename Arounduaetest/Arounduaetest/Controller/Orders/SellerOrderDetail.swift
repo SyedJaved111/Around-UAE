@@ -48,7 +48,12 @@ class SellerOrderDetail: UIViewController {
     private func setupOrderDetails(){
         sellerOrderImage.sd_setShowActivityIndicatorView(true)
         sellerOrderImage.sd_setIndicatorStyle(.gray)
-        sellerOrderImage.sd_setImage(with: URL(string:sellerOrder.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+        sellerOrderImage.sd_setImage(with: URL(string:sellerOrder.order?.user?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+        
+        orderImage.sd_setShowActivityIndicatorView(true)
+        orderImage.sd_setIndicatorStyle(.gray)
+        orderImage.sd_setImage(with: URL(string:sellerOrder.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+        
         sellerNasme.text = sellerOrder.order?.user?.fullName
         sellerPhoneNumber.text = sellerOrder.order?.user?.phone
         sellerEmail.text = sellerOrder.order?.user?.email

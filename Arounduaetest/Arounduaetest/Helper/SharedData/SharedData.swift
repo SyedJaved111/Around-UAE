@@ -24,6 +24,8 @@ class SharedData{
     var conversationuserID = ""
     
     var conversationID = ""
+    var conversationIDImage = ""
+    var username = ""
     var personID = ""
     var conversationArray = [Conversations]()
     var conversationTableId : Int = 0

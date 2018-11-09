@@ -53,13 +53,17 @@ class NearByCell: UICollectionViewCell {
         placeTitle.sd_setIndicatorStyle(.gray)
         placeTitle.sd_setImage(with: URL(string: places.images?.first?.path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
         
-        
-        if AppSettings.sharedSettings.user.favouritePlaces?.contains((places._id!)) ?? false{
-            self.favroutieImage.image = #imageLiteral(resourceName: "Favourite-red")
-            self.btnFavourit.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        if AppSettings.sharedSettings.accountType != "seller"{
+            if AppSettings.sharedSettings.user.favouritePlaces?.contains((places._id!)) ?? false{
+                self.favroutieImage.image = #imageLiteral(resourceName: "Favourite-red")
+                self.btnFavourit.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            }else{
+                self.favroutieImage.image = #imageLiteral(resourceName: "Favourite")
+                self.btnFavourit.backgroundColor = #colorLiteral(red: 0.05490196078, green: 0.09803921569, blue: 0.1490196078, alpha: 1)
+            }
         }else{
-            self.favroutieImage.image = #imageLiteral(resourceName: "Favourite")
-            self.btnFavourit.backgroundColor = #colorLiteral(red: 0.05490196078, green: 0.09803921569, blue: 0.1490196078, alpha: 1)
+            self.favroutieImage.isHidden = true
+            self.btnFavourit.isHidden = true
         }
     }
     

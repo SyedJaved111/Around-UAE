@@ -56,8 +56,10 @@ class VCProductFilter: UIViewController {
     var isDivisonShown = false
     var isSectionShown = false
     let dispatchGroup = DispatchGroup()
+    var selectedGroupId:String?
     var selectedDivision: Divisions?
     var selectedSection:Sections?
+    var selectedCharacterticts:String?
     var selectedManufactorId:String?
     
     override func viewDidLoad(){
@@ -235,7 +237,7 @@ class VCProductFilter: UIViewController {
         }
     
         startLoading("")
-        ProductManager().SearchProduct(("",min,max,[String](),txt,[selectedManufactorId ?? ""]),
+        ProductManager().SearchProduct(("",min,max,[String](),txt,[selectedManufactorId ?? ""],[filterdata[self.groupIndex]._id ?? ""],[self.selectedDivision?._id ?? ""],[self.selectedSection?._id ?? ""],[self.selectedCharacterticts ?? ""]),
         successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
@@ -278,6 +280,11 @@ class VCProductFilter: UIViewController {
             let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
             searchKeyword = txtfiledEnterKeyword.text!
+            vc.groupid = filterdata[self.groupIndex]._id ?? ""
+            vc.divisionid = self.selectedDivision?._id ?? ""
+            vc.sectionid = self.selectedSection?._id ?? ""
+            vc.manufactorid = selectedManufactorId ?? ""
+            vc.characteristicsid = self.selectedCharacterticts ?? ""
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -330,6 +337,11 @@ class VCProductFilter: UIViewController {
                 self.selectDivisionlbl.isHidden = true
                 self.selectDivisionArrow.isHidden = true
                 self.selectDivisionHeader.isHidden = true
+                
+                self.selectedManufactorId = ""
+                self.selectedDivision = nil
+                self.selectedSection = nil
+                self.selectedCharacterticts = ""
                 
             }else{
                 
@@ -397,6 +409,11 @@ class VCProductFilter: UIViewController {
                 self.selectManufacturesBtn.isHidden = true
                 self.selectManufactureslbl.isHidden = true
                 self.selectManufacturesHeader.isHidden = true
+                
+                self.selectedManufactorId = ""
+                self.selectedDivision = nil
+                self.selectedSection = nil
+                self.selectedCharacterticts = ""
             }else{
                 self.selectedDivision = self.filterdata[self.groupIndex].divisions?[self.divisionIndex]
                 self.getFilterSearchData(groupId: self.filterdata[self.groupIndex]._id ?? "", divisionId: self.filterdata[self.groupIndex].divisions?[self.divisionIndex]._id ?? "")
@@ -427,6 +444,9 @@ class VCProductFilter: UIViewController {
                 self.filterTableView.reloadData()
                 self.setViewHeight()
                 self.selectSectionlbl.text = "Select Section".localized
+                self.selectedManufactorId = ""
+                self.selectedSection = nil
+                self.selectedCharacterticts = ""
             }else{
                 
                 self.selectedSection = self.filtersearchdata?.division?.sections?[index - 1]
@@ -459,6 +479,8 @@ class VCProductFilter: UIViewController {
                 self.filterTableView.reloadData()
                 self.setViewHeight()
                 self.selectManufactureslbl.text = "Select Manufactures".localized
+                
+                self.selectedCharacterticts = ""
             }else{
                 self.selectManufactureslbl.text = item
                 self.selectedManufactorId =
@@ -505,7 +527,9 @@ extension VCProductFilter: UITableViewDelegate,UITableViewDataSource,featureCell
             cell.menudropDown.dataSource = array
         }
         cell.menudropDown.selectionAction = {(index: Int, item: String) in
-            cell.featureName.text = item}
+            cell.featureName.text = item
+            self.selectedCharacterticts = self.featuresArray[indexPath.row].characteristics?[index - 1]._id ?? ""
+        }
         return cell
     }
     

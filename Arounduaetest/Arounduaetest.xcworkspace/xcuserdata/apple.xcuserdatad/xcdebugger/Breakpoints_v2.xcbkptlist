@@ -10,7 +10,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Arounduaetest/Controller/ChatController/ChatController.swift"
-            timestampString = "563284003.823332"
+            timestampString = "563464753.2464499"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "781"
+            endingLineNumber = "781"
+            landmarkName = "getAllmessages()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Arounduaetest/Controller/ChatController/ChatController.swift"
+            timestampString = "563464753.2465481"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "786"
@@ -25,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Arounduaetest/Controller/ChatController/ChatController.swift"
-            timestampString = "563284003.823445"
+            filePath = "Arounduaetest/Controller/Store/VCStoreTab.swift"
+            timestampString = "563378202.5508879"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "791"
-            endingLineNumber = "791"
-            landmarkName = "getAllmessages()"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "onChatButtonClciked()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

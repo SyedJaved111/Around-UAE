@@ -9,6 +9,10 @@
 import UIKit
 import SDWebImage
 
+protocol OrderProtocol{
+    func orderEyetapped(cell:PendingTabCell)
+}
+
 class PendingTabCell: UITableViewCell {
 
     @IBOutlet weak var lblpstatus: UILabel!
@@ -22,6 +26,8 @@ class PendingTabCell: UITableViewCell {
     @IBOutlet weak var boxesImage: UIImageView!
     @IBOutlet weak var shadowImage: UIImageView!
     @IBOutlet weak var eyeBtn: UIButton!
+    var delegate: OrderProtocol?
+    
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var str = ""
     var x = " "
@@ -50,11 +56,9 @@ class PendingTabCell: UITableViewCell {
         
         for obj in (order.orderDetails?.first?.combinationDetail) ?? []{
             str += " "
-            if(lang == "en")
-            {
-            str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
-            }else
-            {
+            if(lang == "en"){
+                 str += (obj.feature?.title?.en ?? "")+": "+(obj.characteristic?.title?.en ?? "")
+            }else{
                  str += (obj.feature?.title?.ar ?? "")+": "+(obj.characteristic?.title?.ar ?? "")
             }
         }
@@ -134,6 +138,10 @@ class PendingTabCell: UITableViewCell {
         confirmImage.sd_setShowActivityIndicatorView(true)
         confirmImage.sd_setIndicatorStyle(.gray)
         confirmImage.sd_setImage(with: URL(string: order.images?.first?.path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+    }
+    
+    @IBAction func eyeTapped(_ sender:UIButton){
+        self.delegate?.orderEyetapped(cell: self)
     }
 }
 

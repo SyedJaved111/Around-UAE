@@ -78,6 +78,11 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     
     @objc func onChatButtonClciked() {
        self.user.conversationuserID  = storeid
+//        if AppSettings.sharedSettings.accountType == "seller"{
+//            self.user.conversationIDImage = conversationData.user?.image ?? ""
+//        }else{
+//            self.user.conversationIDImage = conversationData.store?.image ?? ""
+//        }
        self.performSegue(withIdentifier: "storeChat")
     }
 

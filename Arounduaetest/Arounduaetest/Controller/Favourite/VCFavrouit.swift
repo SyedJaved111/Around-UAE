@@ -156,6 +156,15 @@ extension VCFavrouit: UITableViewDelegate,UITableViewDataSource{
         return favouriteProductList.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if AppSettings.sharedSettings.accountType != "seller"{
+            let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "VCProductDetail") as! VCProductDetail
+            vc.product = favouriteProductList[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellFavourit") as! CellFavourit
         cell.setupCellData(favouriteProductList[indexPath.row])
@@ -181,6 +190,7 @@ extension VCFavrouit: PotocolCellFavourite{
             DispatchQueue.main.async {
                 self?.finishLoading()
                 if let favouriteResponse = response{
+                    AppSettings.sharedSettings.user = favouriteResponse.data!
                     if favouriteResponse.success!{
                         self?.favouriteProductList.remove(at: indexpath?.row ?? 0)
                         self?.favouriteProductTableView.reloadData()

@@ -12,6 +12,12 @@ import XLPagerTabStrip
 class VCProducList: ButtonBarPagerTabStripViewController {
     
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    var groupid = ""
+    var divisionid = ""
+    var sectionid = ""
+    var manufactorid = ""
+    var characteristicsid = ""
+    
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .red
         settings.style.buttonBarItemBackgroundColor = .white
@@ -69,7 +75,19 @@ class VCProducList: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCNearByProductList")
         let child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCTopratedProductList")
-      
-        return [child_1, child_2]
+        let obj_2 = child_2 as! VCTopratedProductList
+        obj_2.groupid = groupid
+        obj_2.divisionid = divisionid
+        obj_2.sectionid = sectionid
+        obj_2.characteristicsid = characteristicsid
+        obj_2.manufactorid = manufactorid
+        
+        let obj_1 = child_1 as! VCNearByProductList
+        obj_1.groupid = groupid
+        obj_1.divisionid = divisionid
+        obj_1.sectionid = sectionid
+        obj_1.characteristicsid = characteristicsid
+        obj_1.manufactorid = manufactorid
+        return [obj_1, obj_2]
     }
 }

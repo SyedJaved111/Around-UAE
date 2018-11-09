@@ -389,6 +389,18 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             if params.manufacturers != [""]{
                  parameters["manufacturers[0]"] = params.manufacturers
             }
+            if params.groups != [""]{
+                parameters["groups"] = params.groups
+            }
+            if params.divisions != [""]{
+                parameters["divisions"] = params.divisions
+            }
+            if params.sections != [""]{
+                parameters["sections"] = params.sections
+            }
+            if params.manufacturers != [""]{
+                parameters["characteristics"] = params.characterisrics
+            }
             return parameters
             
         case .SocialLogin(let params):

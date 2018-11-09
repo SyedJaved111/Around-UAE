@@ -105,8 +105,25 @@ class VCOrderDetail: BaseController {
     }
     
     private func setupData(){
-         lblOrderNumber.text = orderData?.payerId
+         lblOrderNumber.text = "Order # \(orderData?.orderNumber ?? "")"
          lblAmount.text = "$\(orderData?.charges ?? 0.0)"
+         var Confirmed = 0
+         var Shipped = 0
+         var Completed = 0
+    
+         for obj in orderData?.orderDetails! ?? []{
+            if obj.status ?? "" == "shipped"{
+                Shipped += 1
+            }
+            if obj.status ?? "" == "confirmed"{
+                Confirmed += 1
+            }
+            if obj.status ?? "" == "completed"{
+                Completed += 1
+            }
+         }
+        
+         lblStatus.text = "Confirmed(\(Confirmed)), "+"Shipped(\(Shipped)), "+"Completed(\(Completed)) "
          let dateFormatter = DateFormatter()
          let tempLocale = dateFormatter.locale
          dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -118,7 +135,6 @@ class VCOrderDetail: BaseController {
 
          lblDate.text = dateString
          lblTotal.text = "\(orderData?.orderDetails?.count ?? 0)"
-         lblStatus.text = orderData?.status?.capitalized
     }
 }
 

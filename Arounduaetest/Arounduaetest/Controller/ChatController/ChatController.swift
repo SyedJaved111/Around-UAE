@@ -80,7 +80,7 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Conversation"
+        self.title = self.user.username
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
          self.setupKeyboardScrolling()
@@ -89,8 +89,6 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         self.showData()
         self.txtMessage.leftViewRect(forBounds: CGRect(x: 50, y: 0, width: 0, height: 0))
         self.getAllmessages()
-        
-        
     }
     
     func seenArray() {
@@ -445,19 +443,16 @@ class ChatController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                         
                         print(millieseconds)
                         
-                        
+                       cell.imgProfile.sd_addActivityIndicator()
+                       cell.imgProfile.sd_setIndicatorStyle(.gray)
+                       cell.imgProfile.sd_setImage(with: URL(string:self.user.conversationIDImage), completed: nil)
                        cell.senderTime.text =  self.getTimeFromTimeStamp(timeStamp: Double(millieseconds))
                     }
                     cell.updateConstraintsIfNeeded()
                     return cell;
                 }
             }
-       
-        
     }
-    
-    
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offSetY = scrollView.contentOffset.y
@@ -981,11 +976,7 @@ class SenderCell: UITableViewCell {
     
     @IBOutlet var imgBackground: UIImageView!
     @IBOutlet var message: UITextView!
-    @IBOutlet var imgProfile: UIImageView! {
-        didSet {
-            imgProfile.makeRound()
-        }
-    }
+    @IBOutlet var imgProfile: UIImageView!
     @IBOutlet weak var senderMessage: UILabel!
     @IBOutlet weak var senderTime: UILabel!
     

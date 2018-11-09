@@ -186,7 +186,7 @@ extension VCFavouritePlaces{
 extension VCFavouritePlaces:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 118
+        return 99
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -199,6 +199,21 @@ extension VCFavouritePlaces:UITableViewDelegate,UITableViewDataSource{
         cell.delegate = self
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if AppSettings.sharedSettings.accountType != "seller"{
+            if let id = favouritePlacesList[indexPath.row]._id{
+                moveToPlaceDetail(id)
+            }
+        }
+    }
+    
+    private func moveToPlaceDetail(_ placeid:String){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCDesertSafari") as! VCDesertSafari
+        vc.placeid = placeid
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
@@ -219,6 +234,7 @@ extension VCFavouritePlaces: PotocolCellFavourite{
                 self?.finishLoading()
                 if let favouriteResponse = response{
                     if favouriteResponse.success!{
+                        AppSettings.sharedSettings.user = favouriteResponse.data!
                         self?.favouritePlacesList.remove(at: indexpath?.row ?? 0)
                         self?.favouritePlacesTableView.reloadData()
                     }else{

@@ -43,6 +43,7 @@ class VCHome: BaseController{
         self.tablView.tableFooterView = UIView()
         fetchGroupsWithDivisons(isRefresh: false)
         setupLocalization()
+        
     }
     
     private func setupLocalization(){
@@ -171,6 +172,8 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
+        vc.groupid = groupWithDivisionList[collectionView.tag]._id ?? ""
+        vc.divisionid = groupWithDivisionList[collectionView.tag].divisions?[indexPath.row]._id ?? ""
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -180,7 +183,6 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
 }
 
 extension VCHome: HomeProtocol{
-    
     func tapOnViewAll(cell:HomeTableViewCell){
         let indx = tablView.indexPath(for: cell)
         moveToSubDivisons(groupWithDivisionList[indx?.row ?? 0]._id ?? "", groupname: groupWithDivisionList[indx?.row ?? 0].title?.en ?? "")

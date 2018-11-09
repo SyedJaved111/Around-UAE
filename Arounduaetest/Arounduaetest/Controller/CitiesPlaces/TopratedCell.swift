@@ -54,12 +54,17 @@ class TopratedCell: UICollectionViewCell {
         placeTitle.sd_setIndicatorStyle(.gray)
         placeTitle.sd_setImage(with: URL(string: places.images?.first?.path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
         
+        if AppSettings.sharedSettings.accountType != "seller"{
         if AppSettings.sharedSettings.user.favouritePlaces?.contains((places._id!)) ?? false{
             self.favroutieImage.image = #imageLiteral(resourceName: "Favourite-red")
             self.btnToprated.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }else{
             self.favroutieImage.image = #imageLiteral(resourceName: "Favourite")
             self.btnToprated.backgroundColor = #colorLiteral(red: 0.06314799935, green: 0.04726300389, blue: 0.03047090769, alpha: 1)
+         }
+        }else{
+            self.favroutieImage.isHidden = true
+            self.btnToprated.isHidden = true
         }
     }
     
