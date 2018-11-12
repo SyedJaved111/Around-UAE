@@ -116,6 +116,9 @@
 		18E1C66C216B36EE00446FAE /* VCForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C667216B36EE00446FAE /* VCForgotPassword.swift */; };
 		18E1C680216B3BA200446FAE /* VCSelectLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C67F216B3BA200446FAE /* VCSelectLanguage.swift */; };
 		18E1C682216B912A00446FAE /* VCFilteredProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E1C681216B912A00446FAE /* VCFilteredProductList.swift */; };
+		18E49A342199540200796343 /* SelfiVedioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E49A332199540200796343 /* SelfiVedioVC.swift */; };
+		18E49A3621998F1A00796343 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E49A3521998F1A00796343 /* PhotoDetailViewController.swift */; };
+		18E49A382199BAEB00796343 /* SelfiVedioPlacesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E49A372199BAEB00796343 /* SelfiVedioPlacesVC.swift */; };
 		18E77B8F2189C334004E21F0 /* ManageAboutPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B8E2189C334004E21F0 /* ManageAboutPageVC.swift */; };
 		18E77B982189D438004E21F0 /* ManageAboutpageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B912189D430004E21F0 /* ManageAboutpageData.swift */; };
 		18E77B9D2189D438004E21F0 /* CanReviewUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B962189D437004E21F0 /* CanReviewUsers.swift */; };
@@ -324,6 +327,9 @@
 		18E1C678216B386D00446FAE /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18E1C67F216B3BA200446FAE /* VCSelectLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCSelectLanguage.swift; sourceTree = "<group>"; };
 		18E1C681216B912A00446FAE /* VCFilteredProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCFilteredProductList.swift; sourceTree = "<group>"; };
+		18E49A332199540200796343 /* SelfiVedioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfiVedioVC.swift; sourceTree = "<group>"; };
+		18E49A3521998F1A00796343 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
+		18E49A372199BAEB00796343 /* SelfiVedioPlacesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfiVedioPlacesVC.swift; sourceTree = "<group>"; };
 		18E77B8E2189C334004E21F0 /* ManageAboutPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAboutPageVC.swift; sourceTree = "<group>"; };
 		18E77B912189D430004E21F0 /* ManageAboutpageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAboutpageData.swift; sourceTree = "<group>"; };
 		18E77B962189D437004E21F0 /* CanReviewUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanReviewUsers.swift; sourceTree = "<group>"; };
@@ -707,7 +713,6 @@
 				1F5A3F72215F8AA800B0CBC6 /* SelectLanguage */,
 				1F5A3F74215F8AA800B0CBC6 /* Splash */,
 				1F5A3F76215F8AA800B0CBC6 /* Store */,
-				1881172C21907B4B00AFC348 /* FormVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -733,6 +738,7 @@
 				1F5A3F53215F8AA800B0CBC6 /* VCNearBy.swift */,
 				1F5A3F55215F8AA800B0CBC6 /* VCTopRated.swift */,
 				187BBA8421626BF40070D155 /* VCDesertSafari.swift */,
+				18E49A372199BAEB00796343 /* SelfiVedioPlacesVC.swift */,
 			);
 			path = CitiesPlaces;
 			sourceTree = "<group>";
@@ -856,6 +862,9 @@
 				18973E1D216603C100E314F4 /* CharacteristicsCell.swift */,
 				18D05679216748D3007510BF /* NotificationVC.swift */,
 				1F7F0A0B216A746F00A2B052 /* ProductDetailView.swift */,
+				18E49A332199540200796343 /* SelfiVedioVC.swift */,
+				18E49A3521998F1A00796343 /* PhotoDetailViewController.swift */,
+				1881172C21907B4B00AFC348 /* FormVC.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -1282,8 +1291,10 @@
 				1F5A3FFA215F8AA900B0CBC6 /* VCMenu.swift in Sources */,
 				18D056AA2167824F007510BF /* FileManager.swift in Sources */,
 				18C59AF8216F7847003DB1B3 /* DeletModelMain.swift in Sources */,
+				18E49A342199540200796343 /* SelfiVedioVC.swift in Sources */,
 				18B150332164D02600FF87A4 /* GMSteperCart.swift in Sources */,
 				1F5561DD216143E1007B1A8E /* VCAboutUs.swift in Sources */,
+				18E49A3621998F1A00796343 /* PhotoDetailViewController.swift in Sources */,
 				18D05688216752BC007510BF /* NotificationSender.swift in Sources */,
 				187BB9842161EBFB0070D155 /* CitiesPlaces.swift in Sources */,
 				1F5A4005215F8AA900B0CBC6 /* VCStoreTab.swift in Sources */,
@@ -1366,6 +1377,7 @@
 				18C59AED216F7194003DB1B3 /* Json4Swift_Base.swift in Sources */,
 				18D056A1216777A8007510BF /* ChatController.swift in Sources */,
 				1F5561DF21614702007B1A8E /* VCPages.swift in Sources */,
+				18E49A382199BAEB00796343 /* SelfiVedioPlacesVC.swift in Sources */,
 				18E1C669216B36EE00446FAE /* VCLogin.swift in Sources */,
 				18B557FA217DFF6E0077F939 /* VCChangeSetting.swift in Sources */,
 				18DFF45A2186E60700B18F1B /* ManageProductCell.swift in Sources */,
@@ -1610,7 +1622,7 @@
 				INFOPLIST_FILE = Arounduaetest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mytech.arounduae.com;
+				PRODUCT_BUNDLE_IDENTIFIER = mtech.arounduae.com;
 				PRODUCT_NAME = "Around UAE";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Arounduaetest/Arounduaetest-Bridging-Header.h";
@@ -1632,7 +1644,7 @@
 				INFOPLIST_FILE = Arounduaetest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mytech.arounduae.com;
+				PRODUCT_BUNDLE_IDENTIFIER = mtech.arounduae.com;
 				PRODUCT_NAME = "Around UAE";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Arounduaetest/Arounduaetest-Bridging-Header.h";

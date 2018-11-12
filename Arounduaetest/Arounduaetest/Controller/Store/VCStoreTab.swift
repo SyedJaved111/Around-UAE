@@ -24,6 +24,7 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     var storeid = ""
     var child_1 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreInfo")
     var child_2 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "VCStoreProducts")
+    var child_3 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "SelfiVedioVC")
 
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo.init(title: "Store Info".localized)
@@ -53,12 +54,13 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         collectionViewPager.layer.borderWidth = 1
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
         super.viewDidLoad()
+        self.delegate = self
         //fetchProductInfo(storeid, isRefresh: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-       
+        
         self.setNavigationBar()
         if(lang == "ar"){
             showArabicBackButton()
@@ -73,7 +75,25 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     
     func addChatButton(backImage: UIImage = #imageLiteral(resourceName: "Chat-1")) {
         let chatButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(onChatButtonClciked))
-        navigationItem.rightBarButtonItem  = chatButton
+        let button =  UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "Takeselfie"), for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.frame = CGRect(x:0,y:0,width:53,height:31)
+        button.imageEdgeInsets = UIEdgeInsetsMake(-1, -32, 1, 32)
+        let label = UILabel(frame: CGRect(x:0,y:5,width: 70,height:20))
+        label.font = UIFont(name: "Arial", size: 10)
+        label.text = "Take Selfie"
+        label.textAlignment = .center
+        label.textColor = UIColor.black
+        label.backgroundColor =   UIColor.clear
+        button.addSubview(label)
+        let barButton = UIBarButtonItem(customView: button)
+        self.navigationItem.rightBarButtonItem = barButton
+        self.navigationItem.setRightBarButtonItems([barButton,chatButton], animated: true)
+    }
+    
+    @objc func buttonAction() {
+        
     }
     
     @objc func onChatButtonClciked() {
@@ -87,11 +107,15 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     }
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        print(currentIndex)
         let objinfo = child_1 as! VCStoreInfo
         objinfo.storeid = storeid
         let objproducts = child_2 as! VCStoreProducts
         objproducts.storeidProducts = storeid
-        return [objinfo, objproducts]
+        let objSelfiVedio = child_3 as! SelfiVedioVC
+        objSelfiVedio.storeid = storeid
+        return [objinfo, objproducts, objSelfiVedio]
+        
     }
 
     @IBAction func tryAgain(_ sender: UIButton){

@@ -177,5 +177,20 @@ class VCDesertSafari: UIViewController {
         guard let url = URL(string: shareduserinfo.setting.twitter ?? "") else { return }
         UIApplication.shared.open(url)
     }
+    
+    @IBAction func selfieVideo(_ sender: Any){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SelfiVedioPlacesVC") as! SelfiVedioPlacesVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func shareApp(_ sender: Any){
+        let text = ""
+        let textToShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 }
 

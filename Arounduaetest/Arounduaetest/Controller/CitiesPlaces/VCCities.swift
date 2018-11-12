@@ -196,8 +196,11 @@ extension VCCities:UICollectionViewDelegate,UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-        if let id = CitiesArray[indexPath.row]._id{
-            moveToCityDetail(id)
+       
+        if AppSettings.sharedSettings.accountType != "seller"{
+            if let id = CitiesArray[indexPath.row]._id{
+                moveToCityDetail(id)
+            }
         }
     }
     

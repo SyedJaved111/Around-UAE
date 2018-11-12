@@ -252,7 +252,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JSs-F1-Mrd">
                                                 <rect key="frame" x="40" y="190" width="295" height="155"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2h2-oH-xsq" customClass="UITextFieldCustom" customModule="Around_UAE" customModuleProvider="target">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2h2-oH-xsq" customClass="UITextFieldCustom" customModule="Around_UAE" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="295" height="45"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="45" id="9QU-GE-W42"/>

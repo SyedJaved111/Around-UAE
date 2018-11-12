@@ -40,7 +40,7 @@ class VCLogin: BaseController {
     override func viewWillAppear(_ animated: Bool){
         self.setNavigationBar()
         self.txtPassword.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
-        self.txtEmail.attributedPlaceholder = NSAttributedString(string: "Username",
+        self.txtEmail.attributedPlaceholder = NSAttributedString(string: "Email",
         attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.3999774754, green: 0.400015533, blue: 0.3999456167, alpha: 1)])
         self.setupLocalization()
     }
@@ -70,7 +70,7 @@ class VCLogin: BaseController {
     
     private func setupLocalization(){
         self.title = "Login".localized
-        self.txtEmail.placeholder = "Username".localized
+        self.txtEmail.placeholder = "Email".localized
         self.txtPassword.placeholder = "Password".localized
         self.btnLogin.setTitle("Login".localized, for: .normal)
         self.btnRegisterNow.setTitle("Register now".localized, for: .normal)

@@ -10,6 +10,8 @@ import UIKit
 import XLPagerTabStrip
 import Cosmos
 import SDWebImage
+import AVFoundation
+import AVKit
 
 class VCStoreInfo: UIViewController,IndicatorInfoProvider {
   
@@ -22,9 +24,13 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     @IBOutlet weak var storeImage: UIImageView!
     @IBOutlet weak var submitFeedbackBtn: UIButton!
     @IBOutlet weak var tableViewReviews: UITableView!
+    @IBOutlet weak var collectionsectionView: UICollectionView!
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
+    
     var storereview:[CanReviewUsers]?
     var reviewArray:[Reviews]?
     var storeid = ""
+    var CitiesArray = [false,false,true,true,false,true]
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
@@ -33,6 +39,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
 
     override func viewDidLoad(){
         super.viewDidLoad()
+        setCollectionViewHeight()
         submitFeedbackBtn.setTitle("Submit Feedback".localized, for: .normal)
         if AppSettings.sharedSettings.accountType == "seller"{
             btnSubmitFeedBack.isHidden = true
@@ -49,7 +56,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
          }
         fetchProductInfo(storeid, isRefresh: false)
     }
-    
+
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
         
         if isRefresh == false{
@@ -109,8 +116,15 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
         for i in 0..<self.tableViewReviews.numberOfRows(inSection: 0){
             tableViewHeight = tableViewHeight + tableView(self.tableViewReviews, heightForRowAt: IndexPath(row: i, section: 0))
         }
-        tableviewReeviewConstraint.constant = tableViewHeight
+        tableviewReeviewConstraint.constant = tableViewHeight + 20
         self.tableViewReviews.setNeedsDisplay()
+    }
+    
+    private func setCollectionViewHeight(){
+//        var tableViewHeight:CGFloat = 0;
+//
+//        collectionViewHeightConstraint.constant = tableViewHeight + 20
+//        self.collectionsectionView.setNeedsDisplay()
     }
 }
 
@@ -166,3 +180,70 @@ class ReviewCell:UITableViewCell{
         reviewDate.text = dateString
     }
 }
+
+extension VCStoreInfo: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return CitiesArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let isVideo = CitiesArray[indexPath.row]
+        if isVideo{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoCell
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCell
+            return cell
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let isVideo = CitiesArray[indexPath.row]
+        if isVideo{
+            playVideo()
+        }else{
+            moveToPhotoDetail()
+        }
+    }
+    
+    private func moveToPhotoDetail(){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PhotoDetailViewController") as! PhotoDetailViewController
+        vc.detailImage = #imageLiteral(resourceName: "product")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func playVideo(){
+        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let yourWidth = collectionView.bounds.width/3.0
+        let yourHeight = yourWidth
+        return CGSize(width: yourWidth, height: yourHeight)
+    }
+}
+
+class VideoCell:UICollectionViewCell{
+    @IBOutlet weak var videoImage:UIImageView!
+}
+
+class ImageCell:UICollectionViewCell{
+    @IBOutlet weak var normalImage:UIImageView!
+}
+

@@ -63,23 +63,23 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
         if(lang == "en"){
             if AppSettings.sharedSettings.accountType == "seller"{
                 lblMenuNameseller += shareduserinfo.pages.map({$0.title?.en ?? ""})
-                Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
+                Menuimgseller += shareduserinfo.pages.map({$0.icon ?? ""})
                 profileTableView.reloadData()
                 
             }else{
                 lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.en ?? ""})
-                Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
+                Menuimgbuyer += shareduserinfo.pages.map({$0.icon ?? ""})
             }
         }
         else if(lang == "ar"){
             if AppSettings.sharedSettings.accountType == "seller"{
                 lblMenuNameseller += shareduserinfo.pages.map({$0.title?.ar ?? ""})
-                Menuimgseller += shareduserinfo.pages.map({$0.image ?? ""})
+                Menuimgseller += shareduserinfo.pages.map({$0.icon ?? ""})
                 profileTableView.reloadData()
                 
             }else{
                 lblMenuNamebuyer += shareduserinfo.pages.map({$0.title?.ar ?? ""})
-                Menuimgbuyer += shareduserinfo.pages.map({$0.image ?? ""})
+                Menuimgbuyer += shareduserinfo.pages.map({$0.icon ?? ""})
             }
         }
         
