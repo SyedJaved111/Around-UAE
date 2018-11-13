@@ -28,6 +28,7 @@ class VCDesertSafari: UIViewController {
     @IBOutlet weak var favouriteImage: UIImageView!
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var placeid = ""
+    var selfiesArray = [Selfies]()
     var locationManager: CLLocationManager = CLLocationManager()
     let shareduserinfo = SharedData.sharedUserInfo
     
@@ -50,6 +51,7 @@ class VCDesertSafari: UIViewController {
             self?.finishLoading()
                 if let responsedetail = response{
                     self?.setupPlaceDetail(responsedetail.data!)
+                    self?.selfiesArray = responsedetail.data?.selfies ?? []
                 }else{
                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
             }
@@ -181,6 +183,8 @@ class VCDesertSafari: UIViewController {
     @IBAction func selfieVideo(_ sender: Any){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SelfiVedioPlacesVC") as! SelfiVedioPlacesVC
+        vc.placeid = placeid
+        vc.selfiesArray = selfiesArray
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

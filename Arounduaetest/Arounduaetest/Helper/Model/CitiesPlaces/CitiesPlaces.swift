@@ -41,6 +41,7 @@ struct Places : Decodable {
     let address : String?
     let location : [Double]?
     let images : [Images]?
+    let selfies: [Selfies]?
 }
 
 struct Places_Reviews : Decodable {

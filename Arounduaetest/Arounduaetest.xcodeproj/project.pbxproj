@@ -122,6 +122,9 @@
 		18E77B8F2189C334004E21F0 /* ManageAboutPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B8E2189C334004E21F0 /* ManageAboutPageVC.swift */; };
 		18E77B982189D438004E21F0 /* ManageAboutpageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B912189D430004E21F0 /* ManageAboutpageData.swift */; };
 		18E77B9D2189D438004E21F0 /* CanReviewUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E77B962189D437004E21F0 /* CanReviewUsers.swift */; };
+		18F47F67219AD6B6002C96AE /* SelfieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F47F66219AD6B6002C96AE /* SelfieManager.swift */; };
+		18F47F69219ADB2E002C96AE /* CaptureSelfiePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F47F68219ADB2E002C96AE /* CaptureSelfiePopupVC.swift */; };
+		18F47F6B219ADEDD002C96AE /* VideoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F47F6A219ADEDC002C96AE /* VideoHelper.swift */; };
 		1F089D8D2160D46900505CDC /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F089D8C2160D46900505CDC /* TextFieldExtension.swift */; };
 		1F5561DD216143E1007B1A8E /* VCAboutUs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5561DC216143E1007B1A8E /* VCAboutUs.swift */; };
 		1F5561DF21614702007B1A8E /* VCPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5561DE21614702007B1A8E /* VCPages.swift */; };
@@ -333,6 +336,9 @@
 		18E77B8E2189C334004E21F0 /* ManageAboutPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAboutPageVC.swift; sourceTree = "<group>"; };
 		18E77B912189D430004E21F0 /* ManageAboutpageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAboutpageData.swift; sourceTree = "<group>"; };
 		18E77B962189D437004E21F0 /* CanReviewUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanReviewUsers.swift; sourceTree = "<group>"; };
+		18F47F66219AD6B6002C96AE /* SelfieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieManager.swift; sourceTree = "<group>"; };
+		18F47F68219ADB2E002C96AE /* CaptureSelfiePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSelfiePopupVC.swift; sourceTree = "<group>"; };
+		18F47F6A219ADEDC002C96AE /* VideoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoHelper.swift; sourceTree = "<group>"; };
 		1F089D8C2160D46900505CDC /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		1F5561DC216143E1007B1A8E /* VCAboutUs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCAboutUs.swift; sourceTree = "<group>"; };
 		1F5561DE21614702007B1A8E /* VCPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPages.swift; sourceTree = "<group>"; };
@@ -568,6 +574,7 @@
 				189B00A621771BCC00BA7BB4 /* OrderManager.swift */,
 				187BB97C2161EBFB0070D155 /* StoreManager.swift */,
 				187BB97D2161EBFB0070D155 /* IndexManager.swift */,
+				18F47F66219AD6B6002C96AE /* SelfieManager.swift */,
 				18B150352164E4B800FF87A4 /* DefaultAlamofireManager.swift */,
 			);
 			name = Network;
@@ -851,6 +858,7 @@
 		1F5A3F76215F8AA800B0CBC6 /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				18F47F6A219ADEDC002C96AE /* VideoHelper.swift */,
 				1F5A3F77215F8AA800B0CBC6 /* CellStore.swift */,
 				1F5A3F78215F8AA800B0CBC6 /* CellStores.swift */,
 				1F5A3F79215F8AA800B0CBC6 /* VCPopUp.swift */,
@@ -865,6 +873,7 @@
 				18E49A332199540200796343 /* SelfiVedioVC.swift */,
 				18E49A3521998F1A00796343 /* PhotoDetailViewController.swift */,
 				1881172C21907B4B00AFC348 /* FormVC.swift */,
+				18F47F68219ADB2E002C96AE /* CaptureSelfiePopupVC.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -1064,7 +1073,7 @@
 					1F71AEFA21551A6E00C9CF46 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -1349,6 +1358,7 @@
 				1F5A3FED215F8AA900B0CBC6 /* HomeTableViewCell.swift in Sources */,
 				1F5A3FF7215F8AA900B0CBC6 /* VCDivisions.swift in Sources */,
 				18BA967A2163AF100009AE52 /* VCCart.swift in Sources */,
+				18F47F67219AD6B6002C96AE /* SelfieManager.swift in Sources */,
 				1F5A403B215F8AA900B0CBC6 /* TextView.swift in Sources */,
 				18E1C66A216B36EE00446FAE /* VCChangePassword.swift in Sources */,
 				1F5A401B215F8AA900B0CBC6 /* TTabBarViewController.swift in Sources */,
@@ -1362,6 +1372,7 @@
 				187BBA692162372F0070D155 /* VCFavouriteTab.swift in Sources */,
 				1F5A4002215F8AA900B0CBC6 /* VCStoreInfo.swift in Sources */,
 				1F5A4034215F8AA900B0CBC6 /* GIFHeader.swift in Sources */,
+				18F47F69219ADB2E002C96AE /* CaptureSelfiePopupVC.swift in Sources */,
 				18D0568C21675381007510BF /* NotificationDataCell.swift in Sources */,
 				1F5A4037215F8AA900B0CBC6 /* IndicatorView.swift in Sources */,
 				1F5A4035215F8AA900B0CBC6 /* GIFTextHeader.swift in Sources */,
@@ -1416,6 +1427,7 @@
 				187BB9812161EBFB0070D155 /* Index.swift in Sources */,
 				18D056AC2167963C007510BF /* VCProductFilter.swift in Sources */,
 				1F5A403D215F8AA900B0CBC6 /* AppSettings.swift in Sources */,
+				18F47F6B219ADEDD002C96AE /* VideoHelper.swift in Sources */,
 				18BB211121650E8E005727F2 /* VCProducList.swift in Sources */,
 				18C59AF3216F7194003DB1B3 /* ProductUAE.swift in Sources */,
 				18C59AF6216F780A003DB1B3 /* SomeDeleteProduct.swift in Sources */,
@@ -1617,14 +1629,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6S7HM35FHK;
 				INFOPLIST_FILE = Arounduaetest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mtech.arounduae.com;
+				PRODUCT_BUNDLE_IDENTIFIER = mytechnology.arounduae.com;
 				PRODUCT_NAME = "Around UAE";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = AroundUAE;
 				SWIFT_OBJC_BRIDGING_HEADER = "Arounduaetest/Arounduaetest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -1639,14 +1651,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6S7HM35FHK;
 				INFOPLIST_FILE = Arounduaetest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mtech.arounduae.com;
+				PRODUCT_BUNDLE_IDENTIFIER = mytechnology.arounduae.com;
 				PRODUCT_NAME = "Around UAE";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = AroundUAE;
 				SWIFT_OBJC_BRIDGING_HEADER = "Arounduaetest/Arounduaetest-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

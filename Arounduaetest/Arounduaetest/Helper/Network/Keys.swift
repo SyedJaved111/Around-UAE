@@ -193,3 +193,10 @@ enum UpdateBillingShippingKey:String{
     case addressType = "addressType"
 }
 
+enum StoreUploadSelfieKey:String{
+    case storeid = "storeId"
+    case caption = "caption"
+    case file = "file"
+    case thumbnail = "thumbnail"
+}
+

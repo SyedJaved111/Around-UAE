@@ -34,14 +34,12 @@ class VCStores: BaseController{
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Stores".localized
-
         self.setNavigationBar()
         if(lang == "ar"){
             showArabicBackButton()
         }else{
             self.addBackButton()
         }
-
     }
     
     fileprivate func setupDelegates(){
@@ -51,7 +49,6 @@ class VCStores: BaseController{
     }
     
     private func fetchStoresData(){
-        
         startLoading("")
         StoreManager().getStores("\(currentPage + 1)",successCallback:
             {[weak self](response) in
@@ -84,7 +81,6 @@ class VCStores: BaseController{
 extension VCStores{
     
     func initialUI(){
-    
         collectionViewStores.spr_setTextHeader { [weak self] in
             self?.currentPage = 0
             StoreManager().getStores("\((self?.currentPage ?? 0) + 1)",successCallback:

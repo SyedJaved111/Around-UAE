@@ -29,6 +29,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     
     var storereview:[CanReviewUsers]?
     var reviewArray:[Reviews]?
+    var galleryArray = [Gallery]()
     var storeid = ""
     var CitiesArray = [false,false,true,true,false,true]
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
@@ -39,7 +40,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
 
     override func viewDidLoad(){
         super.viewDidLoad()
-        setCollectionViewHeight()
+
         submitFeedbackBtn.setTitle("Submit Feedback".localized, for: .normal)
         if AppSettings.sharedSettings.accountType == "seller"{
             btnSubmitFeedBack.isHidden = true
@@ -70,6 +71,9 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
                     if let productResponse = response{
                         if productResponse.success!{
                             self?.storeid = productResponse.data?._id ?? ""
+                            self?.galleryArray = productResponse.data?.gallery ?? []
+                            self?.collectionsectionView.reloadData()
+                            self?.setCollectionViewHeight()
                             self?.lblInstinct.text = (self?.lang ?? "" == "en") ? productResponse.data?.storeName?.en ?? "" :
                                 productResponse.data?.storeName?.ar ?? ""
                             self?.lblAdress.text = productResponse.data?.location ?? ""
@@ -112,7 +116,7 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     }
     
     private func setViewHeight(){
-        var tableViewHeight:CGFloat = 0;
+        var tableViewHeight:CGFloat = 0
         for i in 0..<self.tableViewReviews.numberOfRows(inSection: 0){
             tableViewHeight = tableViewHeight + tableView(self.tableViewReviews, heightForRowAt: IndexPath(row: i, section: 0))
         }
@@ -121,10 +125,20 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     }
     
     private func setCollectionViewHeight(){
-//        var tableViewHeight:CGFloat = 0;
-//
-//        collectionViewHeightConstraint.constant = tableViewHeight + 20
-//        self.collectionsectionView.setNeedsDisplay()
+        collectionViewHeightConstraint.constant = collectionsectionView.collectionViewLayout.collectionViewContentSize.height + 10
+        self.collectionsectionView.setNeedsDisplay()
+    }
+    
+    fileprivate var sectionInsets: UIEdgeInsets {
+        return .zero
+    }
+    
+    fileprivate var itemsPerRow: CGFloat {
+        return 3
+    }
+    
+    fileprivate var interitemSpace: CGFloat {
+        return 5.0
     }
 }
 
@@ -184,35 +198,42 @@ class ReviewCell:UITableViewCell{
 extension VCStoreInfo: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CitiesArray.count
+        return galleryArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let isVideo = CitiesArray[indexPath.row]
-        if isVideo{
+        let isvideo = galleryArray[indexPath.row].mimeType
+        if isvideo == "video"{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoCell
+            cell.videoImage.sd_setShowActivityIndicatorView(true)
+            cell.videoImage.sd_setIndicatorStyle(.gray)
+            cell.videoImage.sd_setImage(with: URL(string: galleryArray[indexPath.row].path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCell
+            cell.normalImage.sd_setShowActivityIndicatorView(true)
+            cell.normalImage.sd_setIndicatorStyle(.gray)
+            cell.normalImage.sd_setImage(with: URL(string: galleryArray[indexPath.row].path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             return cell
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let isVideo = CitiesArray[indexPath.row]
-        if isVideo{
+        let isvideo = galleryArray[indexPath.row].mimeType
+        if isvideo == "video"{
             playVideo()
         }else{
-            moveToPhotoDetail()
+            moveToPhotoDetail(galleryArray[indexPath.row].path ?? "")
         }
     }
     
-    private func moveToPhotoDetail(){
+    private func moveToPhotoDetail(_ detailImageURL:String){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "PhotoDetailViewController") as! PhotoDetailViewController
-        vc.detailImage = #imageLiteral(resourceName: "product")
+        vc.detailImageurl = detailImageURL
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     
     private func playVideo(){
         let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
@@ -224,18 +245,31 @@ extension VCStoreInfo: UICollectionViewDelegate,UICollectionViewDataSource,UICol
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let sectionPadding = sectionInsets.left * (itemsPerRow + 1)
+        let interitemPadding = max(0.0, itemsPerRow - 1) * interitemSpace
+        let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: 80)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5.0
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let yourWidth = collectionView.bounds.width/3.0
-        let yourHeight = yourWidth
-        return CGSize(width: yourWidth, height: yourHeight)
+        return interitemSpace
     }
 }
 

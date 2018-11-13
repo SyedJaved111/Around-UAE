@@ -159,3 +159,19 @@ typealias BillingShippingAddressParams = (
     addressthree:String,
     addresstype:String
 )
+
+typealias StoreUploadSelfieParams = (
+    storeid:String,
+    caption:String,
+    selfieData:Data,
+    thumbnail:Data,
+    mintype:String
+)
+
+typealias PlaceUploadSelfieParams = (
+    placeId:String,
+    caption:String,
+    selfieData:Data,
+    thumbnail:Data,
+    mintype:String
+)

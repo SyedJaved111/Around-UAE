@@ -75,4 +75,7 @@ enum APIURL: String{
     case shipOrderProductURL                    = "auth/ship/product"
     case OrderDetailURL                         = "auth/order/detail"
     case MakeProductCompleteURL                 = "auth/complete/product"
+    
+    case StoreUploadURL                         = "auth/store/upload/selfie"
+    case PlaceUploadURL                         = "auth/place/upload/selfie"
 }

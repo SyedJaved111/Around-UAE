@@ -46,6 +46,24 @@ struct StoreDetail: Decodable {
     let isActive : Bool?
     let averageRating: Double?
     let canReviewUsers: [CanReviewUsers]?
+    let selfies : [Selfies]?
+    let gallery : [Gallery]?
 }
 
+struct Gallery : Decodable {
+    let path : String?
+    let mimeType : String?
+    let createdAt : String?
+    let _id : String?
+}
+
+struct Selfies : Decodable {
+    let path : String?
+    let mimeType : String?
+    let thumbnail: String?
+    let caption : String?
+    let createdAt : String?
+    let _id : String?
+    let user : User?
+}
 

@@ -87,6 +87,10 @@ enum ServerAPI {
     //Social API's
     case SocialLogin(SocialParams)
     
+    //Selfie API's
+    case StoreUploadSelfie(StoreUploadSelfieParams)
+    case PlaceUploadSelfie(PlaceUploadSelfieParams)
+    
     //Parser API's
     static func parseServerResponse<T>(_ type: T.Type, from data: Data)-> T? where T : Decodable{
         do {
@@ -227,6 +231,10 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             return APIURL.MakeProductCompleteURL.rawValue
         case .UpdateBillingShipping:
             return APIURL.UpdateBillingShippingURL.rawValue
+        case .StoreUploadSelfie:
+            return APIURL.StoreUploadURL.rawValue
+        case .PlaceUploadSelfie:
+            return APIURL.PlaceUploadURL.rawValue
         }
     }
     
@@ -245,7 +253,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
              .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
              .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
              .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters,
-             .UpdateBillingShipping:
+             .UpdateBillingShipping,.StoreUploadSelfie,.PlaceUploadSelfie:
             return .post
         case .GetUserProfile,.RemoveImage,
              .GetStoreSGDS,.GetSiteSettings,
@@ -504,7 +512,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             ,.UpdateBillingShipping:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
-        case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage:
+        case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage,.StoreUploadSelfie,.PlaceUploadSelfie:
             return .uploadMultipart(multipartBody ?? [])
             
         case .GetUserProfile,.RemoveImage,.GetStoreSGDS,.GetSiteSettings,
@@ -540,7 +548,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             
             if let profileImageData = UIImageJPEGRepresentation(parameters.nic, 0.8){
                 multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-                                                                name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
+                name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
             }
             
             return multipartFormDataArray
@@ -549,8 +557,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             let profileImageData = UIImageJPEGRepresentation(image, 1.0)!
             var multipartFormDataArray = [MultipartFormData]()
             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-                                                            name: "image", fileName: "nicimage.png", mimeType: "image/jpeg"))
-            
+            name: "image", fileName: "nicimage.png", mimeType: "image/jpeg"))
             return multipartFormDataArray
             
         case .AboutPage(let parameters):
@@ -560,7 +567,42 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.description_ar).data(using: .utf8)!), name: AboutPageKey.DESCRIPTION_AR.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.id).data(using: .utf8)!), name: AboutPageKey.ID.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-                                                            name: "image", fileName: "store.png", mimeType: "image/jpeg"))
+            name: "image", fileName: "store.png", mimeType: "image/jpeg"))
+            return multipartFormDataArray
+            
+        case .StoreUploadSelfie(let parameters):
+            let profileImageData = parameters.selfieData
+            var multipartFormDataArray = [MultipartFormData]()
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.caption).data(using: .utf8)!), name: StoreUploadSelfieKey.caption.rawValue))
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.storeid).data(using: .utf8)!), name: StoreUploadSelfieKey.storeid.rawValue))
+            
+            if parameters.mintype == "image"{
+                multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+                name: "file", fileName: "store.png", mimeType: "image/jpeg"))
+            }else{
+                multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+                name: "file", fileName: "upload.mov", mimeType: "video/mov"))
+                multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+                name: "thumbnail", fileName:"store.png", mimeType: "image/jpeg"))
+            }
+           
+            return multipartFormDataArray
+            
+        case .PlaceUploadSelfie(let parameters):
+            let profileImageData = parameters.selfieData
+            var multipartFormDataArray = [MultipartFormData]()
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.caption).data(using: .utf8)!), name: StoreUploadSelfieKey.caption.rawValue))
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.placeId).data(using: .utf8)!), name: StoreUploadSelfieKey.storeid.rawValue))
+            
+            if parameters.mintype == "image"{
+                multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+                name: "file", fileName: "place.png", mimeType: "image/jpeg"))
+            }else{
+                multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+                name: "file", fileName: "upload.mov", mimeType: "video/mov"))
+                multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
+                name: "thumbnail", fileName:"place.png", mimeType: "image/jpeg"))
+            }
             
             return multipartFormDataArray
             

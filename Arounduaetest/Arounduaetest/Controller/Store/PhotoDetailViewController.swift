@@ -1,11 +1,12 @@
 
 import UIKit
+import SDWebImage
 
 class PhotoDetailViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrolView: UIScrollView!
     @IBOutlet weak var imgPhoto: UIImageView!
-    var detailImage:UIImage?
+    var detailImageurl = ""
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -15,7 +16,9 @@ class PhotoDetailViewController: UIViewController, UIScrollViewDelegate {
         scrolView.delegate = self
         scrolView.minimumZoomScale = 1.0
         scrolView.maximumZoomScale = 10.0
-        imgPhoto.image = detailImage
+        imgPhoto.sd_setShowActivityIndicatorView(true)
+        imgPhoto.sd_setIndicatorStyle(.gray)
+        imgPhoto.sd_setImage(with: URL(string: detailImageurl), placeholderImage: #imageLiteral(resourceName: "Category"))
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

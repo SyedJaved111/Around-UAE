@@ -93,7 +93,10 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     }
     
     @objc func buttonAction() {
-        
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "CaptureSelfiePopupVC") as! CaptureSelfiePopupVC
+        vc.storeid = storeid
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func onChatButtonClciked() {

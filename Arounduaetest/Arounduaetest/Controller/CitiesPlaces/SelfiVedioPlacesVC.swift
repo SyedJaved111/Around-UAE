@@ -20,13 +20,15 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
         }
     }
     
-    var CitiesArray = [false,false,true,true,false,false,true,true,false,false,true,true,false,false,true,true]
+    var selfiesArray = [Selfies]()
     var totalPages = 0
     var currentPage = 0
-    var storeid = ""
+    var placeid = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addBackButton()
+        collectionView.reloadData()
         collectionView.adjustDesign(width: ((view.frame.size.width+20)/2.5))
         setupDelegates()
     }
@@ -46,8 +48,12 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     }
     
     @objc func onChatButtonClciked() {
-        
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "CaptureSelfiePopupVC") as! CaptureSelfiePopupVC
+        vc.storeid = placeid
+        self.present(vc, animated: true, completion: nil)
     }
+
     
     fileprivate func setupDelegates(){
         self.collectionView.emptyDataSetSource = self
@@ -59,38 +65,44 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
 extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CitiesArray.count
+        return selfiesArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
-        let isvideo = CitiesArray[indexPath.row]
-        if isvideo{
+        let isvideo = selfiesArray[indexPath.row].mimeType
+        if isvideo == "video"{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCCitiesCell
+            cell.imgGenral.sd_setShowActivityIndicatorView(true)
+            cell.imgGenral.sd_setIndicatorStyle(.gray)
+            cell.imgGenral.sd_setImage(with: URL(string: selfiesArray[indexPath.row].thumbnail ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCCitiesCell
+            cell.imgGenral.sd_setShowActivityIndicatorView(true)
+            cell.imgGenral.sd_setIndicatorStyle(.gray)
+            cell.imgGenral.sd_setImage(with: URL(string: selfiesArray[indexPath.row].path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-        let isvideo = CitiesArray[indexPath.row]
-        if isvideo{
-            playVideo()
+        let isvideo = selfiesArray[indexPath.row].mimeType
+        if isvideo == "video"{
+            playVideo(selfiesArray[indexPath.row].path ?? "")
         }else{
-            moveToPhotoDetail()
+            moveToPhotoDetail(selfiesArray[indexPath.row].path ?? "")
         }
     }
     
-    private func moveToPhotoDetail(){
+    private func moveToPhotoDetail(_ detailImageURL:String){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "PhotoDetailViewController") as! PhotoDetailViewController
-        vc.detailImage = #imageLiteral(resourceName: "product")
+        vc.detailImageurl = detailImageURL
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func playVideo(){
-        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+    private func playVideo(_ url:String){
+        let videoURL = URL(string:url)
         let player = AVPlayer(url: videoURL!)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player
