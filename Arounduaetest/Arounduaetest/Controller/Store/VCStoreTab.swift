@@ -19,6 +19,7 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var lblMessage: UILabel!
     @IBOutlet var collectionViewPager: ButtonBarView!
     let user = SharedData.sharedUserInfo
+    let nc = NotificationCenter.default
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     var storeid = ""
@@ -55,9 +56,19 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
         super.viewDidLoad()
         self.delegate = self
-        //fetchProductInfo(storeid, isRefresh: false)
+        nc.addObserver(self, selector: #selector(userLoggedIn), name: Notification.Name("UserLoggedIn"), object: nil)
+        nc.addObserver(self, selector: #selector(RemoveSelfie), name: Notification.Name("RemoveSelfie"), object: nil)
+
+    }
+
+    @objc func RemoveSelfie(){
+        addChatButton()
     }
     
+    @objc func userLoggedIn(){
+        addMenuButtons()
+    }
+   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
@@ -73,7 +84,12 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
     }
     
-    func addChatButton(backImage: UIImage = #imageLiteral(resourceName: "Chat-1")) {
+    func addChatButton(backImage: UIImage = #imageLiteral(resourceName: "Chat-1")){
+        let chatButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(onChatButtonClciked))
+        self.navigationItem.setRightBarButtonItems([chatButton], animated: true)
+    }
+    
+    func addMenuButtons(backImage: UIImage = #imageLiteral(resourceName: "Chat-1")) {
         let chatButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(onChatButtonClciked))
         let button =  UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "Takeselfie"), for: .normal)

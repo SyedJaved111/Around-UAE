@@ -25,8 +25,12 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name("RemoveSelfie"), object: nil)
         fetchProductInfo(storeidProducts, isRefresh: false)
     }
+    
+    
     
     fileprivate func setupDelegates(){
         self.collectionViewManageProducts.emptyDataSetSource = self

@@ -37,10 +37,10 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo.init(title: "Store Info".localized)
     }
-
+    
     override func viewDidLoad(){
         super.viewDidLoad()
-
+        
         submitFeedbackBtn.setTitle("Submit Feedback".localized, for: .normal)
         if AppSettings.sharedSettings.accountType == "seller"{
             btnSubmitFeedBack.isHidden = true
@@ -56,6 +56,17 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
             }
          }
         fetchProductInfo(storeid, isRefresh: false)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name("RemoveSelfie"), object: nil)
+    }
+    
+    @IBAction func switchTab(_ sender:UIButton){
+        let parentViewController = self.parent! as! VCStoreTab
+        parentViewController.moveToViewController(at: 2)
     }
 
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){

@@ -50,7 +50,7 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     @objc func onChatButtonClciked() {
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "CaptureSelfiePopupVC") as! CaptureSelfiePopupVC
-        vc.storeid = placeid
+        vc.placeid = placeid
         self.present(vc, animated: true, completion: nil)
     }
 

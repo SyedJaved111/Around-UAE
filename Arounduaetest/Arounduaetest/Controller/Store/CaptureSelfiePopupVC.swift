@@ -31,6 +31,7 @@ class CaptureSelfiePopupVC: UIViewController {
     var movieData: NSData?
     var videoThumbnail:UIImage?
     var storeid = ""
+    var placeid = ""
     var isVideo = false
 
     override func viewDidLoad() {
@@ -138,37 +139,72 @@ extension CaptureSelfiePopupVC: UIImagePickerControllerDelegate, UINavigationCon
     
     private func uploadVideoData(_ caption:String){
         
-        do {
-            movieData = try NSData(contentsOfFile: (videoPath?.relativePath)!, options: NSData.ReadingOptions.alwaysMapped)
-            guard let image = videoThumbnail,let imagedata = UIImageJPEGRepresentation(image, 0.7) else {
-                return
-            }
-            
-            startLoading("")
-            SelfieManager().storeUploadSelfie((storeid,"some caption",movieData! as Data,imagedata,"video"),
-            successCallback:
-            {[weak self](response) in
-                DispatchQueue.main.async {
-                    self?.finishLoading()
-                    if let videoResponse = response{
-                        if(videoResponse.success!){
-                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
-                        }else{
-                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+        if storeid != ""{
+            do {
+                movieData = try NSData(contentsOfFile: (videoPath?.relativePath)!, options: NSData.ReadingOptions.alwaysMapped)
+                guard let image = videoThumbnail,let imagedata = UIImageJPEGRepresentation(image, 0.7) else {
+                    return
+                }
+                
+                startLoading("")
+                SelfieManager().storeUploadSelfie((storeid,"some caption",movieData! as Data,imagedata,"video"),
+                                                  successCallback:
+                    {[weak self](response) in
+                        DispatchQueue.main.async {
+                            self?.finishLoading()
+                            if let videoResponse = response{
+                                if(videoResponse.success!){
+                                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                }else{
+                                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                }
+                            }
                         }
+                    })
+                {[weak self](error) in
+                    DispatchQueue.main.async {
+                        self?.finishLoading()
+                        self?.alertMessage(message: error.message, completionHandler: nil)
                     }
                 }
-            })
-            {[weak self](error) in
-                DispatchQueue.main.async {
-                   self?.finishLoading()
-                   self?.alertMessage(message: error.message, completionHandler: nil)
-                }
+                
+            } catch _ {
+                movieData = nil
+                return
             }
-            
-        } catch _ {
-            movieData = nil
-            return
+        }else{
+            do {
+                movieData = try NSData(contentsOfFile: (videoPath?.relativePath)!, options: NSData.ReadingOptions.alwaysMapped)
+                guard let image = videoThumbnail,let imagedata = UIImageJPEGRepresentation(image, 0.7) else {
+                    return
+                }
+                
+                startLoading("")
+                SelfieManager().placeUploadSelfie((placeid,"some caption",movieData! as Data,imagedata,"video"),
+                                                  successCallback:
+                    {[weak self](response) in
+                        DispatchQueue.main.async {
+                            self?.finishLoading()
+                            if let videoResponse = response{
+                                if(videoResponse.success!){
+                                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                }else{
+                                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                                }
+                            }
+                        }
+                    })
+                {[weak self](error) in
+                    DispatchQueue.main.async {
+                        self?.finishLoading()
+                        self?.alertMessage(message: error.message, completionHandler: nil)
+                    }
+                }
+                
+            } catch _ {
+                movieData = nil
+                return
+            }
         }
     }
     
@@ -178,31 +214,61 @@ extension CaptureSelfiePopupVC: UIImagePickerControllerDelegate, UINavigationCon
             return
         }
         
-        startLoading("")
-        SelfieManager().storeUploadSelfie((storeid,"some caption",imagedata,Data(),"image"),
-        successCallback:
-        {[weak self](response) in
-            DispatchQueue.main.async {
-                self?.finishLoading()
-                if let videoResponse = response{
-                    if(videoResponse.success!){
-                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                            self?.dismiss(animated: true, completion: nil)
-                        })
-                    }else{
-                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                            self?.dismiss(animated: true, completion: nil)
-                        })
+        if storeid != ""{
+            startLoading("")
+            SelfieManager().storeUploadSelfie((storeid,"some caption",imagedata,Data(),"image"),
+            successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let videoResponse = response{
+                        if(videoResponse.success!){
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                self?.dismiss(animated: true, completion: nil)
+                            })
+                        }else{
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                self?.dismiss(animated: true, completion: nil)
+                            })
+                        }
                     }
                 }
+            })
+            {[weak self](error) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    self?.alertMessage(message: error.message, completionHandler: {
+                        self?.dismiss(animated: true, completion: nil)
+                    })
+                }
             }
-        })
-        {[weak self](error) in
-            DispatchQueue.main.async {
-                self?.finishLoading()
-                self?.alertMessage(message: error.message, completionHandler: {
-                    self?.dismiss(animated: true, completion: nil)
+        }else{
+            startLoading("")
+            SelfieManager().placeUploadSelfie((placeid,"some caption",imagedata,Data(),"image"),
+            successCallback:
+                {[weak self](response) in
+                    DispatchQueue.main.async {
+                        self?.finishLoading()
+                        if let videoResponse = response{
+                            if(videoResponse.success!){
+                                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                    self?.dismiss(animated: true, completion: nil)
+                                })
+                            }else{
+                                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                                    self?.dismiss(animated: true, completion: nil)
+                                })
+                            }
+                        }
+                    }
                 })
+            {[weak self](error) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    self?.alertMessage(message: error.message, completionHandler: {
+                        self?.dismiss(animated: true, completion: nil)
+                    })
+                }
             }
         }
     }

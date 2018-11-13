@@ -70,16 +70,8 @@ class SelfiVedioVC: BaseController,IndicatorInfoProvider{
 
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Selfie/Video".localized
-        addSelfieButton()
-    }
-    
-    func addSelfieButton(backImage: UIImage = #imageLiteral(resourceName: "Takeselfie")) {
-        let chatButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(onChatButtonClciked))
-        navigationItem.rightBarButtonItem  = chatButton
-    }
-    
-    @objc func onChatButtonClciked() {
-        
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name("UserLoggedIn"), object: nil)
     }
     
     fileprivate func setupDelegates(){
