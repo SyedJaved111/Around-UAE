@@ -88,12 +88,12 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
         lblMenuNameseller.append("Logout".localized)
         Menuimgseller.append("Logout")
         lblMenuNameseller.append("Share Around UAE".localized)
-        Menuimgseller.append("Share")
+        Menuimgseller.append("social-share-symbol")
         
         lblMenuNamebuyer.append("Logout".localized)
         Menuimgbuyer.append("Logout")
         lblMenuNameseller.append("Share Around UAE".localized)
-        Menuimgseller.append("Share")
+        Menuimgseller.append("social-share-symbol")
         
         profileTableView.reloadData()
     }

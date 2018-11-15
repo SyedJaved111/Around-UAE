@@ -103,7 +103,7 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
             
             cell.userImage.sd_setShowActivityIndicatorView(true)
             cell.userImage.sd_setIndicatorStyle(.gray)
-            cell.userImage.sd_setImage(with: URL(string: selfiesArray[indexPath.row].thumbnail ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+            cell.userImage.sd_setImage(with: URL(string: selfiesArray[indexPath.row].user?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             
             cell.imgGenral.sd_setShowActivityIndicatorView(true)
             cell.imgGenral.sd_setIndicatorStyle(.gray)

@@ -64,4 +64,12 @@ class VCAboutUs: UIViewController {
         UIApplication.shared.open(url)
     }
     
+    @IBAction func share(_ sender:UIButton){
+        let text = ""
+        let textToShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 }

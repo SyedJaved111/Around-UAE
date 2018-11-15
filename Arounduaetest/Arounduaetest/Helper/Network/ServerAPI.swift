@@ -92,6 +92,7 @@ enum ServerAPI {
     case PlaceUploadSelfie(PlaceUploadSelfieParams)
     case GetSelfieList(_ id: String)
     case SetSelfieactive(_ storeid:String, selfieid:String)
+    case DeleteGallery(_ storeid:String, selfieid:String)
     
     //Parser API's
     static func parseServerResponse<T>(_ type: T.Type, from data: Data)-> T? where T : Decodable{
@@ -242,6 +243,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             return APIURL.GetSelfieURL.rawValue
         case .SetSelfieactive:
             return APIURL.SetSelfieactiveURL.rawValue
+        case .DeleteGallery:
+            return APIURL.DeleteGalleryURL.rawValue
         }
     }
     
@@ -260,7 +263,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
              .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
              .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
              .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters,
-             .UpdateBillingShipping,.StoreUploadSelfie,.PlaceUploadSelfie,.GetSelfieList,.SetSelfieactive:
+             .UpdateBillingShipping,.StoreUploadSelfie,.PlaceUploadSelfie,.GetSelfieList,.SetSelfieactive,.DeleteGallery:
             return .post
         case .GetUserProfile,.RemoveImage,
              .GetStoreSGDS,.GetSiteSettings,
@@ -497,6 +500,10 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
                 parameters["storeId"] = storeid
                 parameters["selfieId"] = selfieid
                 return parameters
+        case .DeleteGallery(let storeid, let selfieid):
+            parameters["storeId"] = storeid
+            parameters["fileId"] = selfieid
+            return parameters
         default:
             return nil
         }
@@ -524,9 +531,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
              .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
              .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
              .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters
-            ,.UpdateBillingShipping,.GetSelfieList,.SetSelfieactive:
+            ,.UpdateBillingShipping,.GetSelfieList,.SetSelfieactive,.DeleteGallery:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
-            
         case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage,.StoreUploadSelfie,.PlaceUploadSelfie:
             return .uploadMultipart(multipartBody ?? [])
             
@@ -549,7 +555,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.useraddress).data(using: .utf8)!), name: RegisterUserKey.USER_ADDRESS.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.usergender).data(using: .utf8)!), name: RegisterUserKey.USER_GENDER.rawValue))
             multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),
-                                                            name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
+                name: "nic", fileName: "nicimage.png", mimeType: "image/jpeg"))
             
             return multipartFormDataArray
             

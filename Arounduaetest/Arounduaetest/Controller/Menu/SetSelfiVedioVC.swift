@@ -15,8 +15,8 @@ class SetSelfiVedioVC: BaseController,IndicatorInfoProvider{
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
-            self.collectionView.delegate = self
-            self.collectionView.dataSource = self
+//            self.collectionView.delegate = self
+//            self.collectionView.dataSource = self
         }
     }
     
@@ -27,13 +27,7 @@ class SetSelfiVedioVC: BaseController,IndicatorInfoProvider{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if lang == "en"{
-           addBackButton()
-        }else{
-           showArabicBackButton()
-        }
         collectionView.adjustDesign(width: ((view.frame.size.width+20)/2.5))
-        fetchProductInfo(storeid, isRefresh: false)
     }
     
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
@@ -48,15 +42,17 @@ class SetSelfiVedioVC: BaseController,IndicatorInfoProvider{
                     self?.finishLoading()
                     if let productResponse = response{
                         if productResponse.success!{
-                            self?.selfiesArray = productResponse.data?.selfies?.filter({$0.isActive ?? false == true}) ?? []
+                            
+                            self?.selfiesArray = productResponse.data?.selfies ?? []
+                            self?.collectionView.reloadData()
                         }else{
                             self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
                         }
                     }else{
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
-                self?.setupDelegates()
             })
         {[weak self](error) in
             DispatchQueue.main.async {
@@ -77,6 +73,7 @@ class SetSelfiVedioVC: BaseController,IndicatorInfoProvider{
         }else{
             showArabicBackButton()
         }
+        fetchProductInfo(storeid, isRefresh: false)
     }
     
     fileprivate func setupDelegates(){
@@ -107,7 +104,12 @@ extension SetSelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString
-            
+            if selfiesArray[indexPath.row].isActive ?? false{
+                cell.pickerImage.image = #imageLiteral(resourceName: "Checked")
+            }else{
+                cell.pickerImage.image = #imageLiteral(resourceName: "Unchecked")
+            }
+            cell.delegate = self
             cell.userImage.sd_setShowActivityIndicatorView(true)
             cell.userImage.sd_setIndicatorStyle(.gray)
             cell.userImage.sd_setImage(with: URL(string: selfiesArray[indexPath.row].user?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
@@ -124,11 +126,15 @@ extension SetSelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString
-            
+            if selfiesArray[indexPath.row].isActive ?? false{
+                cell.pickerImage.image = #imageLiteral(resourceName: "Checked")
+            }else{
+                cell.pickerImage.image = #imageLiteral(resourceName: "Unchecked")
+            }
+            cell.delegate = self
             cell.userImage.sd_setShowActivityIndicatorView(true)
             cell.userImage.sd_setIndicatorStyle(.gray)
-            cell.userImage.sd_setImage(with: URL(string: selfiesArray[indexPath.row].thumbnail ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
-            
+            cell.userImage.sd_setImage(with: URL(string: selfiesArray[indexPath.row].user?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             cell.imgGenral.sd_setShowActivityIndicatorView(true)
             cell.imgGenral.sd_setIndicatorStyle(.gray)
             cell.imgGenral.sd_setImage(with: URL(string: selfiesArray[indexPath.row].path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
@@ -177,12 +183,15 @@ extension SetSelfiVedioVC:SetStoreProtocol {
         {[weak self](response) in
             DispatchQueue.main.async {
                 self?.finishLoading()
-                
+                self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                    self?.fetchProductInfo(self?.storeid ?? "", isRefresh: false)
+                })
             }
         })
         {[weak self](error) in
             DispatchQueue.main.async {
                 self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
             }
         }
     }
@@ -199,6 +208,7 @@ class VCStoreSelfiesCell: UICollectionViewCell {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userDate: UILabel!
+    @IBOutlet weak var pickerImage: UIImageView!
     
     @IBAction func setStore(_ sender:UIButton){
         delegate?.setStoreActive(cell: self)

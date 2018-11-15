@@ -12,18 +12,55 @@ import UITextView_Placeholder
 
 class ManageAboutPageVC: UIViewController {
 
+    @IBOutlet weak var manageaboutCollectionView: UICollectionView!
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var storeImage: UIImageView!
     @IBOutlet weak var lblEnglishTextField: UITextView!
     @IBOutlet weak var lblArabicTextField: UITextView!
     var imagePicker = UIImagePickerController()
     var cameraPicker = UIImagePickerController()
     var storeObject:Stores!
+    var galleryArray = [Gallery]()
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Manage Store About".localized
         setupData()
+        fetchProductInfo(storeObject._id ?? "", isRefresh: false)
+    }
+    
+    private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
+        
+        if isRefresh == false{
+            startLoading("")
+        }
+        
+        SelfieManager().getSelfies(storeId,successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let productResponse = response{
+                        if productResponse.success!{
+                            
+                            self?.galleryArray = productResponse.data?.gallery ?? []
+                            self?.manageaboutCollectionView.reloadData()
+                            self?.setCollectionViewHeight()
+                        }else{
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
+                        }
+                    }else{
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                    
+                }
+            })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +80,23 @@ class ManageAboutPageVC: UIViewController {
         lblArabicTextField.placeholder = "Description(Arabic)"
     }
     
+    private func setCollectionViewHeight(){
+        collectionViewHeightConstraint.constant = manageaboutCollectionView.collectionViewLayout.collectionViewContentSize.height + 10
+        self.manageaboutCollectionView.setNeedsDisplay()
+    }
+    
+    fileprivate var sectionInsets: UIEdgeInsets {
+        return .zero
+    }
+    
+    fileprivate var itemsPerRow: CGFloat {
+        return 3
+    }
+    
+    fileprivate var interitemSpace: CGFloat {
+        return 5.0
+    }
+    
     private func setupData(){
         storeImage.sd_setShowActivityIndicatorView(true)
         storeImage.sd_setIndicatorStyle(.gray)
@@ -56,7 +110,7 @@ class ManageAboutPageVC: UIViewController {
     }
     
     @IBAction func cancel(_ sender: UIButton){
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func isCheck()->Bool{
@@ -178,5 +232,109 @@ extension ManageAboutPageVC: UIImagePickerControllerDelegate, UINavigationContro
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension  ManageAboutPageVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return galleryArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let isvideo = galleryArray[indexPath.row].mimeType
+        if isvideo == "video"{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoManageCell", for: indexPath) as! VideoManageCell
+            cell.videoImage.sd_setShowActivityIndicatorView(true)
+            cell.videoImage.sd_setIndicatorStyle(.gray)
+            cell.videoImage.sd_setImage(with: URL(string: galleryArray[indexPath.row].path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+            cell.delegate = self
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageManageCell", for: indexPath) as! ImageManageCell
+            cell.normalImage.sd_setShowActivityIndicatorView(true)
+            cell.normalImage.sd_setIndicatorStyle(.gray)
+            cell.normalImage.sd_setImage(with: URL(string: galleryArray[indexPath.row].path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+            cell.delegate = self
+            return cell
+        }
+    }
+}
+
+extension ManageAboutPageVC: DeleteGalleryImage{
+    func deleteGalleryVideoImage(cell: VideoManageCell) {
+        let indexpath = manageaboutCollectionView.indexPath(for: cell)!
+        SelfieManager().deleteGallery(storeObject._id ?? "", selfieid: galleryArray[indexpath.row]._id ?? "",
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let deleteResponse = response{
+                    if deleteResponse.success!{
+                        self?.manageaboutCollectionView.deleteItems(at: [indexpath])
+                        self?.fetchProductInfo(self?.storeObject._id ?? "", isRefresh: false)
+                    }else{
+                       self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    }
+                }else{
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                }
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
+    }
+    
+    func deleteGalleryNormalImage(cell: ImageManageCell) {
+        let indexpath = manageaboutCollectionView.indexPath(for: cell)!
+        SelfieManager().deleteGallery(storeObject._id ?? "", selfieid: galleryArray[indexpath.row]._id ?? "",
+            successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let deleteResponse = response{
+                        if deleteResponse.success!{
+                            self?.manageaboutCollectionView.deleteItems(at: [indexpath])
+                            self?.fetchProductInfo(self?.storeObject._id ?? "", isRefresh: false)
+                        }else{
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                        }
+                    }else{
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    }
+                }
+            })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
+    }
+}
+
+protocol DeleteGalleryImage{
+    func deleteGalleryVideoImage(cell:VideoManageCell)
+    func deleteGalleryNormalImage(cell:ImageManageCell)
+}
+
+
+class VideoManageCell:UICollectionViewCell{
+    var delegate: DeleteGalleryImage?
+    @IBOutlet weak var videoImage:UIImageView!
+    @IBAction func deleteVideoImage(_ sender:UIButton){
+        self.delegate?.deleteGalleryVideoImage(cell: self)
+    }
+}
+
+class ImageManageCell:UICollectionViewCell{
+    var delegate: DeleteGalleryImage?
+    @IBOutlet weak var normalImage:UIImageView!
+    @IBAction func deleteVideoImage(_ sender:UIButton){
+        self.delegate?.deleteGalleryNormalImage(cell: self)
     }
 }

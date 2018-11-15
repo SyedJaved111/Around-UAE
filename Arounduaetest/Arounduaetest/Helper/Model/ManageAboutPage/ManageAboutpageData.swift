@@ -18,10 +18,12 @@ struct ManageAboutpageData : Decodable {
 	let image : String?
 	let onlineSaleable : Bool?
 	let isActive : Bool?
-	let averageRating : Int?
+	let averageRating : Double?
 	let _id : String?
 	let user : String?
 	let createdAt : String?
 	let updatedAt : String?
 	let canReviewUsers : [CanReviewUsers]?
+    let selfies : [Selfies]?
+    let gallery : [Gallery]?
 }

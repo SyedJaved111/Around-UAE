@@ -53,8 +53,8 @@ class SelfiVedioVC: BaseController,IndicatorInfoProvider{
                     }else{
                         self?.alertMessage(message: "Error".localized, completionHandler: nil)
                     }
+                    self?.setupDelegates()
                 }
-                self?.setupDelegates()
             })
         {[weak self](error) in
             DispatchQueue.main.async {
@@ -123,7 +123,7 @@ extension SelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
             
             cell.userImage.sd_setShowActivityIndicatorView(true)
             cell.userImage.sd_setIndicatorStyle(.gray)
-            cell.userImage.sd_setImage(with: URL(string: selfiArray[indexPath.row].thumbnail ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+            cell.userImage.sd_setImage(with: URL(string: selfiArray[indexPath.row].user?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             
             cell.imgGenral.sd_setShowActivityIndicatorView(true)
             cell.imgGenral.sd_setIndicatorStyle(.gray)

@@ -58,8 +58,17 @@ class VCProductDetail: UIViewController {
         for i in 0..<self.tableViewReviews.numberOfRows(inSection: 0){
             tableViewHeight = tableViewHeight + tableView(self.tableViewReviews, heightForRowAt: IndexPath(row: i, section: 0))
         }
-        tableviewReeviewConstraint.constant = tableViewHeight
+        tableviewReeviewConstraint.constant = tableViewHeight + 20
         self.tableViewReviews.setNeedsDisplay()
+    }
+    
+    @IBAction func share(_ sender:UIButton){
+        let text = ""
+        let textToShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     private func getProductDetail(){
