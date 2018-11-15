@@ -38,13 +38,13 @@ class SelfiVedioVC: BaseController,IndicatorInfoProvider{
             startLoading("")
         }
         
-        StoreManager().getStoreDetail(storeId,successCallback:
+        SelfieManager().getSelfies(storeId,successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let productResponse = response{
                         if productResponse.success!{
-                            self?.selfiArray = productResponse.data?.selfies ?? []
+                            self?.selfiArray = productResponse.data?.selfies?.filter({$0.isActive ?? false == true}) ?? []
                             self?.collectionView.reloadData()
                             
                         }else{
@@ -89,14 +89,42 @@ extension SelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let isvideo = selfiArray[indexPath.row].mimeType
+
+        let dateFormatter = DateFormatter()
+        let tempLocale = dateFormatter.locale
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
         if isvideo == "video"{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCCitiesCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCSelfiesCell
+            cell.userName.text = selfiArray[indexPath.row].caption ?? ""
+            let date = dateFormatter.date(from: selfiArray[indexPath.row].createdAt!)!
+            dateFormatter.dateFormat = "d MMM yyyy"
+            dateFormatter.locale = tempLocale
+            let dateString = dateFormatter.string(from: date)
+            cell.userDate.text = dateString
+            
+            cell.userImage.sd_setShowActivityIndicatorView(true)
+            cell.userImage.sd_setIndicatorStyle(.gray)
+            cell.userImage.sd_setImage(with: URL(string: selfiArray[indexPath.row].user?.image ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+            
             cell.imgGenral.sd_setShowActivityIndicatorView(true)
             cell.imgGenral.sd_setIndicatorStyle(.gray)
             cell.imgGenral.sd_setImage(with: URL(string: selfiArray[indexPath.row].thumbnail ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             return cell
         }else{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCCitiesCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCSelfiesCell
+            cell.userName.text = selfiArray[indexPath.row].caption ?? ""
+            let date = dateFormatter.date(from: selfiArray[indexPath.row].createdAt!)!
+            dateFormatter.dateFormat = "d MMM yyyy"
+            dateFormatter.locale = tempLocale
+            let dateString = dateFormatter.string(from: date)
+            cell.userDate.text = dateString
+            
+            cell.userImage.sd_setShowActivityIndicatorView(true)
+            cell.userImage.sd_setIndicatorStyle(.gray)
+            cell.userImage.sd_setImage(with: URL(string: selfiArray[indexPath.row].thumbnail ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
+            
             cell.imgGenral.sd_setShowActivityIndicatorView(true)
             cell.imgGenral.sd_setIndicatorStyle(.gray)
             cell.imgGenral.sd_setImage(with: URL(string: selfiArray[indexPath.row].path ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
@@ -131,6 +159,15 @@ extension SelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
-        
+        fetchProductInfo(storeid, isRefresh: false)
     }
+}
+
+class VCSelfiesCell: UICollectionViewCell {
+
+    @IBOutlet weak var imgGenral: UIImageView!
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var userDate: UILabel!
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
 }

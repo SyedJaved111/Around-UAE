@@ -90,6 +90,8 @@ enum ServerAPI {
     //Selfie API's
     case StoreUploadSelfie(StoreUploadSelfieParams)
     case PlaceUploadSelfie(PlaceUploadSelfieParams)
+    case GetSelfieList(_ id: String)
+    case SetSelfieactive(_ storeid:String, selfieid:String)
     
     //Parser API's
     static func parseServerResponse<T>(_ type: T.Type, from data: Data)-> T? where T : Decodable{
@@ -116,7 +118,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         switch self {
         case .UserLogin,.ForgotPassword,.RegisterUser,
              .EmailVerification,.ResendVerification,
-             .ResetPassword,.CitiesPlaces,.SearchProduct,.SocialLogin,.SearchFilter:
+             .ResetPassword,.CitiesPlaces,.SearchProduct,.SocialLogin,
+             .SearchFilter:
             return .none
         default:
             return .basic
@@ -235,6 +238,10 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             return APIURL.StoreUploadURL.rawValue
         case .PlaceUploadSelfie:
             return APIURL.PlaceUploadURL.rawValue
+        case .GetSelfieList:
+            return APIURL.GetSelfieURL.rawValue
+        case .SetSelfieactive:
+            return APIURL.SetSelfieactiveURL.rawValue
         }
     }
     
@@ -253,7 +260,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
              .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
              .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
              .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters,
-             .UpdateBillingShipping,.StoreUploadSelfie,.PlaceUploadSelfie:
+             .UpdateBillingShipping,.StoreUploadSelfie,.PlaceUploadSelfie,.GetSelfieList,.SetSelfieactive:
             return .post
         case .GetUserProfile,.RemoveImage,
              .GetStoreSGDS,.GetSiteSettings,
@@ -482,6 +489,14 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
             
             return parameters
             
+        case .GetSelfieList(let id):
+            parameters["id"] = id
+            return parameters
+            
+        case .SetSelfieactive(let storeid, let selfieid):
+                parameters["storeId"] = storeid
+                parameters["selfieId"] = selfieid
+                return parameters
         default:
             return nil
         }
@@ -509,7 +524,7 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
              .AddProdcutsCart,.DeleteProductCart,.CartQuantityUpdate,
              .Payment,.SearchProduct,.SocialLogin,.ShowConfirmedShippedCompletedOrders,
              .ShipOrderProduct,.OrderDetail,.MakeProductComplete,.SearchFilter,.GetFeaturesCharacters
-            ,.UpdateBillingShipping:
+            ,.UpdateBillingShipping,.GetSelfieList,.SetSelfieactive:
             return .requestParameters(parameters: parameters!, encoding: parameterEncoding)
             
         case .RegisterUser,.UpdateProfile,.UploadImage,.AboutPage,.StoreUploadSelfie,.PlaceUploadSelfie:
@@ -591,8 +606,8 @@ extension ServerAPI: TargetType,AccessTokenAuthorizable {
         case .PlaceUploadSelfie(let parameters):
             let profileImageData = parameters.selfieData
             var multipartFormDataArray = [MultipartFormData]()
-            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.caption).data(using: .utf8)!), name: StoreUploadSelfieKey.caption.rawValue))
-            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.placeId).data(using: .utf8)!), name: StoreUploadSelfieKey.storeid.rawValue))
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.caption).data(using: .utf8)!), name: PlaceUploadSelfieKey.caption.rawValue))
+            multipartFormDataArray.append(MultipartFormData(provider: .data((parameters.placeId).data(using: .utf8)!), name: PlaceUploadSelfieKey.placeid.rawValue))
             
             if parameters.mintype == "image"{
                 multipartFormDataArray.append(MultipartFormData(provider: .data(profileImageData),

@@ -38,10 +38,11 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
        "About Us".localized,
        "Language".localized]
     
-    var Menuimgseller = [
+    var Menuimgseller = [ 
         "Cart",
         "Orders",
         "Settings",
+        "Selfie",
         "Contact",
         "AboutUs",
         "Globe"]
@@ -50,6 +51,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
         "Manage Products".localized,
         "My Orders".localized,
         "Manage About Page".localized,
+        "Review Selfies/Videos".localized,
         "Contact Us".localized,
         "About Us".localized,
         "Language".localized]
@@ -85,8 +87,14 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
         
         lblMenuNameseller.append("Logout".localized)
         Menuimgseller.append("Logout")
+        lblMenuNameseller.append("Share Around UAE".localized)
+        Menuimgseller.append("Share")
+        
         lblMenuNamebuyer.append("Logout".localized)
         Menuimgbuyer.append("Logout")
+        lblMenuNameseller.append("Share Around UAE".localized)
+        Menuimgseller.append("Share")
+        
         profileTableView.reloadData()
     }
     
@@ -153,17 +161,21 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
             case 2:
                 moveToManageAboutPage()
             case 3:
-                moveToContactUs()
+                moveToReviewSelfies()
             case 4:
-                moveToAboutUS()
+                moveToContactUs()
             case 5:
-               moveToSelectLanguage()
+                moveToAboutUS()
             case 6:
-               moveTopage(txt: "Terms and Conditions".localized)
+               moveToSelectLanguage()
             case 7:
-               moveTopage(txt: "Privacy Policy".localized)
+               moveTopage(txt: "Terms and Conditions".localized)
             case 8:
+               moveTopage(txt: "Privacy Policy".localized)
+            case 9:
                 self.logOut()
+            case 10:
+                self.ShareApp()
             default:
                 return
             }
@@ -188,10 +200,28 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
                 moveTopage(txt: "Privacy Policy".localized)
             case 8:
                 self.logOut()
+            case 9:
+                self.ShareApp()
             default:
                 return
             }
         }
+    }
+    
+    private func ShareApp(){
+        let text = ""
+        let textToShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    private func moveToReviewSelfies(){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderStore") as! VCOrderStore
+        vc.ordertype = OrderType.SelfieReview
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func moveToManageAboutPage(){

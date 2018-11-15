@@ -23,8 +23,7 @@ class VCCitiesCell: UICollectionViewCell {
     func setupCities(_ city: Cities){
         if(lang == "en"){
          lblGenralName.text = city.title?.en ?? ""
-        }else
-        {
+        }else{
          lblGenralName.text = city.title?.ar ?? ""
         }
         imgGenral.sd_setShowActivityIndicatorView(true)

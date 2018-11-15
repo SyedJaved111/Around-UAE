@@ -11,7 +11,7 @@ import XLPagerTabStrip
 import AVFoundation
 import AVKit
 
-class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
+class SetSelfiVedioVC: BaseController,IndicatorInfoProvider{
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
@@ -23,14 +23,47 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     var selfiesArray = [Selfies]()
     var totalPages = 0
     var currentPage = 0
-    var placeid = ""
+    var storeid = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addBackButton()
-        collectionView.reloadData()
+        if lang == "en"{
+           addBackButton()
+        }else{
+           showArabicBackButton()
+        }
         collectionView.adjustDesign(width: ((view.frame.size.width+20)/2.5))
-        setupDelegates()
+        fetchProductInfo(storeid, isRefresh: false)
+    }
+    
+    private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
+        
+        if isRefresh == false{
+            startLoading("")
+        }
+        
+        SelfieManager().getSelfies(storeId,successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    self?.finishLoading()
+                    if let productResponse = response{
+                        if productResponse.success!{
+                            self?.selfiesArray = productResponse.data?.selfies?.filter({$0.isActive ?? false == true}) ?? []
+                        }else{
+                            self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.en ?? "", completionHandler: nil)
+                        }
+                    }else{
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                }
+                self?.setupDelegates()
+            })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
@@ -39,21 +72,12 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Selfie/Video".localized
-        addSelfieButton()
+        if lang == "en"{
+            addBackButton()
+        }else{
+            showArabicBackButton()
+        }
     }
-    
-    func addSelfieButton(backImage: UIImage = #imageLiteral(resourceName: "Takeselfie")) {
-        let chatButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(onChatButtonClciked))
-        navigationItem.rightBarButtonItem  = chatButton
-    }
-    
-    @objc func onChatButtonClciked() {
-        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "CaptureSelfiePopupVC") as! CaptureSelfiePopupVC
-        vc.placeid = placeid
-        self.present(vc, animated: true, completion: nil)
-    }
-
     
     fileprivate func setupDelegates(){
         self.collectionView.emptyDataSetSource = self
@@ -62,7 +86,7 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     }
 }
 
-extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource {
+extension SetSelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selfiesArray.count
@@ -74,9 +98,9 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
         let tempLocale = dateFormatter.locale
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-       
+        
         if isvideo == "video"{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCSelfiesCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCStoreSelfiesCell
             cell.userName.text = selfiesArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiesArray[indexPath.row].createdAt!)!
             dateFormatter.dateFormat = "d MMM yyyy"
@@ -93,7 +117,7 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
             cell.imgGenral.sd_setImage(with: URL(string: selfiesArray[indexPath.row].thumbnail ?? ""), placeholderImage: #imageLiteral(resourceName: "Category"))
             return cell
         }else{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCSelfiesCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCStoreSelfiesCell
             cell.userName.text = selfiesArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiesArray[indexPath.row].createdAt!)!
             dateFormatter.dateFormat = "d MMM yyyy"
@@ -139,6 +163,44 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){
-        
+        fetchProductInfo(storeid, isRefresh: false)
+    }
+}
+
+extension SetSelfiVedioVC:SetStoreProtocol {
+    
+    func setStoreActive(cell: VCStoreSelfiesCell) {
+        let indexpath = collectionView.indexPath(for: cell)!
+        startLoading("")
+        SelfieManager().setSelfieActive(storeid, selfieid: selfiesArray[indexpath.row]._id ?? "",
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+            }
+        }
+    }
+}
+
+protocol SetStoreProtocol {
+    func setStoreActive(cell:VCStoreSelfiesCell)
+}
+
+class VCStoreSelfiesCell: UICollectionViewCell {
+    
+    var delegate:SetStoreProtocol?
+    @IBOutlet weak var imgGenral: UIImageView!
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var userDate: UILabel!
+    
+    @IBAction func setStore(_ sender:UIButton){
+        delegate?.setStoreActive(cell: self)
     }
 }

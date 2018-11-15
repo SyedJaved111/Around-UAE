@@ -147,7 +147,7 @@ extension CaptureSelfiePopupVC: UIImagePickerControllerDelegate, UINavigationCon
                 }
                 
                 startLoading("")
-                SelfieManager().storeUploadSelfie((storeid,"some caption",movieData! as Data,imagedata,"video"),
+                SelfieManager().storeUploadSelfie((storeid,caption,movieData! as Data,imagedata,"video"),
                                                   successCallback:
                     {[weak self](response) in
                         DispatchQueue.main.async {
@@ -180,7 +180,7 @@ extension CaptureSelfiePopupVC: UIImagePickerControllerDelegate, UINavigationCon
                 }
                 
                 startLoading("")
-                SelfieManager().placeUploadSelfie((placeid,"some caption",movieData! as Data,imagedata,"video"),
+                SelfieManager().placeUploadSelfie((placeid,caption,movieData! as Data,imagedata,"video"),
                                                   successCallback:
                     {[weak self](response) in
                         DispatchQueue.main.async {
@@ -216,7 +216,7 @@ extension CaptureSelfiePopupVC: UIImagePickerControllerDelegate, UINavigationCon
         
         if storeid != ""{
             startLoading("")
-            SelfieManager().storeUploadSelfie((storeid,"some caption",imagedata,Data(),"image"),
+            SelfieManager().storeUploadSelfie((storeid,caption,imagedata,Data(),"image"),
             successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
@@ -244,7 +244,7 @@ extension CaptureSelfiePopupVC: UIImagePickerControllerDelegate, UINavigationCon
             }
         }else{
             startLoading("")
-            SelfieManager().placeUploadSelfie((placeid,"some caption",imagedata,Data(),"image"),
+            SelfieManager().placeUploadSelfie((placeid,caption,imagedata,Data(),"image"),
             successCallback:
                 {[weak self](response) in
                     DispatchQueue.main.async {

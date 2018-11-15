@@ -43,4 +43,39 @@ class SelfieManager{
             failureCallback(error)
         })
     }
+    
+    //MARK: - GetSelfies
+    func getSelfies(_ id:String ,successCallback : @escaping (Response<SelfieData>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .GetSelfieList(id),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<SelfieData>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
+    
+
+    //MARK: - SetSelfieactive
+    func setSelfieActive(_ storeid:String, selfieid:String ,successCallback : @escaping (Response<SelfieData>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .SetSelfieactive(storeid, selfieid: selfieid),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<SelfieData>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
 }

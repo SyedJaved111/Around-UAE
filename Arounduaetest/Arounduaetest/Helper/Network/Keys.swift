@@ -200,3 +200,10 @@ enum StoreUploadSelfieKey:String{
     case thumbnail = "thumbnail"
 }
 
+enum PlaceUploadSelfieKey:String{
+    case placeid = "placeId"
+    case caption = "caption"
+    case file = "file"
+    case thumbnail = "thumbnail"
+}
+

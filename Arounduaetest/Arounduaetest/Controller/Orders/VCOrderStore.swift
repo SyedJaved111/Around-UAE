@@ -13,6 +13,7 @@ enum OrderType:String {
     case manageproduct
     case myorder
     case manageaboutpage
+    case SelfieReview
 }
 
 class VCOrderStore: BaseController{
@@ -197,6 +198,11 @@ extension VCOrderStore: UICollectionViewDataSource,UICollectionViewDelegate{
                 vc.storeObject = storelist[indexPath.row]
                 self.navigationController?.pushViewController(vc, animated: true)
 
+           case .SelfieReview:
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "SetSelfiVedioVC") as! SetSelfiVedioVC
+                vc.storeid = storelist[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
