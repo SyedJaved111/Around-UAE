@@ -36,8 +36,9 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
             guard changeCurrentIndex == true else { return }
             oldCell?.label.textColor = #colorLiteral(red: 0.2549019608, green: 0.2549019608, blue: 0.2549019608, alpha: 1)
             newCell?.label.textColor = #colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)
+            self.moveToViewController(at: 1)
         }
-        
+
         collectionViewPager.layer.borderWidth = 1
         collectionViewPager.layer.borderColor = UIColor.init(red: 247, green: 247, blue: 247, alpha: 1).cgColor
         super.viewDidLoad()
@@ -53,6 +54,7 @@ class VCPlaces: ButtonBarPagerTabStripViewController {
         }
        
         self.title = "Places".localized
+
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController]{

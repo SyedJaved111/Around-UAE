@@ -8,6 +8,7 @@
 
 import UIKit
 import Cosmos
+import MIBadgeButton_Swift
 
 class VCProductDetail: UIViewController {
 
@@ -34,13 +35,16 @@ class VCProductDetail: UIViewController {
     }
     
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    let currency = UserDefaults.standard.string(forKey: "currency")
     var product:Products!
+    var Count = ""
     var productDetail:Product?
     var selectedCell = [IndexPath]()
     var features = [String]()
     var characteristics = [String]()
     var combination:Combinations?
     var dictionary:[String:Any]?
+    var Notificationbtn: MIBadgeButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +67,7 @@ class VCProductDetail: UIViewController {
     }
     
     @IBAction func share(_ sender:UIButton){
-        let text = ""
+        let text = "http://216.200.116.25/around-uae/"
         let textToShare = [ text ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
@@ -108,7 +112,6 @@ class VCProductDetail: UIViewController {
         dic["quantity"] = "\(Int(Productcounter.value))"
         
         if productDetail?.hasCombinations ?? false{
-            
             
             if features.count == 0 || characteristics.count == 0{
                 self.alertMessage(message: "Please Select Some Combination or Feature...".localized, completionHandler: nil)
@@ -179,7 +182,8 @@ class VCProductDetail: UIViewController {
         productImage.sd_setShowActivityIndicatorView(true)
         productImage.sd_setIndicatorStyle(.gray)
         productImage.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
-        prodcutPrice.text = (lang == "en") ? "$\(product.price?.usd ?? 0)" : "$\(product.price?.aed ?? 0)"
+        prodcutPrice.text = (currency == "usd") ?
+            "$\(product.price?.usd ?? 0)" : "AED\(product.price?.aed ?? 0)"
         productname.text = (lang == "en") ? productdetail.productName?.en ?? "" : productdetail.productName?.ar ?? ""
         ratingView.rating = 0.0
         self.favouriteBtn.layer.cornerRadius = 15
@@ -218,13 +222,56 @@ class VCProductDetail: UIViewController {
             self.reviewBtn.backgroundColor = #colorLiteral(red: 0.8745098039, green: 0.1882352941, blue: 0.3176470588, alpha: 1)
             self.reviewBtn.isUserInteractionEnabled = true
         }
+        addButtons()
+    }
+    
+    func addButtons(){
+        Notificationbtn = MIBadgeButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        Notificationbtn?.badgeBackgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        Notificationbtn!.setImage(#imageLiteral(resourceName: "Notification-red"), for: .normal)
+        
+        if(Count == ""){
+            Notificationbtn?.badgeString = nil
+        }
+        else if (Count == "0"){
+            Notificationbtn?.badgeString = nil
+        }
+        else{
+            Notificationbtn?.badgeString = Count
+        }
+        
+        Notificationbtn?.addTarget(self, action:#selector(VCHomeTabs.notification_message), for: UIControlEvents.touchUpInside)
+        let notificationItem = UIBarButtonItem(customView: Notificationbtn!)
+        Notificationbtn!.badgeEdgeInsets = UIEdgeInsetsMake(4, 0, 0, 0)
+        
+        let btn2 = UIButton(type: .custom)
+        btn2.setImage(UIImage(named: "Search"), for: .normal)
+        btn2.frame = CGRect(x: 10, y: 0, width: 20, height: 20)
+        btn2.addTarget(self, action: #selector(btnSearchClick(_:)), for: .touchUpInside)
+        let btnSearch = UIBarButtonItem(customView: btn2)
+        
+        self.navigationItem.setRightBarButtonItems([btnSearch,notificationItem], animated: true)
+    }
+    
+    @objc func notification_message(_ sender: Any){
+        moveToNotificationVC()
+    }
+    
+    private func moveToNotificationVC(){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "NotificationVC") as! NotificationVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func btnSearchClick (_ sender: Any){
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCProductFilter") as! VCProductFilter
+        isFromHome = false
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func addtocartclick(_ sender: Any){
-        
         checKCombination()
-        
-        
         if Productcounter.value == 0.0{
             self.alertMessage(message: "Please Select Your Quantity".localized, completionHandler: nil)
             return

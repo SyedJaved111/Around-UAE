@@ -24,6 +24,5 @@ struct ManageAboutpageData : Decodable {
 	let createdAt : String?
 	let updatedAt : String?
 	let canReviewUsers : [CanReviewUsers]?
-    let selfies : [Selfies]?
     let gallery : [Gallery]?
 }

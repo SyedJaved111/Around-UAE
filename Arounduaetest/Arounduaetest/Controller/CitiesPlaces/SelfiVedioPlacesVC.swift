@@ -28,9 +28,33 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     override func viewDidLoad() {
         super.viewDidLoad()
         addBackButton()
-        collectionView.reloadData()
         collectionView.adjustDesign(width: ((view.frame.size.width+20)/2.5))
-        setupDelegates()
+    }
+    
+    private func getPlaceDetailById(){
+        if placeid == ""{
+            return
+        }
+        startLoading("")
+        CitiesPlacesManager().getPlaceDetail(placeid,
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                if let responsedetail = response{
+                    self?.selfiesArray = responsedetail.data?.selfies ?? []
+                }else{
+                    self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                }
+               self?.setupDelegates()
+            }
+        })
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        }
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
@@ -40,6 +64,7 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Selfie/Video".localized
         addSelfieButton()
+        getPlaceDetailById()
     }
     
     func addSelfieButton(backImage: UIImage = #imageLiteral(resourceName: "Takeselfie")) {
@@ -54,7 +79,6 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
         self.present(vc, animated: true, completion: nil)
     }
 
-    
     fileprivate func setupDelegates(){
         self.collectionView.emptyDataSetSource = self
         self.collectionView.emptyDataSetDelegate = self
@@ -79,7 +103,7 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCSelfiesCell
             cell.userName.text = selfiesArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiesArray[indexPath.row].createdAt!)!
-            dateFormatter.dateFormat = "d MMM yyyy"
+            dateFormatter.dateFormat = "d MMM ,yyyy"
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString
@@ -96,7 +120,7 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCSelfiesCell
             cell.userName.text = selfiesArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiesArray[indexPath.row].createdAt!)!
-            dateFormatter.dateFormat = "d MMM yyyy"
+            dateFormatter.dateFormat = "d MMM ,yyyy"
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString

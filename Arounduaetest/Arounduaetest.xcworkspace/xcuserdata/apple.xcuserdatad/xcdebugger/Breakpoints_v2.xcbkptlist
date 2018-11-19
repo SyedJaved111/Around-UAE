@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Arounduaetest/Helper/Network/ServerAPI.swift"
-            timestampString = "563983005.023399"
+            timestampString = "564070173.267051"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "parseServerResponse(_:from:)"
             landmarkType = "7">
          </BreakpointContent>

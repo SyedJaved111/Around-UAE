@@ -15,6 +15,7 @@ class VCChangeSetting: UIViewController {
     @IBOutlet weak var usdlbl: UILabel!
     @IBOutlet weak var aedlbl: UILabel!
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    let currency = UserDefaults.standard.string(forKey: "currency")
     
     @IBOutlet weak var usdBtn: DLRadioButton!
     @IBOutlet weak var ardBtn: DLRadioButton!
@@ -31,12 +32,17 @@ class VCChangeSetting: UIViewController {
         usdlbl.text = "USD".localized
         aedlbl.text = "AED".localized
         
-        if lang == "ar"{
-             showArabicBackButton()
+        if currency == "aed"{
              ardBtn.isSelected = true
         }else{
              addBackButton()
              usdBtn.isSelected = true
+        }
+        
+        if lang == "ar"{
+            showArabicBackButton()
+        }else{
+            addBackButton()
         }
     }
     

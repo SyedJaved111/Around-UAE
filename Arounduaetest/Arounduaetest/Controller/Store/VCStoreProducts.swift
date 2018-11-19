@@ -82,7 +82,11 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
     }
     
     func addToCartTapped(cell: CellStore){
-        
+        let indexpath  = collectionViewManageProducts.indexPath(for: cell)!
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCPopCart") as! VCPopCart
+        vc.product = productsArray[indexpath.row]
+        self.present(vc, animated: true, completion: nil)
     }
     
     private func addProductToFavourite(product_id:String,cellstore:CellStore){

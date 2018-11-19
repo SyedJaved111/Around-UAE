@@ -80,7 +80,7 @@ class VCForgotPassword: BaseController{
                     if(forgetesponse.success ?? false == true){
                         self?.finishLoading()
                         self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                            self?.moveToChangePassword()
+                            self?.moveToResetPassword()
                         })
                     }else{
                         self?.finishLoading()
@@ -99,9 +99,9 @@ class VCForgotPassword: BaseController{
         }
     }
     
-    private func moveToChangePassword(){
+    private func moveToResetPassword(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "VCChangePassword") as! VCChangePassword
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCResetPassword") as! VCResetPassword
         vc.email = txtEnterEmail.text!
         self.navigationController?.pushViewController(vc, animated: true)
     }

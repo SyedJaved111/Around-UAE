@@ -150,9 +150,9 @@ extension VCDilverdBuyerProducts: UITableViewDataSource,UITableViewDelegate{
     }
 }
 
-extension VCDilverdBuyerProducts: OrderProtocol{
+extension VCDilverdBuyerProducts: PendingBuyerProtocol{
     
-    func orderEyetapped(cell: PendingTabCell) {
+    func orderEyetapped(cell: PendingBuyerCell) {
         let indexpath = confirmedTableView.indexPath(for: cell)!
         moveToDetail(ConfirmedOrderList[indexpath.row])
     }

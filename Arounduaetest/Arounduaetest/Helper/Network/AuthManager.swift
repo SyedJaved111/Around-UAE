@@ -80,6 +80,23 @@ class AuthManager{
         })
     }
     
+    //MARK: - RESET PASSWORD USER
+    func resetPassword(_ params:resetPasswordParams, successCallback : @escaping (Response<User>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .ResetPassword(params),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<User>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
+    
     //MARK: - EMAIL_VERIFICATION USER
     func emailverificationPassword(_ params:EmailverificationParams, successCallback : @escaping (Response<User>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
         NetworkManager.request(target: .EmailVerification(params),

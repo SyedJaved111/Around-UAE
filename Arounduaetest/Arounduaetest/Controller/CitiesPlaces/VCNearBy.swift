@@ -44,9 +44,15 @@ let lang = UserDefaults.standard.string(forKey: "i18n_language")
         NearbyCollectionview.adjustDesign(width: ((view.frame.size.width+20)/2.5))
         initialUI()
         fetchCitiesPlacesData()
+//        let parentViewController = self.parent! as! VCPlaces
+//        parentViewController.moveToViewController(at: 1)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
     }
 
-    
     fileprivate func setupDelegates(){
         self.NearbyCollectionview.emptyDataSetSource = self
         self.NearbyCollectionview.emptyDataSetDelegate = self

@@ -196,18 +196,20 @@ extension VCCities:UICollectionViewDelegate,UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-        if AppSettings.sharedSettings.accountType != "seller"{
             if let id = CitiesArray[indexPath.row]._id{
                 moveToCityDetail(id)
             }
-        }
     }
     
     private func moveToCityDetail(_ cityId:String){
-        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+       let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCPlaces") as! VCPlaces
         vc.cityId = cityId
+        vc.moveToViewController(at: 1)
+
         self.navigationController?.pushViewController(vc, animated: true)
+       // let parentViewController = self.parent! as! VCPlaces
+//        parentViewController.moveToViewController(at: 1)
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!){

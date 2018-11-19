@@ -72,7 +72,9 @@ class VCOrderStore: BaseController{
                                 if array?.contains((AppSettings.sharedSettings.user.stores ?? [])[i]) ?? false{
                                     
                                 }else{
-                                  self?.storelist.remove(at: i)
+                                    if self?.storelist.count ?? 0 > 0{
+                                        self?.storelist.remove(at: i)
+                                    }
                                 }
                             }
                             self?.currentPage = storeResponse.data?.pagination?.page ?? 1

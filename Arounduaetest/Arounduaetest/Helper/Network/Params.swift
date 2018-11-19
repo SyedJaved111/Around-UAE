@@ -175,3 +175,10 @@ typealias PlaceUploadSelfieParams = (
     thumbnail:Data,
     mintype:String
 )
+
+
+typealias UploadGalleryParams = (
+    storeid:String,
+    file:Data,
+    thumbnail:Data
+)

@@ -81,4 +81,5 @@ enum APIURL: String{
     case GetSelfieURL                           = "auth/stores/edit"
     case SetSelfieactiveURL                     = "auth/store/selfie/active"
     case DeleteGalleryURL                       = "auth/store/delete/gallery"
+    case UploadGalleryURL                       = "auth/store/upload/gallery"
 }

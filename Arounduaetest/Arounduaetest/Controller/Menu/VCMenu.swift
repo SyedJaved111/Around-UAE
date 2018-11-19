@@ -92,8 +92,8 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
         
         lblMenuNamebuyer.append("Logout".localized)
         Menuimgbuyer.append("Logout")
-        lblMenuNameseller.append("Share Around UAE".localized)
-        Menuimgseller.append("social-share-symbol")
+        lblMenuNamebuyer.append("Share Around UAE".localized)
+        Menuimgbuyer.append("social-share-symbol")
         
         profileTableView.reloadData()
     }
@@ -209,7 +209,7 @@ class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHe
     }
     
     private func ShareApp(){
-        let text = ""
+        let text = "http://216.200.116.25/around-uae/"
         let textToShare = [ text ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view

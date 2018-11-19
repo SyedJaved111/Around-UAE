@@ -317,7 +317,7 @@ class VCRegister: BaseController{
                 if let Response = response{
                     if(Response.success ?? false == true){
                         self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
-                            self?.navigationController?.popViewController(animated: true)
+                            self?.moveToVerificationCode()
                         })
                     }else{
                         self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
@@ -334,6 +334,12 @@ class VCRegister: BaseController{
               }
           }
      }
+    
+    private func moveToVerificationCode(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCEmailVerfication") as! VCEmailVerfication
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension VCRegister: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

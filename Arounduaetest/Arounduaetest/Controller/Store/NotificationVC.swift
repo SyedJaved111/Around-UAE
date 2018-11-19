@@ -137,6 +137,14 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
                 vc.isfromNotification = true
                 vc.notificationid = notificationArray[indexPath.row]._id ?? ""
                 self.navigationController?.pushViewController(vc, animated: true)
+            }else if notificationArray[indexPath.row].action ?? "" == "ORDER_RECEIVED"{
+                self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "VCOrderDetail") as! VCOrderDetail
+                vc.orderid = notificationArray[indexPath.row].extras?.conversation ?? ""
+                vc.isfromNotification = true
+                vc.notificationid = notificationArray[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
             }else{
                 self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
                 let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
@@ -145,7 +153,14 @@ class NotificationVC: BaseController,UITableViewDataSource,UITableViewDelegate {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }else{
-            if notificationArray[indexPath.row].action ?? "" == "ORDER"{
+            if notificationArray[indexPath.row].action ?? "" == "ORDER_SHIPPED"{
+                self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
+                let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "VCMyOrders") as! VCMyOrders
+                vc.storeid = notificationArray[indexPath.row].store?._id ?? ""
+                vc.notificationid = notificationArray[indexPath.row]._id ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if notificationArray[indexPath.row].action ?? "" == "ORDER_RECEIVED"{
                 self.user.conversationID  = notificationArray[indexPath.row].extras?.conversation ?? ""
                 let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "VCMyOrders") as! VCMyOrders

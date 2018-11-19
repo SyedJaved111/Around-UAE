@@ -37,6 +37,7 @@ class VCProducList: ButtonBarPagerTabStripViewController {
             guard changeCurrentIndex == true else { return }
             oldCell?.label.textColor = #colorLiteral(red: 0.2549019608, green: 0.2549019608, blue: 0.2549019608, alpha: 1)
             newCell?.label.textColor = #colorLiteral(red: 0.3019607843, green: 0.3019607843, blue: 0.3019607843, alpha: 1)
+            self.moveToViewController(at: 1)
         }
 
         super.viewDidLoad()

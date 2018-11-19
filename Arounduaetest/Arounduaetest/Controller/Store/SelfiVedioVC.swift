@@ -25,6 +25,8 @@ class SelfiVedioVC: BaseController,IndicatorInfoProvider{
     var totalPages = 0
     var currentPage = 0
     var storeid = ""
+    var imagePicker = UIImagePickerController()
+    var pickedImage:UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +101,7 @@ extension SelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCSelfiesCell
             cell.userName.text = selfiArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiArray[indexPath.row].createdAt!)!
-            dateFormatter.dateFormat = "d MMM yyyy"
+            dateFormatter.dateFormat = "d MMM ,yyyy"
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString
@@ -116,7 +118,7 @@ extension SelfiVedioVC:UICollectionViewDelegate,UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCSelfiesCell
             cell.userName.text = selfiArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiArray[indexPath.row].createdAt!)!
-            dateFormatter.dateFormat = "d MMM yyyy"
+            dateFormatter.dateFormat = "d MMM ,yyyy"
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString

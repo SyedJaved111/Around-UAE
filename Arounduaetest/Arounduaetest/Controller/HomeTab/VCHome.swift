@@ -38,8 +38,8 @@ class VCHome: BaseController{
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        self.tablView.emptyDataSetSource = self
-        self.tablView.emptyDataSetDelegate = self
+//        self.tablView.emptyDataSetSource = self
+//        self.tablView.emptyDataSetDelegate = self
         self.tablView.tableFooterView = UIView()
         fetchGroupsWithDivisons(isRefresh: false)
         setupLocalization()

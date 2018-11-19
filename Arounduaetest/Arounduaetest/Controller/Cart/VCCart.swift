@@ -27,6 +27,7 @@ class VCCart: UIViewController {
     var cartProductList = [ProductUAE]()
     var total = 0
     let paypalname = Notification.Name("paypal")
+    let currency = UserDefaults.standard.string(forKey: "currency")
     
     @IBOutlet weak var cartscrollview: UIScrollView!
     @IBOutlet weak var myTbleView: UITableView!{
@@ -136,16 +137,13 @@ class VCCart: UIViewController {
                 DispatchQueue.main.async {
                     self?.finishLoading()
                     if let cartProductData = response{
-                        var price = 0
                         if cartProductData.success!{
-                            if cell.increaseValue{
-                               price = (self?.total ?? 0) + (self?.cartProductList[indxpath?.row ?? 0].price?.usd ?? 0)
+                            let updateProductList = cartProductData.data!
+                            if self?.currency ?? "" == "usd"{
+                                cell.lblProductPrice.text = "\(updateProductList.total?.usd ?? 0)"
                             }else{
-                               price = (self?.total ?? 0) - (self?.cartProductList[indxpath?.row ?? 0].price?.usd ?? 0)
+                                cell.lblProductPrice.text = "\(updateProductList.total?.aed ?? 0.0)"
                             }
-                            self?.total = price
-                            self?.lblTotalPrice.text = "$\(price)"
-                            cell.lblProductPrice.text = "$\((self?.cartProductList[indxpath?.row ?? 0].price?.usd ?? 0) * Int((product.quantity ?? 0.0)))"
                         }else{
                             self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }

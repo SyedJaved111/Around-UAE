@@ -26,6 +26,7 @@ class CellStore: UICollectionViewCell {
     @IBOutlet weak var ratingView: CosmosView!
     var delegate: storeCellDelegate?
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    let currency = UserDefaults.standard.string(forKey: "currency")
     
     override func awakeFromNib(){
         imgProducts.image = nil
@@ -54,7 +55,7 @@ class CellStore: UICollectionViewCell {
 
         imgProducts.sd_setShowActivityIndicatorView(true)
         imgProducts.sd_setIndicatorStyle(.gray)
-        productPrice.text = (lang == "en") ? "$\(product.price?.usd ?? 0)" : "$\(product.price?.aed ?? 0)"
+        productPrice.text = (currency == "usd") ? "$\(product.price?.usd ?? 0)" : "AED\(product.price?.aed ?? 0)"
         imgProducts.sd_setImage(with: URL(string: product.images?.first?.path ?? ""))
         if AppSettings.sharedSettings.accountType == "seller"{
            UIButtonFavourite.isHidden = true

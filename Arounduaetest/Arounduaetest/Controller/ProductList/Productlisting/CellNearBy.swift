@@ -21,6 +21,7 @@ class CellNearBy: UICollectionViewCell {
     @IBOutlet weak var btnFavrouitnearbyImage: UIImageView!
     @IBOutlet weak var imgproductneaby: UIImageView!
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    let currency = UserDefaults.standard.string(forKey: "currency")
     
     override func awakeFromNib() {
         btnFavrouitnearby.makeRound()

@@ -130,12 +130,17 @@ class VCDesertSafari: UIViewController {
     
     override func viewWillAppear(_ animated: Bool){
         self.title = "Desert Safari".localized
-        if(lang == "en")
-        {
-        self.addBackButton()
-        }else
-        {
+        if(lang == "en"){
+           self.addBackButton()
+        }else{
             self.showArabicBackButton()
+        }
+        if AppSettings.sharedSettings.accountType == "seller"{
+            btnlikeimg.isHidden = true
+            favouriteImage.isHidden = true
+        }else{
+            btnlikeimg.isHidden = false
+            favouriteImage.isHidden = false
         }
      self.lblShareon.text = "Share on".localized
         self.btnsubmit.setTitle("Submit Feedback".localized, for: .normal)
@@ -184,12 +189,11 @@ class VCDesertSafari: UIViewController {
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SelfiVedioPlacesVC") as! SelfiVedioPlacesVC
         vc.placeid = placeid
-        vc.selfiesArray = selfiesArray
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func shareApp(_ sender: Any){
-        let text = ""
+        let text = "http://216.200.116.25/around-uae/"
         let textToShare = [ text ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view

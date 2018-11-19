@@ -17,6 +17,10 @@
 import UIKit
 import SDWebImage
 
+protocol PendingBuyerProtocol{
+    func orderEyetapped(cell:PendingBuyerCell)
+}
+
 class PendingBuyerCell: UITableViewCell {
     
     @IBOutlet weak var lblpstatus: UILabel!
@@ -31,7 +35,7 @@ class PendingBuyerCell: UITableViewCell {
     @IBOutlet weak var boxesImage: UIImageView!
     @IBOutlet weak var shadowImage: UIImageView!
     @IBOutlet weak var eyeBtn: UIButton!
-    var delegate: OrderProtocol?
+    var delegate: PendingBuyerProtocol?
     
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     var str = ""
@@ -115,6 +119,6 @@ class PendingBuyerCell: UITableViewCell {
     }
     
     @IBAction func eyeTapped(_ sender:UIButton){
-        //self.delegate?.orderEyetapped(cell: self)
+        self.delegate?.orderEyetapped(cell: self)
     }
 }

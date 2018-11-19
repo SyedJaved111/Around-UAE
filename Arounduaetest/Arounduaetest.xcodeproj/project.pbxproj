@@ -54,6 +54,8 @@
 		1881172D21907B4B00AFC348 /* FormVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881172C21907B4B00AFC348 /* FormVC.swift */; };
 		188191B42164F65300FEA31D /* VCProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188191B22164F65200FEA31D /* VCProductDetail.swift */; };
 		188191B52164F65300FEA31D /* GMSteper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188191B32164F65300FEA31D /* GMSteper.swift */; };
+		188373F0219EEB4B00D5AB22 /* VCResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188373EF219EEB4B00D5AB22 /* VCResetPassword.swift */; };
+		188373F2219F056700D5AB22 /* VCPopCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188373F1219F056700D5AB22 /* VCPopCart.swift */; };
 		18973E1E216603C100E314F4 /* CharacteristicsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18973E1D216603C100E314F4 /* CharacteristicsCell.swift */; };
 		189B00A721771BCC00BA7BB4 /* OrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B00A621771BCC00BA7BB4 /* OrderManager.swift */; };
 		18B150332164D02600FF87A4 /* GMSteperCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B150312164D02500FF87A4 /* GMSteperCart.swift */; };
@@ -263,6 +265,8 @@
 		1881172C21907B4B00AFC348 /* FormVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormVC.swift; sourceTree = "<group>"; };
 		188191B22164F65200FEA31D /* VCProductDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCProductDetail.swift; sourceTree = "<group>"; };
 		188191B32164F65300FEA31D /* GMSteper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSteper.swift; sourceTree = "<group>"; };
+		188373EF219EEB4B00D5AB22 /* VCResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCResetPassword.swift; sourceTree = "<group>"; };
+		188373F1219F056700D5AB22 /* VCPopCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCPopCart.swift; sourceTree = "<group>"; };
 		18973E1D216603C100E314F4 /* CharacteristicsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacteristicsCell.swift; sourceTree = "<group>"; };
 		189B00A621771BCC00BA7BB4 /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
 		18B150312164D02500FF87A4 /* GMSteperCart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSteperCart.swift; sourceTree = "<group>"; };
@@ -801,6 +805,7 @@
 				18E1C667216B36EE00446FAE /* VCForgotPassword.swift */,
 				18E1C664216B36EB00446FAE /* VCLogin.swift */,
 				18E1C663216B36EA00446FAE /* VCRegister.swift */,
+				188373EF219EEB4B00D5AB22 /* VCResetPassword.swift */,
 			);
 			path = LoginRegister;
 			sourceTree = "<group>";
@@ -877,6 +882,7 @@
 				18E49A3521998F1A00796343 /* PhotoDetailViewController.swift */,
 				1881172C21907B4B00AFC348 /* FormVC.swift */,
 				18F47F68219ADB2E002C96AE /* CaptureSelfiePopupVC.swift */,
+				188373F1219F056700D5AB22 /* VCPopCart.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -1284,6 +1290,7 @@
 				1F5A3FCA215F8AA900B0CBC6 /* AppDelegate.swift in Sources */,
 				188191B42164F65300FEA31D /* VCProductDetail.swift in Sources */,
 				1881172D21907B4B00AFC348 /* FormVC.swift in Sources */,
+				188373F0219EEB4B00D5AB22 /* VCResetPassword.swift in Sources */,
 				18973E1E216603C100E314F4 /* CharacteristicsCell.swift in Sources */,
 				1F5A3FE0215F8AA900B0CBC6 /* VCCategories.swift in Sources */,
 				1F5A3FE5215F8AA900B0CBC6 /* VCNearBy.swift in Sources */,
@@ -1408,6 +1415,7 @@
 				18BB211021650E8E005727F2 /* VCNearByProductList.swift in Sources */,
 				1F5A4014215F8AA900B0CBC6 /* AlertView.swift in Sources */,
 				187BB97E2161EBFB0070D155 /* Message.swift in Sources */,
+				188373F2219F056700D5AB22 /* VCPopCart.swift in Sources */,
 				1F5A3FFF215F8AA900B0CBC6 /* CellStore.swift in Sources */,
 				1F5A4007215F8AA900B0CBC6 /* AroundUAE.xcdatamodeld in Sources */,
 				1F5A3FDE215F8AA900B0CBC6 /* BaseController.swift in Sources */,

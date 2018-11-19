@@ -95,4 +95,21 @@ class SelfieManager{
             failureCallback(error)
         })
     }
+    
+    //MARK: - UploadGallery
+    func uploadGallery(_ params:UploadGalleryParams,successCallback : @escaping (Response<SelfieData>?) -> Void,failureCallback : @escaping (NetworkError) -> Void){
+        NetworkManager.request(target: .UploadGallery(params),
+        success:
+        {(response) in
+            if let parsedResponse = ServerAPI.parseServerResponse(Response<SelfieData>.self, from: response){
+                successCallback(parsedResponse)
+            }else{
+                failureCallback(NetworkManager.networkError)
+            }
+        },
+        failure:
+        {(error) in
+            failureCallback(error)
+        })
+    }
 }

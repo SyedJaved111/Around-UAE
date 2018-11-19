@@ -21,13 +21,39 @@ class ManageAboutPageVC: UIViewController {
     var cameraPicker = UIImagePickerController()
     var storeObject:Stores!
     var galleryArray = [Gallery]()
+    var galleryImage:UIImage?
+    var isForSelfie = false
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Manage Store About".localized
         setupData()
+        addMenuButtons()
         fetchProductInfo(storeObject._id ?? "", isRefresh: false)
+    }
+
+    func addMenuButtons(backImage: UIImage = #imageLiteral(resourceName: "Chat-1")) {
+        let button =  UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "Takeselfie"), for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.frame = CGRect(x:0,y:0,width:53,height:31)
+        button.imageEdgeInsets = UIEdgeInsetsMake(-1, -32, 1, 32)
+        let label = UILabel(frame: CGRect(x:0,y:5,width: 70,height:20))
+        label.font = UIFont(name: "Arial", size: 10)
+        label.text = "Add Image/Video"
+        label.textAlignment = .center
+        label.textColor = UIColor.black
+        label.backgroundColor =   UIColor.clear
+        button.addSubview(label)
+        let barButton = UIBarButtonItem(customView: button)
+        self.navigationItem.rightBarButtonItem = barButton
+        self.navigationItem.setRightBarButtonItems([barButton], animated: true)
+    }
+    
+    @objc func buttonAction(){
+        isForSelfie = true
+        openGallery()
     }
     
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
@@ -171,11 +197,35 @@ class ManageAboutPageVC: UIViewController {
         }
     }
     
+    private func picVideoImageFromCamera(){
+        let alert = UIAlertController(title: "Gallery".localized, message: nil, preferredStyle: .alert)
+        
+        let cameraAction = UIAlertAction(title: "Camera".localized, style: .default) {
+            UIAlertAction in
+            self.isForSelfie = false
+            self.openCamera()
+        }
+        
+        let libraryAction = UIAlertAction(title: "Library".localized, style: .default) { (action) in
+            self.openGallery()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) {
+            UIAlertAction in self.cancel()
+        }
+        alert.addAction(cameraAction)
+        alert.addAction(libraryAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     private func picImage(){
         let alert = UIAlertController(title: "Store Picture".localized, message: nil, preferredStyle: .alert)
         
         let cameraAction = UIAlertAction(title: "Camera".localized, style: .default) {
-            UIAlertAction in self.openCamera()
+            UIAlertAction in
+            self.isForSelfie = false
+            self.openCamera()
         }
         
         let libraryAction = UIAlertAction(title: "Library".localized, style: .default) { (action) in
@@ -225,13 +275,51 @@ extension ManageAboutPageVC: UIImagePickerControllerDelegate, UINavigationContro
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            storeImage.image = image
-        }
+            if isForSelfie {
+              galleryImage = image
+              uploadGalleryImage(image)
+                
+            }else{
+              storeImage.image = image
+            }
+         }
         dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func uploadGalleryImage(_ galleryImage:UIImage){
+        
+        let profileImageData = UIImageJPEGRepresentation(galleryImage,0.7)!
+        startLoading("")
+        SelfieManager().uploadGallery((storeObject?._id ?? "",profileImageData,Data()),
+        successCallback:
+        {[weak self](response) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                
+                if let galleryresponse = response{
+                    if galleryresponse.success!{
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: {
+                            self?.fetchProductInfo(self?.storeObject?._id ?? "", isRefresh: false)
+                        })
+                    }else{
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                    }
+                }else{
+                   self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
+                }
+            }
+        },
+        failureCallback:
+        {[weak self](error) in
+            DispatchQueue.main.async {
+                self?.finishLoading()
+                self?.alertMessage(message: error.message, completionHandler: nil)
+            }
+        })
     }
 }
 
@@ -271,6 +359,7 @@ extension ManageAboutPageVC: DeleteGalleryImage{
                 self?.finishLoading()
                 if let deleteResponse = response{
                     if deleteResponse.success!{
+                        self?.galleryArray.remove(at: indexpath.row)
                         self?.manageaboutCollectionView.deleteItems(at: [indexpath])
                         self?.fetchProductInfo(self?.storeObject._id ?? "", isRefresh: false)
                     }else{
@@ -298,8 +387,8 @@ extension ManageAboutPageVC: DeleteGalleryImage{
                     self?.finishLoading()
                     if let deleteResponse = response{
                         if deleteResponse.success!{
+                            self?.galleryArray.remove(at: indexpath.row)
                             self?.manageaboutCollectionView.deleteItems(at: [indexpath])
-                            self?.fetchProductInfo(self?.storeObject._id ?? "", isRefresh: false)
                         }else{
                             self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)
                         }
