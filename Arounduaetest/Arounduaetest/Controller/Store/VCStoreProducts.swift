@@ -11,7 +11,11 @@ import XLPagerTabStrip
 import SDWebImage
 
 class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
-   
+    func favouriteTapped(cell: CellStore) {
+        
+    }
+    
+    
     @IBOutlet var collectionViewManageProducts: UICollectionView!
     var productsArray = [Products]()
     var storeidProducts = ""
@@ -29,8 +33,6 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
         nc.post(name: Notification.Name("RemoveSelfie"), object: nil)
         fetchProductInfo(storeidProducts, isRefresh: false)
     }
-    
-    
     
     fileprivate func setupDelegates(){
         self.collectionViewManageProducts.emptyDataSetSource = self
@@ -70,15 +72,10 @@ class VCStoreProducts: BaseController,IndicatorInfoProvider,storeCellDelegate{
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
-        return IndicatorInfo.init(title: "Store Products".localized)
-    }
-    
-    func favouriteTapped(cell: CellStore){
-        let indxpath = collectionViewManageProducts.indexPath(for: cell)
-        
-        if let path = indxpath, let productid = productsArray[path.row]._id{
-            addProductToFavourite(product_id: productid,cellstore: cell)
+        if isResturant{
+            return IndicatorInfo.init(title: "Food Items".localized)
         }
+        return IndicatorInfo.init(title: "Store Products".localized)
     }
     
     func addToCartTapped(cell: CellStore){

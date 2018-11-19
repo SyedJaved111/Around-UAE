@@ -38,11 +38,11 @@ class VCPopUp: UIViewController {
         super.viewWillAppear(animated)
         lblSubmitFeedBack.text = "Submit Feedback".localized
         if let _ = placeid{
-            lblHowsExperience.text = "Hows was your experience with instinct Place?".localized
+            lblHowsExperience.text = "How was your experience with instinct Place?".localized
         }else if let _ = storeid{
-            lblHowsExperience.text = "Hows was your experience with instinct Store?".localized
+            lblHowsExperience.text = "How was your experience with instinct Store?".localized
         }else if let _ = productid{
-            lblHowsExperience.text = "Hows was your experience with instinct Product?".localized
+            lblHowsExperience.text = "How was your experience with instinct Product?".localized
         }
         textViewWriteComments.text = "Write Comments...".localized
         btnSubmit.setTitle("Submit".localized, for: .normal)

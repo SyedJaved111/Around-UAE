@@ -29,7 +29,7 @@ class VCResturants: BaseController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Resturants".localized
+        self.title = "Restaurants".localized
         self.setNavigationBar()
         self.addBackButton()
     }
@@ -162,6 +162,7 @@ extension VCResturants: UICollectionViewDataSource,UICollectionViewDelegate{
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCStoreTab") as! VCStoreTab
         vc.storeid = storeid
+        isResturant = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -16,7 +16,7 @@ class VCEmailVerfication: BaseController {
     @IBOutlet weak var btnSubmit: UIButtonMain!
     
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
-    let email = AppSettings.sharedSettings.user.email ?? ""
+    var email = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()

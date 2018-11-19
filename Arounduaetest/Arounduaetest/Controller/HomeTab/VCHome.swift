@@ -25,6 +25,7 @@ class VCHome: BaseController{
         }
     }
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    var divisionid = ""
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -111,10 +112,11 @@ class VCHome: BaseController{
         moveToCitiesList()
     }
     
-    private func moveToSubDivisons(_ groupId:String,groupname:String){
+    private func moveToSubDivisons(_ groupId:String,divisionId:String,groupname:String){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCSubDivisions") as! VCSubDivisions
         vc.groupId = groupId
+        vc.divisionid = divisionId
         vc.groupName = groupname
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -174,6 +176,7 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
         vc.groupid = groupWithDivisionList[collectionView.tag]._id ?? ""
         vc.divisionid = groupWithDivisionList[collectionView.tag].divisions?[indexPath.row]._id ?? ""
+        divisionid = groupWithDivisionList[collectionView.tag].divisions?[indexPath.row]._id ?? ""
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -185,7 +188,7 @@ extension VCHome: UICollectionViewDelegate,UICollectionViewDataSource{
 extension VCHome: HomeProtocol{
     func tapOnViewAll(cell:HomeTableViewCell){
         let indx = tablView.indexPath(for: cell)
-        moveToSubDivisons(groupWithDivisionList[indx?.row ?? 0]._id ?? "", groupname: groupWithDivisionList[indx?.row ?? 0].title?.en ?? "")
+        moveToSubDivisons(groupWithDivisionList[indx?.row ?? 0]._id ?? "", divisionId: divisionid , groupname: groupWithDivisionList[indx?.row ?? 0].title?.en ?? "")
     }
 }
 

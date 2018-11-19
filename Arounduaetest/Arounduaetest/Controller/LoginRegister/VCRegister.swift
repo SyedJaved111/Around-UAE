@@ -338,6 +338,7 @@ class VCRegister: BaseController{
     private func moveToVerificationCode(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCEmailVerfication") as! VCEmailVerfication
+        vc.email = txtEmail.text!
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -72,11 +72,11 @@ class VCCart: UIViewController {
                             self?.btnCheckout.backgroundColor = UIColor.lightGray
                         }else{
                             self?.cartProductList = cartProductData.data ?? []
-                            if self?.lang ?? "" == "en"{
+                            if self?.currency ?? "" == "usd"{
                                 self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
                                 self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
                             }else{
-                                self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.aed ?? 0}).reduce(0, +) ?? 0)"
+                                self?.lblTotalPrice.text = "AED\(self?.cartProductList.map({$0.total?.aed ?? 0}).reduce(0, +) ?? 0)"
                                 self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
                             }
                             self?.myTbleView.reloadData()
@@ -110,7 +110,11 @@ class VCCart: UIViewController {
                 if let cartProductData = response{
                     if cartProductData.success!{
                          self?.cartProductList.remove(at: row)
-                         self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
+                            if self?.currency ?? "" == "usd"{
+                                self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
+                            }else{
+                                self?.lblTotalPrice.text = "AED\(self?.cartProductList.map({$0.total?.aed ?? 0}).reduce(0, +) ?? 0)"
+                            }
                          self?.myTbleView.reloadData()
                          self?.setViewHeight()
                     }else{
@@ -130,7 +134,7 @@ class VCCart: UIViewController {
     }
     
     private func updateCartQuantity(_ product:ProductUAE,cell:CartCell){
-        let indxpath = myTbleView.indexPath(for: cell)
+        let indxpath = myTbleView.indexPath(for: cell)!
         startLoading("")
         CartManager().UpdateCartQuantity(("\(cell.viewStepper.value)",(product.product?._id!)!,product.combination ?? ""),successCallback:
             {[weak self](response) in
@@ -139,10 +143,21 @@ class VCCart: UIViewController {
                     if let cartProductData = response{
                         if cartProductData.success!{
                             let updateProductList = cartProductData.data!
+                    
                             if self?.currency ?? "" == "usd"{
-                                cell.lblProductPrice.text = "\(updateProductList.total?.usd ?? 0)"
+                                cell.lblProductPrice.text = "$\(updateProductList.total?.usd ?? 0)"
+                                self?.cartProductList[indxpath.row].total?.usd = updateProductList.total?.usd ?? 0
                             }else{
-                                cell.lblProductPrice.text = "\(updateProductList.total?.aed ?? 0.0)"
+                                cell.lblProductPrice.text = "AED\(updateProductList.total?.aed ?? 0.0)"
+                                self?.cartProductList[indxpath.row].total?.aed = updateProductList.total?.aed ?? 0
+                            }
+                            
+                            if self?.currency ?? "" == "usd"{
+                                self?.lblTotalPrice.text = "$\(self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0)"
+                                self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
+                            }else{
+                                self?.lblTotalPrice.text = "AED\(self?.cartProductList.map({$0.total?.aed ?? 0}).reduce(0, +) ?? 0)"
+                                self?.total = self?.cartProductList.map({$0.total?.usd ?? 0}).reduce(0, +) ?? 0
                             }
                         }else{
                             self?.alertMessage(message: (self?.lang ?? "" == "en") ? response?.message?.en ?? "" : response?.message?.ar ?? "", completionHandler: nil)

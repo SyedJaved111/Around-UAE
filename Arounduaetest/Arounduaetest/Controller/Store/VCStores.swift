@@ -169,6 +169,7 @@ extension VCStores: UICollectionViewDataSource,UICollectionViewDelegate{
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCStoreTab") as! VCStoreTab
         vc.storeid = storeid
+        isResturant = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

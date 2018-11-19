@@ -62,8 +62,8 @@ class VCResetPassword: BaseController {
             return false
         }
         
-        if oldPassword.count < 6 {
-            let alertView = AlertView.prepare(title: "Alert".localized, message: "password must contain 6 characters".localized, okAction: {
+        if oldPassword.count < 4 {
+            let alertView = AlertView.prepare(title: "Alert".localized, message: "Code must contain 4 characters".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
             return false
@@ -76,7 +76,7 @@ class VCResetPassword: BaseController {
             return false
         }
         
-        if newPassword.count < 6 {
+        if newPassword.count <= 6 {
             let alertView = AlertView.prepare(title: "Alert".localized, message: "password must contain 6 characters".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)
@@ -90,7 +90,7 @@ class VCResetPassword: BaseController {
             return false
         }
         
-        if confirmPassword.count < 6 {
+        if confirmPassword.count <= 6 {
             let alertView = AlertView.prepare(title: "Alert".localized, message: "password must contain 6 characters".localized, okAction: {
             })
             self.present(alertView, animated: true, completion: nil)

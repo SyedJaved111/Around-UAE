@@ -2,7 +2,7 @@
 import UIKit
 import XLPagerTabStrip
 
-class VCTopratedProductList: BaseController, IndicatorInfoProvider{
+class VCTopratedProductList: BaseController, IndicatorInfoProvider,CellNearProtocol{
     
     var productarray = [Products]()
     var groupid = ""
@@ -43,6 +43,9 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
     override func viewDidLoad(){
         super.viewDidLoad()
         collectionViewProductnearby.adjustDesign(width: (view.frame.size.width+24)/2.3)
+//        if !isFromHome{
+//            groupid = ""
+//        }
         searchProducts(isRefresh: false)
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("SearchCompleted"), object: nil)
     }
@@ -68,7 +71,7 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
             startLoading("")
         }
         
-        ProductManager().SearchProduct(("",0,0,[String](),"",[manufactorid],[groupid],[divisionid],[sectionid],[characteristicsid]),
+        ProductManager().SearchProduct(("",0,0,[String](),searchKeyword,[manufactorid],[groupid],[divisionid],[sectionid],[characteristicsid]),
         successCallback:
         {[weak self](response) in
             DispatchQueue.main.async {
@@ -87,8 +90,7 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
                         {
                         self?.alertMessage(message: (productsResponse.message?.en ?? "").localized, completionHandler: nil)
                         }
-                        else
-                        {
+                        else{
                             self?.alertMessage(message: (productsResponse.message?.ar ?? "").localized, completionHandler: nil)
                         }
                     }
@@ -121,6 +123,51 @@ class VCTopratedProductList: BaseController, IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo(title: "Top Rated".localized)
     }
+    
+    func addToCartTapped(cell: CellNearBy){
+        let indexpath  = collectionViewProductnearby.indexPath(for: cell)!
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCPopCart") as! VCPopCart
+        vc.product = productarray[indexpath.row]
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func favouriteTapped(cell: CellNearBy){
+        let indxpath = collectionViewProductnearby.indexPath(for: cell)
+        
+        if let path = indxpath, let productid = productarray[path.row]._id{
+            addProductToFavourite(product_id: productid,cellnearBy: cell)
+        }
+    }
+    
+    private func addProductToFavourite(product_id:String,cellnearBy:CellNearBy){
+        startLoading("")
+        ProductManager().makeProductFavourite(product_id,
+        successCallback:
+            {[weak self](response) in
+                DispatchQueue.main.async {
+                    if let favouriteResponse = response{
+                        AppSettings.sharedSettings.user = favouriteResponse.data!
+                        if AppSettings.sharedSettings.user.favouriteProducts?.contains((product_id)) ?? false{
+                            cellnearBy.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite-red")
+                            cellnearBy.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                        }else{
+                            cellnearBy.btnFavrouitnearbyImage.image = #imageLiteral(resourceName: "Favourite")
+                            cellnearBy.btnFavrouitnearby.backgroundColor = #colorLiteral(red: 0.137254902, green: 0.1176470588, blue: 0.0862745098, alpha: 1)
+                        }
+                        self?.alertMessage(message: (self?.lang ?? "" == "en") ? favouriteResponse.message?.en ?? "" : favouriteResponse.message?.ar ?? "", completionHandler: nil)
+                    }else{
+                        self?.alertMessage(message: "Error".localized, completionHandler: nil)
+                    }
+                    self?.finishLoading()
+                }
+        }){[weak self](error) in
+            DispatchQueue.main.async{
+                self?.finishLoading()
+                self?.alertMessage(message: error.message.localized, completionHandler: nil)
+            }
+        }
+    }
 }
 
 extension VCTopratedProductList: UICollectionViewDelegate,UICollectionViewDataSource{
@@ -132,6 +179,7 @@ extension VCTopratedProductList: UICollectionViewDelegate,UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellNearBy", for: indexPath) as! CellNearBy
         cell.setupNearbyData(product: productarray[indexPath.row])
+        cell.delegate = self
         return cell
     }
     

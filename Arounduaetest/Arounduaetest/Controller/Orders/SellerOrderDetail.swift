@@ -79,7 +79,7 @@ class SellerOrderDetail: UIViewController {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = dateFormatter.date(from: string)!
-        dateFormatter.dateFormat = "d MMM yyyy"
+        dateFormatter.dateFormat = "d MMM, yyyy"
         dateFormatter.locale = tempLocale
         let dateString = dateFormatter.string(from: date)
         orderDate.text = dateString

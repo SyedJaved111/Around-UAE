@@ -223,10 +223,6 @@ class VCProductFilter: UIViewController {
     }
     
     private func searchProducts(){
-        guard let txt = txtfiledEnterKeyword.text, txt.count > 0 else{
-            alertMessage(message: "Please Enter Search Keyword..".localized, completionHandler: nil)
-            return
-        }
         
         if ViewRanger.maximumValue == 0.0{
             max = -1
@@ -237,7 +233,7 @@ class VCProductFilter: UIViewController {
         }
     
         startLoading("")
-        ProductManager().SearchProduct(("",min,max,[String](),txt,[selectedManufactorId ?? ""],[filterdata[self.groupIndex]._id ?? ""],[self.selectedDivision?._id ?? ""],[self.selectedSection?._id ?? ""],[self.selectedCharacterticts ?? ""]),
+        ProductManager().SearchProduct(("",min,max,[String](),txtfiledEnterKeyword.text ?? "",[selectedManufactorId ?? ""],[filterdata[self.groupIndex]._id ?? ""],[self.selectedDivision?._id ?? ""],[self.selectedSection?._id ?? ""],[self.selectedCharacterticts ?? ""]),
         successCallback:
             {[weak self](response) in
                 DispatchQueue.main.async {
@@ -277,6 +273,7 @@ class VCProductFilter: UIViewController {
             NotificationCenter.default.post(name: Notification.Name("SearchCompleted"), object: products)
             self.navigationController?.popViewController(animated: true)
         }else{
+            
             let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
             searchKeyword = txtfiledEnterKeyword.text!

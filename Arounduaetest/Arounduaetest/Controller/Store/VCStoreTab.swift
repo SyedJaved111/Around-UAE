@@ -11,7 +11,7 @@ import XLPagerTabStrip
 import SocketIO
 import SwiftyJSON
 import MIBadgeButton_Swift
-
+var isResturant = false
 class VCStoreTab: ButtonBarPagerTabStripViewController {
 
     @IBOutlet weak var viewEmptyList: UIView!
@@ -28,6 +28,9 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     var child_3 = UIStoryboard(name: "HomeTabs", bundle: nil).instantiateViewController(withIdentifier: "SelfiVedioVC")
 
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
+        if isResturant{
+            return IndicatorInfo.init(title: "Restaurants Info".localized)
+        }
         return IndicatorInfo.init(title: "Store Info".localized)
     }
     
@@ -62,7 +65,9 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
     }
 
     @objc func RemoveSelfie(){
-        addChatButton()
+        if AppSettings.sharedSettings.accountType == "buyer"{
+            addChatButton()
+        }
     }
     
     @objc func userLoggedIn(){
@@ -78,8 +83,14 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         }else{
             self.addBackButton()
         }
-        addChatButton()
-        self.title = "Stores".localized
+        if AppSettings.sharedSettings.accountType == "buyer"{
+           addChatButton()
+        }
+        if isResturant{
+            self.title = "Resturants".localized
+        }else{
+            self.title = "Stores".localized
+        }
         lblEmpty.text = "Empty List".localized
         lblMessage.text = "Sorry there no data is available refresh it or try it later ".localized
     }
@@ -105,7 +116,11 @@ class VCStoreTab: ButtonBarPagerTabStripViewController {
         button.addSubview(label)
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
-        self.navigationItem.setRightBarButtonItems([barButton,chatButton], animated: true)
+        if AppSettings.sharedSettings.accountType == "seller"{
+            self.navigationItem.setRightBarButtonItems([barButton], animated: true)
+        }else{
+            self.navigationItem.setRightBarButtonItems([barButton,chatButton], animated: true)
+        }
     }
     
     @objc func buttonAction() {

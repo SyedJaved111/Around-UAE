@@ -13,7 +13,8 @@ import GoogleSignIn
 
 class VCMenu: BaseController, UITableViewDataSource,UITableViewDelegate,CustomHeaderDelegate {
     
-     let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    let lang = UserDefaults.standard.string(forKey: "i18n_language")
+    
     func didTapButton(in section: Int) {
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProfile") as! VCProfile

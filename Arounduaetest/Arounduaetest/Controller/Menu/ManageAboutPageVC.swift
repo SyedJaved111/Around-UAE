@@ -53,7 +53,7 @@ class ManageAboutPageVC: UIViewController {
     
     @objc func buttonAction(){
         isForSelfie = true
-        openGallery()
+        picImage(true)
     }
     
     private func fetchProductInfo(_ storeId: String, isRefresh: Bool){
@@ -132,7 +132,7 @@ class ManageAboutPageVC: UIViewController {
     }
     
     @IBAction func editStoreImage(_ sender: UIButton) {
-        picImage()
+        picImage(false)
     }
     
     @IBAction func cancel(_ sender: UIButton){
@@ -197,34 +197,17 @@ class ManageAboutPageVC: UIViewController {
         }
     }
     
-    private func picVideoImageFromCamera(){
-        let alert = UIAlertController(title: "Gallery".localized, message: nil, preferredStyle: .alert)
-        
-        let cameraAction = UIAlertAction(title: "Camera".localized, style: .default) {
-            UIAlertAction in
-            self.isForSelfie = false
-            self.openCamera()
+    private func picImage(_ ForSelfie:Bool){
+        if isForSelfie{
+            isForSelfie = true
+        }else{
+            isForSelfie = false
         }
-        
-        let libraryAction = UIAlertAction(title: "Library".localized, style: .default) { (action) in
-            self.openGallery()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) {
-            UIAlertAction in self.cancel()
-        }
-        alert.addAction(cameraAction)
-        alert.addAction(libraryAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func picImage(){
         let alert = UIAlertController(title: "Store Picture".localized, message: nil, preferredStyle: .alert)
         
         let cameraAction = UIAlertAction(title: "Camera".localized, style: .default) {
             UIAlertAction in
-            self.isForSelfie = false
+            
             self.openCamera()
         }
         

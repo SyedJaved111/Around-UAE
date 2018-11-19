@@ -22,6 +22,7 @@ class VCSubDivisions: BaseController {
     var subDivisonlist = [GroupDivisonData]()
     var groupId = ""
     var groupName = ""
+    var divisionid = ""
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -110,9 +111,11 @@ extension VCSubDivisions: UICollectionViewDataSource,UICollectionViewDelegate{
         }
     }
     
-    private func moveToStoreDetail(_ storeid:String){
+    private func moveToStoreDetail(_ divisonid:String){
         let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "VCProducList") as! VCProducList
+        vc.groupid = groupId
+        vc.divisionid = divisonid
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

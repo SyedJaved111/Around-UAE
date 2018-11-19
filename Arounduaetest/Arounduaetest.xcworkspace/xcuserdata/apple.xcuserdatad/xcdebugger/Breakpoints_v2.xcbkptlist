@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Arounduaetest/Controller/ChatController/ChatController.swift"
-            timestampString = "563464753.2464499"
+            timestampString = "564322786.926621"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "781"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Arounduaetest/Controller/ChatController/ChatController.swift"
-            timestampString = "563464753.2465481"
+            timestampString = "564322786.92669"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "786"
@@ -48,6 +48,22 @@
             startingLineNumber = "103"
             endingLineNumber = "103"
             landmarkName = "parseServerResponse(_:from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Arounduaetest/Controller/LoginRegister/VCResetPassword.swift"
+            timestampString = "564328179.810841"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "isCheck()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

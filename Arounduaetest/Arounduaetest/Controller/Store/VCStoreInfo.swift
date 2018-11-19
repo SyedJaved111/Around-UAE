@@ -35,6 +35,9 @@ class VCStoreInfo: UIViewController,IndicatorInfoProvider {
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
+        if isResturant{
+            return IndicatorInfo.init(title: "Info".localized)
+        }
         return IndicatorInfo.init(title: "Store Info".localized)
     }
     

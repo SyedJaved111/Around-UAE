@@ -68,8 +68,21 @@ class SelfiVedioPlacesVC: BaseController,IndicatorInfoProvider{
     }
     
     func addSelfieButton(backImage: UIImage = #imageLiteral(resourceName: "Takeselfie")) {
-        let chatButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(onChatButtonClciked))
-        navigationItem.rightBarButtonItem  = chatButton
+        let button =  UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "Takeselfie"), for: .normal)
+        button.addTarget(self, action: #selector(onChatButtonClciked), for: .touchUpInside)
+        button.frame = CGRect(x:0,y:0,width:53,height:31)
+        button.imageEdgeInsets = UIEdgeInsetsMake(-1, -32, 1, 32)
+        let label = UILabel(frame: CGRect(x:0,y:5,width: 70,height:20))
+        label.font = UIFont(name: "Arial", size: 10)
+        label.text = "Take Selfie"
+        label.textAlignment = .center
+        label.textColor = UIColor.black
+        label.backgroundColor =   UIColor.clear
+        button.addSubview(label)
+        let barButton = UIBarButtonItem(customView: button)
+        self.navigationItem.rightBarButtonItem = barButton
+        self.navigationItem.setRightBarButtonItems([barButton], animated: true)
     }
     
     @objc func onChatButtonClciked() {
@@ -103,7 +116,7 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralVideoCell", for: indexPath) as! VCSelfiesCell
             cell.userName.text = selfiesArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiesArray[indexPath.row].createdAt!)!
-            dateFormatter.dateFormat = "d MMM ,yyyy"
+            dateFormatter.dateFormat = "d MMM, yyyy"
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString
@@ -120,7 +133,7 @@ extension SelfiVedioPlacesVC:UICollectionViewDelegate,UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenralCell", for: indexPath) as! VCSelfiesCell
             cell.userName.text = selfiesArray[indexPath.row].caption ?? ""
             let date = dateFormatter.date(from: selfiesArray[indexPath.row].createdAt!)!
-            dateFormatter.dateFormat = "d MMM ,yyyy"
+            dateFormatter.dateFormat = "d MMM, yyyy"
             dateFormatter.locale = tempLocale
             let dateString = dateFormatter.string(from: date)
             cell.userDate.text = dateString

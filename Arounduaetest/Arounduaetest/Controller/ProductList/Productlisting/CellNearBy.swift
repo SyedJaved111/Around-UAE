@@ -10,6 +10,11 @@ import UIKit
 import Cosmos
 import SDWebImage
 
+protocol CellNearProtocol{
+    func addToCartTapped(cell: CellNearBy)
+    func favouriteTapped(cell: CellNearBy)
+}
+
 class CellNearBy: UICollectionViewCell {
     
     @IBOutlet weak var btnaddtocartnearby: UIButtonMain!
@@ -22,6 +27,7 @@ class CellNearBy: UICollectionViewCell {
     @IBOutlet weak var imgproductneaby: UIImageView!
     let lang = UserDefaults.standard.string(forKey: "i18n_language")
     let currency = UserDefaults.standard.string(forKey: "currency")
+    var delegate: CellNearProtocol?
     
     override func awakeFromNib() {
         btnFavrouitnearby.makeRound()
@@ -33,6 +39,17 @@ class CellNearBy: UICollectionViewCell {
         uiviewcomosenearby.rating = 0.0
         lblproductnamenearby.text = nil
         imgproductneaby.image = nil
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.setsubViewDesign()
+    }
+    
+    func setsubViewDesign(){
+        self.btnFavrouitnearby.layer.cornerRadius = 15
+        self.btnFavrouitnearby.layer.borderWidth = 0.5
+        self.btnFavrouitnearby.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     func setupNearbyData(product:Products){
@@ -63,10 +80,10 @@ class CellNearBy: UICollectionViewCell {
     }
     
     @IBAction func btnaddtocartclicknearby(_ sender: Any){
-        
+        self.delegate?.addToCartTapped(cell: self)
     }
     
     @IBAction func btnfavrouitClicknearby(_ sender: Any){
-        
+        self.delegate?.favouriteTapped(cell: self)
     }
 }

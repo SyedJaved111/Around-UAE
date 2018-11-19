@@ -3,7 +3,11 @@ import UIKit
 import XLPagerTabStrip
 
 var searchKeyword = ""
-class VCNearByProductList: BaseController,IndicatorInfoProvider{
+class VCNearByProductList: BaseController,IndicatorInfoProvider,CellNearProtocol{
+    
+    func favouriteTapped(cell: CellNearBy) {
+        
+    }
     
     var productarray = [Products]()
     var groupid = ""
@@ -127,6 +131,14 @@ class VCNearByProductList: BaseController,IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo{
         return IndicatorInfo(title: "Near By".localized)
     }
+    
+    func addToCartTapped(cell: CellNearBy){
+        let indexpath  = collectionViewProductnearby.indexPath(for: cell)!
+        let storyboard = UIStoryboard(name: "HomeTabs", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VCPopCart") as! VCPopCart
+        vc.product = productarray[indexpath.row]
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 extension VCNearByProductList: UICollectionViewDelegate,UICollectionViewDataSource{
@@ -138,6 +150,7 @@ extension VCNearByProductList: UICollectionViewDelegate,UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellNearBy", for: indexPath) as! CellNearBy
         cell.setupNearbyData(product: productarray[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
